@@ -7,14 +7,14 @@ import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 
-const Login = (props) => {
+const OwnerLogin = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleLogin = async () => {
     const { email, password } = formData;
 
     await axios
-      .post('/user/signin', {
+      .post('/user/signin/owner', {
         email,
         password,
       })
@@ -121,4 +121,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default OwnerLogin;

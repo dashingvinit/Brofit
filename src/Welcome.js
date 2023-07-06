@@ -9,7 +9,7 @@ const Home = (props) => {
     <Background>
       <View style={{ marginHorizontal: 20, marginVertical: 100 }}>
         <Text style={{ color: 'white', fontSize: 48 }}>Welcome to</Text>
-        <Text style={{ color: '#e6fd54', fontSize: 64, marginBottom: 40 }}>
+        <Text style={{ color: '#e6fd54', fontSize: 64, marginBottom: 100 }}>
           Brofit+
         </Text>
         <Btn
@@ -42,7 +42,7 @@ const Home = (props) => {
             bgColor={bgColor}
             textColor={neon}
             btnLabel="Owner Login"
-            Press={() => props.navigation.navigate('Login')}
+            Press={() => props.navigation.navigate('OwnerLogin')}
           />
         </View>
       </View>

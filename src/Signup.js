@@ -1,11 +1,53 @@
-import React from 'react';
-import { View, Text, Touchable, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import axios from './constants/Axios';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 
 const Signup = (props) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    gymId: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleSignup = async () => {
+    const { name, email, gymId, password, confirmPassword } = formData;
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    await axios
+      .post('user/signup', {
+        name,
+        email,
+        gymId,
+        password,
+      })
+      .then((response) => {
+        alert('SignUp successful');
+        props.navigation.navigate('Login');
+        console.log('Response:', response.data.data);
+      })
+      .catch((error) => {
+        alert('SignUp failed');
+        console.error('Error:', error);
+      });
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [field]: value,
+    }));
+  };
+
   return (
     <Background>
       <View style={{ alignItems: 'center', width: 400 }}>
@@ -16,7 +58,7 @@ const Signup = (props) => {
             fontWeight: 'bold',
             marginTop: 50,
           }}>
-          Register
+          Welcome
         </Text>
         <Text
           style={{
@@ -36,23 +78,61 @@ const Signup = (props) => {
             paddingTop: 50,
             alignItems: 'center',
           }}>
-          <Field placeholder="First Name" />
-          <Field placeholder="Last Name" />
-          <Field placeholder="Email" keyboardType={'email-address'} />
-          <Field placeholder="Gym_Id" keyboardType={'number'} />
-          <Field placeholder="Password" secureTextEntry={true} />
-          <Field placeholder="Confirm Password" secureTextEntry={true} />
+          <Field
+            placeholder="Name"
+            value={formData.name}
+            onChangeText={(value) => handleInputChange('name', value)}
+          />
+          <Field
+            placeholder="Email"
+            keyboardType={'email-address'}
+            value={formData.email}
+            onChangeText={(value) => handleInputChange('email', value)}
+          />
+          <Field
+            placeholder="Gym_Id"
+            value={formData.gymId}
+            onChangeText={(value) => handleInputChange('gymId', value)}
+          />
+          <Field
+            placeholder="Password"
+            secureTextEntry={true}
+            value={formData.password}
+            onChangeText={(value) => handleInputChange('password', value)}
+          />
+          <Field
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+            value={formData.confirmPassword}
+            onChangeText={(value) =>
+              handleInputChange('confirmPassword', value)
+            }
+          />
           <View
             style={{
               display: 'flex',
               flexDirection: 'row',
-              width: '78%',
-              paddingRight: 16,
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              textAlign: 'center',
             }}>
-            <Text style={{ color: 'grey', fontSize: 16 }}>
+            <Text
+              style={{
+                color: 'grey',
+                fontSize: 16,
+                flexWrap: 'wrap',
+                textAlign: 'center',
+              }}>
               By signing in, you agree to our{' '}
             </Text>
-            <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
+            <Text
+              style={{
+                color: neon,
+                fontWeight: 'bold',
+                fontSize: 16,
+                flexWrap: 'wrap',
+                textAlign: 'center',
+              }}>
               Terms & Conditions
             </Text>
           </View>
@@ -66,7 +146,15 @@ const Signup = (props) => {
               paddingRight: 16,
               marginBottom: 10,
             }}>
-            <Text style={{ color: 'grey', fontSize: 16 }}>and </Text>
+            <Text
+              style={{
+                color: 'grey',
+                fontSize: 16,
+                flexWrap: 'wrap',
+                textAlign: 'center',
+              }}>
+              and{' '}
+            </Text>
             <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
               Privacy Policy
             </Text>
@@ -75,10 +163,7 @@ const Signup = (props) => {
             textColor={bgColor}
             bgColor={neon}
             btnLabel="Signup"
-            Press={() => {
-              alert('Accoutn created');
-              props.navigation.navigate('Login');
-            }}
+            Press={handleSignup}
           />
           <View
             style={{

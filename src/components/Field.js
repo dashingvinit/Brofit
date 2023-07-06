@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { darkGreen } from '../constants/Constants';
+import { neon } from '../constants/Constants';
 
 const Field = (props) => {
   return (
@@ -8,13 +8,13 @@ const Field = (props) => {
       {...props}
       style={{
         borderRadius: 100,
-        color: darkGreen,
+        color: neon,
         paddingHorizontal: 10,
         width: '78%',
         backgroundColor: 'rgb(220,220, 220)',
         marginVertical: 10,
       }}
-      placeholderTextColor={darkGreen}></TextInput>
+      placeholderTextColor={neon}></TextInput>
   );
 };
 
