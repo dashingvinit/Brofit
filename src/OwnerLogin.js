@@ -22,6 +22,7 @@ const OwnerLogin = (props) => {
         const token = response.data.data;
         alert('Login successful');
         AsyncStorage.setItem('token', token);
+        props.navigation.navigate('Home');
         console.log('Response:', response.data.data);
       })
       .catch((error) => {

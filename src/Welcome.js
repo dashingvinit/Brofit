@@ -8,8 +8,16 @@ const Home = (props) => {
   return (
     <Background>
       <View style={{ marginHorizontal: 20, marginVertical: 100 }}>
-        <Text style={{ color: 'white', fontSize: 48 }}>Welcome to</Text>
-        <Text style={{ color: '#e6fd54', fontSize: 64, marginBottom: 100 }}>
+        <Text style={{ color: 'white', fontSize: 48, fontWeight: 'bold' }}>
+          Welcome to
+        </Text>
+        <Text
+          style={{
+            color: '#e6fd54',
+            fontSize: 64,
+            fontWeight: 'bold',
+            marginBottom: 100,
+          }}>
           Brofit+
         </Text>
         <Btn
@@ -22,6 +30,7 @@ const Home = (props) => {
           bgColor={bgColor}
           textColor={neon}
           btnLabel="Signup"
+          // Press={() => props.navigation.navigate('ProfileSetup')}
           Press={() => props.navigation.navigate('Signup')}
         />
         <View

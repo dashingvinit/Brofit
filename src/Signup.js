@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from './constants/Axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
@@ -7,6 +8,7 @@ import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 
 const Signup = (props) => {
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,9 +33,11 @@ const Signup = (props) => {
         password,
       })
       .then((response) => {
+        const user = response.data.data;
+        AsyncStorage.setItem('UserObject', user);
         alert('SignUp successful');
-        props.navigation.navigate('Login');
-        console.log('Response:', response.data.data);
+        console.log('Response:', user);
+        props.navigation.navigate('ProfileSetup');
       })
       .catch((error) => {
         alert('SignUp failed');
@@ -71,7 +75,7 @@ const Signup = (props) => {
         </Text>
         <View
           style={{
-            backgroundColor: '#1d2226',
+            backgroundColor: bgColor,
             height: 700,
             width: 400,
             borderTopLeftRadius: 130,
@@ -164,6 +168,7 @@ const Signup = (props) => {
             bgColor={neon}
             btnLabel="Signup"
             Press={handleSignup}
+            loading={loading}
           />
           <View
             style={{

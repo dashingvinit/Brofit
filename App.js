@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Welcome from './src/Welcome';
 import Signup from './src/Signup';
+import ProfileSetup from './src/ProfileSetup';
 import Login from './src/Login';
 import OwnerLogin from './src/OwnerLogin';
 import Home from './src/Home';
@@ -15,6 +16,7 @@ function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="ProfileSetup" component={ProfileSetup} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
         <Stack.Screen name="Home" component={Home} />
