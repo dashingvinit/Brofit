@@ -1,10 +1,22 @@
 import { View, Text } from 'react-native';
-import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
 import Background from './components/Background';
 import { bgColor } from './constants/Constants';
 import Field from './components/Field';
 
 const ProfileSetup = () => {
+  const _retriveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('UserObject');
+      if (value !== null) {
+        console.log(value);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const [formData, setFormData] = useState({
     userdId: '',
     weight: '',
@@ -46,6 +58,10 @@ const ProfileSetup = () => {
       [field]: value,
     }));
   };
+
+  useEffect(() => {
+    _retriveData();
+  }, []);
 
   return (
     <Background>

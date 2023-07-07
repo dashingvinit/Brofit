@@ -34,7 +34,9 @@ const Signup = (props) => {
       })
       .then((response) => {
         const user = response.data.data;
-        AsyncStorage.setItem('UserObject', user);
+        console.log(user);
+        AsyncStorage.setItem('keepLoggedIn', 'true');
+        AsyncStorage.setItem('UserObject', JSON.stringyfy(user));
         alert('SignUp successful');
         console.log('Response:', user);
         props.navigation.navigate('ProfileSetup');
