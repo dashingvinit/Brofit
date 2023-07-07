@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import axios from './constants/Axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
 
 const Signup = (props) => {
   const [loading, setLoading] = useState(true);
@@ -35,8 +39,7 @@ const Signup = (props) => {
       .then((response) => {
         const user = response.data.data;
         console.log(user);
-        AsyncStorage.setItem('keepLoggedIn', 'true');
-        AsyncStorage.setItem('UserObject', JSON.stringyfy(user));
+        save('user', JSON.stringify(user));
         alert('SignUp successful');
         console.log('Response:', user);
         props.navigation.navigate('ProfileSetup');

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import axios from './constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
 
 const Login = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -20,10 +24,10 @@ const Login = (props) => {
       })
       .then((response) => {
         const token = response.data.data;
+        save('token', token);
         alert('Login successful');
-        AsyncStorage.setItem('token', token);
-        props.navigation.navigate('Home');
-        console.log('Response:', response.data.data);
+        props.navigation.navigate('ProfileSetup');
+        console.log('Response:', token);
       })
       .catch((error) => {
         alert('Login failed');
