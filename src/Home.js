@@ -41,14 +41,16 @@ const Home =(props) => {
           </View>
         </View>
 
-        <View>
+        <View style={{flexDirection:'row'}}>
           <Text style={styles.pageTitle}>Personalized Plan</Text>
 
           <TouchableOpacity
               onPress={() => props.navigation.navigate('AnimatedVedios')}>
-              <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
-                Signup
+              <View style={styles.textContainer1}>
+              <Text style={styles.pageTitle2}>
+                Tutorial
               </Text>
+              </View>
             </TouchableOpacity>
 
         </View>
@@ -158,8 +160,22 @@ const styles = StyleSheet.create({
     color: '#e6fd54',
   },
   pageTitle: {
-    color: '#e6fd54',
+    color: 'white',
     margin: 20,
+    fontSize: 20,
+  },
+  textContainer1: {
+    height: 40,
+    width: 150,
+    backgroundColor: '#2a2f37',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:30,
+    marginLeft:60,
+    marginTop: 10,
+  },
+  pageTitle2: {
+    color: neon,
     fontSize: 20,
   },
   slideableImagesContainer: {
