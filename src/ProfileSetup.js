@@ -1,41 +1,35 @@
-import { View, Text } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, TouchableNativeFeedbackComponent } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import axios from './constants/Axios';
+import React, { useState, useEffect } from 'react';
 import Background from './components/Background';
-import { bgColor } from './constants/Constants';
+import { neon, bgColor } from './constants/Constants';
 import Field from './components/Field';
+import Btn from './components/Btn';
 
 const ProfileSetup = () => {
   const [formData, setFormData] = useState({
-    userdId: '',
-    weight: '',
-    height: '',
-    age: '',
+    weight: '70',
+    height: '10',
     plan: '',
-    goal: '',
   });
 
-  setFormData({ ...formData, userId: user.userId });
-
   const handleProfileSetup = async () => {
-    const { userId, weight, age, height, plan, goal } = formData;
+    const { weight, height, plan } = formData;
 
     axios
       .post('/userProfile', {
-        userId,
-        age,
         weight,
         height,
-        plan,
-        goal,
+        // plan,
       })
       .then((response) => {
-        alert('SignUp successful');
+        alert('Setup successful');
         const user = response.data.data;
-        props.navigation.navigate('ProfileSetup', { userObject: user });
         console.log('Response:', user);
       })
       .catch((error) => {
-        alert('SignUp failed');
+        // alert('Setup failed');
         console.error('Error:', error);
       });
   };
@@ -49,7 +43,6 @@ const ProfileSetup = () => {
 
   return (
     <Background>
-      <Text>{user.email}</Text>
       <View style={{ alignItems: 'center' }}>
         <Text
           style={{
@@ -83,23 +76,19 @@ const ProfileSetup = () => {
         }}>
         <Field
           placeholder="Height"
-          //   value={formData.height}
-          //   onChangeText={(value) => handleInputChange('height', value)}
+          value={formData.height}
+          onChangeText={(value) => handleInputChange('height', value)}
         />
         <Field
           placeholder="Weight"
-          //   value={formData.weight}
-          //   onChangeText={(value) => handleInputChange('weight', value)}
+          value={formData.weight}
+          onChangeText={(value) => handleInputChange('weight', value)}
         />
-        <Field
-          placeholder="Age"
-          //   value={formData.age}
-          //   onChangeText={(value) => handleInputChange('age', value)}
-        />
-        <Field
-          placeholder="userId"
-          value={user.age}
-          //   onChangeText={(value) => handleInputChange('age', value)}
+        <Btn
+          textColor={bgColor}
+          bgColor={neon}
+          btnLabel="Update"
+          Press={handleProfileSetup}
         />
       </View>
     </Background>
