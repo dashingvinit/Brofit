@@ -7,7 +7,7 @@ import Field from './components/Field';
 import Btn from './components/Btn';
 import Plans from './components/Plans';
 
-const ProfileSetup = () => {
+const ProfileSetup = (props) => {
   const [formData, setFormData] = useState({
     weight: '70',
     height: '10',
@@ -35,8 +35,10 @@ const ProfileSetup = () => {
       .then((response) => {
         alert('Setup successful');
         const user = response.data.data;
+        props.navigation.navigate('Home');
         console.log('Response:', user);
       })
+
       .catch((error) => {
         alert('Setup failed');
         console.error('Error:', error);
