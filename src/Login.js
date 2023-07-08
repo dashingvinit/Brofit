@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import axios from './constants/Axios';
+import axios, { setTokenHeader } from './constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
@@ -17,23 +17,19 @@ const Login = (props) => {
   const handleLogin = async () => {
     const { email, password } = formData;
 
-    await axios
-      .post('/user/signin', {
-        email,
-        password,
-      })
-      .then((response) => {
-        const token = response.data.data;
-        save('token', token);
-        alert('Login successful');
-        props.navigation.navigate('ProfileSetup');
-        console.log('Response:', token);
-      })
-      .catch((error) => {
-        alert('Login failed');
-        console.error('Login failed');
-        console.error('Error:', error);
-      });
+    try {
+      const response = await axios.post('/user/signin', { email, password });
+      const token = response.data.data;
+      await save('token', token); // Wait for the token to be saved
+      setTokenHeader();
+      alert('Login successful');
+      // console.log('Response:', token);
+      props.navigation.navigate('ProfileSetup');
+    } catch (error) {
+      alert('Login failed');
+      console.error('Login failed');
+      console.error('Error:', error);
+    }
   };
 
   const handleInputChange = (field, value) => {

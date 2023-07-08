@@ -8,14 +8,14 @@ const Axios = axios.create({
   },
 });
 
-const setTokenHeader = async () => {
+export const setTokenHeader = async () => {
   try {
     const token = await SecureStore.getItemAsync('token');
     Axios.interceptors.request.use((config) => {
       config.headers['x-access-token'] = token;
       return config;
     });
-    console.log('Token set:', token);
+    // console.log('Token set:', token);
   } catch (error) {
     if (error.code === 'ENOENT') {
       Axios.interceptors.request.use((config) => {
@@ -30,9 +30,9 @@ const setTokenHeader = async () => {
 
 setTokenHeader();
 
-// Axios.interceptors.request.use((config) => {
-//   console.log('Request Headers:', config.headers);
-//   return config;
-// });
+Axios.interceptors.request.use((config) => {
+  console.log('Request Headers:', config.headers);
+  return config;
+});
 
 export default Axios;

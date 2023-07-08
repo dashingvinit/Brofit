@@ -1,11 +1,11 @@
-import { View, Text, TouchableNativeFeedbackComponent } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
+import { View, Text } from 'react-native';
 import axios from './constants/Axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Background from './components/Background';
 import { neon, bgColor } from './constants/Constants';
 import Field from './components/Field';
 import Btn from './components/Btn';
+import Plans from './components/Plans';
 
 const ProfileSetup = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +14,15 @@ const ProfileSetup = () => {
     plan: '',
   });
 
+  const handlePlanSelect = (plan) => {
+    const selectedPlanName = plan._id;
+    console.log(selectedPlanName);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      plan: selectedPlanName,
+    }));
+  };
+
   const handleProfileSetup = async () => {
     const { weight, height, plan } = formData;
 
@@ -21,7 +30,7 @@ const ProfileSetup = () => {
       .post('/userProfile', {
         weight,
         height,
-        // plan,
+        plan,
       })
       .then((response) => {
         alert('Setup successful');
@@ -29,7 +38,7 @@ const ProfileSetup = () => {
         console.log('Response:', user);
       })
       .catch((error) => {
-        // alert('Setup failed');
+        alert('Setup failed');
         console.error('Error:', error);
       });
   };
@@ -62,7 +71,7 @@ const ProfileSetup = () => {
             marginBottom: 20,
             marginRight: 30,
           }}>
-          Setup you profile😉
+          Setup your profile😉
         </Text>
       </View>
       <View
@@ -75,15 +84,30 @@ const ProfileSetup = () => {
           alignItems: 'center',
         }}>
         <Field
+          keyboardType={
+            Platform.OS === 'android'
+              ? 'phone-pad'
+              : Platform.OS === 'ios'
+              ? 'number-pad'
+              : 'numbers-and-punctuation'
+          }
           placeholder="Height"
           value={formData.height}
           onChangeText={(value) => handleInputChange('height', value)}
         />
         <Field
+          keyboardType={
+            Platform.OS === 'android'
+              ? 'phone-pad'
+              : Platform.OS === 'ios'
+              ? 'number-pad'
+              : 'numbers-and-punctuation'
+          }
           placeholder="Weight"
           value={formData.weight}
           onChangeText={(value) => handleInputChange('weight', value)}
         />
+        <Plans onSelect={handlePlanSelect} />
         <Btn
           textColor={bgColor}
           bgColor={neon}

@@ -37,9 +37,12 @@ const Signup = (props) => {
         password,
       })
       .then((response) => {
-        const user = response.data.data;
-        console.log(user);
-        save('user', JSON.stringify(user));
+        const user = JSON.stringify(response.data.data.user);
+        const token = response.data.data.jwt;
+        console.log('token', token);
+        console.log('user', user);
+        save('user', user);
+        save('token', token);
         alert('SignUp successful');
         console.log('Response:', user);
         props.navigation.navigate('ProfileSetup');
