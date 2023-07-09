@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import axios from '../constants/Axios';
-import { bgLight } from '../constants/Constants';
+import { bgLight, neon } from '../constants/Constants';
 
 const Graph = () => {
   const [chartData, setChartData] = useState([]);
@@ -39,23 +39,30 @@ const Graph = () => {
 
   const data = {
     labels: [
-      '4A',
-      '5A',
-      '6A',
-      '7A',
-      '8A',
-      '9A',
-      '10A',
-      '11A',
-      '12P',
-      '3P',
-      '4P',
-      '5P',
-      '6P',
-      '7P',
-      '8P',
-      '9P',
-      '10P',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20',
+      '21',
+      '22',
+      '23',
+      '24',
     ],
     datasets: [
       {
@@ -79,32 +86,45 @@ const Graph = () => {
         padding: 10,
         margin: 6,
       }}>
-      <BarChart
-        data={data}
-        width={360}
-        height={250}
-        yAxisInterval={0}
-        // withHorizontalLabels={false}
-        contentInset={{ left: 0, right: 10 }}
-        chartConfig={{
-          backgroundGradientFrom: '#1E2923',
-          backgroundGradientFromOpacity: 0,
-          backgroundGradientTo: '#08130D',
-          backgroundGradientToOpacity: 0.5,
-          color: (opacity = 0.5) => `rgba(26, 255, 146, ${opacity})`,
-          strokeWidth: 2, // optional, default 3
-          barPercentage: 0.5,
-          useShadowColorFromDataset: false, // optional
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginLeft: -10,
-          borderRadius: 20,
-        }}
-        verticalLabelRotation={30}
-      />
+      <ScrollView horizontal contentContainerStyle={{ width: screenWidth * 2 }}>
+        <View>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 'bold',
+              marginBottom: 10,
+              color: neon,
+            }}>
+            🟢 Gym Activity - 5 min intervals between updates - 24hrs of data
+          </Text>
+          <BarChart
+            data={data}
+            width={1.999 * screenWidth}
+            height={220}
+            yAxisInterval={0}
+            withHorizontalLabels={true}
+            contentInset={{ left: 0, right: 10 }}
+            chartConfig={{
+              backgroundGradientFrom: '#1E2923',
+              backgroundGradientFromOpacity: 0,
+              backgroundGradientTo: '#08130D',
+              backgroundGradientToOpacity: 0.5,
+              color: (opacity = 0.5) => `rgba(26, 255, 146, ${opacity})`,
+              strokeWidth: 2,
+              barPercentage: 0.5,
+              useShadowColorFromDataset: false,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            style={{
+              marginLeft: -10,
+              borderRadius: 20,
+            }}
+            verticalLabelRotation={30}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
