@@ -1,26 +1,29 @@
 import React from 'react';
 import { SafeAreaView, View, TouchableOpacity, Text } from 'react-native';
+import axios from './constants/Axios';
 import { Calendar } from 'react-native-calendars';
 import { COLORS } from './constants';
 import FetchQuote from './FetchQuote'
 
 const Attendance = () => {
 
-
-  const handleCheckIn = () => {
-    
-    fetch('http://localhost:7000/api/v1/gym/1')
-      .then(response => response.json())
-      .then(data => {
-        setPopupMessage(data.message);
-      })
-      .catch(error => {
-        console.log('Error:', error);
-      });
+  const handleCheckIn = async () => {
+    try {
+      const response = await axios.post('/attendance');
+      // setPopupMessage(response.data.message);
+      alert('Done');
+    } catch (error) {
+      if (error.response && error.response.status === 500) {
+        alert('Internal Server Error: Please try again later.');
+      } else {
+        alert('Error: ' + error.message);
+      }
+    }
   };
+  
 
   return (
-    <View style={{ flex: 1,backgroundColor: COLORS.black }}>
+    <View style={{ flex: 1,backgroundColor: COLORS.black,paddingTop:80 }}>
       <View style={{ flex: 1 }}>
         <Calendar style={{borderRadius:25, elevation: 4, margin: 10, backgroundColor: COLORS.gray, }}
           

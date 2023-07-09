@@ -9,6 +9,8 @@ import OwnerLogin from './src/OwnerLogin';
 import Home from './src/Home';
 import AnimatedVedios from './src/AnimatedVedios ';
 
+import Attendance from './src/Attendance'
+
 // import styles from './src/components/home/popular/popularjobs.style'
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +26,8 @@ function App() {
         <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
+        <Stack.Screen name="Attendance" component={Attendance} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
