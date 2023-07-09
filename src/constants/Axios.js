@@ -16,6 +16,7 @@ export const setTokenHeader = async () => {
       config.headers['x-access-token'] = token;
       return config;
     });
+
     // console.log('Token set:', token);
   } catch (error) {
     if (error.code === 'ENOENT') {
@@ -31,9 +32,9 @@ export const setTokenHeader = async () => {
 
 setTokenHeader();
 
-Axios.interceptors.request.use((config) => {
-  console.log('Request Headers:', config.headers);
-  return config;
-});
+// Axios.interceptors.request.use((config) => {
+//   console.log('Request Headers:', config.headers);
+//   return config;
+// });
 
 export default Axios;

@@ -7,10 +7,9 @@ import ProfileSetup from './src/ProfileSetup';
 import Login from './src/Login';
 import OwnerLogin from './src/OwnerLogin';
 import Home from './src/Home';
-import MainContainer from './src/screens/MainContainer';
-import AnimatedVedios from './src/AnimatedVedios '
-// import styles from './src/components/home/popular/popularjobs.style'
+import AnimatedVedios from './src/AnimatedVedios ';
 
+// import styles from './src/components/home/popular/popularjobs.style'
 
 const Stack = createNativeStackNavigator();
 
@@ -24,10 +23,7 @@ function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="AnimatedVedios" component={AnimatedVedios} />
-
-        {/* <Stack.Screen name="MainContainer" component={MainContainer} /> */}
-
+        <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
       </Stack.Navigator>
     </NavigationContainer>
   );
