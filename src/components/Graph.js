@@ -93,13 +93,14 @@ const Graph = () => {
               fontSize: 15,
               fontWeight: 'bold',
               marginBottom: 10,
+              marginRight: 10,
               color: neon,
             }}>
             🟢 Gym Activity - 5 min intervals between updates - 24hrs of data
           </Text>
           <BarChart
             data={data}
-            width={1.999 * screenWidth}
+            width={2 * screenWidth}
             height={220}
             yAxisInterval={0}
             withHorizontalLabels={true}
@@ -118,10 +119,10 @@ const Graph = () => {
               },
             }}
             style={{
-              marginLeft: -10,
+              marginLeft: -20,
               borderRadius: 20,
             }}
-            verticalLabelRotation={30}
+            verticalLabelRotation={0}
           />
         </View>
       </ScrollView>
