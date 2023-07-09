@@ -41,7 +41,7 @@ const ProfileSetup = (props) => {
 
       .catch((error) => {
         alert('Setup failed');
-        console.error('Error:', error);
+        console.error('Error:', 'profilesetup', error);
       });
   };
 

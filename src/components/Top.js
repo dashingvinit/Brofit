@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 
 const Top = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('User');
   const getUser = async () => {
     const userObject = await SecureStore.getItemAsync('user');
     const user = JSON.parse(userObject);
