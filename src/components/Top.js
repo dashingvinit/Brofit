@@ -1,7 +1,19 @@
 import { View, Text, Image } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
 
 const Top = () => {
+  const [name, setName] = useState('');
+  const getUser = async () => {
+    const userObject = await SecureStore.getItemAsync('user');
+    const user = JSON.parse(userObject);
+    setName(user.name);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <View
       style={{
@@ -24,7 +36,7 @@ const Top = () => {
           Welcome Back
         </Text>
         <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>
-          Arjun Negi
+          {name}
         </Text>
       </View>
     </View>
