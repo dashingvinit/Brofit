@@ -4,10 +4,16 @@ import * as SecureStore from 'expo-secure-store';
 
 const Top = () => {
   const [name, setName] = useState('User');
+
   const getUser = async () => {
     const userObject = await SecureStore.getItemAsync('user');
-    const user = JSON.parse(userObject);
-    setName(user.name);
+    if (!userObject) return;
+    try {
+      const user = JSON.parse(userObject);
+      setName(user.name);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
