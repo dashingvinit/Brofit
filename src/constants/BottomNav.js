@@ -42,6 +42,16 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
+        name="Timer1"
+        component={Timer}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="ios-walk-outline" color={color} size={30} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
         name="Timer"
         component={Timer}
         options={{

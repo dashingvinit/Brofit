@@ -13,7 +13,7 @@ import Timer from '../Timer'
 
 const Stack = createNativeStackNavigator();
 
-const StackNav = () => {
+const StackNav = ({ sethandleLogin }) => {
   return (
     <Stack.Navigator
       initialRouteName="Welcome"
@@ -21,7 +21,9 @@ const StackNav = () => {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="ProfileSetup" component={ProfileSetup} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Login">
+        {(props) => <Login {...props} sethandleLogin={sethandleLogin} />}
+      </Stack.Screen>
       <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
       <Stack.Screen name="Home1" component={Home} />
       <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
