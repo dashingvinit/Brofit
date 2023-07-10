@@ -22,6 +22,7 @@ const Login = (props) => {
       const token = response.data.data;
       await save('token', token); // Wait for the token to be saved
       setTokenHeader();
+      props.sethandleLogin();
       alert('Login successful');
       // console.log('Response:', token);
       props.navigation.navigate('Home1');
