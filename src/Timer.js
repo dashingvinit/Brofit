@@ -1,10 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, ScrollView, TouchableOpacity
-  } from 'react-native'
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { ImageBackground } from 'react-native';
 import { COLORS, icons, images, SIZES } from './constants';
-import moment from 'moment'
+import moment from 'moment';
+import { neon } from './constants/Constants';
 
 function Timer({ interval, style }) {
   const pad = (n) => (n < 10 ? '0' + n : n);
@@ -23,38 +28,37 @@ function RoundButton({ title, color, background, onPress, disabled }) {
   return (
     <TouchableOpacity
       onPress={() => !disabled && onPress()}
-      style={[ styles.button, { backgroundColor: background }]}
-      activeOpacity={disabled ? 1.0 : 0.7}
-    >
+      style={[styles.button, { backgroundColor: background }]}
+      activeOpacity={disabled ? 1.0 : 0.7}>
       <View style={styles.buttonBorder}>
-        <Text style={[ styles.buttonTitle, { color }]}>{title}</Text>
+        <Text style={[styles.buttonTitle, { color }]}>{title}</Text>
       </View>
     </TouchableOpacity>
-  )
+  );
 }
 function Lap({ number, interval, fastest, slowest }) {
   const lapStyle = [
     styles.lapText,
     fastest && styles.fastest,
     slowest && styles.slowest,
-  ]
+  ];
   return (
     <View style={styles.lap}>
       <Text style={lapStyle}>Lap {number}</Text>
-      <Timer style={[lapStyle, styles.lapTimer]} interval={interval}/>
+      <Timer style={[lapStyle, styles.lapTimer]} interval={interval} />
     </View>
-  )
+  );
 }
 
 function LapsTable({ laps, timer }) {
-  const finishedLaps = laps.slice(1)
-  let min = Number.MAX_SAFE_INTEGER
-  let max = Number.MIN_SAFE_INTEGER
+  const finishedLaps = laps.slice(1);
+  let min = Number.MAX_SAFE_INTEGER;
+  let max = Number.MIN_SAFE_INTEGER;
   if (finishedLaps.length >= 2) {
-    finishedLaps.forEach(lap => {
-      if (lap < min) min = lap
-      if (lap > max) max = lap
-    })
+    finishedLaps.forEach((lap) => {
+      if (lap < min) min = lap;
+      if (lap > max) max = lap;
+    });
   }
   return (
     <ScrollView style={styles.scrollView}>
@@ -68,142 +72,139 @@ function LapsTable({ laps, timer }) {
         />
       ))}
     </ScrollView>
-  )
+  );
 }
 
 function ButtonsRow({ children }) {
-  return (
-    <View style={styles.buttonsRow}>{children}</View>
-  )
+  return <View style={styles.buttonsRow}>{children}</View>;
 }
 export default class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       start: 0,
       now: 0,
-      laps: [ ],
-    }
+      laps: [],
+    };
   }
   componentWillUnmount() {
-    clearInterval(this.timer)
+    clearInterval(this.timer);
   }
 
   start = () => {
-    const now = new Date().getTime()
+    const now = new Date().getTime();
     this.setState({
       start: now,
       now,
       laps: [0],
-    })
+    });
     this.timer = setInterval(() => {
-      this.setState({ now: new Date().getTime()})
-    }, 100)
-  }
-  
+      this.setState({ now: new Date().getTime() });
+    }, 100);
+  };
+
   lap = () => {
-    const timestamp = new Date().getTime()
-    const { laps, now, start } = this.state
-    const [firstLap, ...other] = laps
+    const timestamp = new Date().getTime();
+    const { laps, now, start } = this.state;
+    const [firstLap, ...other] = laps;
     this.setState({
       laps: [0, firstLap + now - start, ...other],
       start: timestamp,
       now: timestamp,
-    })
-  }
+    });
+  };
 
   stop = () => {
-    clearInterval(this.timer)
-    const { laps, now, start } = this.state
-    const [firstLap, ...other] = laps
+    clearInterval(this.timer);
+    const { laps, now, start } = this.state;
+    const [firstLap, ...other] = laps;
     this.setState({
       laps: [firstLap + now - start, ...other],
       start: 0,
       now: 0,
-    })
-  }
+    });
+  };
   reset = () => {
     this.setState({
       laps: [],
       start: 0,
       now: 0,
-    })
-  }
+    });
+  };
   resume = () => {
-    const now = new Date().getTime()
+    const now = new Date().getTime();
     this.setState({
       start: now,
       now,
-    })
+    });
     this.timer = setInterval(() => {
-      this.setState({ now: new Date().getTime()})
-    }, 100)
-  }
+      this.setState({ now: new Date().getTime() });
+    }, 100);
+  };
   render() {
-    const { now, start, laps } = this.state
-    const timer = now - start
+    const { now, start, laps } = this.state;
+    const timer = now - start;
     return (
-    <ImageBackground
-          source={require('./assets/images/timerback.jpg')} 
-          style={styles.backgroundImage}
-        >
-      <View style={styles.container}>
-        <Timer
-          interval={laps.reduce((total, curr) => total + curr, 0) + timer}
-          style={styles.timer}
-        />
-        {laps.length === 0 && (
-          <ButtonsRow>
-            <RoundButton
-              title='Lap'
-              color='#e6fd54'
-              background='#1d2226'
-              disabled
-            />
-            <RoundButton
-              title='Start'
-              color='#e6fd54'
-              background='#1d2226'
-              onPress={this.start}
-            />
-          </ButtonsRow>
-        )}
-        {start > 0 && (
-          <ButtonsRow>
-            <RoundButton
-              title='Lap'
-              color='#e6fd54'
-              background='#1d2226'
-              onPress={this.lap}
-            />
-            <RoundButton
-              title='Stop'
-              color='#e6fd54'
-              background='#1d2226'
-              onPress={this.stop}
-            />
-          </ButtonsRow>
-        )}
-        {laps.length > 0 && start === 0 && (
-          <ButtonsRow>
-            <RoundButton
-              title='Reset'
-              color='#e6fd54'
-              background='#1d2226'
-              onPress={this.reset}
-            />
-            <RoundButton
-              title='Start'
-              color='#e6fd54'
-              background='#1d2226'
-              onPress={this.resume}
-            />
-          </ButtonsRow>
-        )}
-        <LapsTable laps={laps} timer={timer}/>
-      </View>
+      <ImageBackground
+        source={require('./assets/images/timerback.jpg')}
+        style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <Timer
+            interval={laps.reduce((total, curr) => total + curr, 0) + timer}
+            style={styles.timer}
+          />
+          {laps.length === 0 && (
+            <ButtonsRow>
+              <RoundButton
+                title="Lap"
+                color="#e6fd54"
+                background="#1d2226"
+                disabled
+              />
+              <RoundButton
+                title="Start"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={this.start}
+              />
+            </ButtonsRow>
+          )}
+          {start > 0 && (
+            <ButtonsRow>
+              <RoundButton
+                title="Lap"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={this.lap}
+              />
+              <RoundButton
+                title="Stop"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={this.stop}
+              />
+            </ButtonsRow>
+          )}
+          {laps.length > 0 && start === 0 && (
+            <ButtonsRow>
+              <RoundButton
+                title="Reset"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={this.reset}
+              />
+              <RoundButton
+                title="Start"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={this.resume}
+              />
+            </ButtonsRow>
+          )}
+          <LapsTable laps={laps} timer={timer} />
+        </View>
       </ImageBackground>
-    )
+    );
   }
 }
 
@@ -239,8 +240,7 @@ const styles = StyleSheet.create({
   buttonBorder: {
     width: 150,
     height: 76,
-    borderRadius:40,
-    borderWidth: 1,
+    borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   lapText: {
-    color: '#FFFFFF',
+    color: neon,
     fontSize: 18,
   },
   lapTimer: {
@@ -261,7 +261,6 @@ const styles = StyleSheet.create({
   lap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor: '#151515',
     borderTopWidth: 1,
     paddingVertical: 10,
   },
@@ -276,6 +275,6 @@ const styles = StyleSheet.create({
   },
   timerContainer: {
     flexDirection: 'row',
-    paddingHorizontal:30
-  }
-})
+    paddingHorizontal: 30,
+  },
+});

@@ -3,7 +3,8 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import axios from './constants/Axios';
 import { Calendar } from 'react-native-calendars';
 import { COLORS } from './constants';
-import FetchQuote from './components/FetchQuote';;
+import FetchQuote from './components/FetchQuote';
+import { bgColor, bgLight, neon } from './constants/Constants';
 
 const Attendance = () => {
   const handleCheckIn = async () => {
@@ -21,25 +22,25 @@ const Attendance = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.black, paddingTop: 80 }}>
+    <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
       <View style={{ flex: 1 }}>
         <Calendar
           style={{
-            borderRadius: 25,
-            elevation: 4,
+            color: neon,
+            borderRadius: 20,
+            elevation: 0,
             margin: 10,
-            backgroundColor: COLORS.gray,
+            padding: 20,
+            backgroundColor: bgLight,
           }}
         />
       </View>
-
-      {/* Fitness Quotes */}
 
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          paddingVertical: 130,
+          paddingVertical: 50,
         }}>
         <TouchableOpacity>
           <FetchQuote />
@@ -51,11 +52,11 @@ const Attendance = () => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingHorizontal: 30,
-          paddingVertical: 20,
+          paddingVertical: 80,
         }}>
         <TouchableOpacity
           style={{
-            backgroundColor: COLORS.gray3,
+            backgroundColor: bgLight,
             paddingVertical: 20,
             paddingHorizontal: 20,
             borderRadius: 30,
@@ -69,7 +70,7 @@ const Attendance = () => {
 
         <TouchableOpacity
           style={{
-            backgroundColor: COLORS.gray3,
+            backgroundColor: bgLight,
             paddingVertical: 20,
             paddingHorizontal: 20,
             borderRadius: 30,

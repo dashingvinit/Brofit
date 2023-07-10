@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
-import { COLORS } from '../constants';
+import { bgColor, bgLight, neon } from '../constants/Constants';
 
 function FetchQuote() {
   const [quote, setQuote] = useState('');
@@ -31,11 +31,11 @@ function FetchQuote() {
     <View style={{ padding: 20 }}>
       <Text
         style={{
-          backgroundColor: COLORS.gray3,
+          backgroundColor: neon,
           borderRadius: 30,
-          paddingHorizontal: 25,
-          paddingVertical: 25,
-          color: COLORS.lightWhite,
+          paddingHorizontal: 20,
+          paddingVertical: 20,
+          color: bgColor,
         }}>
         {quote}
       </Text>

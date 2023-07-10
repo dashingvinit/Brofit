@@ -63,7 +63,8 @@ const Home = (props) => {
 
 const styles = StyleSheet.create({
   boxesContainer: {
-    marginTop: 10,
+    // marginTop: 10,
+    // marginBottom: 10,
     flexDirection: 'row',
   },
   box: {
