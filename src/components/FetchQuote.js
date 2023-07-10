@@ -22,8 +22,10 @@ function FetchQuote() {
     fetch('https://type.fit/api/quotes')
       .then((res) => res.json())
       .then((data) => {
-        setQuote(data[0].text);
-        setAuthor(data[0].author);
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomQuote = data[randomIndex];
+        setQuote(randomQuote.text);
+        setAuthor(randomQuote.author);
       });
   }
 

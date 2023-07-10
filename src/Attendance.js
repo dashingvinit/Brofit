@@ -10,7 +10,7 @@ const Attendance = () => {
     try {
       const response = await axios.post('/attendance');
       alert('Done');
-      fetchAttendanceData();
+      // fetchAttendanceData();
     } catch (error) {
       if (error.response && error.response.status === 500) {
         alert('Internal Server Error: Please try again later.');
