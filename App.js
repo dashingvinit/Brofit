@@ -1,35 +1,17 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomNav from './src/constants/BottomNav';
-import Welcome from './src/Welcome';
-import Signup from './src/Signup';
-import ProfileSetup from './src/ProfileSetup';
-import Login from './src/Login';
-import OwnerLogin from './src/OwnerLogin';
-import Home from './src/Home';
-import AnimatedVedios from './src/AnimatedVedios ';
-
-import Attendance from './src/Attendance'
+import StackNav from './src/constants/StackNav';
 
 // import styles from './src/components/home/popular/popularjobs.style'
 
-const Stack = createNativeStackNavigator();
-
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="ProfileSetup" component={ProfileSetup} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
-        <Stack.Screen name="Attendance" component={Attendance} />
-
-      </Stack.Navigator>
+      {isLoggedIn ? <BottomNav /> : <StackNav />}
     </NavigationContainer>
   );
 }

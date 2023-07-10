@@ -24,7 +24,7 @@ const Login = (props) => {
       setTokenHeader();
       alert('Login successful');
       // console.log('Response:', token);
-      props.navigation.navigate('Home');
+      props.navigation.navigate('Home1');
     } catch (error) {
       alert('Login failed');
       console.error('Login failed');

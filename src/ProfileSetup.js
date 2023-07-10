@@ -35,7 +35,7 @@ const ProfileSetup = (props) => {
       .then((response) => {
         alert('Setup successful');
         const user = response.data.data;
-        props.navigation.navigate('Home');
+        props.navigation.navigate('Home1');
         console.log('Response:', user);
       })
 

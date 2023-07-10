@@ -57,7 +57,7 @@ const Home = (props) => {
             bgColor={bgColor}
             textColor={neon}
             btnLabel="Home"
-            Press={() => props.navigation.navigate('Home')}
+            Press={() => props.navigation.navigate('Home1')}
           />
         </View>
       </View>
