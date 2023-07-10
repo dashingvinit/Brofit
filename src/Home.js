@@ -22,7 +22,11 @@ const Home = (props) => {
           <View style={styles.box}>
             <Text style={styles.boxText}>Box 2</Text>
           </View>
-          <View style={styles.box}>{/* <GiStopwatch /> */}</View>
+          <View style={styles.box}>
+          <TouchableOpacity onPress={() => props.navigation.navigate('Timer')}>
+              <Text style={{fontSize: 40}}>⏱️</Text>
+          </TouchableOpacity>
+          </View>
         </View>
         <Graph />
         <WorkoutCards navigation={props.navigation} />

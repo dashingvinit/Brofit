@@ -9,6 +9,7 @@ import OwnerLogin from '../OwnerLogin';
 import Home from '../Home';
 import AnimatedVedios from '../AnimatedVedios ';
 import Attendance from '../Attendance';
+import Timer from '../Timer'
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const StackNav = () => {
       <Stack.Screen name="Home1" component={Home} />
       <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
       <Stack.Screen name="Attendance" component={Attendance} />
+      <Stack.Screen name="Timer" component={Timer} />
     </Stack.Navigator>
   );
 };
