@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { bgColor, bgLight, neon } from './constants/Constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { FontAwesome } from '@expo/vector-icons';
 
 const Home = (props) => {
@@ -17,15 +18,40 @@ const Home = (props) => {
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>Box 1</Text>
+            <Text style={styles.boxText}>
+              <Ionicons
+                name="ios-heart-outline"
+                style={{
+                  color: neon,
+                }}
+                size={50}
+              />
+            </Text>
           </View>
           <View style={styles.box}>
-            <Text style={styles.boxText}>Box 2</Text>
+            <Text style={styles.boxText}>
+              <Ionicons
+                name="ios-bar-chart"
+                style={{
+                  color: neon,
+                }}
+                size={50}
+              />
+            </Text>
           </View>
           <View style={styles.box}>
-          <TouchableOpacity onPress={() => props.navigation.navigate('Timer')}>
-              <Text style={{fontSize: 40}}>⏱️</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Timer')}>
+              <Text style={{ fontSize: 40 }}>
+                <Ionicons
+                  name="ios-timer-outline"
+                  style={{
+                    color: neon,
+                  }}
+                  size={50}
+                />
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
         <Graph />
@@ -42,7 +68,7 @@ const styles = StyleSheet.create({
   },
   box: {
     flex: 1,
-    height: 130,
+    height: 120,
     backgroundColor: bgLight,
     margin: 6,
     justifyContent: 'center',
@@ -50,8 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   boxText: {
-    fontSize: 35,
-    fontWeight: 'bold',
     color: neon,
   },
 });

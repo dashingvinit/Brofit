@@ -93,10 +93,10 @@ const Graph = () => {
               fontSize: 15,
               fontWeight: 'bold',
               marginBottom: 10,
-              marginRight: 10,
-              color: neon,
+              marginLeft: 4,
+              color: 'white',
             }}>
-            🟢 Gym Activity - 5 min intervals between updates - 24hrs of data
+            Gym Activity - 5 min intervals between updates - 24hrs of data
           </Text>
           <BarChart
             data={data}
@@ -108,15 +108,12 @@ const Graph = () => {
             chartConfig={{
               backgroundGradientFrom: '#1E2923',
               backgroundGradientFromOpacity: 0,
-              backgroundGradientTo: '#08130D',
-              backgroundGradientToOpacity: 0.5,
-              color: (opacity = 0.5) => `rgba(26, 255, 146, ${opacity})`,
-              strokeWidth: 2,
-              barPercentage: 0.5,
+              backgroundGradientTo: neon,
+              backgroundGradientToOpacity: 0.1,
+              color: (opacity = 1) => `rgba(224, 254, 16, ${opacity})`,
+              strokeWidth: 3,
+              barPercentage: 0.7,
               useShadowColorFromDataset: false,
-              style: {
-                borderRadius: 16,
-              },
             }}
             style={{
               marginLeft: -20,

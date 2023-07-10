@@ -17,7 +17,7 @@ const BottomNav = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          backgroundColor: 'rgba(42, 43, 43, 0.8)',
           // backdropFilter: 'blur(20px)',
           height: 60,
           borderTopWidth: 0,
@@ -28,6 +28,9 @@ const BottomNav = () => {
           fontWeight: 'bold',
           marginBottom: 10,
         },
+
+        tabBarActiveTintColor: neon,
+        tabBarInactiveTintColor: 'white',
       }}
       initialRouteName="Home"
       activeColor={neon}
