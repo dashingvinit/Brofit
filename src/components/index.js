@@ -5,5 +5,6 @@ import Graph from './Graph';
 import Plans from './Plans';
 import Top from './Top';
 import WorkoutCards from './WorkoutCards';
+import CheckedIn from './CheckedIn';
 
-export { Field, Background, Btn, Graph, Plans, Top, WorkoutCards };
+export { Field, Background, Btn, Graph, Plans, Top,CheckedIn, WorkoutCards };
