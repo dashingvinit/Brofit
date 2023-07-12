@@ -13,6 +13,7 @@ import Timer from '../Timer'
 import OwnerHome from '../owner/Home'
 import Members from '../owner/Members';
 import AdminPage from '../admin/Adminpage';
+import Userrole from '../admin/Userrole';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +36,8 @@ const StackNav = ({ sethandleLogin }) => {
       {/*added for Owners */}
       <Stack.Screen name="Home2" component={OwnerHome} /> 
       <Stack.Screen name="Members" component={Members} />  
-      <Stack.Screen name="Adminpage" component={AdminPage} />   
+      <Stack.Screen name="Adminpage" component={AdminPage} />
+      <Stack.Screen name="Userrole" component={Userrole} />   
       
     </Stack.Navigator>
   );

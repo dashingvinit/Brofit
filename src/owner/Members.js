@@ -48,9 +48,9 @@ const Members = () => {
                 <View style={styles.separator} />
                 {users.map((user) => (
                     <TouchableOpacity
-                    key={user._id}
-                    onPress={() => handleUserPress(user)}
-                    style={styles.userContainer}
+                      key={user._id}
+                      onPress={() => handleUserPress(user)}
+                      style={styles.userContainer}
                     >
                     <Text style={styles.userText}>✔️   {user.name}</Text>
                     </TouchableOpacity>
