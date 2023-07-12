@@ -29,7 +29,7 @@ const Top = () => {
         paddingTop: 40,
       }}>
       <Image
-        source={require('../assets/images/timerback.jpg')}
+        source={require('../assets/images/profile.jpg')}
         style={{ width: 65, height: 65, borderRadius: 50, marginRight: 10 }}
       />
       <View>

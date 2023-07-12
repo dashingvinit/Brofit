@@ -71,6 +71,12 @@ const Home = (props) => {
             btnLabel="Members"
             Press={() => props.navigation.navigate('Members')}
           />
+          <Btn
+            bgColor={bgColor}
+            textColor={neon}
+            btnLabel="Adminpage"
+            Press={() => props.navigation.navigate('Adminpage')}
+          />
         </View>
       </View>
     </Background>
