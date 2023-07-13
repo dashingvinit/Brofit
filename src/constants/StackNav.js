@@ -14,6 +14,7 @@ import OwnerHome from '../owner/Home'
 import Members from '../owner/Members';
 import AdminPage from '../admin/Adminpage';
 import Userrole from '../admin/Userrole';
+import Plans from '../owner/Plans';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,9 +34,16 @@ const StackNav = ({ sethandleLogin }) => {
       <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
       <Stack.Screen name="Attendance" component={Attendance} />
       <Stack.Screen name="Timer" component={Timer} />
+
       {/*added for Owners */}
+
       <Stack.Screen name="Home2" component={OwnerHome} /> 
-      <Stack.Screen name="Members" component={Members} />  
+      <Stack.Screen name="Members" component={Members} />
+      <Stack.Screen name="Plans" component={Plans} /> 
+
+
+      {/*added for Admins */}
+
       <Stack.Screen name="Adminpage" component={AdminPage} />
       <Stack.Screen name="Userrole" component={Userrole} />   
       
