@@ -53,18 +53,6 @@ const Home = (props) => {
             btnLabel="Owner Login"
             Press={() => props.navigation.navigate('OwnerLogin')}
           />
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Home"
-            Press={() => props.navigation.navigate('Home1')}
-          />
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="OwnerHome"
-            Press={() => props.navigation.navigate('Home2')}
-          />
         </View>
       </View>
     </Background>
