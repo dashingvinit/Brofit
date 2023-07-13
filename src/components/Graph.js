@@ -1,4 +1,5 @@
 import { View, Text, ScrollView } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
@@ -10,7 +11,11 @@ const Graph = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
-    const response = await axios.get('/gym/graph/2');
+    const userString = await SecureStore.getItemAsync('user');
+    const user = JSON.parse(userString); // Parse the user string to an object
+    const gymId = user.gymId;
+    console.log('gymId', gymId);
+    const response = await axios.get(`/gym/graph/${gymId}`);
     if (response) {
       // console.log(response.data.data);
       const data = response.data.data;

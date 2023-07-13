@@ -1,5 +1,5 @@
 import React from 'react';
-import { Graph, Top, CheckedIn} from '../components';
+import { Graph, Top, CheckedIn } from '../components';
 import {
   View,
   Text,
@@ -54,9 +54,9 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-        <Graph />
-        <CheckedIn navigation={props.navigation}/>
-        
+        {/* <Graph /> */}
+        <CheckedIn navigation={props.navigation} />
+
         {/* <WorkoutCards navigation={props.navigation} /> */}
       </ScrollView>
     </View>

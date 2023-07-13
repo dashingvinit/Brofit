@@ -1,8 +1,10 @@
 import { View, Text, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
+import Btn from './Btn';
+import { bgColor, neon } from '../constants/Constants';
 
-const Top = () => {
+const Top = (props) => {
   const [name, setName] = useState('User');
 
   const getUser = async () => {
@@ -13,6 +15,17 @@ const Top = () => {
       setName(user.name);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await SecureStore.deleteItemAsync('token');
+      alert('token deleted using top logout button');
+      console.log('token deelted');
+      props.navigation.navigate('Welcome');
+    } catch (error) {
+      console.error('error', error);
     }
   };
 
@@ -45,6 +58,12 @@ const Top = () => {
           {name}
         </Text>
       </View>
+      <Btn
+        bgColor={bgColor}
+        textColor={neon}
+        btnLabel="Logout"
+        Press={handleLogout}
+      />
     </View>
   );
 };

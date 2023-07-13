@@ -6,6 +6,7 @@ import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
+import jwtDecode from 'jwt-decode';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -20,7 +21,13 @@ const Login = (props) => {
     try {
       const response = await axios.post('/user/signin', { email, password });
       const token = response.data.data;
-      await save('token', token); // Wait for the token to be saved
+      const decodedPayload = jwtDecode(token);
+      console.log('loginUser', decodedPayload);
+      await save('LoginUser', decodedPayload);
+      const expires = Date.now() + 1000 * 60 * 60; // 1 hour
+      const stringExpires = JSON.stringify(expires);
+      await save('token', token);
+      await save('expire', stringExpires); // Wait for the token to be saved
       setTokenHeader();
       props.sethandleLogin();
       alert('Login successful');

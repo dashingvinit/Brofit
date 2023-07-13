@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
+
 import { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNav from './src/constants/BottomNav';
@@ -10,12 +11,27 @@ import StackNav from './src/constants/StackNav';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const deleteItemFromSecureStore = async (key) => {
+    try {
+      await SecureStore.deleteItemAsync(key);
+      console.log('Item deleted successfully');
+    } catch (error) {
+      console.error('Failed to delete item:', error);
+    }
+  };
+
   const getToken = async () => {
-    const token = await SecureStore.getItemAsync('token');
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
+    try {
+      const token = await SecureStore.getItemAsync('token');
+      const expire = await SecureStore.getItemAsync('expire');
+      if (expire > Date.now() && token) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        deleteItemFromSecureStore('token');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

@@ -1,17 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Welcome from '../Welcome';
-import Home from '../Home';
-import Timer from '../Timer';
-import Attendance from '../Attendance';
+import Home from '../owner/Home';
+import Members from '../owner/Members';
 import { neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
 
-const BottomNav = () => {
+const OwnerNav = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -47,30 +44,11 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
-        name="Timer1"
-        component={Timer}
+        name="Members"
+        component={Members}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-walk-outline" color={color} size={30} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Timer"
-        component={Timer}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-timer-outline" color={color} size={30} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Attendance"
-        component={Attendance}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="checkmark-done" color={color} size={30} />
           ),
         }}
       />
@@ -78,4 +56,4 @@ const BottomNav = () => {
   );
 };
 
-export default BottomNav;
+export default OwnerNav;

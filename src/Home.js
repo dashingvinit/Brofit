@@ -14,7 +14,7 @@ import { FontAwesome } from '@expo/vector-icons';
 const Home = (props) => {
   return (
     <View style={{ backgroundColor: bgColor }}>
-      <Top />
+      <Top navigation={props.navigation} />
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>

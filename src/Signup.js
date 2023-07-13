@@ -29,28 +29,34 @@ const Signup = (props) => {
       return;
     }
 
-    await axios
-      .post('user/signup', {
-        name,
-        email,
-        gymId,
-        password,
-      })
-      .then((response) => {
-        const user = JSON.stringify(response.data.data.user);
-        const token = response.data.data.jwt;
-        console.log('token', token);
-        console.log('user', user);
-        save('user', user);
-        save('token', token);
-        alert('SignUp successful');
-        console.log('Response:', user);
-        props.navigation.navigate('ProfileSetup');
-      })
-      .catch((error) => {
-        alert('SignUp failed');
-        console.error('Error:', error);
-      });
+    try {
+      await axios
+        .post('user/signup', {
+          name,
+          email,
+          gymId,
+          password,
+        })
+        .then((response) => {
+          const user = JSON.stringify(response.data.data.user);
+          const token = response.data.data.jwt;
+          const expires = Date.now() + 1000 * 60 * 60; // 1hr
+          console.log('token', token);
+          console.log('user', user);
+          save('user', user);
+          save('token', token);
+          save('expire', expires);
+          alert('SignUp successful');
+          console.log('Response:', user);
+          props.navigation.navigate('ProfileSetup');
+        })
+        .catch((error) => {
+          alert('SignUp failed');
+          console.error('Error:', error);
+        });
+    } catch (error) {
+      console.error('error', error);
+    }
   };
 
   const handleInputChange = (field, value) => {
