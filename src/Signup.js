@@ -41,11 +41,12 @@ const Signup = (props) => {
           const user = JSON.stringify(response.data.data.user);
           const token = response.data.data.jwt;
           const expires = Date.now() + 1000 * 60 * 60; // 1hr
+          const expireString = JSON.stringify(expires);
           console.log('token', token);
           console.log('user', user);
           save('user', user);
           save('token', token);
-          save('expire', expires);
+          save('expire', expireString);
           alert('SignUp successful');
           console.log('Response:', user);
           props.navigation.navigate('ProfileSetup');
