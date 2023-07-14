@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from './constants/Axios';
+import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
+import axios, { setTokenHeader } from './constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
+import jwtDecode from 'jwt-decode';
+
+async function save(key, value) {
+  await SecureStore.setItemAsync(key, value);
+}
 
 const OwnerLogin = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -13,23 +18,31 @@ const OwnerLogin = (props) => {
   const handleLogin = async () => {
     const { email, password } = formData;
 
-    await axios
-      .post('/user/signin/owner', {
+    try {
+      const response = await axios.post('/user/signin/owner', {
         email,
         password,
-      })
-      .then((response) => {
-        const token = response.data.data;
-        alert('Login successful');
-        AsyncStorage.setItem('token', token);
-        props.navigation.navigate('Home');
-        console.log('Response:', response.data.data);
-      })
-      .catch((error) => {
-        alert('Login failed');
-        console.error('Login failed');
-        console.error('Error:', error);
       });
+      const token = response.data.data;
+      const decodedPayload = jwtDecode(token);
+      const user = JSON.stringify(decodedPayload);
+      console.log(response);
+      console.log('loginUser', user);
+      await save('user', user);
+      const expires = Date.now() + 1000 * 60 * 60; // 1 hour
+      const stringExpires = JSON.stringify(expires);
+      await save('token', token);
+      await save('expire', stringExpires); // Wait for the token to be saved
+      setTokenHeader();
+      props.sethandleLogin();
+      alert('Login successful');
+      console.log('Response:', token);
+      props.navigation.navigate('Home1');
+    } catch (error) {
+      alert('Login failed');
+      console.error('Login failed');
+      console.error('Error:', error);
+    }
   };
 
   const handleInputChange = (field, value) => {
