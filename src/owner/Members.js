@@ -8,13 +8,14 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
 
 const Members = () => {
   const [users, setUsers] = useState([]);
 
   const getMembers = async () => {
     try {
-      const response = await fetch('http://192.168.29.77:7000/api/v1/gym/2');
+      const response = await fetch('http://192.168.29.77:7000/api/v1/gym/3');
       const data = await response.json();
       setUsers(data.data.members);
     } catch (error) {
@@ -30,21 +31,14 @@ const Members = () => {
 
   const handleUserPress = async (user) => {
     try {
-      const url = 'http://192.168.29.77:7000/api/v1/userProfile/:id';
-      const response1 = await fetch(url, {
-        method: 'GET',
-        params: {
-          id: 'user._id',
-        },
-      });
-      const data1 = await response1.json();
-      console.log(data1);
+      const response = await fetch(`http://192.168.29.77:7000/api/v1/userProfile/${user._id}`);
+      const data = response.data;
+      console.log(data);
     } catch (error) {
-      {
-        alert('Error: ' + error.message);
-      }
+      alert('Error: ' + error.message);
     }
   };
+
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
