@@ -26,23 +26,27 @@ const ProfileSetup = (props) => {
   const handleProfileSetup = async () => {
     const { weight, height, plan } = formData;
 
-    axios
-      .post('/userProfile', {
-        weight,
-        height,
-        plan,
-      })
-      .then((response) => {
-        alert('Setup successful');
-        const user = response.data.data;
-        props.navigation.navigate('Home1');
-        console.log('Response:', user);
-      })
+    try {
+      axios
+        .post('/userProfile', {
+          weight,
+          height,
+          plan,
+        })
+        .then((response) => {
+          alert('Setup successful');
+          const user = response.data.data;
+          props.navigation.navigate('Home1');
+          console.log('Response:', user);
+        })
 
-      .catch((error) => {
-        alert('Setup failed');
-        console.error('Error:', 'profilesetup', error);
-      });
+        .catch((error) => {
+          alert('Setup failed');
+          console.error('Error:', 'profilesetup', error);
+        });
+    } catch (error) {
+      console.error('profileSetupError', error);
+    }
   };
 
   const handleInputChange = (field, value) => {

@@ -7,6 +7,7 @@ import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
+import { Slider } from '@rneui/themed';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -22,8 +23,10 @@ const Login = (props) => {
       const response = await axios.post('/user/signin', { email, password });
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
-      console.log('loginUser', decodedPayload);
-      await save('LoginUser', decodedPayload);
+      const user = JSON.stringify(decodedPayload);
+      console.log(response);
+      console.log('loginUser', user);
+      await save('user', user);
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
       await save('token', token);
@@ -31,7 +34,7 @@ const Login = (props) => {
       setTokenHeader();
       props.sethandleLogin();
       alert('Login successful');
-      // console.log('Response:', token);
+      console.log('Response:', token);
       props.navigation.navigate('Home1');
     } catch (error) {
       alert('Login failed');

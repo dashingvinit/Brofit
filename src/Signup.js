@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import axios from './constants/Axios';
+import axios, { setTokenHeader } from './constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
+import { s } from 'react-native-size-matters';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -28,35 +29,32 @@ const Signup = (props) => {
       alert('Passwords do not match');
       return;
     }
-
     try {
-      await axios
-        .post('user/signup', {
-          name,
-          email,
-          gymId,
-          password,
-        })
-        .then((response) => {
-          const user = JSON.stringify(response.data.data.user);
-          const token = response.data.data.jwt;
-          const expires = Date.now() + 1000 * 60 * 60; // 1hr
-          const expireString = JSON.stringify(expires);
-          console.log('token', token);
-          console.log('user', user);
-          save('user', user);
-          save('token', token);
-          save('expire', expireString);
-          alert('SignUp successful');
-          console.log('Response:', user);
-          props.navigation.navigate('ProfileSetup');
-        })
-        .catch((error) => {
-          alert('SignUp failed');
-          console.error('Error:', error);
-        });
+      const response = await axios.post('user/signup', {
+        name,
+        email,
+        gymId,
+        password,
+      });
+      console.log(response.data.data);
+      const userJSON = response.data.data.user;
+      const user = JSON.stringify(userJSON);
+      console.log('user', user);
+      save('user', user);
+      if (response.data.data.jwt) {
+        const token = response.data.data.jwt;
+        const expires = Date.now() + 1000 * 60 * 60; // 1hr
+        const expireString = JSON.stringify(expires);
+        save('token', token);
+        save('expire', expireString);
+        console.log('token', token);
+      }
+      setTokenHeader();
+      alert('SignUp successful');
+      props.navigation.navigate('ProfileSetup');
     } catch (error) {
-      console.error('error', error);
+      alert('SignUp failed');
+      console.error('Error:', error);
     }
   };
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Axios = axios.create({
-  baseURL: 'http://192.168.143.49:7000/api/v1/',
+  baseURL: 'http://192.168.47.49:7000/api/v1/',
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export const setTokenHeader = async () => {
       return config;
     });
 
-    // console.log('Token set:', token);
+    console.log('Token set:', token);
   } catch (error) {
     if (error.code === 'ENOENT') {
       Axios.interceptors.request.use((config) => {
@@ -30,11 +30,11 @@ export const setTokenHeader = async () => {
   }
 };
 
-setTokenHeader();
+Axios.interceptors.request.use((config) => {
+  console.log('Request Headers:', config.headers);
+  return config;
+});
 
-// Axios.interceptors.request.use((config) => {
-//   console.log('Request Headers:', config.headers);
-//   return config;
-// });
+setTokenHeader();
 
 export default Axios;
