@@ -7,6 +7,7 @@ import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
+import { Slider } from '@rneui/themed';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -26,18 +27,18 @@ const OwnerLogin = (props) => {
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
       const user = JSON.stringify(decodedPayload);
-      console.log(response);
-      console.log('loginUser', user);
+
+      console.log('OwnerLoggedIn', decodedPayload);
       await save('user', user);
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
       await save('token', token);
       await save('expire', stringExpires); // Wait for the token to be saved
       setTokenHeader();
-      props.sethandleLogin();
-      alert('Login successful');
+
       console.log('Response:', token);
-      props.navigation.navigate('Home1');
+      alert('Login successful');
+      props.navigation.navigate('Home2');
     } catch (error) {
       alert('Login failed');
       console.error('Login failed');
@@ -51,6 +52,7 @@ const OwnerLogin = (props) => {
       [field]: value,
     }));
   };
+
   return (
     <Background>
       <View style={{ alignItems: 'center', width: 400 }}>

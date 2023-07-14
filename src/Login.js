@@ -24,8 +24,8 @@ const Login = (props) => {
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
       const user = JSON.stringify(decodedPayload);
-      console.log(response);
-      console.log('loginUser', user);
+
+      console.log('loginUser', decodedPayload);
       await save('user', user);
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
@@ -49,6 +49,9 @@ const Login = (props) => {
       [field]: value,
     }));
   };
+
+  setTokenHeader();
+
   return (
     <Background>
       <View style={{ alignItems: 'center', width: 400 }}>

@@ -4,6 +4,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../owner/Home';
 import Members from '../owner/Members';
+import Plans from '../owner/Plans';
+import Profile from '../owner/UserProfile';
+
 import { neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
@@ -49,6 +52,16 @@ const OwnerNav = () => {
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-walk-outline" color={color} size={30} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Plans"
+        component={Plans}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="md-list" color={color} size={30} />
           ),
         }}
       />

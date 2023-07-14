@@ -61,7 +61,7 @@ const Top = (props) => {
       <Btn
         bgColor={bgColor}
         textColor={neon}
-        btnLabel="Logout"
+        btnLabel="[]->"
         Press={handleLogout}
       />
     </View>

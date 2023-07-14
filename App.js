@@ -7,14 +7,30 @@ import BottomNav from './src/constants/BottomNav';
 import StackNav from './src/constants/StackNav';
 import OwnerNav from './src/constants/OwnerNav';
 
-// import styles from './src/components/home/popular/popularjobs.style'
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState('');
 
   const sethandleLogin = () => {
     setIsLoggedIn(true);
   };
+
+  const getUser = async () => {
+    try {
+      const user = await SecureStore.getItemAsync('user');
+      const userObj = JSON.parse(user);
+      const userRole = userObj.role;
+      setRole(userRole);
+      console.log('Role:', userRole);
+      console.log('User:', userObj);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const deleteItemFromSecureStore = async (key) => {
     try {
@@ -24,7 +40,9 @@ function App() {
       console.error('Failed to delete item:', error);
     }
   };
+
   setTokenHeader();
+
   const getToken = async () => {
     try {
       const token = await SecureStore.getItemAsync('token');
@@ -45,10 +63,23 @@ function App() {
     getToken();
   }, []);
 
+  const renderNavbarBasedOnRole = () => {
+    if (role === 'owner') {
+      return <OwnerNav />;
+    } else if (role === 'admin') {
+      return <BottomNav />;
+      // Render AdminNav component
+      // Replace with the component you want to render for the admin role
+      return null;
+    } else {
+      return <BottomNav />;
+    }
+  };
+
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        <BottomNav />
+        renderNavbarBasedOnRole()
       ) : (
         <StackNav sethandleLogin={sethandleLogin} />
       )}
