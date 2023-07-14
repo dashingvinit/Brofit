@@ -2,11 +2,11 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Axios = axios.create({
-  baseURL: 'http://192.168.47.49:7000/api/v1/',
+  baseURL: 'http://192.168.29.77:7000/api/v1/',
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json',
-  },
+  },  
 });
 
 export const setTokenHeader = async () => {

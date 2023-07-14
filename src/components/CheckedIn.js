@@ -8,16 +8,14 @@ const CheckedIn = () => {
 
   const getCheckIn = async () => {
     try {
-      const response = await fetch('http://192.168.143.49:7000/api/v1/gym/3');
-      const data = await response.json();
-      setUsers(data.data.members);
-      alert(data.data.members);
+      const response = await axios.get('/attendance/3');
+      const data = response.data;
+      console.log(data.data);
     } catch (error) {
-      {
-        alert('Error: ' + error.message);
-      }
+      alert('Error: ' + error.message);
     }
   };
+  
 
   useEffect(() => {
     getCheckIn();
@@ -30,7 +28,7 @@ const CheckedIn = () => {
         {users.map((user) => (
           <View key={user._id}>
             <View style={styles.userContainer}>
-              <Text style={styles.userText}>✔️{user.name}</Text>
+              <Text style={styles.userText}>✔️{user._id}</Text>
             </View>
           </View>
         ))}
