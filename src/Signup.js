@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -6,11 +6,6 @@ import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
-import { s } from 'react-native-size-matters';
-
-async function save(key, value) {
-  await SecureStore.setItemAsync(key, value);
-}
 
 const Signup = (props) => {
   const [loading, setLoading] = useState(true);
@@ -45,13 +40,24 @@ const Signup = (props) => {
         const token = response.data.data.jwt;
         const expires = Date.now() + 1000 * 60 * 60; // 1hr
         const expireString = JSON.stringify(expires);
-        save('token', token);
+        async function save(key, value) {
+          await SecureStore.setItemAsync(key, value);
+        }
         save('expire', expireString);
+        save('token', token)
+          .then(() => {
+            setTokenHeader();
+            console.log('token saved');
+          })
+          .catch((error) => {
+            console.log('token not saved', error);
+          });
+
         console.log('token', token);
       }
+      setLoading(false);
       setTokenHeader();
       alert('SignUp successful');
-      props.navigation.navigate('ProfileSetup');
     } catch (error) {
       alert('SignUp failed');
       console.error('Error:', error);
@@ -63,6 +69,11 @@ const Signup = (props) => {
       ...prevFormData,
       [field]: value,
     }));
+  };
+
+  const nextPage = async () => {
+    setTokenHeader();
+    props.navigation.navigate('ProfileSetup');
   };
 
   return (
@@ -153,7 +164,6 @@ const Signup = (props) => {
               Terms & Conditions
             </Text>
           </View>
-
           <View
             style={{
               display: 'flex',
@@ -181,8 +191,17 @@ const Signup = (props) => {
             bgColor={neon}
             btnLabel="Signup"
             Press={handleSignup}
-            loading={loading}
           />
+          {loading ? null : (
+            <Btn
+              textColor={bgColor}
+              bgColor={neon}
+              btnLabel="Next"
+              loading={loading}
+              disable={loading}
+              Press={nextPage}
+            />
+          )}
           <View
             style={{
               display: 'flex',

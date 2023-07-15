@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
-import axios from './constants/Axios';
-import React, { useState } from 'react';
+import axios, { setTokenHeader } from './constants/Axios';
+import React, { useEffect, useState } from 'react';
 import Background from './components/Background';
 import { neon, bgColor } from './constants/Constants';
 import Field from './components/Field';
@@ -55,6 +55,10 @@ const ProfileSetup = (props) => {
       [field]: value,
     }));
   };
+
+  useEffect(() => {
+    setTokenHeader();
+  }, []);
 
   return (
     <Background>
@@ -113,7 +117,7 @@ const ProfileSetup = (props) => {
           value={formData.weight}
           onChangeText={(value) => handleInputChange('weight', value)}
         />
-        <Plans onSelect={handlePlanSelect} />
+        {/* <Plans onSelect={handlePlanSelect} /> */}
         <Btn
           textColor={bgColor}
           bgColor={neon}

@@ -53,36 +53,10 @@ const Home = (props) => {
             btnLabel="Owner Login"
             Press={() => props.navigation.navigate('OwnerLogin')}
           />
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Home"
-            Press={() => props.navigation.navigate('Home1')}
-          />
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="OwnerHome"
-            Press={() => props.navigation.navigate('Home2')}
-          />
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="O"
-            Press={() => props.navigation.navigate('Plans')}
-          />
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Members"
-            Press={() => props.navigation.navigate('Members')}
-          />
         </View>
       </View>
     </Background>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Home;
