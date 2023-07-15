@@ -8,14 +8,14 @@ const CheckedIn = () => {
 
   const getCheckIn = async () => {
     try {
-      const response = await axios.get('/attendance/3');
+      const response = await axios.get('/attendance/4');
       const data = response.data;
       console.log(data.data);
     } catch (error) {
       alert('Error: ' + error.message);
+      console.log('Owner Home checkedIN', error);
     }
   };
-  
 
   useEffect(() => {
     getCheckIn();
@@ -25,8 +25,8 @@ const CheckedIn = () => {
     <View style={styles.container}>
       <Text style={styles.heading}>CheckIn Users</Text>
       <View style={{ backgroundColor: bgColor }}>
-        {users.map((user) => (
-          <View key={user._id}>
+        {users.map((user, index) => (
+          <View key={index}>
             <View style={styles.userContainer}>
               <Text style={styles.userText}>✔️{user._id}</Text>
             </View>

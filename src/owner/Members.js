@@ -31,14 +31,16 @@ const Members = () => {
 
   const handleUserPress = async (user) => {
     try {
-      const response = await fetch(`http://192.168.29.77:7000/api/v1/userProfile/${user._id}`);
+      const response = await fetch(
+        `http://192.168.29.211:7000/api/v1/userProfile/${user._id}`
+      );
+      // const response = await axios.get(`/userProfile/${user._id}`);
       const data = response.data;
       console.log(data);
     } catch (error) {
       alert('Error: ' + error.message);
     }
   };
-
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>

@@ -13,7 +13,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Home = (props) => {
   return (
-    <View style={{ backgroundColor: bgColor,flex:1 }}>
+    <View style={{ backgroundColor: bgColor, flex: 1 }}>
       <Top />
       <ScrollView>
         <View style={styles.boxesContainer}>
