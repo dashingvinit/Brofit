@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const Plans = () => {
   const [plans, setPlans] = useState([]);
@@ -19,11 +27,14 @@ const Plans = () => {
 
   const getPlans = async () => {
     try {
-      const response = await axios.get('/gym/3');
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString); // Parse the user string to an object
+      const gymId = user.gymId;
+      const response = await axios.get(`/gym/${gymId}`);
       const data = response.data;
       setPlans(data.data.plans);
     } catch (error) {
-      console.log('Error: ' + error);
+      console.log('plans Owner: ' + error);
     }
   };
 
@@ -48,7 +59,7 @@ const Plans = () => {
         gymId,
         name,
         price,
-        validity
+        validity,
       });
       alert('Plan created');
       toggleForm();
@@ -85,7 +96,7 @@ const Plans = () => {
       const response = await axios.patch(`/plan/${selectedPlan._id}`, {
         name: editName,
         price: editPrice,
-        validity: editValidity
+        validity: editValidity,
       });
       alert('Plan updated');
       toggleForm();
@@ -100,38 +111,47 @@ const Plans = () => {
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.heading}>Plans</Text>
-          {plans && plans.length > 0 ?
-            (plans.map((plan) => (
-            <View key={plan.plan} style={{ flexDirection: 'row' }}>
-              <View style={styles.plainCard}>
-                <Text style={styles.h1}>{plan.plan}</Text>
-                <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
-                  <Text style={{ color: 'white', fontSize: 16 }}>Name : </Text>
-                  {plan.name}
-                </Text>
-                <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
-                  <Text style={{ color: 'white', fontSize: 16 }}>Price : </Text>
-                  {plan.price}
-                </Text>
-                <Text style={{ color: neon, fontSize: 16 }}>
-                  <Text style={{ color: 'white', fontSize: 16 }}>Validity (Days) : </Text>
-                  {plan.validity}
-                </Text>
+          {plans && plans.length > 0 ? (
+            plans.map((plan, index) => (
+              <View key={index} style={{ flexDirection: 'row' }}>
+                <View style={styles.plainCard}>
+                  <Text style={styles.h1}>{plan.plan}</Text>
+                  <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
+                    <Text style={{ color: 'white', fontSize: 16 }}>
+                      Name :{' '}
+                    </Text>
+                    {plan.name}
+                  </Text>
+                  <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
+                    <Text style={{ color: 'white', fontSize: 16 }}>
+                      Price :{' '}
+                    </Text>
+                    {plan.price}
+                  </Text>
+                  <Text style={{ color: neon, fontSize: 16 }}>
+                    <Text style={{ color: 'white', fontSize: 16 }}>
+                      Validity (Days) :{' '}
+                    </Text>
+                    {plan.validity}
+                  </Text>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() => handleEdit(plan)}
+                    style={styles.createButton}>
+                    <Text style={styles.createButtonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handleDelete(plan._id)}
+                    style={styles.createButton}>
+                    <Text style={styles.createButtonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View>
-                <TouchableOpacity onPress={() => handleEdit(plan)} style={styles.createButton}>
-                  <Text style={styles.createButtonText}>Edit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleDelete(plan._id)} style={styles.createButton}>
-                  <Text style={styles.createButtonText}>Delete</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))
-            ): (
-              <Text>No plans found.</Text>
-            )
-        }
+            ))
+          ) : (
+            <Text>No plans found.</Text>
+          )}
           {!showForm ? (
             <TouchableOpacity onPress={toggleForm} style={styles.createButton}>
               <Text style={styles.createButtonText}>Create Plan</Text>
@@ -169,8 +189,7 @@ const Plans = () => {
               />
               <TouchableOpacity
                 onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
-                style={styles.createButton}
-              >
+                style={styles.createButton}>
                 <Text style={styles.createButtonText}>
                   {selectedPlan ? 'Update Plan' : 'Create Plan'}
                 </Text>

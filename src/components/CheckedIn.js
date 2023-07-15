@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from '../constants/Axios';
 import { bgColor, bgLight, neon } from '../constants/Constants';
@@ -8,8 +9,12 @@ const CheckedIn = () => {
 
   const getCheckIn = async () => {
     try {
-      const response = await axios.get('/attendance/4');
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString); // Parse the user string to an object
+      const gymId = user.gymId;
+      const response = await axios.get(`/attendance/${gymId}`);
       const data = response.data;
+      setUsers(data.data);
       console.log(data.data);
     } catch (error) {
       alert('Error: ' + error.message);
