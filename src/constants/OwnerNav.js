@@ -3,9 +3,8 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Home from '../owner/Home';
-import Members from '../owner/Members';
+import MembersStack from '../owner/MembersStack';
 import Plans from '../owner/Plans';
-import Profile from '../owner/UserProfile';
 
 import { neon } from './Constants';
 
@@ -48,10 +47,10 @@ const OwnerNav = () => {
       />
       <Tab.Screen
         name="Members"
-        component={Members}
+        component={MembersStack}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-walk-outline" color={color} size={30} />
+            <Ionicons name="ios-people" color={color} size={30} />
           ),
         }}
       />

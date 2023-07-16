@@ -176,12 +176,26 @@ const Plans = () => {
                 style={styles.input}
               />
               <TextInput
+                keyboardType={
+                  Platform.OS === 'android'
+                    ? 'phone-pad'
+                    : Platform.OS === 'ios'
+                    ? 'number-pad'
+                    : 'numbers-and-punctuation'
+                }
                 value={selectedPlan ? editPrice : price}
                 onChangeText={selectedPlan ? setEditPrice : setPrice}
                 placeholder="Price"
                 style={styles.input}
               />
               <TextInput
+                keyboardType={
+                  Platform.OS === 'android'
+                    ? 'phone-pad'
+                    : Platform.OS === 'ios'
+                    ? 'number-pad'
+                    : 'numbers-and-punctuation'
+                }
                 value={selectedPlan ? editValidity : validity}
                 onChangeText={selectedPlan ? setEditValidity : setValidity}
                 placeholder="Validity"

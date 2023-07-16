@@ -7,7 +7,6 @@ import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
-import { Slider } from '@rneui/themed';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -31,7 +30,7 @@ const Login = (props) => {
       const stringExpires = JSON.stringify(expires);
       await save('token', token);
       await save('expire', stringExpires); // Wait for the token to be saved
-      setTokenHeader();
+
       props.sethandleLogin();
       alert('Login successful');
       console.log('Response:', token);

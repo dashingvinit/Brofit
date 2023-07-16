@@ -1,16 +1,16 @@
 import { View, Text } from 'react-native';
 import axios from '../constants/Axios';
 import React from 'react';
+import Background from '../components/Background';
 
-const UserProfile = () => {
-  const getGymLocation = async () => {
-    const response = await axios.get('/gym/3');
-    console.log(response.data.data);
-  };
+const UserProfile = (props) => {
+  const user = props.route.params.user;
   return (
-    <View>
-      <Text>UserProfile</Text>
-    </View>
+    <Background>
+      <View>
+        <Text>{user.name}</Text>
+      </View>
+    </Background>
   );
 };
 

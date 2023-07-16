@@ -8,6 +8,17 @@ import Btn from './components/Btn';
 import Plans from './components/Plans';
 
 const ProfileSetup = (props) => {
+  const setTokenHeader = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    axios.interceptors.request.use((config) => {
+      config.headers['x-access-token'] = token;
+      return config;
+    });
+    console.log('Token set:', token);
+  };
+
+  setTokenHeader();
+
   const [formData, setFormData] = useState({
     weight: '70',
     height: '10',
@@ -117,7 +128,7 @@ const ProfileSetup = (props) => {
           value={formData.weight}
           onChangeText={(value) => handleInputChange('weight', value)}
         />
-        {/* <Plans onSelect={handlePlanSelect} /> */}
+        <Plans onSelect={handlePlanSelect} />
         <Btn
           textColor={bgColor}
           bgColor={neon}

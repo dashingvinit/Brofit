@@ -10,17 +10,20 @@ import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 
-const Members = () => {
+const Members = (props) => {
   const [users, setUsers] = useState([]);
 
   const getMembers = async () => {
     try {
-      const response = await fetch('http://192.168.29.77:7000/api/v1/gym/3');
-      const data = await response.json();
+      const response = await axios.get(
+        'http://192.168.29.49:7000/api/v1/gym/4'
+      );
+      const data = response.data;
+      console.log(response.data.data.members);
       setUsers(data.data.members);
     } catch (error) {
       {
-        alert('Error: ' + error.message);
+        alert('Member Fetch errror: ' + error.message);
       }
     }
   };
@@ -30,17 +33,8 @@ const Members = () => {
   }, []);
 
   const handleUserPress = async (user) => {
-    try {
-      // const response = await fetch(
-      //   `http://192.168.29.211:7000/api/v1/userProfile/${user._id}`
-      // );
-      const response = await axios.get(`/userProfile/${user._id}`);
-      const data = response.data;
-      console.log(data);
-    } catch (error) {
-      console.log('members page', error);
-      alert('Error: ' + error.message);
-    }
+    console.log(user);
+    props.navigation.navigate('UserProfile', { user });
   };
 
   return (
@@ -49,9 +43,9 @@ const Members = () => {
         <View style={styles.container}>
           <Text style={styles.heading}>Gym Members</Text>
           <View style={styles.separator} />
-          {users.map((user) => (
+          {users.map((user, index) => (
             <TouchableOpacity
-              key={user._id}
+              key={index}
               onPress={() => handleUserPress(user)}
               style={styles.userContainer}>
               <Text style={styles.userText}>✔️ {user.name}</Text>
