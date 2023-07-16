@@ -40,8 +40,7 @@ const Home = (props) => {
             </Text>
           </View>
           <View style={styles.box}>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('Timer')}>
+            <TouchableOpacity>
               <Text style={{ fontSize: 40 }}>
                 <Ionicons
                   name="ios-timer-outline"

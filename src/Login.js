@@ -19,22 +19,32 @@ const Login = (props) => {
     const { email, password } = formData;
 
     try {
-      const response = await axios.post('/user/signin', { email, password });
+      const response = await axios.post('/user/signin', {
+        email,
+        password,
+      });
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
       const user = JSON.stringify(decodedPayload);
 
-      console.log('loginUser', decodedPayload);
+      console.log('OwnerLoggedIn', decodedPayload);
       await save('user', user);
+
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
+
       await save('token', token);
       await save('expire', stringExpires); // Wait for the token to be saved
 
+      // Inside handleLogin function
+      await setTokenHeader().then(() => {
+        console.log('Token Set');
+      });
+
+      console.log('Response:', token);
       props.sethandleLogin();
       alert('Login successful');
-      console.log('Response:', token);
-      props.navigation.navigate('Home1');
+      props.navigation.navigate('Home2');
     } catch (error) {
       alert('Login failed');
       console.error('Login failed');

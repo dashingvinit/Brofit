@@ -2,7 +2,9 @@ import { View, Text, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import Btn from './Btn';
+import EBtn from './ExitButton';
 import { bgColor, neon } from '../constants/Constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Top = (props) => {
   const [name, setName] = useState('User');
@@ -58,10 +60,10 @@ const Top = (props) => {
           {name}
         </Text>
       </View>
-      <Btn
+      <EBtn
         bgColor={bgColor}
         textColor={neon}
-        btnLabel="[]->"
+        btnLabel={<Ionicons name="ios-exit-outline" color={neon} size={30} />}
         Press={handleLogout}
       />
     </View>

@@ -5,7 +5,7 @@ import Welcome from '../Welcome';
 import Signup from '../Signup';
 import ProfileSetup from '../ProfileSetup';
 import Login from '../Login';
-import OwnerLogin from '../OwnerLogin';
+import OwnerLogin from '../owner/OwnerLogin';
 import Home from '../Home';
 import AnimatedVedios from '../AnimatedVedios ';
 import Attendance from '../Attendance';
@@ -29,7 +29,9 @@ const StackNav = ({ sethandleLogin }) => {
       <Stack.Screen name="Login">
         {(props) => <Login {...props} sethandleLogin={sethandleLogin} />}
       </Stack.Screen>
-      <Stack.Screen name="OwnerLogin" component={OwnerLogin} />
+      <Stack.Screen name="OwnerLogin">
+        {(props) => <OwnerLogin {...props} sethandleLogin={sethandleLogin} />}
+      </Stack.Screen>
       <Stack.Screen name="Home1" component={Home} />
       <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />
       <Stack.Screen name="Attendance" component={Attendance} />

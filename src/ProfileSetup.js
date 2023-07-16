@@ -1,4 +1,5 @@
 import { View, Text } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
 import React, { useEffect, useState } from 'react';
 import Background from './components/Background';
@@ -22,8 +23,27 @@ const ProfileSetup = (props) => {
   const [formData, setFormData] = useState({
     weight: '70',
     height: '10',
-    plan: '',
+    plan: '1245',
   });
+
+  const handleProfileSetup = async () => {
+    const { weight, height, plan } = formData;
+
+    try {
+      const response = await axios.post('/userProfile', {
+        weight,
+        height,
+        plan,
+      });
+      alert('Setup successful');
+      const user = response.data.data;
+      props.navigation.navigate('Home1');
+      console.log('Response:', user);
+    } catch (error) {
+      alert('Setup failed');
+      console.error('Error:', 'profilesetup', error);
+    }
+  };
 
   const handlePlanSelect = (plan) => {
     const selectedPlanName = plan._id;
@@ -32,32 +52,6 @@ const ProfileSetup = (props) => {
       ...prevFormData,
       plan: selectedPlanName,
     }));
-  };
-
-  const handleProfileSetup = async () => {
-    const { weight, height, plan } = formData;
-
-    try {
-      axios
-        .post('/userProfile', {
-          weight,
-          height,
-          plan,
-        })
-        .then((response) => {
-          alert('Setup successful');
-          const user = response.data.data;
-          props.navigation.navigate('Home1');
-          console.log('Response:', user);
-        })
-
-        .catch((error) => {
-          alert('Setup failed');
-          console.error('Error:', 'profilesetup', error);
-        });
-    } catch (error) {
-      console.error('profileSetupError', error);
-    }
   };
 
   const handleInputChange = (field, value) => {

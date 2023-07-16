@@ -11,6 +11,33 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState('');
 
+  setTokenHeader();
+
+  const deleteItemFromSecureStore = async (key) => {
+    try {
+      await SecureStore.deleteItemAsync(key);
+      console.log('Item deleted successfully');
+    } catch (error) {
+      console.error('Failed to delete item:', error);
+    }
+  };
+
+  const getToken = async () => {
+    try {
+      const token = await SecureStore.getItemAsync('token');
+      const expire = await SecureStore.getItemAsync('expire');
+      const expires = JSON.parse(expire);
+      if (expires > Date.now() && token) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        deleteItemFromSecureStore('token');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const sethandleLogin = () => {
     setIsLoggedIn(true);
   };
@@ -29,41 +56,12 @@ function App() {
   };
 
   useEffect(() => {
+    getToken();
     getUser();
   }, []);
 
-  const deleteItemFromSecureStore = async (key) => {
-    try {
-      await SecureStore.deleteItemAsync(key);
-      console.log('Item deleted successfully');
-    } catch (error) {
-      console.error('Failed to delete item:', error);
-    }
-  };
-
-  setTokenHeader();
-
-  const getToken = async () => {
-    try {
-      const token = await SecureStore.getItemAsync('token');
-      const expire = await SecureStore.getItemAsync('expire');
-      const expires = JSON.parse(expire);
-      if (expires > Date.now() && token) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-        deleteItemFromSecureStore('token');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getToken();
-  }, []);
-
   const renderNavbarBasedOnRole = () => {
+    getUser();
     if (role === 'owner') {
       return <OwnerNav />;
     } else if (role === 'admin') {

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import axios, { setTokenHeader } from './constants/Axios';
+import axios, { setTokenHeader } from '../constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Background from './components/Background';
-import Btn from './components/Btn';
-import { bgColor, neon } from './constants/Constants';
-import Field from './components/Field';
+import Background from '../components/Background';
+import Btn from '../components/Btn';
+import { bgColor, neon } from '../constants/Constants';
+import Field from '../components/Field';
 import jwtDecode from 'jwt-decode';
-import { Slider } from '@rneui/themed';
+import { s } from 'react-native-size-matters';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
 }
 
 const OwnerLogin = (props) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
   const handleLogin = async () => {
@@ -30,13 +31,21 @@ const OwnerLogin = (props) => {
 
       console.log('OwnerLoggedIn', decodedPayload);
       await save('user', user);
+
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
+
       await save('token', token);
       await save('expire', stringExpires); // Wait for the token to be saved
-      setTokenHeader();
+
+      // Inside handleLogin function
+      await setTokenHeader().then(() => {
+        console.log('Token Set');
+        setLoading(false);
+      });
 
       console.log('Response:', token);
+      props.sethandleLogin();
       alert('Login successful');
       props.navigation.navigate('Home2');
     } catch (error) {

@@ -17,7 +17,7 @@ const CheckedIn = () => {
       setUsers(data.data);
       console.log(data.data);
     } catch (error) {
-      alert('Error: ' + error.message);
+      // alert('Error: ' + error.message);
       console.log('Owner Home checkedIN', error);
     }
   };
