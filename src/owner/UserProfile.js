@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const UserProfile = (props) => {
   const user = props.route.params.user;
-  const [userData, setUserData] = useState(null); // State variable to hold user data
+  const [userData, setUserData] = useState(null); 
 
   useEffect(() => {
     fetchUserProfileData();
@@ -17,7 +17,6 @@ const UserProfile = (props) => {
       const response = await axios.get(`/userProfile/${user._id}`);
       const data = response.data;
       setUserData(data.data);
-      console.log(data.data);
     } catch (error) {
       console.log('User Profile Error', error);
     }
@@ -31,7 +30,6 @@ const UserProfile = (props) => {
       .then((response) => {
         const responseData = response.data;
         setUserData(responseData.data);
-        console.log(responseData.data);
       })
       .catch((error) => {
         console.error(error);
@@ -66,7 +64,7 @@ const UserProfile = (props) => {
                 <Text style={{color: 'white',marginVertical:10,fontSize:20,fontWeight:'bold'}}>Attendance Dates:</Text>
                 {userData.attendance.map((entry, index) => (
                   <Text key={index} style={styles.text}>
-                    {entry.day}
+                    {userData.attendance[userData.attendance.length - 1]};
                   </Text>
                 ))}
               </View>
