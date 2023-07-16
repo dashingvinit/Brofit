@@ -9,6 +9,8 @@ import {
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
+import Search from '../components/Search';
+import { useIsFocused } from '@react-navigation/native';
 
 const Members = (props) => {
   const [users, setUsers] = useState([]);
@@ -16,10 +18,9 @@ const Members = (props) => {
   const getMembers = async () => {
     try {
       const response = await axios.get(
-        'http://192.168.29.49:7000/api/v1/gym/4'
+        'http://192.168.29.77:7000/api/v1/gym/3'
       );
       const data = response.data;
-      console.log(response.data.data.members);
       setUsers(data.data.members);
     } catch (error) {
       {
@@ -28,14 +29,30 @@ const Members = (props) => {
     }
   };
 
+  const isFocused = useIsFocused();
   useEffect(() => {
-    getMembers();
-  }, []);
+    if (isFocused) {
+      getMembers();
+    }
+  }, [isFocused]);
 
   const handleUserPress = async (user) => {
     console.log(user);
     props.navigation.navigate('UserProfile', { user });
   };
+
+  
+  const handleSearch = (query) => {
+    const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(query.toLowerCase()));
+    if (filteredUsers.length === 0) {
+      Alert.alert('User Not Found', 'No member found with the given name.', [
+        { text: 'OK', onPress: () => setUsers(users) },
+      ]);
+    } else {
+      setUsers(filteredUsers);
+    }
+  };
+
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
@@ -43,6 +60,7 @@ const Members = (props) => {
         <View style={styles.container}>
           <Text style={styles.heading}>Gym Members</Text>
           <View style={styles.separator} />
+          <Search onSearch={handleSearch} />
           {users.map((user, index) => (
             <TouchableOpacity
               key={index}
