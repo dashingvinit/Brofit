@@ -19,7 +19,7 @@ const Members = (props) => {
   const getMembers = async () => {
     try {
       const response = await axios.get(
-        'http://192.168.29.49:7000/api/v1/gym/4'
+        'http://192.168.29.77:7000/api/v1/gym/4'
       );
       const data = response.data;
       setUsers(data.data.members);

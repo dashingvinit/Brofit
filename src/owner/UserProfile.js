@@ -24,17 +24,20 @@ const UserProfile = (props) => {
   };
 
   const handleStatus = () => {
-          axios.patch(`/userProfile/${user._id}`)
-          console.log(user.id)
-          .then(response => {
-            const responseData = response.data;
-            setUserData(responseData.data);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-  };
+    const updatedStatus = userData.status === "active" ? "inactive" : "active"; 
   
+    axios
+      .patch(`/userProfile/${userData._id}`, { status: updatedStatus })
+      .then((response) => {
+        const responseData = response.data;
+        setUserData(responseData.data);
+        console.log(responseData.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+   
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
@@ -53,7 +56,7 @@ const UserProfile = (props) => {
             )}
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text}>Status: {userData.status}</Text>
-              <TouchableOpacity onPress={{handleStatus}} style={styles.button}>
+              <TouchableOpacity onPress={handleStatus} style={styles.button}>
                 <Text style={styles.buttonText}>Click Me</Text>
               </TouchableOpacity>
             </View>
