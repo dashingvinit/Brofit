@@ -1,21 +1,47 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { FetchQuote, CheckIn } from './components';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import axios from './constants/Axios';
+import * as SecureStore from 'expo-secure-store';
 
 const Attendance = () => {
+  const [userData, setUserData] = useState(null); 
+  const [markedDates, setMarkedDates] = useState({});
 
   const fetchattendance = async() => {
     try{
-      const response = await fetch('http://192.168.29.77:7000/api/v1/attendance');
-      const data = response.json();
-      console.log(data);
-    }catch(error){
-      console.log('h'+ error)
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString); 
+      const Id = user.userId;
+      const response = await axios.get(`http://192.168.29.77:7000/api/v1/userProfile/64b1063ebbad5f7834e36b34`);
+      const data =await response.data;
+      setUserData(data.data.attendance);
+
+      const markedDatesObj = {};
+      data.data.attendance.forEach((entry) => {
+        const day = entry.day; 
+        const formattedDay = day.split('-').reverse().join('-'); 
+        markedDatesObj[formattedDay] = {
+          customStyles: {
+            container: {
+              backgroundColor: 'blue', 
+              borderRadius: 16,
+            },
+            text: {
+              color: 'white', // Change the text color
+              fontWeight: 'bold',
+              fontSize: 16,
+            },
+          },
+        };
+      });
+      setMarkedDates(markedDatesObj);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchattendance();
@@ -24,7 +50,7 @@ const Attendance = () => {
   return (
     <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
       <View style={{ flex: 1 }}>
-        <Calendar
+      <Calendar
           style={{
             color: neon,
             borderRadius: 20,
@@ -33,6 +59,8 @@ const Attendance = () => {
             padding: 20,
             backgroundColor: bgLight,
           }}
+          markedDates={markedDates}
+          markingType={'custom'}
         />
       </View>
 
