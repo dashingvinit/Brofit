@@ -30,6 +30,7 @@ const Plans = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString); // Parse the user string to an object
       const gymId = user.gymId;
+      console.log('gymId: ' + gymId);
       const response = await axios.get(`/gym/${gymId}`);
       const data = response.data;
       setPlans(data.data.plans);
@@ -112,8 +113,8 @@ const Plans = () => {
         <View style={styles.container}>
           <Text style={styles.heading}>Plans</Text>
           {plans && plans.length > 0 ? (
-            plans.map((plan, index) => (
-              <View key={index} style={{ flexDirection: 'row' }}>
+            plans.map((plan) => (
+              <View key={plan.name} style={{ flexDirection: 'row' }}>
                 <View style={styles.plainCard}>
                   <Text style={styles.h1}>{plan.plan}</Text>
                   <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>

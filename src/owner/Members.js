@@ -8,16 +8,14 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import axios from 'axios';
+import axios from '../constants/Axios';
 
 const Members = (props) => {
   const [users, setUsers] = useState([]);
 
   const getMembers = async () => {
     try {
-      const response = await axios.get(
-        'http://192.168.29.49:7000/api/v1/gym/4'
-      );
+      const response = await axios.get('/gym/4');
       const data = response.data;
       console.log(response.data.data.members);
       setUsers(data.data.members);
