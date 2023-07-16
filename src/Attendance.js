@@ -1,10 +1,26 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { FetchQuote, CheckIn } from './components';
 import { bgColor, bgLight, neon } from './constants/Constants';
+import axios from './constants/Axios';
 
 const Attendance = () => {
+
+  const fetchattendance = async() => {
+    try{
+      const response = await fetch('http://192.168.29.77:7000/api/v1/attendance');
+      const data = response.json();
+      console.log(data);
+    }catch(error){
+      console.log('h'+ error)
+    }
+  }
+
+  useEffect(() => {
+    fetchattendance();
+  }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
       <View style={{ flex: 1 }}>
