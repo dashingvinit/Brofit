@@ -15,7 +15,7 @@ const Attendance = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString); 
       const Id = user.userId;
-      const response = await axios.get(`http://192.168.29.77:7000/api/v1/userProfile/64b1063ebbad5f7834e36b34`);
+      const response = await axios.get(`/userProfile/${Id}`);
       const data =await response.data;
       setUserData(data.data.attendance);
 
@@ -30,7 +30,7 @@ const Attendance = () => {
               borderRadius: 16,
             },
             text: {
-              color: 'white', // Change the text color
+              color: 'white', 
               fontWeight: 'bold',
               fontSize: 16,
             },
