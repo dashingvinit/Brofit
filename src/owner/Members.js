@@ -55,7 +55,11 @@ const Members = (props) => {
 
   return (
     <SafeAreaView
-      style={{ backgroundColor: bgColor, flex: 1, paddingBottom: 50 }}>
+      style={{
+        backgroundColor: bgColor,
+        flex: 1,
+        paddingBottom: 50,
+      }}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <Text style={styles.heading}>Gym Members</Text>
@@ -66,7 +70,7 @@ const Members = (props) => {
               key={index}
               onPress={() => handleUserPress(user)}
               style={styles.userContainer}>
-              <Text style={styles.userText}>✔️ {user.name}</Text>
+              <Text style={styles.userText}>{user.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 16,
+    padding: 10,
   },
   heading: {
     fontSize: 24,
@@ -93,8 +97,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingVertical: 18,
-    marginTop: 20,
+    paddingVertical: 10,
+    marginTop: 10,
+    width: '100%',
+    backgroundColor: bgLight,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   userText: {
     fontSize: 20,

@@ -51,7 +51,7 @@ const BottomNav = () => {
         component={Timer}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-walk-outline" color={color} size={30} />
+            <Ionicons name="ios-barbell-outline" color={color} size={30} />
           ),
         }}
       />

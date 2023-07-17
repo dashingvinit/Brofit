@@ -108,7 +108,8 @@ const Plans = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: bgColor, paddingBottom: 100 }}>
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.heading}>Plans</Text>
@@ -136,7 +137,7 @@ const Plans = () => {
                     {plan.validity}
                   </Text>
                 </View>
-                <View>
+                <View style={{}}>
                   <TouchableOpacity
                     onPress={() => handleEdit(plan)}
                     style={styles.createButton}>
@@ -219,11 +220,10 @@ const Plans = () => {
 
 const styles = StyleSheet.create({
   plainCard: {
-    margin: 20,
+    margin: 10,
     paddingHorizontal: 20,
     backgroundColor: bgLight,
     borderRadius: 5,
-    width: 220,
     paddingBottom: 20,
   },
   h1: {
@@ -232,13 +232,13 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 32,
+    marginBottom: 20,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
   },
   container: {
     flex: 1,
-    padding: 16,
   },
   createButton: {
     backgroundColor: bgLight,
@@ -246,7 +246,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 150,
+    paddingHorizontal: 20,
+    alignContent: 'center',
+
     height: 50,
     margin: 20,
   },
@@ -257,6 +259,7 @@ const styles = StyleSheet.create({
   },
   createPlanContainer: {
     marginVertical: 20,
+    marginHorizontal: 10,
   },
   createPlanText: {
     fontSize: 20,

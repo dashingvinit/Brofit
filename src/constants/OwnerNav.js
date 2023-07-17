@@ -7,7 +7,7 @@ import MembersStack from '../owner/MembersStack';
 import Plans from '../owner/Plans';
 import OwnerAttendance from '../owner/OwnerAttendance';
 
-import { neon } from './Constants';
+import { bgLight, neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +19,7 @@ const OwnerNav = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: 'rgba(42, 43, 43, 0.8)',
+          backgroundColor: bgLight,
           height: 60,
           borderTopWidth: 0,
           elevation: 0,

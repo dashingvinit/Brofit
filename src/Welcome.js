@@ -18,7 +18,7 @@ const Home = (props) => {
             fontWeight: 'bold',
             marginBottom: 100,
           }}>
-          Brofit+
+          Brofit
         </Text>
         <Btn
           bgColor={neon}

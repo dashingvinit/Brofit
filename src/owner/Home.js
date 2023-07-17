@@ -53,7 +53,7 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-        {/* <Graph /> */}
+        <Graph />
         <CheckedIn navigation={props.navigation} />
 
         {/* <WorkoutCards navigation={props.navigation} /> */}

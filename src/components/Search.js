@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet,Text } from 'react-native';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+} from 'react-native';
 import { bgLight, neon } from '../constants/Constants';
 
 const Search = ({ onSearch }) => {
@@ -35,6 +41,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     borderWidth: 1,
+    borderColor: neon,
     backgroundColor: bgLight,
     borderRadius: 20,
     padding: 8,
