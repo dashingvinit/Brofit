@@ -7,7 +7,7 @@ import Welcome from '../Welcome';
 import Home from '../Home';
 import Timer from '../Timer';
 import Attendance from '../Attendance';
-import { neon } from './Constants';
+import { bgLight, neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +19,7 @@ const BottomNav = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: 'rgba(42, 43, 43, 0.8)',
+          backgroundColor: bgLight,
           // backdropFilter: 'blur(20px)',
           height: 60,
           borderTopWidth: 0,
