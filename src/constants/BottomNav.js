@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import Welcome from '../Welcome';
 import Home from '../Home';
@@ -44,7 +45,7 @@ const BottomNav = () => {
         component={Home}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-home-outline" color={color} size={30} />
+            <AntDesign name="home" color={color} size={30} />
           ),
         }}
       />
@@ -54,6 +55,15 @@ const BottomNav = () => {
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-barbell-outline" color={color} size={30} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Timer3"
+        component={Timer}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="user" color={color} size={30} />
           ),
         }}
       />
@@ -72,7 +82,7 @@ const BottomNav = () => {
         component={Attendance}
         options={{
           tabBarIcon: ({ color }) => (
-            <Ionicons name="checkmark-done" color={color} size={30} />
+            <AntDesign name="calendar" color={color} size={30} />
           ),
         }}
       />
