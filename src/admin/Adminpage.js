@@ -58,8 +58,6 @@ const AdminPage = (props) => {
       });
   };
 
-  const handleUsersRole = () => {};
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
       <Top style={{ paddingTop: 0 }} />
@@ -117,12 +115,6 @@ const AdminPage = (props) => {
             </TouchableOpacity>
           </View>
         )}
-
-        <TouchableOpacity
-          onPress={() => props.navigation.navigate('Userrole')}
-          style={styles.userContainer}>
-          <Text style={styles.userText}>User</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
