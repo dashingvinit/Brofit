@@ -9,6 +9,7 @@ import WorkoutCards from './WorkoutCards';
 import CheckedIn from './CheckedIn';
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
+import Userstatusbox from './Userstatusbox'
 
 export {
   Field,
@@ -22,4 +23,5 @@ export {
   WorkoutCards,
   CheckIn,
   CheckOut,
+  Userstatusbox,
 };

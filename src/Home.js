@@ -1,5 +1,5 @@
 import React from 'react';
-import { Graph, Top, WorkoutCards } from './components';
+import { Graph, Top, WorkoutCards, Userstatusbox } from './components';
 import {
   View,
   Text,
@@ -26,6 +26,9 @@ const Home = (props) => {
                 }}
                 size={50}
               />
+            </Text>
+            <Text>
+            <Userstatusbox />
             </Text>
           </View>
           <View style={styles.box}>
