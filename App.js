@@ -79,7 +79,7 @@ function App() {
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        renderNavbarBasedOnRole((sethandleLogout = { sethandleLogout }))
+        renderNavbarBasedOnRole()
       ) : (
         <StackNav sethandleLogin={sethandleLogin} />
       )}

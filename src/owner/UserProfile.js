@@ -77,7 +77,6 @@ const UserProfile = (props) => {
                   }}>
                   Attendance Dates:
                 </Text>
-                {/* hennlo */}
               </View>
             ) : (
               <Text style={styles.text}>No attendance data available</Text>

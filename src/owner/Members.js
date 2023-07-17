@@ -54,7 +54,8 @@ const Members = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
+    <SafeAreaView
+      style={{ backgroundColor: bgColor, flex: 1, paddingBottom: 50 }}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <Text style={styles.heading}>Gym Members</Text>
