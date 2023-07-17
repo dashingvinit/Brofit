@@ -10,33 +10,33 @@ const CheckIn = () => {
 
   const targetLocation = { latitude: 12.3456, longitude: 78.9101 };
 
-  const getPermission = async () => {
-    const { status } = await Permissions.askForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Permission to access location was denied');
-      return;
-    }
+  // const getPermission = async () => {
+  //   const { status } = await Permissions.askForegroundPermissionsAsync();
+  //   if (status !== 'granted') {
+  //     alert('Permission to access location was denied');
+  //     return;
+  //   }
 
-    const location = await Location.getCurrentPositionAsync({});
-    setUserLocation(location.coords);
-  };
+  //   const location = await Location.getCurrentPositionAsync({});
+  //   setUserLocation(location.coords);
+  // };
 
-  useEffect(() => {
-    getPermission();
-  }, []);
+  // useEffect(() => {
+  //   getPermission();
+  // }, []);
 
-  useEffect(() => {
-    if (userLocation && targetLocation) {
-      const distance = Location.distanceBetween(
-        userLocation.latitude,
-        userLocation.longitude,
-        targetLocation.latitude,
-        targetLocation.longitude
-      );
+  // useEffect(() => {
+  //   if (userLocation && targetLocation) {
+  //     const distance = Location.distanceBetween(
+  //       userLocation.latitude,
+  //       userLocation.longitude,
+  //       targetLocation.latitude,
+  //       targetLocation.longitude
+  //     );
 
-      setDisableButton(distance > 100);
-    }
-  }, [userLocation]);
+  //     setDisableButton(distance > 100);
+  //   }
+  // }, [userLocation]);
 
   const handleCheckIn = async () => {
     const response = await axios.post('/attendace');
@@ -60,7 +60,7 @@ const CheckIn = () => {
           paddingHorizontal: 20,
           borderRadius: 30,
         }}
-        disabled={disableButton}
+        // disabled={disableButton}
         onPress={handleCheckIn}>
         <Text style={{ color: bgColor, fontWeight: 'bold' }}>CheckIN</Text>
       </TouchableOpacity>

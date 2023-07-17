@@ -37,6 +37,7 @@ const ProfileSetup = (props) => {
       });
       alert('Setup successful');
       const user = response.data.data;
+      props.sethandleLogin();
       props.navigation.navigate('Home1');
       console.log('Response:', user);
     } catch (error) {

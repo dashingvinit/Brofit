@@ -23,8 +23,9 @@ const Top = (props) => {
   const handleLogout = async () => {
     try {
       await SecureStore.deleteItemAsync('token');
-      alert('token deleted using top logout button');
-      console.log('token deelted');
+      alert('token deleted ');
+      console.log('Token deleted');
+      // props.sethandleLogin();
       props.navigation.navigate('Welcome');
     } catch (error) {
       console.error('error', error);
