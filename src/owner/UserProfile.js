@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const UserProfile = (props) => {
   const user = props.route.params.user;
-  const [userData, setUserData] = useState(null); 
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     fetchUserProfileData();
@@ -15,8 +15,9 @@ const UserProfile = (props) => {
   const fetchUserProfileData = async () => {
     try {
       const response = await axios.get(`/userProfile/${user._id}`);
-      const data = response.data;
-      setUserData(data.data);
+      const data = response.data.data;
+      console.log('User Profile Data', data);
+      setUserData(data);
     } catch (error) {
       console.log('User Profile Error', error);
       
@@ -24,8 +25,8 @@ const UserProfile = (props) => {
   };
 
   const handleStatus = () => {
-    const updatedStatus = userData.status === "active" ? "inactive" : "active"; 
-  
+    const updatedStatus = userData.status === 'active' ? 'inactive' : 'active';
+
     axios
       .patch(`/userProfile/${userData._id}`, { status: updatedStatus })
       .then((response) => {
@@ -36,11 +37,18 @@ const UserProfile = (props) => {
         console.error(error);
       });
   };
-   
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
-      <Text style={{color:'white',textAlign:'center',fontSize:24,paddingVertical:20}}>Details of User</Text>
+      <Text
+        style={{
+          color: 'white',
+          textAlign: 'center',
+          fontSize: 24,
+          paddingVertical: 20,
+        }}>
+        Details of User
+      </Text>
       <View style={styles.container}>
         {userData ? (
           <>
@@ -67,19 +75,19 @@ const UserProfile = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container :{
-    paddingHorizontal:40,
-    paddingVertical:20,
-    backgroundColor:bgLight,
-    borderRadius:30,
-    marginHorizontal:20,
-    marginVertical:40,
+  container: {
+    paddingHorizontal: 40,
+    paddingVertical: 20,
+    backgroundColor: bgLight,
+    borderRadius: 30,
+    marginHorizontal: 20,
+    marginVertical: 40,
   },
-  text :{
+  text: {
     color: neon,
-    marginVertical:10,
-    fontSize:20,
-    fontWeight:'bold',
+    marginVertical: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: bgColor,
@@ -87,13 +95,13 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 20,
     marginLeft: 70,
-    height:40,
+    height: 40,
     width: 100,
   },
   buttonText: {
     color: neon,
-    fontSize:16,
+    fontSize: 16,
   },
-})
+});
 
 export default UserProfile;

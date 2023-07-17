@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNav from './src/constants/BottomNav';
 import StackNav from './src/constants/StackNav';
+import AdminNav from './src/constants/AdminNav';
 import OwnerNav from './src/constants/OwnerNav';
 
 function App() {
@@ -42,6 +43,10 @@ function App() {
     setIsLoggedIn(true);
   };
 
+  const sethandleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   const getUser = async () => {
     try {
       const user = await SecureStore.getItemAsync('user');
@@ -65,10 +70,7 @@ function App() {
     if (role === 'owner') {
       return <OwnerNav />;
     } else if (role === 'admin') {
-      return <BottomNav />;
-      // Render AdminNav component
-      // Replace with the component you want to render for the admin role
-      return null;
+      return <AdminNav />;
     } else {
       return <BottomNav />;
     }
@@ -77,7 +79,7 @@ function App() {
   return (
     <NavigationContainer>
       {isLoggedIn ? (
-        renderNavbarBasedOnRole()
+        renderNavbarBasedOnRole((sethandleLogout = { sethandleLogout }))
       ) : (
         <StackNav sethandleLogin={sethandleLogin} />
       )}

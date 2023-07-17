@@ -6,6 +6,7 @@ import Signup from '../Signup';
 import ProfileSetup from '../ProfileSetup';
 import Login from '../Login';
 import OwnerLogin from '../owner/OwnerLogin';
+import AdminLogin from '../admin/AdminLogin';
 import Home from '../Home';
 import AnimatedVedios from '../AnimatedVedios ';
 import Attendance from '../Attendance';
@@ -25,12 +26,17 @@ const StackNav = ({ sethandleLogin }) => {
       screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="ProfileSetup" component={ProfileSetup} />
+      <Stack.Screen name="ProfileSetup">
+        {(props) => <ProfileSetup {...props} sethandleLogin={sethandleLogin} />}
+      </Stack.Screen>
       <Stack.Screen name="Login">
         {(props) => <Login {...props} sethandleLogin={sethandleLogin} />}
       </Stack.Screen>
       <Stack.Screen name="OwnerLogin">
         {(props) => <OwnerLogin {...props} sethandleLogin={sethandleLogin} />}
+      </Stack.Screen>
+      <Stack.Screen name="AdminLogin">
+        {(props) => <AdminLogin {...props} sethandleLogin={sethandleLogin} />}
       </Stack.Screen>
       <Stack.Screen name="Home1" component={Home} />
       <Stack.Screen name="AnimatedVideos" component={AnimatedVedios} />

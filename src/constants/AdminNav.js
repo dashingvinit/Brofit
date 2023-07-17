@@ -2,10 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeStack from '../owner/HomeStack';
-import MembersStack from '../owner/MembersStack';
-import Plans from '../owner/Plans';
-import OwnerAttendance from '../owner/OwnerAttendance';
+import Home from '../admin/Adminpage';
+import Userrole from '../admin/Userrole';
 
 import { neon } from './Constants';
 
@@ -20,6 +18,7 @@ const OwnerNav = () => {
         tabBarStyle: {
           position: 'absolute',
           backgroundColor: 'rgba(42, 43, 43, 0.8)',
+          backdropFilter: 'blur(20px)',
           height: 60,
           borderTopWidth: 0,
           elevation: 0,
@@ -38,7 +37,7 @@ const OwnerNav = () => {
       inactiveColor="#3e2465">
       <Tab.Screen
         name="Home"
-        component={HomeStack}
+        component={Home}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-home-outline" color={color} size={30} />
@@ -47,30 +46,10 @@ const OwnerNav = () => {
       />
       <Tab.Screen
         name="Members"
-        component={MembersStack}
+        component={Userrole}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-people" color={color} size={30} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Plans"
-        component={Plans}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="md-list" color={color} size={30} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="OwnerAttendance"
-        component={OwnerAttendance}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="checkmark-done" color={color} size={30} />
           ),
         }}
       />
