@@ -146,7 +146,7 @@ export default class App extends Component {
     const timer = now - start;
     return (
       <ImageBackground
-        source={require('./assets/images/timerback.jpg')}
+        source={require('./assets/timerBG2.jpg')}
         style={styles.backgroundImage}>
         <View style={styles.container}>
           <Timer
