@@ -20,9 +20,12 @@ const OwnerNav = () => {
         tabBarStyle: {
           position: 'absolute',
           backgroundColor: bgLight,
+          opacity: 0.9,
           height: 60,
           borderTopWidth: 0,
           elevation: 0,
+          margin: 10,
+          borderRadius: 20,
         },
         tabBarLabelStyle: {
           fontSize: 14,

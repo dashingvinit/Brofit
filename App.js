@@ -43,7 +43,7 @@ function App() {
     setIsLoggedIn(true);
   };
 
-  const sethandleLogout = () => {
+  const handleLogout = () => {
     setIsLoggedIn(false);
   };
 
@@ -68,11 +68,11 @@ function App() {
   const renderNavbarBasedOnRole = () => {
     getUser();
     if (role === 'owner') {
-      return <OwnerNav />;
+      return <OwnerNav handleLogout={handleLogout} />;
     } else if (role === 'admin') {
-      return <AdminNav />;
+      return <AdminNav handleLogout={handleLogout} />;
     } else {
-      return <BottomNav />;
+      return <BottomNav handleLogout={handleLogout} />;
     }
   };
 

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import Top from '../components/Top';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 
@@ -10,7 +17,7 @@ const AdminPage = (props) => {
   const [email, setEmail] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [owner,setowner] = useState('');
+  const [owner, setowner] = useState('');
   const handleAddGym = () => {
     setShowForm(true);
   };
@@ -24,14 +31,14 @@ const AdminPage = (props) => {
       longitude,
       owner,
     };
-    
-    fetch('http://192.168.29.77:7000/api/v1/gym', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+
+    axios
+      .post('/gym', {
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/   json',
+        },
+      })
       .then((response) => {
         if (response.ok) {
           alert('Gym added successfully!');
@@ -43,7 +50,7 @@ const AdminPage = (props) => {
           setLongitude('');
           setowner('');
         } else {
-            alert('Failed to add gym.');
+          alert('Failed to add gym.');
         }
       })
       .catch((error) => {
@@ -53,6 +60,7 @@ const AdminPage = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
+      <Top style={{ paddingTop: 0 }} />
       <View style={styles.container}>
         <Text style={styles.heading}>Admins</Text>
         <TouchableOpacity onPress={handleAddGym} style={styles.userContainer}>
@@ -100,7 +108,9 @@ const AdminPage = (props) => {
               onChangeText={setowner}
               keyboardType="string"
             />
-            <TouchableOpacity onPress={handleFormSubmit} style={styles.submitButton}>
+            <TouchableOpacity
+              onPress={handleFormSubmit}
+              style={styles.submitButton}>
               <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>
           </View>
