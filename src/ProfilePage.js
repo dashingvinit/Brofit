@@ -48,15 +48,12 @@ const ProfilePage = () => {
         weight: parseInt(editWeight),
       };
 
-      // Send the updated data to the API using axios or fetch
-      // For this example, I'm assuming you are using axios:
 
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
 
       await axios.patch(`/userProfile/${user.userId}`, updatedData);
 
-      // Update the local state with the new data
       setUsername(editName);
       setUserData({
         ...userData,
@@ -65,15 +62,13 @@ const ProfilePage = () => {
         weight: parseInt(editWeight),
       });
 
-      // Reset editable state
       setEditable(false);
     } catch (error) {
       console.log('Update Profile Error', error);
-      // Handle error here
+      
     }
   };
 
-  // Render null if userData is not available yet
   if (!userData) return null;
 
   return (
