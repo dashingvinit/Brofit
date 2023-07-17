@@ -50,40 +50,23 @@ const UserProfile = (props) => {
       </Text>
       <View style={styles.container}>
         {userData ? (
-          <View>
+          <>
             <Text style={styles.text}>Name: {user.name}</Text>
             <Text style={styles.text}>Age: {userData.age}</Text>
             <Text style={styles.text}>Height: {userData.height}</Text>
             <Text style={styles.text}>Weight: {userData.weight}</Text>
-            {userData.plan ? (
-              <Text style={styles.text}>Plan: {userData.plan}</Text>
-            ) : (
-              <Text style={styles.text}>Plan: Plans not found</Text>
-            )}
+            <Text style={styles.text}>
+              Plan: {userData.plan ? userData.plan.name : 'Plans not found'}
+            </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text}>Status: {userData.status}</Text>
               <TouchableOpacity onPress={handleStatus} style={styles.button}>
                 <Text style={styles.buttonText}>Click Me</Text>
               </TouchableOpacity>
             </View>
-            {userData.attendance && userData.attendance.length > 0 ? (
-              <View>
-                <Text
-                  style={{
-                    color: 'white',
-                    marginVertical: 10,
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                  }}>
-                  Attendance Dates:
-                </Text>
-              </View>
-            ) : (
-              <Text style={styles.text}>No attendance data available</Text>
-            )}
-          </View>
+          </>
         ) : (
-          <Text style={{ color: neon }}>Loading...</Text>
+          <Text style={{ color: neon }}>No Profile Found</Text>
         )}
       </View>
     </SafeAreaView>

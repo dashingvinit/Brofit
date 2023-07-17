@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import axios from 'axios';
+import axios from '../constants/Axios';
+import * as SecureStore from 'expo-secure-store';
 
 const OwnerAttendance = () => {
   const [searchDate, setSearchDate] = useState('');
@@ -10,10 +11,18 @@ const OwnerAttendance = () => {
 
   const searchAttendance = async () => {
     try {
-      const response = await axios.get(`/aten?date=${searchDate}`);
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString); 
+      const Id = user.gymId;
+      const response = await axios.get(`attendance/dayWiseAttendance/${Id}?date=${searchDate}`);
       setAttendanceData(response.data);
+      console.log(reponse.data)
     } catch (error) {
-      console.error('Error fetching attendance data:', error);
+        if (error.response && error.response.status === 404) {
+            alert('Data not found.');
+        }
+        else{
+            console.error('Error fetching attendance data:', error); }
     }
   };
 
@@ -40,7 +49,7 @@ const OwnerAttendance = () => {
                   ? 'number-pad'
                   : 'numbers-and-punctuation'
               }
-            placeholder="Enter date (YYYY-MM-DD)"
+            placeholder={searchDate}
             onChangeText={(text) => setSearchDate(text)}
             value={searchDate}
         />
