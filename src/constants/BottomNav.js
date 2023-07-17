@@ -8,6 +8,7 @@ import Welcome from '../Welcome';
 import Home from '../Home';
 import Timer from '../Timer';
 import Attendance from '../Attendance';
+import ProfilePage from '../ProfilePage'
 import { bgLight, neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
@@ -59,8 +60,8 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
-        name="Timer3"
-        component={Timer}
+        name="ProfilePage"
+        component={ProfilePage}
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="user" color={color} size={30} />
