@@ -38,6 +38,7 @@ const Attendance = () => {
         };
       });
       setMarkedDates(markedDatesObj);
+      console.log(markedDates)
     } catch (error) {
       console.log(error);
     }

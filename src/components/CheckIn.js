@@ -39,15 +39,11 @@ const CheckIn = () => {
   // }, [userLocation]);
 
   const handleCheckIn = async () => {
-    const response = await axios.post('/attendace');
-
-    if (response.status === 200) {
-      alert('CheckIn successful');
-      const user = response.data.data;
-      props.navigation.navigate('Home1');
-    } else {
-      alert('Setup failed');
-      console.error('Error:', 'profilesetup', response);
+    try {
+      const response = await axios.post('/attendance');
+      alert('CheckIN Done');
+    } catch (error) {
+      alert('Error: ' + error);
     }
   };
 
