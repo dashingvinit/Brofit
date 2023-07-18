@@ -15,7 +15,6 @@ const CheckedIn = (props) => {
       const response = await axios.get(`/attendance/${gymId}`);
       const data = response.data;
       setUsers(data.data);
-      console.log(data.data);
     } catch (error) {
       // alert('Error: ' + error.message);
       console.log('Owner Home checkedIN', error);
@@ -33,7 +32,7 @@ const CheckedIn = (props) => {
         {users.map((user, index) => (
           <View key={index}>
             <View style={styles.userContainer}>
-              <Text style={styles.userText}>✔️{user._id}</Text>
+              <Text style={styles.userText}>✔️{user.userId.name}</Text>
             </View>
           </View>
         ))}
