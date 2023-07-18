@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { FetchQuote, CheckIn } from './components';
@@ -7,30 +7,35 @@ import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Attendance = () => {
-  const [userData, setUserData] = useState(null); 
+  const [userData, setUserData] = useState(null);
+  const [attendance, setAttendance] = useState();
   const [markedDates, setMarkedDates] = useState({});
 
-  const fetchattendance = async() => {
-    try{
+  const handleCheckin = async () => {
+    setAttendance('Checked In');
+  };
+
+  const fetchattendance = async () => {
+    try {
       const userString = await SecureStore.getItemAsync('user');
-      const user = JSON.parse(userString); 
+      const user = JSON.parse(userString);
       const Id = user.userId;
       const response = await axios.get(`/userProfile/${Id}`);
-      const data =await response.data;
+      const data = await response.data;
       setUserData(data.data.attendance);
 
       const markedDatesObj = {};
       data.data.attendance.forEach((entry) => {
-        const day = entry.day; 
-        const formattedDay = day.split('-').reverse().join('-'); 
+        const day = entry.day;
+        const formattedDay = day.split('-').reverse().join('-');
         markedDatesObj[formattedDay] = {
           customStyles: {
             container: {
-              backgroundColor: 'blue', 
+              backgroundColor: 'blue',
               borderRadius: 16,
             },
             text: {
-              color: 'white', 
+              color: 'white',
               fontWeight: 'bold',
               fontSize: 16,
             },
@@ -47,23 +52,23 @@ const Attendance = () => {
     fetchattendance();
   }, []);
 
-  const handleCheckout = async() =>{
+  const handleCheckout = async () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
-      const user = JSON.parse(userString); 
+      const user = JSON.parse(userString);
       const Id = user.userId;
-      console.log(Id)
+      console.log(Id);
       const response = await axios.patch(`/attendance/${Id}`);
       alert('CheckOut Done');
     } catch (error) {
       alert('Error: ' + error);
     }
-  }
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
       <View style={{ flex: 1 }}>
-      <Calendar
+        <Calendar
           style={{
             color: neon,
             borderRadius: 20,
@@ -87,6 +92,7 @@ const Attendance = () => {
           <FetchQuote />
         </TouchableOpacity>
       </View>
+
       <View
         style={{
           flexDirection: 'row',
@@ -94,7 +100,7 @@ const Attendance = () => {
           paddingHorizontal: 30,
           paddingVertical: 80,
         }}>
-        <CheckIn />
+        <CheckIn checkINStatus={handleCheckin} />
 
         <TouchableOpacity
           style={{

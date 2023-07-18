@@ -4,7 +4,7 @@ import { Location, Permissions } from 'expo';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
 
-const CheckIn = () => {
+const CheckIn = ({ checkINStatus }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [disableButton, setDisableButton] = useState(true);
 
@@ -41,6 +41,7 @@ const CheckIn = () => {
   const handleCheckIn = async () => {
     try {
       const response = await axios.post('/attendance');
+      checkINStatus();
       alert('CheckIN Done');
     } catch (error) {
       alert('Error: ' + error);

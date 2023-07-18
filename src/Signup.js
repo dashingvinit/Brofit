@@ -47,7 +47,6 @@ const Signup = (props) => {
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
       console.log('user', user);
-
       await save('user', user);
 
       if (response.data.data.jwt) {
@@ -57,6 +56,7 @@ const Signup = (props) => {
 
         await save('expire', expireString);
         await save('token', token);
+        await save('user', user);
         // Inside handleLogin function
         await setTokenHeader().then(() => {
           console.log('Token Set');

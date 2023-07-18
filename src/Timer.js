@@ -9,7 +9,7 @@ import {
 import { ImageBackground } from 'react-native';
 import { COLORS, icons, images, SIZES } from './constants';
 import moment from 'moment';
-import { neon } from './constants/Constants';
+import { bgColor, bgLight, neon } from './constants/Constants';
 
 function Timer({ interval, style }) {
   const pad = (n) => (n < 10 ? '0' + n : n);
@@ -158,13 +158,13 @@ export default class App extends Component {
               <RoundButton
                 title="Lap"
                 color="#e6fd54"
-                background="#1d2226"
+                background="#1d2226b3"
                 disabled
               />
               <RoundButton
                 title="Start"
                 color="#e6fd54"
-                background="#1d2226"
+                background="#1d2226b3"
                 onPress={this.start}
               />
             </ButtonsRow>
@@ -214,6 +214,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 380,
     paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backgroundImage: {
     flex: 1,
@@ -225,9 +227,13 @@ const styles = StyleSheet.create({
     color: COLORS.lightWhite,
     fontSize: 66,
     fontWeight: '200',
-    width: 110,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    // width: 110,
   },
   button: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
     width: 150,
     height: 76,
     borderRadius: 40,
