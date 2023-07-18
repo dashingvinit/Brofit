@@ -29,11 +29,22 @@ const CheckedIn = () => {
     <View style={styles.container}>
       <Text style={styles.heading}>CheckIn Users</Text>
       <View style={{ backgroundColor: bgColor }}>
+
+        <View style={styles.userContainer}>
+            <Text style={styles.userText}>  Name</Text>
+            <Text style={styles.userText}>CheckIn</Text>
+            <Text style={styles.userText}>CheckOut</Text>
+        </View>
+
         {users.map((user, index) => (
           <View key={index}>
+            <TouchableOpacity>
             <View style={styles.userContainer}>
-              <Text style={styles.userText}>✔️{user.userId.name}</Text>
+              <Text style={styles.userText}>✔️ {user.userId.name}</Text>
+              <Text style={styles.userText}>{user.checkIn}</Text>
+              <Text style={styles.userText}>      {user.checkOut}</Text>
             </View>
+            </TouchableOpacity>
           </View>
         ))}
       </View>
@@ -56,10 +67,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    flexDirection:'row',
+    backgroundColor:bgLight,
+    marginTop:20,
+    borderRadius:25,
+    height:50,
   },
   userText: {
-    fontSize: 20,
+    fontSize: 18,
     color: neon,
+    marginRight:60,
+    marginLeft:20,
   },
 });
 
