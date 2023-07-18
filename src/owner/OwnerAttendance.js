@@ -4,12 +4,13 @@ import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
+import Userprofile from './UserProfile'
 
 const OwnerAttendance = () => {
   const [searchDay, setSearchDay] = useState('');
   const [searchMonth, setSearchMonth] = useState('');
   const [searchYear, setSearchYear] = useState('');
-  const [attendanceData, setAttendanceData] = useState(null);
+  const [attendanceData, setAttendanceData] = useState([]);
 
   const searchAttendance = async () => {
     try {
@@ -17,23 +18,23 @@ const OwnerAttendance = () => {
       const user = JSON.parse(userString); 
       const Id = user.gymId;
       const date = `${searchDay}-${searchMonth}-${searchYear}`
-      
-      const requestData = {
-        date: date,
-      };
-      const response = await axios.get(`attendance/dayWiseAttendance/${Id}`,{
-        data: requestData,
-      });
-      setAttendanceData(response.data);
-      console.log(reponse.data)
+      const response = await axios.get(`attendance/${Id}/${date}`);
+      const data = response.data.data;
+      console.log(data)
+      setAttendanceData(data);
     } catch (error) {
         if (error.response && error.response.status === 404) {
             alert('Data not found.');
+            console.log(error)
         }
         else{
             console.error('Error fetching attendance data:', error); }
     }
   };
+
+  const handlePress = () =>{
+    alert('UserPressed')
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, padding: 16 }}>
@@ -105,17 +106,48 @@ const OwnerAttendance = () => {
             height:50,
             width:80,
             }}
-            onPress={searchAttendance}
-        >
+            onPress={searchAttendance}>
             <Text style={{ color: neon, fontWeight: 'bold' }}>Search</Text>
         </TouchableOpacity>
       </View>
-      {attendanceData && (
-        <View style={{ marginTop: 20 }}>
-          <Text>Attendance Data:</Text>
-          <Text>{JSON.stringify(attendanceData, null, 2)}</Text>
-        </View>
-      )}
+          {attendanceData.length > 0 && (
+            <View style={{ marginTop: 20 }}>
+              <View style={{
+                          backgroundColor:bgLight,
+                          borderRadius:25,
+                          height:70,
+                          width:240,
+                          alignItems:'center',
+                          marginHorizontal:70
+                          }}>
+                <Text style={{
+                            color:"white",
+                            fontSize:20,                        
+                            textAlign:'center',
+                            paddingHorizontal:40,
+                            paddingVertical:20
+
+                            }}>Attendance Data</Text>
+              </View>
+              
+              {attendanceData.map((dataEntry) => (
+                <TouchableOpacity onPress={handlePress}> 
+                  <View style={{
+                  backgroundColor:bgLight,
+                  borderRadius:15,
+                  height:50,
+                  width:200,
+                  alignItems:'center',
+                  marginHorizontal:10,
+                  marginVertical:20
+                  }}>
+                  <Text key={dataEntry._id} style={{color:neon, fontSize:20, paddingVertical:10}}>{dataEntry.userId.name}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+                          
+            </View>
+          )}
     </SafeAreaView>
   );
 };
