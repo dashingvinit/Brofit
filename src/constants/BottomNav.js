@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import Welcome from '../Welcome';
-import WorkoutPlan from '../WorkoutPlan';
+import WorkoutStack from '../WorkoutStack';
 import Home from '../Home';
 import Timer from '../Timer';
 import Attendance from '../Attendance';
@@ -52,8 +52,8 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
-        name="WorkoutPlan"
-        component={WorkoutPlan}
+        name="WorkoutStack"
+        component={WorkoutStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-barbell-outline" color={color} size={30} />
