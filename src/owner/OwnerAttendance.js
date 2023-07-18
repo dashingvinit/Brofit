@@ -6,7 +6,9 @@ import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
 const OwnerAttendance = () => {
-  const [searchDate, setSearchDate] = useState('');
+  const [searchDay, setSearchDay] = useState('');
+  const [searchMonth, setSearchMonth] = useState('');
+  const [searchYear, setSearchYear] = useState('');
   const [attendanceData, setAttendanceData] = useState(null);
 
   const searchAttendance = async () => {
@@ -14,7 +16,14 @@ const OwnerAttendance = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString); 
       const Id = user.gymId;
-      const response = await axios.get(`attendance/dayWiseAttendance/${Id}?date=${searchDate}`);
+      const date = `${searchDay}-${searchMonth}-${searchYear}`
+      
+      const requestData = {
+        date: date,
+      };
+      const response = await axios.get(`attendance/dayWiseAttendance/${Id}`,{
+        data: requestData,
+      });
       setAttendanceData(response.data);
       console.log(reponse.data)
     } catch (error) {
@@ -32,26 +41,58 @@ const OwnerAttendance = () => {
         Attendance
       </Text>
       <View style={{flexDirection:'row', marginHorizontal:20}}>
-        <TextInput
-            style={{
-            backgroundColor:bgLight,
+      <TextInput
+          style={{
+            backgroundColor: bgLight,
             padding: 8,
             marginBottom: 16,
-            width:250,
+            width: 60,
             borderRadius: 12,
-            height:50,
-            color:neon,
-            }}
-            keyboardType={
-                Platform.OS === 'android'
-                  ? 'phone-pad'
-                  : Platform.OS === 'ios'
-                  ? 'number-pad'
-                  : 'numbers-and-punctuation'
-              }
-            placeholder={searchDate}
-            onChangeText={(text) => setSearchDate(text)}
-            value={searchDate}
+            height: 50,
+            color: neon,
+            textAlign: 'center'
+          }}
+          keyboardType="number-pad"
+          placeholder="DD"
+          onChangeText={(text) => setSearchDay(text)}
+          value={searchDay}
+          maxLength={2}
+        />
+        <Text style={{ color: neon, fontSize: 34, marginHorizontal: 10 }}>/</Text>
+        <TextInput
+          style={{
+            backgroundColor: bgLight,
+            padding: 8,
+            marginBottom: 16,
+            width: 60,
+            borderRadius: 12,
+            height: 50,
+            color: neon,
+            textAlign: 'center'
+          }}
+          keyboardType="number-pad"
+          placeholder="MM"
+          onChangeText={(text) => setSearchMonth(text)}
+          value={searchMonth}
+          maxLength={2}
+        />
+        <Text style={{ color: neon, fontSize: 34, marginHorizontal: 10 }}>/</Text>
+        <TextInput
+          style={{
+            backgroundColor: bgLight,
+            padding: 8,
+            marginBottom: 16,
+            width: 80,
+            borderRadius: 12,
+            height: 50,
+            color: neon,
+            textAlign: 'center'
+          }}
+          keyboardType="number-pad"
+          placeholder="YYYY"
+          onChangeText={(text) => setSearchYear(text)}
+          value={searchYear}
+          maxLength={4}
         />
         <TouchableOpacity
             style={{

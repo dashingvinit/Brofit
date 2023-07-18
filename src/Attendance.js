@@ -38,7 +38,6 @@ const Attendance = () => {
         };
       });
       setMarkedDates(markedDatesObj);
-      console.log(markedDates)
     } catch (error) {
       console.log(error);
     }
@@ -47,6 +46,19 @@ const Attendance = () => {
   useEffect(() => {
     fetchattendance();
   }, []);
+
+  const handleCheckout = async() =>{
+    try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString); 
+      const Id = user.userId;
+      console.log(Id)
+      const response = await axios.patch(`/attendance/${Id}`);
+      alert('CheckOut Done');
+    } catch (error) {
+      alert('Error: ' + error);
+    }
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
@@ -91,7 +103,7 @@ const Attendance = () => {
             paddingHorizontal: 20,
             borderRadius: 30,
           }}
-          onPress={'soon'}>
+          onPress={handleCheckout}>
           <Text style={{ color: 'white', fontWeight: 'bold' }}> CheckOUT </Text>
         </TouchableOpacity>
       </View>

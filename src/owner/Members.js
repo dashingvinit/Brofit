@@ -36,7 +36,6 @@ const Members = (props) => {
   }, [isFocused]);
 
   const handleUserPress = async (user) => {
-    console.log(user);
     props.navigation.navigate('UserProfile', { user });
   };
 
