@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const UserProfile = (props) => {
   const user = props.route.params.user;
+  // console.log(user.userId._id);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {

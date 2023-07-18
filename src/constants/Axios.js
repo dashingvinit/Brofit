@@ -22,7 +22,7 @@ Axios.interceptors.request.use(async (config) => {
   const token = await getTokenFromSecureStore();
   if (token) {
     config.headers['x-access-token'] = token;
-    console.log('Token set:', token);
+    // console.log('Token set:', token);
   }
   return config;
 });
@@ -36,7 +36,7 @@ export function setTokenHeader() {
       const token = await getTokenFromSecureStore();
       if (token) {
         config.headers['x-access-token'] = token;
-        console.log('Token set:', token);
+        // console.log('Token set:', token);
       }
       return config;
     });

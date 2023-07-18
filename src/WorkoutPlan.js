@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { Background } from './components';
 import React from 'react';
 import { bgColor } from './constants/Constants';
 
@@ -26,7 +25,8 @@ const WorkoutPlan = (props) => {
   ];
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => props.navigation.navigate('Workouts')}>
+    <TouchableOpacity
+      onPress={() => props.navigation.navigate('Workouts', { item })}>
       <View>
         <ImageBackground
           source={getImageSource(item.bg)}

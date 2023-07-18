@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeStack from '../owner/HomeStack';
 import MembersStack from '../owner/MembersStack';
 import Plans from '../owner/Plans';
-import OwnerAttendance from '../owner/OwnerAttendance';
+import AttendanceStack from '../owner/AttendanceStack';
 
 import { bgLight, neon } from './Constants';
 
@@ -72,8 +72,8 @@ const OwnerNav = () => {
       />
 
       <Tab.Screen
-        name="OwnerAttendance"
-        component={OwnerAttendance}
+        name="AttendanceStack"
+        component={AttendanceStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="checkmark-done" color={color} size={30} />
