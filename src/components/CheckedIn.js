@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from '../constants/Axios';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 
@@ -27,23 +27,22 @@ const CheckedIn = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>CheckIn Users</Text>
+      <Text style={styles.heading}>Todays CheckedIn Users</Text>
       <View style={{ backgroundColor: bgColor }}>
-
         <View style={styles.userContainer}>
-            <Text style={styles.userText}>  Name</Text>
-            <Text style={styles.userText}>CheckIn</Text>
-            <Text style={styles.userText}>CheckOut</Text>
+          <Text style={styles.userText}> Name</Text>
+          <Text style={styles.userText}>CheckIn</Text>
+          <Text style={styles.userText}>CheckOut</Text>
         </View>
 
         {users.map((user, index) => (
           <View key={index}>
             <TouchableOpacity>
-            <View style={styles.userContainer}>
-              <Text style={styles.userText}>✔️ {user.userId.name}</Text>
-              <Text style={styles.userText}>{user.checkIn}</Text>
-              <Text style={styles.userText}>      {user.checkOut}</Text>
-            </View>
+              <View style={styles.userContainer}>
+                <Text style={styles.userText}>{user.userId.name}</Text>
+                <Text style={styles.userText}>{user.checkIn}</Text>
+                <Text style={styles.userText}> {user.checkOut}</Text>
+              </View>
             </TouchableOpacity>
           </View>
         ))}
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: bgColor,
     padding: 16,
+    paddingBottom: 100,
   },
   heading: {
     fontSize: 24,
@@ -67,17 +67,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    flexDirection:'row',
-    backgroundColor:bgLight,
-    marginTop:20,
-    borderRadius:25,
-    height:50,
+    flexDirection: 'row',
+    backgroundColor: bgLight,
+    marginTop: 20,
+    borderRadius: 25,
+    height: 50,
   },
   userText: {
     fontSize: 18,
-    color: neon,
-    marginRight:60,
-    marginLeft:20,
+    color: 'white',
+    marginRight: 10,
+    marginLeft: 20,
   },
 });
 
