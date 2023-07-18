@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import axios from '../constants/Axios';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 
-const CheckedIn = () => {
+const CheckedIn = (props) => {
   const [users, setUsers] = useState([]);
 
   const getCheckIn = async () => {
