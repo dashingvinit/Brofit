@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity,ScrollView } from 'react-native';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from '../constants/Axios';
@@ -38,6 +38,7 @@ const OwnerAttendance = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, padding: 16 }}>
+      <ScrollView style={{flexGrow: 1}}>
       <Text
         style={{
           fontSize: 24,
@@ -166,6 +167,7 @@ const OwnerAttendance = (props) => {
           ))}
         </View>
       )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
