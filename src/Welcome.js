@@ -33,6 +33,7 @@ const Home = (props) => {
           // Press={() => props.navigation.navigate('ProfileSetup')}
           Press={() => props.navigation.navigate('Signup')}
         />
+
         <View
           style={{
             marginTop: 40,

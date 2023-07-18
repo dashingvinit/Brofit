@@ -1,15 +1,22 @@
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Card } from '@rneui/themed';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios from '../constants/Axios';
+import { bgLight, neon } from '../constants/Constants';
 
 const Plans = ({ onSelect }) => {
   const [plans, setPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
-  const getplans = async () => {
+  const getPlans = async () => {
     const userString = await SecureStore.getItemAsync('user');
-    const user = JSON.parse(userString); // Parse the user string to an object
+    const user = JSON.parse(userString);
     const gymId = user.gymId;
     console.log('gymId', gymId);
     await axios
@@ -24,37 +31,67 @@ const Plans = ({ onSelect }) => {
   };
 
   const handlePlanClick = (plan) => {
+    setSelectedPlan(plan);
     onSelect(plan);
   };
 
   useEffect(() => {
-    getplans();
+    getPlans();
   }, []);
 
   if (plans.length === 0) {
     return <Text>Loading...</Text>;
   }
 
+  const renderItem = ({ item }) => (
+    <View style={[styles.card, selectedPlan === item && styles.selectedCard]}>
+      <TouchableOpacity
+        onPress={() => handlePlanClick(item)}
+        underlayColor="#f0f0f0">
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.content}>Price: {item.price}</Text>
+        <Text style={styles.content}>Validity: {item.validity}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
-    <>
-      {plans.map((plan) => (
-        <Card key={plan._id}>
-          <Card.Title>{plan.name}</Card.Title>
-          <Card.Divider />
-          <View
-            style={{
-              position: 'relative',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity onPress={() => handlePlanClick(plan)}>
-              <Text>Price: {plan.price}</Text>
-              <Text>Validity: {plan.validity}</Text>
-            </TouchableOpacity>
-          </View>
-        </Card>
-      ))}
-    </>
+    <FlatList
+      data={plans}
+      renderItem={renderItem}
+      keyExtractor={(item) => item._id}
+      ListEmptyComponent={<Text>No plans available.</Text>}
+      contentContainerStyle={styles.flatListContainer}
+    />
   );
 };
+
+const styles = StyleSheet.create({
+  flatListContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+  },
+  card: {
+    marginVertical: 10,
+    padding: 20,
+    width: 300,
+    backgroundColor: bgLight,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  selectedCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: neon,
+  },
+  content: {
+    fontSize: 16,
+    color: 'white',
+  },
+});
 
 export default Plans;

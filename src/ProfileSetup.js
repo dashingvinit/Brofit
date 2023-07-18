@@ -27,13 +27,15 @@ const ProfileSetup = (props) => {
   });
 
   const handleProfileSetup = async () => {
-    const { weight, height, plan } = formData;
+    const { weight, height, plan, gender, age } = formData;
 
     try {
       const response = await axios.post('/userProfile', {
         weight,
         height,
         plan,
+        gender,
+        age,
       });
       alert('Setup successful');
       const user = response.data.data;
@@ -97,6 +99,7 @@ const ProfileSetup = (props) => {
           width: 400,
           borderTopLeftRadius: 130,
           paddingTop: 50,
+          paddingBottom: 50,
           alignItems: 'center',
         }}>
         <Field
@@ -110,6 +113,19 @@ const ProfileSetup = (props) => {
           placeholder="Height"
           value={formData.height}
           onChangeText={(value) => handleInputChange('height', value)}
+        />
+
+        <Field
+          keyboardType={
+            Platform.OS === 'android'
+              ? 'phone-pad'
+              : Platform.OS === 'ios'
+              ? 'number-pad'
+              : 'numbers-and-punctuation'
+          }
+          placeholder="Age"
+          value={formData.age}
+          onChangeText={(value) => handleInputChange('age', value)}
         />
         <Field
           keyboardType={

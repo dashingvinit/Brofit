@@ -19,12 +19,14 @@ const OwnerNav = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
+          bottom: 10,
+          left: 10,
+          right: 10,
           backgroundColor: bgLight,
           opacity: 0.9,
           height: 60,
           borderTopWidth: 0,
-          elevation: 0,
-          margin: 10,
+          elevation: 3,
           borderRadius: 20,
         },
         tabBarLabelStyle: {
@@ -38,7 +40,8 @@ const OwnerNav = () => {
       }}
       initialRouteName="Home"
       activeColor={neon}
-      inactiveColor="#3e2465">
+      inactiveColor="#3e2465"
+      keyboardHidesTabBar={true}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
