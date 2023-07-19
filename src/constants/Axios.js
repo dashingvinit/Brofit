@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Axios = axios.create({
-  baseURL: 'http://192.168.147.94:7000/api/v1/',
+  baseURL: 'http://192.168.29.211:7000/api/v1/',
   timeout: 5000, // Adjust the timeout as needed
 });
 
@@ -28,8 +28,8 @@ Axios.interceptors.request.use(async (config) => {
 });
 
 export function setTokenHeader() {
-  // Optional: You can update the token in SecureStore here
-  // return a Promise here
+  // Update the token in SecureStore here
+  // Return a Promise
   return new Promise((resolve, reject) => {
     Axios.interceptors.request.eject(0);
     Axios.interceptors.request.use(async (config) => {
