@@ -24,10 +24,10 @@ const UserProfile = (props) => {
   };
 
   const handleStatus = () => {
-    const updatedStatus = userData.status === 'active' ? 'inactive' : 'active';
+    const updatedStatus = "active";
 
     axios
-      .patch(`/userProfile/${userData._id}`, { status: updatedStatus })
+      .patch(`/userProfile/plan/${user._id}`, { status: updatedStatus })
       .then((response) => {
         const responseData = response.data;
         setUserData(responseData.data);
