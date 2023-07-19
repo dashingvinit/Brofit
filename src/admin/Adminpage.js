@@ -60,7 +60,10 @@ const AdminPage = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
-      <Top style={{ paddingTop: 0 }} />
+      <Top
+        navigation={props.navigation}
+        setHandleLogout={props.setHandleLogout}
+      />
       <View style={styles.container}>
         <Text style={styles.heading}>Admins</Text>
         <TouchableOpacity onPress={handleAddGym} style={styles.userContainer}>

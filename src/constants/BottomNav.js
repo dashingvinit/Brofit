@@ -4,9 +4,8 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import Welcome from '../Welcome';
 import WorkoutStack from '../WorkoutStack';
-import Home from '../Home';
+import HomeStack from '../HomeStack';
 import Timer from '../Timer';
 import Attendance from '../Attendance';
 import ProfilePage from '../ProfilePage';
@@ -14,7 +13,7 @@ import { bgLight, neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
 
-const BottomNav = () => {
+const BottomNav = ({ setHandleLogout }) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -39,18 +38,18 @@ const BottomNav = () => {
         tabBarActiveTintColor: neon,
         tabBarInactiveTintColor: 'white',
       }}
-      initialRouteName="Home"
+      initialRouteName="HomeStack"
       activeColor={neon}
       inactiveColor="#3e2465">
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="HomeStack"
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="home" color={color} size={30} />
+            <Ionicons name="ios-home-outline" color={color} size={30} />
           ),
-        }}
-      />
+        }}>
+        {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
+      </Tab.Screen>
       <Tab.Screen
         name="WorkoutStack"
         component={WorkoutStack}

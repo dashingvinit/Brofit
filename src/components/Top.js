@@ -25,7 +25,7 @@ const Top = (props) => {
       await SecureStore.deleteItemAsync('token');
       alert('token deleted ');
       console.log('Token deleted');
-      // props.sethandleLogin();
+      props.setHandleLogout();
       props.navigation.navigate('Welcome');
     } catch (error) {
       console.error('error', error);

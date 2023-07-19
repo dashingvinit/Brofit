@@ -23,6 +23,14 @@ function App() {
     }
   };
 
+  const sethandleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const setHandleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   const getToken = async () => {
     try {
       const token = await SecureStore.getItemAsync('token');
@@ -37,14 +45,6 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const sethandleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
   };
 
   const getUser = async () => {
@@ -68,11 +68,11 @@ function App() {
   const renderNavbarBasedOnRole = () => {
     getUser();
     if (role === 'owner') {
-      return <OwnerNav handleLogout={handleLogout} />;
+      return <OwnerNav setHandleLogout={setHandleLogout} />;
     } else if (role === 'admin') {
-      return <AdminNav handleLogout={handleLogout} />;
+      return <AdminNav setHandleLogout={setHandleLogout} />;
     } else {
-      return <BottomNav handleLogout={handleLogout} />;
+      return <BottomNav setHandleLogout={setHandleLogout} />;
     }
   };
 

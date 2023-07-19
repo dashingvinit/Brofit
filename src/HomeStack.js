@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Welcome from '../Welcome';
+import Welcome from './Welcome';
 import Home from './Home';
-import UserProfile from './UserProfile';
+import PlanUpdate from './PlanUpdate';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (
@@ -16,7 +16,7 @@ const HomeStack = ({ setHandleLogout }) => {
       <Stack.Screen name="HomeScreen">
         {(props) => <Home {...props} setHandleLogout={setHandleLogout} />}
       </Stack.Screen>
-      <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="PlanUpdate" component={PlanUpdate} />
       <Stack.Screen name="Welcome" component={Welcome} />
     </Stack.Navigator>
   );

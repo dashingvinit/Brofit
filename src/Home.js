@@ -14,7 +14,10 @@ import { FontAwesome } from '@expo/vector-icons';
 const Home = (props) => {
   return (
     <View style={{ backgroundColor: bgColor }}>
-      <Top navigation={props.navigation} />
+      <Top
+        navigation={props.navigation}
+        setHandleLogout={props.setHandleLogout}
+      />
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>
@@ -28,19 +31,22 @@ const Home = (props) => {
               />
             </Text>
             <Text>
-            <Userstatusbox />
+              <Userstatusbox />
             </Text>
           </View>
           <View style={styles.box}>
-            <Text style={styles.boxText}>
-              <Ionicons
-                name="ios-bar-chart"
-                style={{
-                  color: neon,
-                }}
-                size={50}
-              />
-            </Text>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('PlanUpdate')}>
+              <Text style={styles.boxText}>
+                <Ionicons
+                  name="ios-bar-chart"
+                  style={{
+                    color: neon,
+                  }}
+                  size={50}
+                />
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.box}>
             <TouchableOpacity

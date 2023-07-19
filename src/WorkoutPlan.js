@@ -56,7 +56,7 @@ const WorkoutPlan = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginHorizontal: 10 }}>
+      <View>
         <View style={{ alignContent: 'center', alignItems: 'center' }}>
           <Text style={styles.header}>Workout Plan</Text>
         </View>
@@ -76,10 +76,8 @@ const WorkoutPlan = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 40,
     backgroundColor: bgColor,
-    // alignItems: 'center',
   },
   header: {
     fontSize: 30,

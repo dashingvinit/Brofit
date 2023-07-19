@@ -11,7 +11,7 @@ import { bgLight, neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
 
-const OwnerNav = () => {
+const OwnerNav = ({ setHandleLogout }) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -44,13 +44,14 @@ const OwnerNav = () => {
       keyboardHidesTabBar={true}>
       <Tab.Screen
         name="Home"
-        component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-home-outline" color={color} size={30} />
           ),
-        }}
-      />
+        }}>
+        {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
+      </Tab.Screen>
+
       <Tab.Screen
         name="Members"
         component={MembersStack}
