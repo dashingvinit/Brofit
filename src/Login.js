@@ -113,9 +113,11 @@ const Login = (props) => {
               paddingRight: 16,
               marginBottom: 200,
             }}>
-            <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
-              Forgot Password ?
-            </Text>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Forgetpassword')}>
+              <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
+                Forgot Password ?
+              </Text>
+            </TouchableOpacity>
           </View>
           <Btn
             textColor={bgColor}
