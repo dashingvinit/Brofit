@@ -9,10 +9,11 @@ const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const [username, setUsername] = useState(null);
   const [editable, setEditable] = useState(false);
-  const [editName, setEditName] = useState('');
+  // const [editName, setEditName] = useState('');
   const [editAge, setEditAge] = useState('');
   const [editHeight, setEditHeight] = useState('');
   const [editWeight, setEditWeight] = useState('');
+  const [Id, setId] = useState('');
 
   useEffect(() => {
     fetchUserProfileData();
@@ -26,6 +27,7 @@ const ProfilePage = () => {
       const response = await axios.get(`/userProfile/${user.userId}`);
       const data = await response.data;
       setUserData(data.data);
+      setId(data.data._id);
     } catch (error) {
       console.log('User Profile Error', error);
     }
@@ -33,39 +35,29 @@ const ProfilePage = () => {
 
   const handleEdit = () => {
     setEditable(true);
-    setEditName(username);
-    setEditAge(userData.age); 
-    setEditHeight(userData.height); 
-    setEditWeight(userData.weight); 
+    // setEditName(username);
+    setEditAge(userData.age.toString()); // Convert to string for TextInput
+    setEditHeight(userData.height.toString()); // Convert to string for TextInput
+    setEditWeight(userData.weight.toString()); // Convert to string for TextInput
   };
 
   const handleSave = async () => {
     try {
       const updatedData = {
-        name: editName,
         age: parseInt(editAge),
         height: parseInt(editHeight),
         weight: parseInt(editWeight),
       };
 
-
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-
-      await axios.patch(`/userProfile/${user.userId}`, updatedData);
-
-      setUsername(editName);
-      setUserData({
-        ...userData,
-        age: parseInt(editAge),
-        height: parseInt(editHeight),
-        weight: parseInt(editWeight),
-      });
+      console.log(user.userId);
+      await axios.patch(`/userProfile/${Id}`, updatedData);
+      fetchUserProfileData();
 
       setEditable(false);
     } catch (error) {
       console.log('Update Profile Error', error);
-      
     }
   };
 
@@ -80,12 +72,12 @@ const ProfilePage = () => {
       <View style={styles.container}>
         {editable ? (
           <>
-            <TextInput
+            {/* <TextInput
               style={styles.input}
               placeholder="Name"
               value={editName}
               onChangeText={setEditName}
-            />
+            /> */}
             <TextInput
               style={styles.input}
               placeholder="Age"

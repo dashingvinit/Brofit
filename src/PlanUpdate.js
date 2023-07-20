@@ -54,13 +54,15 @@ const PlanUpdate = () => {
     }
   };
 
-  const handlePlan = async(planId) => {
+  const handlePlan = async (planId) => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user.userId;
       console.log(planId);
       const response = await axios.patch(`/userProfile/newPlan/${Id}`, { planId });
+      console.log(response.data)
+      console.log(planId);
     } catch (error) {
       console.log('Failed to update plan:', error);
     }
