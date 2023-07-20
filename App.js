@@ -17,7 +17,7 @@ function App() {
   const deleteItemFromSecureStore = async (key) => {
     try {
       await SecureStore.deleteItemAsync(key);
-      console.log('Item deleted successfully');
+      // console.log('Item deleted successfully');
     } catch (error) {
       console.error('Failed to delete item:', error);
     }
@@ -54,7 +54,7 @@ function App() {
       const userRole = userObj.role;
       setRole(userRole);
       console.log('Role:', userRole);
-      console.log('User:', userObj);
+      // console.log('User:', userObj);
     } catch (error) {
       console.log(error);
     }

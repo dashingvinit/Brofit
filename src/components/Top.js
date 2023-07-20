@@ -62,7 +62,7 @@ const Top = (props) => {
             }}>
             Welcome Back
           </Text>
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>
+          <Text style={{ fontSize: 28, fontWeight: 'bold', color: 'white' }}>
             {name}
           </Text>
         </View>

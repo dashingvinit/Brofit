@@ -6,6 +6,7 @@ const Stack = createNativeStackNavigator();
 import Welcome from './Welcome';
 import Home from './Home';
 import PlanUpdate from './PlanUpdate';
+import AnimatedVideos from './AnimatedVideos';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (
@@ -18,6 +19,7 @@ const HomeStack = ({ setHandleLogout }) => {
       </Stack.Screen>
       <Stack.Screen name="PlanUpdate" component={PlanUpdate} />
       <Stack.Screen name="Welcome" component={Welcome} />
+      <Stack.Screen name="AnimatedVideos" component={AnimatedVideos} />
     </Stack.Navigator>
   );
 };

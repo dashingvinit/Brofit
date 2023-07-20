@@ -41,9 +41,9 @@ const Login = (props) => {
         console.log('Token Set');
       });
 
-      console.log('Response:', token);
+      // console.log('Response:', token);
       props.sethandleLogin();
-      alert('Login successful');
+      // alert('Login successful');
       props.navigation.navigate('Home2');
     } catch (error) {
       alert('Login failed');

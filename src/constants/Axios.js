@@ -44,9 +44,9 @@ export function setTokenHeader() {
   });
 }
 
-Axios.interceptors.request.use((config) => {
-  console.log('Request Headers:', config.headers);
-  return config;
-});
+// Axios.interceptors.request.use((config) => {
+//   console.log('Request Headers:', config.headers);
+//   return config;
+// });
 
 export default Axios;
