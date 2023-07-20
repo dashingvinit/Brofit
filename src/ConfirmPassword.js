@@ -8,8 +8,8 @@ import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
 
-const Forgetpassword = () => {
-  const [formData, setFormData] = useState({ email: ''});
+const ConfirmPassword = () => {
+  const [formData, setFormData] = useState({ password: '', confirmPassword: '' });
 
   const handleInputChange = (field, value) => {
     setFormData((prevFormData) => ({
@@ -17,19 +17,6 @@ const Forgetpassword = () => {
       [field]: value,
     }));
   };
-
-  const handleReset = async() =>{
-    try{
-      console.log(formData)
-      const response = await axios.post('/forgotPass',{ email: formData.email });
-      console.log(response);
-    }
-    catch(error)
-    {
-      console.log(error);
-    }
-
-  }
 
   return (
     <Background>
@@ -63,14 +50,22 @@ const Forgetpassword = () => {
               fontWeight: 'bold',
               marginBottom: 20,
             }}>
-            Enter credentials to reset
+            Enter New Password
           </Text>
-          <Field
-            placeholder="Email"
-            keyboardType="email-address"
-            value={formData.email}
-            onChangeText={(value) => handleInputChange('email', value)}
-          />
+            <Field
+                placeholder="Password"
+                secureTextEntry={true}
+                value={formData.password}
+                onChangeText={(value) => handleInputChange('password', value)}
+            />
+            <Field
+                placeholder="Confirm Password"
+                secureTextEntry={true}
+                value={formData.confirmPassword}
+                onChangeText={(value) =>
+                handleInputChange('confirmPassword', value)
+                }
+            />
           <View
             style={{
               alignItems: 'flex-end',
@@ -83,7 +78,7 @@ const Forgetpassword = () => {
             textColor={bgColor}
             bgColor={neon}
             btnLabel="Reset"
-            Press={handleReset}
+            // Press={handleLogin}
           />
           <View
             style={{
@@ -97,4 +92,5 @@ const Forgetpassword = () => {
     </Background>
   );
 };
-export default Forgetpassword
+
+export default ConfirmPassword
