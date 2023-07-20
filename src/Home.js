@@ -13,11 +13,18 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Home = (props) => {
   return (
-    <View style={{ backgroundColor: bgColor }}>
+    <View style={{ flex: 1, backgroundColor: bgColor, position: 'relative' }}>
+      {/* Circular lights */}
+      <View style={styles.lightTopLeft} />
+      <View style={styles.lightTopRight} />
+      <View style={styles.lightBottomLeft} />
+      <View style={styles.lightBottomRight} />
+
       <Top
         navigation={props.navigation}
         setHandleLogout={props.setHandleLogout}
       />
+
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>
@@ -70,10 +77,17 @@ const Home = (props) => {
   );
 };
 
+const commonLightStyles = {
+  width: 300,
+  height: 300,
+  borderRadius: 150,
+  position: 'absolute',
+  opacity: 0.5,
+  background: 'conic-gradient(rgba(255, 255, 255, 0.8) 100%, transparent 70%)',
+};
+
 const styles = StyleSheet.create({
   boxesContainer: {
-    // marginTop: 10,
-    // marginBottom: 10,
     flexDirection: 'row',
   },
   box: {
@@ -87,6 +101,27 @@ const styles = StyleSheet.create({
   },
   boxText: {
     color: neon,
+  },
+
+  lightTopLeft: {
+    ...commonLightStyles,
+    top: -150,
+    left: -150,
+  },
+  lightTopRight: {
+    ...commonLightStyles,
+    top: -150,
+    right: -150,
+  },
+  lightBottomLeft: {
+    ...commonLightStyles,
+    bottom: -150,
+    left: -150,
+  },
+  lightBottomRight: {
+    ...commonLightStyles,
+    bottom: -150,
+    right: -150,
   },
 });
 

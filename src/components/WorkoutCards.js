@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   slideableImage: {
-    width: 380,
+    width: 300,
     height: 400,
     marginRight: 20,
     borderRadius: 10,

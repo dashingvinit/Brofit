@@ -7,23 +7,10 @@ import {
   ImageBackground,
 } from 'react-native';
 import React from 'react';
-import { bgColor } from './constants/Constants';
+import { bgColor, WorkoutPlanData } from './constants/Constants';
 
 const WorkoutPlan = (props) => {
-  const data = [
-    {
-      id: '1',
-      title: 'Day 1',
-      content: 'Shoulders, chest, and core',
-      bg: 'grade1',
-    },
-    { id: '2', title: 'Day 2', content: 'Content for Card 2', bg: 'grade2' },
-    { id: '3', title: 'Day 3', content: 'Content for Card 3', bg: 'grade3' },
-    { id: '4', title: 'Day 4', content: 'Content for Card 1', bg: 'grade1' },
-    { id: '5', title: 'Day 5', content: 'Content for Card 2', bg: 'grade2' },
-    { id: '6', title: 'Day 6', content: 'Content for Card 3', bg: 'grade3' },
-  ];
-
+  const data = WorkoutPlanData;
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => props.navigation.navigate('Workouts', { item })}>
@@ -67,7 +54,7 @@ const WorkoutPlan = (props) => {
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>No plans available.</Text>}
-          contentContainerStyle={styles.flatListContainer}
+          contentContainerStyle={{ paddingBottom: 180 }}
         />
       </View>
     </View>
@@ -111,6 +98,9 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 12,
     color: 'rgba(255, 255, 255, 0.8)',
+  },
+  bottomSpace: {
+    height: 300, // Add the height as per your requirement to create enough space at the bottom
   },
 });
 
