@@ -1,4 +1,5 @@
 import { chest, leg, back, bicep, tricep, shoulder } from '../assets/images';
+import { barbellShoulderPress, dummbell } from '../assets/lottieFiles';
 
 export const neon = '#e0fe10';
 export const bgColor = '#1c2227';
@@ -44,31 +45,31 @@ export const WorkoutPlanData = [
         name: 'Barbell Shoulder Press',
         reps: '10-12',
         sets: '4',
-        lottieFile: 'exercise1.json',
+        lottieFile: barbellShoulderPress,
       },
       {
         name: 'Bench Press',
         reps: '8-10',
         sets: '4',
-        lottieFile: 'exercise2.json',
+        lottieFile: dummbell,
       },
       {
         name: 'Dumbbell Flyes',
         reps: '12-15',
         sets: '3',
-        lottieFile: 'exercise3.json',
+        lottieFile: barbellShoulderPress,
       },
       {
         name: 'Plank',
         reps: '30 seconds',
         sets: '3',
-        lottieFile: 'exercise4.json',
+        lottieFile: barbellShoulderPress,
       },
       {
         name: 'Russian Twists',
         reps: '15-20',
         sets: '3',
-        lottieFile: 'exercise5.json',
+        lottieFile: barbellShoulderPress,
       },
     ],
   },

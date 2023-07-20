@@ -1,5 +1,5 @@
 import React from 'react';
-import { Graph, Top, WorkoutCards, Userstatusbox } from './components';
+import { Graph, Top, WorkoutCards, Userstatusbox, Loading } from './components';
 import {
   View,
   Text,
@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { FontAwesome } from '@expo/vector-icons';
 
 const Home = (props) => {
   return (
@@ -19,7 +18,6 @@ const Home = (props) => {
       <View style={styles.lightTopRight} />
       <View style={styles.lightBottomLeft} />
       <View style={styles.lightBottomRight} />
-
       <Top
         navigation={props.navigation}
         setHandleLogout={props.setHandleLogout}

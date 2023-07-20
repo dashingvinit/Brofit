@@ -9,11 +9,13 @@ import WorkoutCards from './WorkoutCards';
 import CheckedIn from './CheckedIn';
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
-import Userstatusbox from './Userstatusbox'
+import Userstatusbox from './Userstatusbox';
+import Loading from './Loading';
 
 export {
   Field,
   FetchQuote,
+  Loading,
   Background,
   Btn,
   Graph,

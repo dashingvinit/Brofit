@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import { WebView } from 'react-native-webview';
 
 const VideoPage = () => {
@@ -17,13 +24,23 @@ const VideoPage = () => {
     <View style={styles.container}>
       <Text style={styles.heading}>Video Page</Text>
 
-      <TouchableOpacity onPress={() => toggleCollapse('chest')} style={styles.sectionHeader}>
+      <TouchableOpacity
+        onPress={() => toggleCollapse('chest')}
+        style={styles.sectionHeader}>
         <Text style={styles.sectionHeaderText}>Chest</Text>
-        <Text style={expandedSection === 'chest' ? styles.collapseIcon : styles.expandIcon}>
+        <Text
+          style={
+            expandedSection === 'chest'
+              ? styles.collapseIcon
+              : styles.expandIcon
+          }>
           {expandedSection === 'chest' ? '^' : '>'}
         </Text>
       </TouchableOpacity>
-      <ScrollView style={expandedSection === 'chest' ? styles.videoContainer : styles.collapsed}>
+      <ScrollView
+        style={
+          expandedSection === 'chest' ? styles.videoContainer : styles.collapsed
+        }>
         {expandedSection === 'chest' && (
           <View>
             <Text style={styles.videoTitle}>Video 1</Text>
@@ -36,13 +53,21 @@ const VideoPage = () => {
         )}
       </ScrollView>
 
-      <TouchableOpacity onPress={() => toggleCollapse('back')} style={styles.sectionHeader}>
+      <TouchableOpacity
+        onPress={() => toggleCollapse('back')}
+        style={styles.sectionHeader}>
         <Text style={styles.sectionHeaderText}>Back</Text>
-        <Text style={expandedSection === 'back' ? styles.collapseIcon : styles.expandIcon}>
+        <Text
+          style={
+            expandedSection === 'back' ? styles.collapseIcon : styles.expandIcon
+          }>
           {expandedSection === 'back' ? '^' : '>'}
         </Text>
       </TouchableOpacity>
-      <ScrollView style={expandedSection === 'back' ? styles.videoContainer : styles.collapsed}>
+      <ScrollView
+        style={
+          expandedSection === 'back' ? styles.videoContainer : styles.collapsed
+        }>
         {expandedSection === 'back' && (
           <View>
             <Text style={styles.videoTitle}>Video 1</Text>
@@ -55,13 +80,25 @@ const VideoPage = () => {
         )}
       </ScrollView>
 
-      <TouchableOpacity onPress={() => toggleCollapse('biceps')} style={styles.sectionHeader}>
+      <TouchableOpacity
+        onPress={() => toggleCollapse('biceps')}
+        style={styles.sectionHeader}>
         <Text style={styles.sectionHeaderText}>Biceps</Text>
-        <Text style={expandedSection === 'biceps' ? styles.collapseIcon : styles.expandIcon}>
+        <Text
+          style={
+            expandedSection === 'biceps'
+              ? styles.collapseIcon
+              : styles.expandIcon
+          }>
           {expandedSection === 'biceps' ? '^' : '>'}
         </Text>
       </TouchableOpacity>
-      <ScrollView style={expandedSection === 'biceps' ? styles.videoContainer : styles.collapsed}>
+      <ScrollView
+        style={
+          expandedSection === 'biceps'
+            ? styles.videoContainer
+            : styles.collapsed
+        }>
         {expandedSection === 'biceps' && (
           <View>
             <Text style={styles.videoTitle}>Video 1</Text>
@@ -74,13 +111,25 @@ const VideoPage = () => {
         )}
       </ScrollView>
 
-      <TouchableOpacity onPress={() => toggleCollapse('triceps')} style={styles.sectionHeader}>
+      <TouchableOpacity
+        onPress={() => toggleCollapse('triceps')}
+        style={styles.sectionHeader}>
         <Text style={styles.sectionHeaderText}>Triceps</Text>
-        <Text style={expandedSection === 'triceps' ? styles.collapseIcon : styles.expandIcon}>
+        <Text
+          style={
+            expandedSection === 'triceps'
+              ? styles.collapseIcon
+              : styles.expandIcon
+          }>
           {expandedSection === 'triceps' ? '^' : '>'}
         </Text>
       </TouchableOpacity>
-      <ScrollView style={expandedSection === 'triceps' ? styles.videoContainer : styles.collapsed}>
+      <ScrollView
+        style={
+          expandedSection === 'triceps'
+            ? styles.videoContainer
+            : styles.collapsed
+        }>
         {expandedSection === 'triceps' && (
           <View>
             <Text style={styles.videoTitle}>Video 1</Text>
@@ -93,13 +142,21 @@ const VideoPage = () => {
         )}
       </ScrollView>
 
-      <TouchableOpacity onPress={() => toggleCollapse('leg')} style={styles.sectionHeader}>
+      <TouchableOpacity
+        onPress={() => toggleCollapse('leg')}
+        style={styles.sectionHeader}>
         <Text style={styles.sectionHeaderText}>Leg</Text>
-        <Text style={expandedSection === 'leg' ? styles.collapseIcon : styles.expandIcon}>
+        <Text
+          style={
+            expandedSection === 'leg' ? styles.collapseIcon : styles.expandIcon
+          }>
           {expandedSection === 'leg' ? '^' : '>'}
         </Text>
       </TouchableOpacity>
-      <ScrollView style={expandedSection === 'leg' ? styles.videoContainer : styles.collapsed}>
+      <ScrollView
+        style={
+          expandedSection === 'leg' ? styles.videoContainer : styles.collapsed
+        }>
         {expandedSection === 'leg' && (
           <View>
             <Text style={styles.videoTitle}>Video 1</Text>
@@ -112,13 +169,25 @@ const VideoPage = () => {
         )}
       </ScrollView>
 
-      <TouchableOpacity onPress={() => toggleCollapse('shoulder')} style={styles.sectionHeader}>
+      <TouchableOpacity
+        onPress={() => toggleCollapse('shoulder')}
+        style={styles.sectionHeader}>
         <Text style={styles.sectionHeaderText}>Shoulder</Text>
-        <Text style={expandedSection === 'shoulder' ? styles.collapseIcon : styles.expandIcon}>
+        <Text
+          style={
+            expandedSection === 'shoulder'
+              ? styles.collapseIcon
+              : styles.expandIcon
+          }>
           {expandedSection === 'shoulder' ? '^' : '>'}
         </Text>
       </TouchableOpacity>
-      <ScrollView style={expandedSection === 'shoulder' ? styles.videoContainer : styles.collapsed}>
+      <ScrollView
+        style={
+          expandedSection === 'shoulder'
+            ? styles.videoContainer
+            : styles.collapsed
+        }>
         {expandedSection === 'shoulder' && (
           <View>
             <Text style={styles.videoTitle}>Video 1</Text>

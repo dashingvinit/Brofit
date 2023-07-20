@@ -16,7 +16,12 @@ const WorkoutCards = ({ navigation }) => {
 
   return (
     <View>
-      <View style={{ flexDirection: 'row' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <Text style={styles.pageTitle}>Personalized Plan</Text>
 
         <TouchableOpacity onPress={goToDetails}>
@@ -45,14 +50,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textContainer1: {
-    height: 40,
-    width: 150,
+    padding: 10,
     backgroundColor: '#2a2f37',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
-    marginLeft: 60,
-    marginTop: 10,
   },
   pageTitle2: {
     color: neon,
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   slideableImage: {
-    width: 300,
+    width: 380,
     height: 400,
     marginRight: 20,
     borderRadius: 10,

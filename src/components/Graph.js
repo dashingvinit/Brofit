@@ -2,6 +2,7 @@ import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import Loading from './Loading';
 import React, { useState, useEffect } from 'react';
 import axios from '../constants/Axios';
 import { bgLight, neon } from '../constants/Constants';
@@ -79,7 +80,7 @@ const Graph = () => {
   const screenWidth = Dimensions.get('window').width;
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <Loading />;
   }
 
   return (
