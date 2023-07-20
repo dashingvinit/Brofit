@@ -43,16 +43,16 @@ const Plans = () => {
     getPlans();
   }, []);
 
-  const handleDelete = async (planId) => {
-    try {
-      const response = await axios.delete(`/plan/${planId}`);
-      const data1 = await response.data;
-      setPlans(data1.data.plans);
-      getPlans();
-    } catch (error) {
-      console.log('Error:', error);
-    }
-  };
+  // const handleDelete = async (planId) => {
+  //   try {
+  //     const response = await axios.delete(`/plan/${planId}`);
+  //     const data1 = await response.data;
+  //     setPlans(data1.data.plans);
+  //     getPlans();
+  //   } catch (error) {
+  //     console.log('Error:', error);
+  //   }
+  // };
 
   const handleCreatePlan = async () => {
     try {
@@ -137,17 +137,17 @@ const Plans = () => {
                     {plan.validity}
                   </Text>
                 </View>
-                <View style={{}}>
+                <View style={{alignContent:'center', justifyContent:'center'}}>
                   <TouchableOpacity
                     onPress={() => handleEdit(plan)}
                     style={styles.createButton}>
                     <Text style={styles.createButtonText}>Edit</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     onPress={() => handleDelete(plan._id)}
                     style={styles.createButton}>
                     <Text style={styles.createButtonText}>Delete</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
             ))
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: bgLight,
     borderRadius: 5,
     paddingBottom: 20,
+    width:250,
   },
   h1: {
     fontSize: 20,
@@ -248,7 +249,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     alignContent: 'center',
-
     height: 50,
     margin: 20,
   },
