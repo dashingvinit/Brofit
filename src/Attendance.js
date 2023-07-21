@@ -52,13 +52,13 @@ const Attendance = () => {
     fetchattendance();
   }, []);
 
-  const handleCheckout = async () => {
+  const handleCheckout = async () => { 
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user.userId;
-      console.log(Id);
       const response = await axios.patch(`/attendance/${Id}`);
+      console.log(response.data)
       alert('CheckOut Done');
     } catch (error) {
       alert('Error: ' + error);
@@ -67,6 +67,9 @@ const Attendance = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
+      <View style={{alignItems:'center',marginTop:20,marginBottom:20}}>
+        <Text style={{color:'white',fontSize:24}}>Daily Attendance</Text>
+      </View>
       <View style={{ flex: 1 }}>
         <Calendar
           style={{
@@ -106,8 +109,9 @@ const Attendance = () => {
           style={{
             backgroundColor: bgLight,
             paddingVertical: 20,
-            paddingHorizontal: 20,
+            paddingHorizontal:30,
             borderRadius: 30,
+            width:150,
           }}
           onPress={handleCheckout}>
           <Text style={{ color: 'white', fontWeight: 'bold' }}> CheckOUT </Text>
