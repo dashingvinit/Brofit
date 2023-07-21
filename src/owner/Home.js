@@ -21,26 +21,32 @@ const Home = (props) => {
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>
-              <Ionicons
-                name="ios-heart-outline"
-                style={{
-                  color: neon,
-                }}
-                size={50}
-              />
-            </Text>
+          <TouchableOpacity
+              onPress={() => props.navigation.navigate('ActiveList')}>
+              <Text style={styles.boxText}>
+                <Ionicons
+                  name="ios-heart-outline"
+                  style={{
+                    color: neon,
+                  }}
+                  size={50}
+                />
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.box}>
-            <Text style={styles.boxText}>
-              <Ionicons
-                name="ios-bar-chart"
-                style={{
-                  color: neon,
-                }}
-                size={50}
-              />
-            </Text>
+          <TouchableOpacity
+              onPress={() => props.navigation.navigate('InactiveList')}>
+              <Text style={styles.boxText}>
+                <Ionicons
+                  name="ios-bar-chart"
+                  style={{
+                    color: neon,
+                  }}
+                  size={50}
+                />
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.box}>
             <TouchableOpacity>

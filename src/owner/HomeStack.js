@@ -6,6 +6,8 @@ const Stack = createNativeStackNavigator();
 import Welcome from '../Welcome';
 import Home from './Home';
 import UserProfile from './UserProfile';
+import ActiveList from './ActiveList';
+import InactiveList from './InactiveList';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (
@@ -17,6 +19,8 @@ const HomeStack = ({ setHandleLogout }) => {
         {(props) => <Home {...props} setHandleLogout={setHandleLogout} />}
       </Stack.Screen>
       <Stack.Screen name="UserProfile" component={UserProfile} />
+      <Stack.Screen name="ActiveList" component={ActiveList} />
+      <Stack.Screen name="InactiveList" component={InactiveList} />
       <Stack.Screen name="Welcome" component={Welcome} />
     </Stack.Navigator>
   );
