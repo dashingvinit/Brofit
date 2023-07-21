@@ -11,6 +11,7 @@ import Home from '../Home';
 import OwnerHome from '../owner/Home';
 import AdminPage from '../admin/Adminpage';
 import Forgetpassword from '../Forgetpassword';
+import ConfirmPass from '../ConfirmPassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ const StackNav = ({ sethandleLogin }) => {
       screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Forgetpassword" component={Forgetpassword} />
+
       <Stack.Screen name="ProfileSetup">
         {(props) => <ProfileSetup {...props} sethandleLogin={sethandleLogin} />}
       </Stack.Screen>
@@ -34,11 +35,14 @@ const StackNav = ({ sethandleLogin }) => {
       <Stack.Screen name="AdminLogin">
         {(props) => <AdminLogin {...props} sethandleLogin={sethandleLogin} />}
       </Stack.Screen>
-      {/*added for Users */}
+      {/* Rest Password Screens */}
+      <Stack.Screen name="Forgetpassword" component={Forgetpassword} />
+      <Stack.Screen name="ConfirmPass" component={ConfirmPass} />
+      {/*added for Users home */}
       <Stack.Screen name="Home1" component={Home} />
-      {/*added for Owners */}
+      {/*added for Owners home */}
       <Stack.Screen name="Home2" component={OwnerHome} />
-      {/*added for Admins */}
+      {/*added for Admins home */}
       <Stack.Screen name="Adminpage" component={AdminPage} />
     </Stack.Navigator>
   );

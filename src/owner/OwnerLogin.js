@@ -76,9 +76,9 @@ const OwnerLogin = (props) => {
         </Text>
         <View
           style={{
-            backgroundColor: '#1d2226',
+            backgroundColor: bgColor,
             height: 700,
-            width: 400,
+            width: '100%',
             borderTopLeftRadius: 130,
             paddingTop: 100,
             alignItems: 'center',

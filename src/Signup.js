@@ -102,7 +102,7 @@ const Signup = (props) => {
           style={{
             backgroundColor: bgColor,
             height: 700,
-            width: 400,
+            width: '100%',
             borderTopLeftRadius: 130,
             paddingTop: 50,
             alignItems: 'center',

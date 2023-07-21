@@ -75,9 +75,9 @@ const Login = (props) => {
         </Text>
         <View
           style={{
-            backgroundColor: '#1d2226',
+            backgroundColor: bgColor,
             height: 700,
-            width: 400,
+            width: '100%',
             borderTopLeftRadius: 130,
             paddingTop: 100,
             alignItems: 'center',
@@ -113,7 +113,8 @@ const Login = (props) => {
               paddingRight: 16,
               marginBottom: 200,
             }}>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Forgetpassword')}>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Forgetpassword')}>
               <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
                 Forgot Password ?
               </Text>

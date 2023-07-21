@@ -9,6 +9,13 @@ import AdminNav from './src/constants/AdminNav';
 import OwnerNav from './src/constants/OwnerNav';
 
 function App() {
+  const linking = {
+    prefixes: ['https://brofit.onrender.com', 'brofit://'],
+    config: {
+      screens: {},
+    },
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState('');
 
@@ -77,7 +84,7 @@ function App() {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       {isLoggedIn ? (
         renderNavbarBasedOnRole()
       ) : (
