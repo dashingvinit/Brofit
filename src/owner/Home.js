@@ -1,5 +1,5 @@
 import React from 'react';
-import { Graph, Top, CheckedIn } from '../components';
+import { Graph, Top, CheckedIn, OwnerStatus } from '../components';
 import {
   View,
   Text,
@@ -32,6 +32,7 @@ const Home = (props) => {
                   size={50}
                 />
               </Text>
+              <Text style={{color:neon}}> Active</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.box}>
@@ -46,21 +47,20 @@ const Home = (props) => {
                   size={50}
                 />
               </Text>
+              <Text style={{color:neon}}>Inactive</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.box}>
-            <TouchableOpacity>
               <Text style={{ fontSize: 40 }}>
                 <Ionicons
-                  name="ios-timer-outline"
+                  name="person"
                   style={{
                     color: neon,
                   }}
                   size={50}
                 />
               </Text>
-              <Text style={{color:neon,textAlign:'center'}}>5</Text>
-            </TouchableOpacity>
+              <OwnerStatus />
           </View>
         </View>
         <Graph />
