@@ -37,7 +37,7 @@ const ActiveList = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
       <View style={{ marginTop: 20, alignItems: 'center' }}>
-        <Text style={styles.heading}>Inactive Members</Text>
+        <Text style={styles.heading}>Active Members</Text>
       </View>
       <ScrollView>
         {loading ? (
