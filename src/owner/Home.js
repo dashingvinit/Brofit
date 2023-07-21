@@ -59,6 +59,7 @@ const Home = (props) => {
                   size={50}
                 />
               </Text>
+              <Text style={{color:neon,textAlign:'center'}}>5</Text>
             </TouchableOpacity>
           </View>
         </View>
