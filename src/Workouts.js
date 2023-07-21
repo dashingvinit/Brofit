@@ -15,7 +15,8 @@ const Workouts = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headers}>Workouts</Text>
+      <Text style={styles.headers}>{item.title}</Text>
+      <Text style={styles.content}>{item.content}</Text>
       <ScrollView>
         <View style={{ paddingBottom: 100 }}>
           {workouts.map((workout) => (
@@ -55,6 +56,12 @@ const styles = StyleSheet.create({
   headers: {
     fontSize: 32,
     fontWeight: 'bold',
+    color: neon,
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  content: {
+    fontSize: 20,
     color: 'white',
     textAlign: 'center',
     marginBottom: 20,

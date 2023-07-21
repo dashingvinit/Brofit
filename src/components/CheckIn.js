@@ -42,8 +42,10 @@ const CheckIn = ({ checkINStatus }) => {
     try {
       const response = await axios.post('/attendance');
       checkINStatus();
+      console.log(response);
       alert('CheckIN Done');
     } catch (error) {
+      console.log(error);
       alert('Error: ' + error);
     }
   };
