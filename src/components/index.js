@@ -10,12 +10,12 @@ import CheckedIn from './CheckedIn';
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
 import Userstatusbox from './Userstatusbox';
-import Loading from './Loading';
+import GraphLoading from './GraphLoading';
 
 export {
   Field,
   FetchQuote,
-  Loading,
+  GraphLoading,
   Background,
   Btn,
   Graph,

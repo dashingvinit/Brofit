@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
-import Loading from './Loading';
+import GraphLoading from './GraphLoading';
 import React, { useState, useEffect } from 'react';
 import axios from '../constants/Axios';
 import { bgLight, neon } from '../constants/Constants';
@@ -79,10 +79,6 @@ const Graph = () => {
 
   const screenWidth = Dimensions.get('window').width;
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <View
       style={{
@@ -92,43 +88,49 @@ const Graph = () => {
         padding: 10,
         margin: 6,
       }}>
-      <ScrollView horizontal contentContainerStyle={{ width: screenWidth * 2 }}>
-        <View>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              marginBottom: 10,
-              marginLeft: 4,
-              color: 'white',
-            }}>
-            Gym Activity - 5 min intervals between updates - 24hrs of data
-          </Text>
-          <BarChart
-            data={data}
-            width={2 * screenWidth}
-            height={220}
-            yAxisInterval={0}
-            withHorizontalLabels={true}
-            contentInset={{ left: 0, right: 10 }}
-            chartConfig={{
-              backgroundGradientFrom: '#1E2923',
-              backgroundGradientFromOpacity: 0,
-              backgroundGradientTo: neon,
-              backgroundGradientToOpacity: 0.1,
-              color: (opacity = 1) => `rgba(224, 254, 16, ${opacity})`,
-              strokeWidth: 3,
-              barPercentage: 0.7,
-              useShadowColorFromDataset: false,
-            }}
-            style={{
-              marginLeft: -20,
-              borderRadius: 20,
-            }}
-            verticalLabelRotation={0}
-          />
-        </View>
-      </ScrollView>
+      {isLoading ? (
+        <GraphLoading />
+      ) : (
+        <ScrollView
+          horizontal
+          contentContainerStyle={{ width: screenWidth * 2 }}>
+          <View>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                marginBottom: 10,
+                marginLeft: 4,
+                color: 'white',
+              }}>
+              Gym Activity - 5 min intervals between updates - 24hrs of data
+            </Text>
+            <BarChart
+              data={data}
+              width={2 * screenWidth}
+              height={220}
+              yAxisInterval={0}
+              withHorizontalLabels={true}
+              contentInset={{ left: 0, right: 10 }}
+              chartConfig={{
+                backgroundGradientFrom: '#1E2923',
+                backgroundGradientFromOpacity: 0,
+                backgroundGradientTo: neon,
+                backgroundGradientToOpacity: 0.1,
+                color: (opacity = 1) => `rgba(224, 254, 16, ${opacity})`,
+                strokeWidth: 3,
+                barPercentage: 0.7,
+                useShadowColorFromDataset: false,
+              }}
+              style={{
+                marginLeft: -20,
+                borderRadius: 20,
+              }}
+              verticalLabelRotation={0}
+            />
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 };

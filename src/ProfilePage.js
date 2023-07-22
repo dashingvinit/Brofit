@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   TextInput,
 } from 'react-native';
+import GraphLoading from './components';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, neon, bgLight } from './constants/Constants';
 import axios from './constants/Axios';
@@ -70,9 +73,36 @@ const ProfilePage = () => {
   if (!userData) return null;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
-      <View style={{ alignItems: 'center', paddingVertical: 20 }}>
-        <Text style={{ color: neon, fontSize: 28 }}>Profile 😉</Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, paddingTop: 20 }}>
+      <View style={styles.profileCard}>
+        <View style={styles.profileContainer}>
+          <Image
+            source={require('./assets/images/profile.jpg')}
+            style={{ width: 100, height: 100, borderRadius: 50 }}
+          />
+          <Text style={styles.userName}>{username}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+            Age: {userData?.age}
+          </Text>
+        </View>
+        <View style={styles.profileIcons}>
+          <View style={{ alignItems: 'center' }}>
+            {userData?.status == 'active' ? (
+              <MaterialCommunityIcons
+                name="card-bulleted-outline"
+                size={30}
+                color={bgColor}
+              />
+            ) : (
+              <MaterialCommunityIcons
+                name="card-bulleted-off-outline"
+                size={30}
+                color={bgColor}
+              />
+            )}
+            <Text>Plan</Text>
+          </View>
+        </View>
       </View>
 
       <View style={styles.container}>
@@ -89,21 +119,18 @@ const ProfilePage = () => {
               placeholder="Age"
               value={editAge}
               onChangeText={setEditAge}
-              keyboardType="numeric"
             />
             <TextInput
               style={styles.input}
               placeholder="Height"
               value={editHeight}
               onChangeText={setEditHeight}
-              keyboardType="numeric"
             />
             <TextInput
               style={styles.input}
               placeholder="Weight"
               value={editWeight}
               onChangeText={setEditWeight}
-              keyboardType="numeric"
             />
             <TouchableOpacity onPress={handleSave} style={styles.button}>
               <Text style={styles.buttonText}>Save</Text>
@@ -111,8 +138,6 @@ const ProfilePage = () => {
           </>
         ) : (
           <>
-            <Text style={styles.text}>Name: {username}</Text>
-            <Text style={styles.text}>Age: {userData?.age}</Text>
             <Text style={styles.text}>Height: {userData?.height}</Text>
             <Text style={styles.text}>Weight: {userData?.weight}</Text>
             <Text style={styles.text}>
@@ -132,16 +157,40 @@ const ProfilePage = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 40,
-    paddingVertical: 20,
-    backgroundColor: bgLight,
+  profileCard: {
+    backgroundColor: neon,
     borderRadius: 30,
-    marginHorizontal: 20,
-    marginVertical: 40,
   },
+  profileContainer: {
+    paddingVertical: 40,
+    paddingHorizontal: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  userName: {
+    color: bgColor,
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  profileIcons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+    paddingHorizontal: 50,
+    paddingBottom: 30,
+  },
+
+  container: {
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    marginTop: 20,
+  },
+
   text: {
-    color: neon,
+    color: bgColor,
     marginVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
@@ -158,6 +207,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: neon,
     fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   input: {
     backgroundColor: 'white',
