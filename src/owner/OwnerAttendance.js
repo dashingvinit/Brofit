@@ -14,6 +14,7 @@ import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Userprofile from './UserProfile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useIsFocused } from '@react-navigation/native';
 
 const OwnerAttendance = (props) => {
   const [searchDay, setSearchDay] = useState('');
@@ -31,7 +32,6 @@ const OwnerAttendance = (props) => {
       const date = `${searchDay}-${searchMonth}-${searchYear}`;
       const response = await axios.get(`attendance/${Id}/${date}`);
       const data = response.data.data;
-      console.log(data);
       setAttendanceData(data);
       setIsLoading(false);
     } catch (error) {
@@ -50,7 +50,7 @@ const OwnerAttendance = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, padding: 10 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, padding: 16 }}>
       <Text
         style={{
           fontSize: 24,
@@ -133,7 +133,7 @@ const OwnerAttendance = (props) => {
       </View>
 
       {!attendanceData.length && !isLoading && (
-        <View style={{ marginLeft: 20 }}>
+        <View style={{ marginLeft: 20, marginVertical: 80 }}>
           <Image
             source={require('../assets/images/dumbell.gif')}
             style={{ width: 300, height: 300 }}
@@ -175,39 +175,86 @@ const OwnerAttendance = (props) => {
                   Attendance Data
                 </Text>
               </View>
+
+              {/* Adding fixed headings for Name, Check-in, and Check-out */}
               <View
                 style={{
+                  flexDirection: 'row',
+                  marginHorizontal: 8,
+                  marginTop: 30,
+                  marginBottom: 5,
                   backgroundColor: bgLight,
                   borderRadius: 25,
-                  marginTop: 20,
-                  marginBottom: 60,
+                  height: 50,
+                  paddingTop: 10,
                 }}>
-                {attendanceData.map((dataEntry) => (
-                  <TouchableOpacity
-                    key={dataEntry._id}
-                    onPress={() => handlePress(dataEntry.userId)}>
-                    <View
-                      style={{
-                        height: 50,
-                        marginHorizontal: 10,
-                        marginVertical: 20,
-                      }}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Ionicons
-                          name="person"
-                          color={neon}
-                          size={20}
-                          marginLeft={10}
-                        />
-                        <Text
-                          style={{ color: neon, fontSize: 20, marginLeft: 20 }}>
-                          {dataEntry.userId.name}
-                        </Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                ))}
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    flex: 1,
+                    marginLeft: 30,
+                  }}>
+                  Name
+                </Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    flex: 1,
+                    marginLeft: 40,
+                  }}>
+                  Check-in
+                </Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 18,
+                    flex: 1,
+                    marginLeft: 40,
+                  }}>
+                  Check-out
+                </Text>
               </View>
+              <ScrollView>
+                <View
+                  style={{
+                    backgroundColor: bgLight,
+                    borderRadius: 25,
+                    marginTop: 20,
+                    marginBottom: 60,
+                  }}>
+                  {attendanceData.map((dataEntry) => (
+                    <TouchableOpacity
+                      key={dataEntry._id}
+                      onPress={() => handlePress(dataEntry.userId)}>
+                      <View
+                        style={{
+                          height: 50,
+                          marginHorizontal: 10,
+                          marginVertical: 20,
+                        }}>
+                        <View style={{ flexDirection: 'row' }}>
+                          <Ionicons
+                            name="person"
+                            color={neon}
+                            size={20}
+                            marginLeft={10}
+                          />
+                          <Text
+                            style={{
+                              color: neon,
+                              fontSize: 20,
+                              marginLeft: 20,
+                            }}>
+                            {dataEntry.userId.name}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </ScrollView>
             </View>
           </ScrollView>
         )

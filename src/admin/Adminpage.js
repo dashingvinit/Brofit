@@ -109,7 +109,6 @@ const AdminPage = (props) => {
               placeholder="owner"
               value={owner}
               onChangeText={setowner}
-              keyboardType="string"
             />
             <TouchableOpacity
               onPress={handleFormSubmit}

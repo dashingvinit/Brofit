@@ -11,6 +11,7 @@ import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
 import Userstatusbox from './Userstatusbox';
 import GraphLoading from './GraphLoading';
+import OwnerStatus from './OwnerStatus';
 
 export {
   Field,
@@ -26,4 +27,5 @@ export {
   CheckIn,
   CheckOut,
   Userstatusbox,
+  OwnerStatus,
 };

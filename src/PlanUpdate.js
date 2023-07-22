@@ -141,7 +141,7 @@ const PlanUpdate = () => {
             </TouchableOpacity>
           </View>
         ) : (
-          <View>
+          <View style={{alignItems:'center'}}>
             <View style={styles.planContainer}>
               <Text style={styles.planName}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Plan Name : </Text>
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     padding: 16,
     margin: 8,
     borderRadius: 25,
-    width:300,
+    width:350,
     marginLeft:20,
   },
   planContainer1: {
