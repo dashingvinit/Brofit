@@ -43,7 +43,7 @@ const UserProfile = (props) => {
         style={{
           color: 'white',
           textAlign: 'center',
-          fontSize: 24,
+          fontSize: 34,
           paddingVertical: 20,
         }}>
         Details of User
@@ -51,17 +51,18 @@ const UserProfile = (props) => {
       <View style={styles.container}>
         {userData ? (
           <>
-            <Text style={styles.text}>Name: {user.name}</Text>
-            <Text style={styles.text}>Age: {userData.age}</Text>
-            <Text style={styles.text}>Height: {userData.height}</Text>
-            <Text style={styles.text}>Weight: {userData.weight}</Text>
+            <Text style={styles.text}>Name: <Text style={styles.text1}>{user.name}</Text></Text>
+            <Text style={styles.text}>Email: <Text style={styles.text1}>{userData.userId.email}</Text></Text>
+            <Text style={styles.text}>Age: <Text style={styles.text1}>{userData.age}</Text></Text>
+            <Text style={styles.text}>Height: <Text style={styles.text1}>{userData.height}</Text></Text>
+            <Text style={styles.text}>Weight: <Text style={styles.text1}>{userData.weight}</Text></Text>
             <Text style={styles.text}>
-              Plan: {userData.plan ? userData.plan.name : 'Plans not found'}
+              Plan: <Text style={styles.text1}>{userData.plan ? userData.plan.name : 'Plans not found'}</Text>
             </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text}>Status: {userData.status}</Text>
+              <Text style={styles.text}>Status: <Text style={styles.text1}>{userData.status}</Text></Text>
               <TouchableOpacity onPress={handleStatus} style={styles.button}>
-                <Text style={styles.buttonText}>Click Me</Text>
+                <Text style={styles.buttonText}>Change</Text>
               </TouchableOpacity>
             </View>
           </>
@@ -80,12 +81,18 @@ const styles = StyleSheet.create({
     backgroundColor: bgLight,
     borderRadius: 30,
     marginHorizontal: 20,
-    marginVertical: 40,
+    marginVertical: 30,
   },
   text: {
+    color: 'white',
+    marginVertical: 10,
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  text1: {
     color: neon,
     marginVertical: 10,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
   },
   button: {

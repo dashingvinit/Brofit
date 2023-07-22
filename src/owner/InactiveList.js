@@ -71,7 +71,7 @@ const InactiveList = () => {
                   Status: <Text style={styles.dataItem1}>{member.status}</Text>
                 </Text>
                 <TouchableOpacity onPress={() => handleEdit(member.userId._id)}>
-                  <Text style={styles.editButton}>Edit</Text>
+                  <Text style={styles.editButton}>Change</Text>
                 </TouchableOpacity>
               </View>
               <Text style={styles.dataItem}>
@@ -126,9 +126,14 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
   },
   editButton: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+    color: neon,
+    fontSize: 16,
+    backgroundColor:bgColor,
+    height:30,
+    width:90,
+    textAlign:'center',
+    borderRadius:10,
+    paddingVertical:4,
   },
 });
 
