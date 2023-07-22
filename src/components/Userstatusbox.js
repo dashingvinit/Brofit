@@ -3,6 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import { neon } from '../constants/Constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Userstatusbox = () => {
   const [userData, setUserData] = useState(null);
@@ -13,20 +14,46 @@ const Userstatusbox = () => {
 
   const fetchUserProfileData = async () => {
     try {
-        const userString = await SecureStore.getItemAsync('user');
-        const user = JSON.parse(userString); 
-        const response = await axios.get(`/userProfile/${user.userId}`);
-        const data =await response.data;
-        console.log(data.data)
-        setUserData(data.data.status)
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const response = await axios.get(`/userProfile/${user.userId}`);
+      const data = await response.data;
+      // console.log(data.data);
+      const status = data.data.status;
+      const capitalizedUserData =
+        status.charAt(0).toUpperCase() + status.slice(1);
+      setUserData(capitalizedUserData);
     } catch (error) {
       console.log('User Profile Error', error);
     }
   };
 
   return (
-    <View>
-      <Text style={{color:neon,fontWeight:'bold',fontSize:16}}>{userData}</Text>
+    <View style={{ alignItems: 'center' }}>
+      {userData === 'Active' ? (
+        <Ionicons
+          name="ios-heart-outline"
+          style={{
+            color: neon,
+          }}
+          size={50}
+        />
+      ) : (
+        <Ionicons
+          name="ios-heart-dislike-outline"
+          style={{
+            color: neon,
+            fontWeight: 'bold',
+          }}
+          size={50}
+        />
+      )}
+      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
+        {userData}
+      </Text>
+      <Text style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+        Status
+      </Text>
     </View>
   );
 };

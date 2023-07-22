@@ -26,37 +26,31 @@ const Home = (props) => {
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>
-              <Ionicons
-                name="ios-heart-outline"
-                style={{
-                  color: neon,
-                }}
-                size={50}
-              />
-            </Text>
-            <Text>
-              <Userstatusbox />
-            </Text>
+            <Userstatusbox />
           </View>
           <View style={styles.box}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('PlanUpdate')}>
-              <Text style={styles.boxText}>
+              <View style={{ alignItems: 'center' }}>
                 <Ionicons
-                  name="ios-bar-chart"
+                  name="list-outline"
                   style={{
                     color: neon,
                   }}
                   size={50}
                 />
-              </Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                <Text
+                  style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                  Selected
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
           <View style={styles.box}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('Timer')}>
-              <Text style={{ fontSize: 40 }}>
+              <View style={{ alignItems: 'center' }}>
                 <Ionicons
                   name="ios-timer-outline"
                   style={{
@@ -64,7 +58,12 @@ const Home = (props) => {
                   }}
                   size={50}
                 />
-              </Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Track</Text>
+                <Text
+                  style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                  Time
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -98,7 +97,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   boxText: {
-    color: neon,
+    color: 'white',
+    alignItems: 'center',
   },
 
   lightTopLeft: {

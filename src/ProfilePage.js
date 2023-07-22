@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import GraphLoading from './components';
+import { GraphLoading } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, neon, bgLight } from './constants/Constants';
@@ -23,10 +23,7 @@ const ProfilePage = () => {
   const [editHeight, setEditHeight] = useState('');
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
-
-  useEffect(() => {
-    fetchUserProfileData();
-  }, []);
+  const [planExiper, setPlanExiper] = useState('');
 
   const fetchUserProfileData = async () => {
     try {
@@ -53,23 +50,51 @@ const ProfilePage = () => {
   const handleSave = async () => {
     try {
       const updatedData = {
-        age: parseInt(editAge),
-        height: (editHeight),
-        weight: (editWeight),
+        age: parseFloat(editAge),
+        height: editHeight,
+        weight: editWeight,
       };
 
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       await axios.patch(`/userProfile/${Id}`, updatedData);
       fetchUserProfileData();
-
       setEditable(false);
     } catch (error) {
       console.log('Update Profile Error', error);
     }
   };
 
-  if (!userData) return null;
+  const getDifferenceInDays = (dateString) => {
+    if (!dateString) return null;
+
+    const [day, month, year] = dateString.split('-').map(Number);
+    const givenDate = new Date(year, month - 1, day);
+
+    if (isNaN(givenDate.getTime())) return null;
+
+    const currentDate = new Date();
+
+    const timeDifferenceInMilliseconds = givenDate - currentDate;
+
+    const differenceInDays = Math.floor(
+      timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)
+    );
+    return differenceInDays;
+  };
+
+  useEffect(() => {
+    const fetchAndCalculatePlanExpiry = async () => {
+      await fetchUserProfileData();
+      const givenDateString = userData?.planExpiryDate;
+      const differenceInDays = getDifferenceInDays(givenDateString);
+      setPlanExiper(differenceInDays);
+    };
+
+    fetchAndCalculatePlanExpiry();
+  }, []);
+
+  if (!userData) return <GraphLoading />;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, paddingTop: 20 }}>
@@ -80,11 +105,8 @@ const ProfilePage = () => {
             style={{ width: 100, height: 100, borderRadius: 50 }}
           />
           <Text style={styles.userName}>{username}</Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-            Email: {userData?.userId.email}
-          </Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
-            Age: {userData?.age}
+          <Text style={{ fontWeight: 'bold', fontSize: 16, color: bgLight }}>
+            {userData?.userId.email}
           </Text>
         </View>
         <View style={styles.profileIcons}>
@@ -102,7 +124,17 @@ const ProfilePage = () => {
                 color={bgColor}
               />
             )}
+            <Text>{userData?.status}</Text>
             <Text>Plan</Text>
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <MaterialCommunityIcons
+              name="calendar-clock-outline"
+              size={30}
+              color={bgColor}
+            />
+            <Text>Expiries In</Text>
+            <Text>{planExiper} days</Text>
           </View>
         </View>
       </View>
@@ -140,9 +172,12 @@ const ProfilePage = () => {
           </>
         ) : (
           <>
+            <Text style={styles.text}>Age: {userData?.age}</Text>
             <Text style={styles.text}>Height: {userData?.height}</Text>
             <Text style={styles.text}>Weight: {userData?.weight}</Text>
-            <Text style={styles.text}>PlanExpiryDate: {userData?.planExpiryDate}</Text>
+            <Text style={styles.text}>
+              PlanExpiryDate: {userData?.planExpiryDate}
+            </Text>
             <Text style={styles.text}>
               Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
             </Text>
