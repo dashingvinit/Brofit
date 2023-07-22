@@ -20,7 +20,11 @@ const InactiveList = () => {
       setInactiveData(data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      if (error.response && error.response.status === 404) {
+        console.log('Data not found');
+      } else {
+        console.error('Error fetching attendance data:', error);
+      }
       setLoading(false);
     }
   };

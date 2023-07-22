@@ -14,14 +14,13 @@ const ActiveList = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const gymId = user.gymId;
-      console.log(gymId);
       const response = await axios.get(`/userProfile/${gymId}/active`);
       const data = await response.data.data;
       setInactiveData(data);
       setLoading(false);
     } catch (error) {
         if (error.response && error.response.status === 404) {
-            console.log('Data not found. Status: 404');
+            console.log('Data not found');
             setInactiveData([]); 
         }else {
             console.error('Error fetching data:', error);
