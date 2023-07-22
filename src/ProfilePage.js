@@ -54,13 +54,12 @@ const ProfilePage = () => {
     try {
       const updatedData = {
         age: parseInt(editAge),
-        height: parseInt(editHeight),
-        weight: parseInt(editWeight),
+        height: (editHeight),
+        weight: (editWeight),
       };
 
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      console.log(user.userId);
       await axios.patch(`/userProfile/${Id}`, updatedData);
       fetchUserProfileData();
 
@@ -81,6 +80,9 @@ const ProfilePage = () => {
             style={{ width: 100, height: 100, borderRadius: 50 }}
           />
           <Text style={styles.userName}>{username}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
+            Email: {userData?.userId.email}
+          </Text>
           <Text style={{ fontWeight: 'bold', fontSize: 16 }}>
             Age: {userData?.age}
           </Text>
@@ -140,6 +142,7 @@ const ProfilePage = () => {
           <>
             <Text style={styles.text}>Height: {userData?.height}</Text>
             <Text style={styles.text}>Weight: {userData?.weight}</Text>
+            <Text style={styles.text}>PlanExpiryDate: {userData?.planExpiryDate}</Text>
             <Text style={styles.text}>
               Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
             </Text>
