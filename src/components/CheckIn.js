@@ -38,11 +38,10 @@ const CheckIn = ({ checkINStatus }) => {
   //   }
   // }, [userLocation]);
 
-  const handleCheckIn = async() => {
+  const handleCheckIn = async () => {
     try {
       const response = await axios.post('/attendance');
       checkINStatus();
-      alert('CheckIN Done');
     } catch (error) {
       if (error.response && error.response.status === 500) {
         alert('Internal Server Error: Please try again later.');
@@ -56,11 +55,12 @@ const CheckIn = ({ checkINStatus }) => {
     <View>
       <TouchableOpacity
         style={{
+          marginRight: 5,
           backgroundColor: neon,
           paddingVertical: 20,
           paddingHorizontal: 40,
           borderRadius: 30,
-          width:150,
+          width: 150,
         }}
         // disabled={disableButton}
         onPress={handleCheckIn}>

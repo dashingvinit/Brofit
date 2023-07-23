@@ -24,7 +24,7 @@ const ProfilePage = () => {
   const [editHeight, setEditHeight] = useState('');
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
-  const [planExiper, setPlanExiper] = useState('');
+  const [planExiper, setPlanExiper] = useState(null);
 
   const fetchUserProfileData = async () => {
     try {
@@ -56,8 +56,8 @@ const ProfilePage = () => {
         weight: editWeight,
       };
 
-      const userString = await SecureStore.getItemAsync('user');
-      const user = JSON.parse(userString);
+      // const userString = await SecureStore.getItemAsync('user');
+      // const user = JSON.parse(userString);
       await axios.patch(`/userProfile/${Id}`, updatedData);
       fetchUserProfileData();
       setEditable(false);
@@ -68,33 +68,31 @@ const ProfilePage = () => {
 
   const getDifferenceInDays = async (dateString) => {
     if (!dateString) return null;
-    try {
-      const [day, month, year] = dateString.split('-').map(Number);
-      const givenDate = new Date(year, month - 1, day);
-      if (isNaN(givenDate.getTime())) return null;
-      const currentDate = new Date();
-      const timeDifferenceInMilliseconds = givenDate - currentDate;
-      const differenceInDays = Math.floor(
-        timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)
-      );
-      return differenceInDays;
-    } catch (error) {
-      console.log('Error in getDifferenceInDays', error);
-    }
+
+    const [day, month, year] = dateString.split('-').map(Number);
+    const givenDate = new Date(year, month - 1, day);
+    if (isNaN(givenDate.getTime())) return null;
+    const currentDate = new Date();
+    const timeDifferenceInMilliseconds = givenDate - currentDate;
+    const differenceInDays = Math.floor(
+      timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)
+    );
+    setPlanExiper(differenceInDays);
+    return differenceInDays;
   };
 
   useEffect(() => {
-    const fetchAndCalculatePlanExpiry = () => {
+    const fetchAndCalculatePlanExpiry = async () => {
       fetchUserProfileData();
       const givenDateString = userData?.planExpiryDate;
 
       if (userData && givenDateString) {
-        const differenceInDays = getDifferenceInDays(givenDateString);
+        const differenceInDays = await getDifferenceInDays(givenDateString);
         setPlanExiper(differenceInDays);
       }
     };
     fetchAndCalculatePlanExpiry();
-  }, []);
+  }, [userData?.planExpiryDate]);
 
   if (!userData) return <GraphLoading />;
 
@@ -104,7 +102,6 @@ const ProfilePage = () => {
         flex: 1,
         backgroundColor: bgColor,
         paddingTop: 20,
-        paddingBottom: 100,
       }}>
       <ScrollView>
         <View style={styles.profileCard}>
@@ -234,7 +231,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'white',
     borderRadius: 30,
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 300,
   },
 
   text: {

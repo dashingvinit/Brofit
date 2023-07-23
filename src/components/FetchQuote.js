@@ -30,17 +30,35 @@ function FetchQuote() {
   }
 
   return (
-    <View style={{ padding: 20 }}>
+    <View
+      style={{
+        marginBottom: 10,
+        backgroundColor: bgLight,
+        paddingTop: 20,
+        borderRadius: 30,
+      }}>
       <Text
         style={{
-          backgroundColor: neon,
-          borderRadius: 30,
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-          color: bgColor,
+          textAlign: 'center',
+          fontSize: 20,
+          fontWeight: 'bold',
+          color: neon,
         }}>
-        {quote}
+        Quote of the Day
       </Text>
+      <View style={{ margin: 10 }}>
+        <Text
+          style={{
+            backgroundColor: neon,
+            borderRadius: 30,
+            paddingHorizontal: 30,
+            paddingVertical: 20,
+            width: '100%',
+            color: bgColor,
+          }}>
+          {quote}
+        </Text>
+      </View>
     </View>
   );
 }

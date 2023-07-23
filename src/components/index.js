@@ -12,8 +12,10 @@ import CheckOut from './CheckOut';
 import Userstatusbox from './Userstatusbox';
 import GraphLoading from './GraphLoading';
 import OwnerStatus from './OwnerStatus';
+import Calendar from './Calendar';
 
 export {
+  Calendar,
   Field,
   FetchQuote,
   GraphLoading,
