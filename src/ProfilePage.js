@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { GraphLoading, GradientBG, Hr } from './components';
+import { GraphLoading, TopBack, GradientBG, Hr } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, neon, bgLight } from './constants/Constants';
@@ -56,8 +56,6 @@ const ProfilePage = () => {
         weight: editWeight,
       };
 
-      // const userString = await SecureStore.getItemAsync('user');
-      // const user = JSON.parse(userString);
       await axios.patch(`/userProfile/${Id}`, updatedData);
       fetchUserProfileData();
       setEditable(false);
@@ -94,7 +92,14 @@ const ProfilePage = () => {
     fetchAndCalculatePlanExpiry();
   }, [userData?.planExpiryDate]);
 
-  if (!userData) return <GraphLoading />;
+  if (!userData)
+    return (
+      <GradientBG style={{ flex: 1 }}>
+        <View style={styles.profileCard}>
+          <GraphLoading />
+        </View>
+      </GradientBG>
+    );
 
   return (
     <GradientBG style={{ flex: 1 }}>
@@ -184,53 +189,24 @@ const ProfilePage = () => {
                 }}>
                 <View style={styles.smContainer}>
                   <Text>Height</Text>
-                  <Text
-                    style={{
-                      fontSize: 38,
-                      fontWeight: 'bold',
-                      paddingVertical: 15,
-                    }}>
-                    {userData?.height}
-                  </Text>
+                  <Text style={styles.smHeader}>{userData?.height}</Text>
                   <Text style={{ fontSize: 12 }}>Inch</Text>
                 </View>
                 <View style={styles.smContainer}>
                   <Text>Weight</Text>
-                  <Text
-                    style={{
-                      fontSize: 38,
-                      fontWeight: 'bold',
-                      paddingVertical: 15,
-                    }}>
-                    {userData?.weight}
-                  </Text>
+                  <Text style={styles.smHeader}>{userData?.weight}</Text>
                   <Text style={{ fontSize: 12 }}>KG</Text>
                 </View>
                 <View style={styles.smContainer}>
-                  <Text>BMI</Text>
-                  <Text
-                    style={{
-                      fontSize: 38,
-                      fontWeight: 'bold',
-                      paddingVertical: 15,
-                    }}>
-                    {userData?.height}
-                  </Text>
-                  <Text style={{ fontSize: 12 }}>Inch</Text>
+                  <Text>Age</Text>
+                  <Text style={styles.smHeader}>{userData?.age}</Text>
+                  <Text style={{ fontSize: 12 }}>Yrs</Text>
                 </View>
               </View>
-              <Hr />
-              <View style={styles.bottomContainer}>
-                <Text style={styles.text}>Age: {userData?.age}</Text>
-                <Text style={styles.text}>
-                  PlanExpiryDate: {userData?.planExpiryDate}
-                </Text>
-                <Text style={styles.text}>
-                  Plan:{' '}
-                  {userData?.plan ? userData.plan.name : 'Plans not found'}
-                </Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.text}>Status: {userData?.status}</Text>
+
+              <View style={styles.editContainer}>
+                <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
+                  <Text style={styles.editHeader}>Edit Profile Settings</Text>
                   <TouchableOpacity onPress={handleEdit} style={styles.button}>
                     <Text style={styles.buttonText}>Edit</Text>
                   </TouchableOpacity>
@@ -238,6 +214,19 @@ const ProfilePage = () => {
               </View>
             </>
           )}
+          <Hr />
+          <View style={styles.bottomContainer}>
+            <Text style={styles.smHeader}>Plan details:</Text>
+            <Text style={styles.text}>
+              Plan Expires: {userData?.planExpiryDate}
+            </Text>
+            <Text style={styles.text}>
+              Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
+            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={styles.text}>Status: {userData?.status}</Text>
+            </View>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </GradientBG>
@@ -251,7 +240,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   profileContainer: {
-    paddingVertical: 40,
+    paddingVertical: 30,
     paddingHorizontal: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -272,13 +261,19 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff66',
     borderRadius: 30,
     marginTop: 10,
-    marginBottom: 300,
+  },
+  input: {
+    color: '#AAC8A7',
+    backgroundColor: '#FAF3F0',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
   },
   smContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#F8FFDB',
     height: 200,
     width: 125,
     marginHorizontal: 10,
@@ -287,40 +282,48 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'flex-start',
   },
+  smHeader: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    paddingVertical: 15,
+  },
   bottomContainer: {
     padding: 20,
-    backgroundColor: '#CCFFBD',
+    backgroundColor: '#C4DFDF',
     borderRadius: 30,
     marginTop: 10,
-    marginBottom: 300,
+    marginBottom: 200,
   },
-
   text: {
-    color: bgColor,
+    color: '#F8F6F4',
     marginVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
   },
+  editContainer: {
+    backgroundColor: '#ffffff66',
+    borderRadius: 30,
+    marginTop: 10,
+  },
+  editHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 20,
+    color: bgColor,
+  },
   button: {
     backgroundColor: bgColor,
-    paddingHorizontal: 18,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginLeft: 70,
-    height: 40,
-    width: 100,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonText: {
     color: neon,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  input: {
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
   },
 });
 

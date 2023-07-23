@@ -49,13 +49,14 @@ const Calender = () => {
     <View>
       <Calendar
         style={{
-          borderWidth: 0,
-          borderRadius: 16,
+          borderWidth: 1,
+          borderRadius: 30,
+          borderColor: 'gray',
           padding: 10,
         }}
         theme={{
           backgroundColor: bgLight,
-          calendarBackground: bgLight,
+          calendarBackground: 'transparent',
           textSectionTitleColor: '#C0EEF2',
           selectedDayBackgroundColor: '#00adf5',
           selectedDayTextColor: '#ffffff',
