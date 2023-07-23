@@ -186,7 +186,7 @@ const ProfilePage = () => {
                   <Text>Height</Text>
                   <Text
                     style={{
-                      fontSize: 40,
+                      fontSize: 38,
                       fontWeight: 'bold',
                       paddingVertical: 15,
                     }}>
@@ -198,7 +198,7 @@ const ProfilePage = () => {
                   <Text>Weight</Text>
                   <Text
                     style={{
-                      fontSize: 40,
+                      fontSize: 38,
                       fontWeight: 'bold',
                       paddingVertical: 15,
                     }}>
@@ -210,7 +210,7 @@ const ProfilePage = () => {
                   <Text>BMI</Text>
                   <Text
                     style={{
-                      fontSize: 40,
+                      fontSize: 38,
                       fontWeight: 'bold',
                       paddingVertical: 15,
                     }}>
@@ -279,7 +279,8 @@ const styles = StyleSheet.create({
   },
   smContainer: {
     backgroundColor: 'white',
-    width: 120,
+    height: 200,
+    width: 125,
     marginHorizontal: 10,
     borderRadius: 30,
     marginTop: 10,
