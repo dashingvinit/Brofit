@@ -101,7 +101,6 @@ const ProfilePage = () => {
       style={{
         flex: 1,
         backgroundColor: bgColor,
-        paddingTop: 20,
       }}>
       <ScrollView>
         <View style={styles.profileCard}>
@@ -205,6 +204,7 @@ const styles = StyleSheet.create({
   profileCard: {
     backgroundColor: neon,
     borderRadius: 30,
+    marginTop: 20,
   },
   profileContainer: {
     paddingVertical: 40,

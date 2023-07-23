@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar } from './components';
 import { bgColor, bgLight, neon } from './constants/Constants';
@@ -27,9 +27,11 @@ const Attendance = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: bgColor, paddingTop: 40 }}>
-      <FetchQuote />
-      <Calendar />
+    <View style={{ flex: 1, backgroundColor: bgColor }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 160 }}>
+        <FetchQuote />
+        <Calendar />
+      </ScrollView>
       <View
         style={{
           marginTop: 20,
