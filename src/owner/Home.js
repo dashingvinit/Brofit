@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { FontAwesome } from '@expo/vector-icons';
 
 const Home = (props) => {
@@ -29,12 +30,12 @@ const Home = (props) => {
                   style={{
                     color: neon,
                   }}
-                  size={50}
+                  size={45}
                 />
-                <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Active</Text>
                 <Text
                   style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
-                  Selected
+                  Members
                 </Text>
               </View>
             </TouchableOpacity>
@@ -44,31 +45,31 @@ const Home = (props) => {
               onPress={() => props.navigation.navigate('InactiveList')}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons
-                  name="list-outline"
+                  name="cloud-offline-outline"
                   style={{
                     color: neon,
                   }}
-                  size={50}
+                  size={45}
                 />
-                <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Inactive</Text>
                 <Text
                   style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
-                  Selected
+                  Subscriptions
                 </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.box}>
-            <Text style={{ fontSize: 40 }}>
-              <Ionicons
-                name="person"
+            <View style={{ alignItems: 'center' }}>
+              <MaterialIcons
+                name="sports-baseball"
                 style={{
                   color: neon,
                 }}
-                size={50}
+                size={45}
               />
-            </Text>
-            <OwnerStatus />
+              <OwnerStatus />
+            </View>
           </View>
         </View>
         <Graph />
@@ -82,8 +83,6 @@ const Home = (props) => {
 
 const styles = StyleSheet.create({
   boxesContainer: {
-    // marginTop: 10,
-    // marginBottom: 10,
     flexDirection: 'row',
   },
   box: {

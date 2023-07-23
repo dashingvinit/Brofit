@@ -61,22 +61,21 @@ function LapsTable({ laps, timer }) {
     });
   }
   return (
-      <ScrollView style={styles.scrollView}>
-        <View style={{height:450}}>
-          <ScrollView>
+    <ScrollView style={styles.scrollView}>
+      <View style={{ height: 450 }}>
+        <ScrollView>
           {laps.map((lap, index) => (
-          <Lap
-            number={laps.length - index}
-            key={laps.length - index}
-            interval={index === 0 ? timer + lap : lap}
-            fastest={lap === min}
-            slowest={lap === max}
-          />
-        ))}
-          </ScrollView>
-        </View>
-      </ScrollView>
-    
+            <Lap
+              number={laps.length - index}
+              key={laps.length - index}
+              interval={index === 0 ? timer + lap : lap}
+              fastest={lap === min}
+              slowest={lap === max}
+            />
+          ))}
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -151,7 +150,7 @@ export default class App extends Component {
     const timer = now - start;
     return (
       <ImageBackground
-        source={require('./assets/grade3.jpg')}
+        source={require('./assets/grade1.jpg')}
         style={styles.backgroundImage}>
         <View style={styles.container}>
           <Timer
@@ -209,7 +208,6 @@ export default class App extends Component {
               </ButtonsRow>
             )}
           </View>
-          
         </View>
       </ImageBackground>
     );
@@ -251,8 +249,8 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal:30,
-    marginTop:-150,
+    marginHorizontal: 30,
+    marginTop: -150,
   },
   buttonTitle: {
     fontSize: 30,
@@ -272,7 +270,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   lapText: {
-    marginTop:20,
+    marginTop: 20,
     color: neon,
     fontSize: 18,
   },

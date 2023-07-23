@@ -13,11 +13,15 @@ import Userstatusbox from './Userstatusbox';
 import GraphLoading from './GraphLoading';
 import OwnerStatus from './OwnerStatus';
 import Calendar from './Calendar';
+import GradientBG from './GradientBG';
+import Hr from './hr';
 
 export {
   Calendar,
+  Hr,
   Field,
   FetchQuote,
+  GradientBG,
   GraphLoading,
   Background,
   Btn,

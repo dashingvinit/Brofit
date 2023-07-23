@@ -1,5 +1,12 @@
 import React from 'react';
-import { Graph, Top, WorkoutCards, Userstatusbox, Loading } from './components';
+import {
+  Graph,
+  Top,
+  WorkoutCards,
+  Userstatusbox,
+  Loading,
+  GradientBG,
+} from './components';
 import {
   View,
   Text,
@@ -9,68 +16,71 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { G } from 'react-native-svg';
 
 const Home = (props) => {
   return (
-    <View style={{ flex: 1, backgroundColor: bgColor, position: 'relative' }}>
-      {/* Circular lights */}
-      <View style={styles.lightTopLeft} />
-      <View style={styles.lightTopRight} />
-      <View style={styles.lightBottomLeft} />
-      <View style={styles.lightBottomRight} />
-      <Top
-        navigation={props.navigation}
-        setHandleLogout={props.setHandleLogout}
-      />
+    <GradientBG>
+      <View style={{ flex: 1 }}>
+        {/* Circular lights */}
+        <View style={styles.lightTopLeft} />
+        <View style={styles.lightTopRight} />
+        <View style={styles.lightBottomLeft} />
+        <View style={styles.lightBottomRight} />
+        <Top
+          navigation={props.navigation}
+          setHandleLogout={props.setHandleLogout}
+        />
 
-      <ScrollView>
-        <View style={styles.boxesContainer}>
-          <View style={styles.box}>
-            <Userstatusbox />
+        <ScrollView>
+          <View style={styles.boxesContainer}>
+            <View style={styles.box}>
+              <Userstatusbox />
+            </View>
+            <View style={styles.box}>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('PlanUpdate')}>
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons
+                    name="list-outline"
+                    style={{
+                      color: neon,
+                    }}
+                    size={50}
+                  />
+                  <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                  <Text
+                    style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                    Selected
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.box}>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('Timer')}>
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons
+                    name="ios-timer-outline"
+                    style={{
+                      color: neon,
+                    }}
+                    size={50}
+                  />
+                  <Text style={{ fontSize: 20, color: 'white' }}>Track</Text>
+                  <Text
+                    style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                    Time
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.box}>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('PlanUpdate')}>
-              <View style={{ alignItems: 'center' }}>
-                <Ionicons
-                  name="list-outline"
-                  style={{
-                    color: neon,
-                  }}
-                  size={50}
-                />
-                <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
-                <Text
-                  style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
-                  Selected
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.box}>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('Timer')}>
-              <View style={{ alignItems: 'center' }}>
-                <Ionicons
-                  name="ios-timer-outline"
-                  style={{
-                    color: neon,
-                  }}
-                  size={50}
-                />
-                <Text style={{ fontSize: 20, color: 'white' }}>Track</Text>
-                <Text
-                  style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
-                  Time
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Graph />
-        <WorkoutCards navigation={props.navigation} />
-      </ScrollView>
-    </View>
+          <Graph />
+          <WorkoutCards navigation={props.navigation} />
+        </ScrollView>
+      </View>
+    </GradientBG>
   );
 };
 

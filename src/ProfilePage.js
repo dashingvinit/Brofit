@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { GraphLoading } from './components';
+import { GraphLoading, GradientBG, Hr } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, neon, bgLight } from './constants/Constants';
@@ -97,106 +97,150 @@ const ProfilePage = () => {
   if (!userData) return <GraphLoading />;
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: bgColor,
-      }}>
-      <ScrollView>
-        <View style={styles.profileCard}>
-          <View style={styles.profileContainer}>
-            <Image
-              source={require('./assets/images/profile.jpg')}
-              style={{ width: 100, height: 100, borderRadius: 50 }}
-            />
-            <Text style={styles.userName}>{username}</Text>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, color: bgLight }}>
-              {userData?.userId.email}
-            </Text>
-          </View>
-          <View style={styles.profileIcons}>
-            <View style={{ alignItems: 'center' }}>
-              {userData?.status == 'active' ? (
-                <MaterialCommunityIcons
-                  name="card-bulleted-outline"
-                  size={30}
-                  color={bgColor}
-                />
-              ) : (
-                <MaterialCommunityIcons
-                  name="card-bulleted-off-outline"
-                  size={30}
-                  color={bgColor}
-                />
-              )}
-              <Text>{userData?.status}</Text>
-              <Text>Plan</Text>
-            </View>
-            <View style={{ alignItems: 'center' }}>
-              <MaterialCommunityIcons
-                name="calendar-clock-outline"
-                size={30}
-                color={bgColor}
+    <GradientBG style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.profileCard}>
+            <View style={styles.profileContainer}>
+              <Image
+                source={require('./assets/images/profile.jpg')}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
               />
-              <Text>Expiries In</Text>
-              <Text>{planExiper} days</Text>
+              <Text style={styles.userName}>{username}</Text>
+              <Text
+                style={{ fontWeight: 'bold', fontSize: 16, color: bgLight }}>
+                {userData?.userId.email}
+              </Text>
+            </View>
+            <View style={styles.profileIcons}>
+              <View style={{ alignItems: 'center' }}>
+                {userData?.status == 'active' ? (
+                  <MaterialCommunityIcons
+                    name="card-bulleted-outline"
+                    size={30}
+                    color={bgColor}
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="card-bulleted-off-outline"
+                    size={30}
+                    color={bgColor}
+                  />
+                )}
+                <Text>{userData?.status}</Text>
+                <Text>Plan</Text>
+              </View>
+              <View style={{ alignItems: 'center' }}>
+                <MaterialCommunityIcons
+                  name="calendar-clock-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Expiries In</Text>
+                <Text>{planExiper} days</Text>
+              </View>
             </View>
           </View>
-        </View>
+          <Hr />
 
-        <View style={styles.container}>
           {editable ? (
             <>
-              {/* <TextInput
+              <View style={styles.container}>
+                {/* <TextInput
               style={styles.input}
               placeholder="Name"
               value={editName}
               onChangeText={setEditName}
             /> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Age"
-                value={editAge}
-                onChangeText={setEditAge}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Height"
-                value={editHeight}
-                onChangeText={setEditHeight}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Weight"
-                value={editWeight}
-                onChangeText={setEditWeight}
-              />
-              <TouchableOpacity onPress={handleSave} style={styles.button}>
-                <Text style={styles.buttonText}>Save</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <>
-              <Text style={styles.text}>Age: {userData?.age}</Text>
-              <Text style={styles.text}>Height: {userData?.height}</Text>
-              <Text style={styles.text}>Weight: {userData?.weight}</Text>
-              <Text style={styles.text}>
-                PlanExpiryDate: {userData?.planExpiryDate}
-              </Text>
-              <Text style={styles.text}>
-                Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
-              </Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={styles.text}>Status: {userData?.status}</Text>
-                <TouchableOpacity onPress={handleEdit} style={styles.button}>
-                  <Text style={styles.buttonText}>Edit</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Age"
+                  value={editAge}
+                  onChangeText={setEditAge}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Height"
+                  value={editHeight}
+                  onChangeText={setEditHeight}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Weight"
+                  value={editWeight}
+                  onChangeText={setEditWeight}
+                />
+                <TouchableOpacity onPress={handleSave} style={styles.button}>
+                  <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
               </View>
             </>
+          ) : (
+            <>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                }}>
+                <View style={styles.smContainer}>
+                  <Text>Height</Text>
+                  <Text
+                    style={{
+                      fontSize: 40,
+                      fontWeight: 'bold',
+                      paddingVertical: 15,
+                    }}>
+                    {userData?.height}
+                  </Text>
+                  <Text style={{ fontSize: 12 }}>Inch</Text>
+                </View>
+                <View style={styles.smContainer}>
+                  <Text>Weight</Text>
+                  <Text
+                    style={{
+                      fontSize: 40,
+                      fontWeight: 'bold',
+                      paddingVertical: 15,
+                    }}>
+                    {userData?.weight}
+                  </Text>
+                  <Text style={{ fontSize: 12 }}>KG</Text>
+                </View>
+                <View style={styles.smContainer}>
+                  <Text>BMI</Text>
+                  <Text
+                    style={{
+                      fontSize: 40,
+                      fontWeight: 'bold',
+                      paddingVertical: 15,
+                    }}>
+                    {userData?.height}
+                  </Text>
+                  <Text style={{ fontSize: 12 }}>Inch</Text>
+                </View>
+              </View>
+              <Hr />
+              <View style={styles.bottomContainer}>
+                <Text style={styles.text}>Age: {userData?.age}</Text>
+                <Text style={styles.text}>
+                  PlanExpiryDate: {userData?.planExpiryDate}
+                </Text>
+                <Text style={styles.text}>
+                  Plan:{' '}
+                  {userData?.plan ? userData.plan.name : 'Plans not found'}
+                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={styles.text}>Status: {userData?.status}</Text>
+                  <TouchableOpacity onPress={handleEdit} style={styles.button}>
+                    <Text style={styles.buttonText}>Edit</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </>
           )}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </GradientBG>
   );
 };
 
@@ -226,10 +270,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     paddingBottom: 30,
   },
-
   container: {
     padding: 20,
     backgroundColor: 'white',
+    borderRadius: 30,
+    marginTop: 10,
+    marginBottom: 300,
+  },
+  smContainer: {
+    backgroundColor: 'white',
+    width: 120,
+    marginHorizontal: 10,
+    borderRadius: 30,
+    marginTop: 10,
+    padding: 20,
+    alignItems: 'flex-start',
+  },
+  bottomContainer: {
+    padding: 20,
+    backgroundColor: '#CCFFBD',
     borderRadius: 30,
     marginTop: 10,
     marginBottom: 300,
