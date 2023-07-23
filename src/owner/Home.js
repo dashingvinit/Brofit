@@ -21,46 +21,54 @@ const Home = (props) => {
       <ScrollView>
         <View style={styles.boxesContainer}>
           <View style={styles.box}>
-          <TouchableOpacity
+            <TouchableOpacity
               onPress={() => props.navigation.navigate('ActiveList')}>
-              <Text style={styles.boxText}>
+              <View style={{ alignItems: 'center' }}>
                 <Ionicons
-                  name="ios-heart-outline"
+                  name="list-outline"
                   style={{
                     color: neon,
                   }}
                   size={50}
                 />
-              </Text>
-              <Text style={{color:neon}}> Active</Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                <Text
+                  style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                  Selected
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
           <View style={styles.box}>
-          <TouchableOpacity
+            <TouchableOpacity
               onPress={() => props.navigation.navigate('InactiveList')}>
-              <Text style={styles.boxText}>
+              <View style={{ alignItems: 'center' }}>
                 <Ionicons
-                  name="ios-bar-chart"
+                  name="list-outline"
                   style={{
                     color: neon,
                   }}
                   size={50}
                 />
-              </Text>
-              <Text style={{color:neon}}>Inactive</Text>
+                <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                <Text
+                  style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                  Selected
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
           <View style={styles.box}>
-              <Text style={{ fontSize: 40 }}>
-                <Ionicons
-                  name="person"
-                  style={{
-                    color: neon,
-                  }}
-                  size={50}
-                />
-              </Text>
-              <OwnerStatus />
+            <Text style={{ fontSize: 40 }}>
+              <Ionicons
+                name="person"
+                style={{
+                  color: neon,
+                }}
+                size={50}
+              />
+            </Text>
+            <OwnerStatus />
           </View>
         </View>
         <Graph />
