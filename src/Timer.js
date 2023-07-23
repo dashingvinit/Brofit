@@ -61,17 +61,22 @@ function LapsTable({ laps, timer }) {
     });
   }
   return (
-    <ScrollView style={styles.scrollView}>
-      {laps.map((lap, index) => (
-        <Lap
-          number={laps.length - index}
-          key={laps.length - index}
-          interval={index === 0 ? timer + lap : lap}
-          fastest={lap === min}
-          slowest={lap === max}
-        />
-      ))}
-    </ScrollView>
+      <ScrollView style={styles.scrollView}>
+        <View style={{height:450}}>
+          <ScrollView>
+          {laps.map((lap, index) => (
+          <Lap
+            number={laps.length - index}
+            key={laps.length - index}
+            interval={index === 0 ? timer + lap : lap}
+            fastest={lap === min}
+            slowest={lap === max}
+          />
+        ))}
+          </ScrollView>
+        </View>
+      </ScrollView>
+    
   );
 }
 
@@ -153,55 +158,58 @@ export default class App extends Component {
             interval={laps.reduce((total, curr) => total + curr, 0) + timer}
             style={styles.timer}
           />
-          {laps.length === 0 && (
-            <ButtonsRow>
-              <RoundButton
-                title="Lap"
-                color="#e6fd54"
-                background="#1d2226b3"
-                disabled
-              />
-              <RoundButton
-                title="Start"
-                color="#e6fd54"
-                background="#1d2226b3"
-                onPress={this.start}
-              />
-            </ButtonsRow>
-          )}
-          {start > 0 && (
-            <ButtonsRow>
-              <RoundButton
-                title="Lap"
-                color="#e6fd54"
-                background="#1d2226"
-                onPress={this.lap}
-              />
-              <RoundButton
-                title="Stop"
-                color="#e6fd54"
-                background="#1d2226"
-                onPress={this.stop}
-              />
-            </ButtonsRow>
-          )}
-          {laps.length > 0 && start === 0 && (
-            <ButtonsRow>
-              <RoundButton
-                title="Reset"
-                color="#e6fd54"
-                background="#1d2226"
-                onPress={this.reset}
-              />
-              <RoundButton
-                title="Start"
-                color="#e6fd54"
-                background="#1d2226"
-                onPress={this.resume}
-              />
-            </ButtonsRow>
-          )}
           <LapsTable laps={laps} timer={timer} />
+          <View style={styles.container1}>
+            {laps.length === 0 && (
+              <ButtonsRow>
+                <RoundButton
+                  title="Lap"
+                  color="#e6fd54"
+                  background="#1d2226b3"
+                  disabled
+                />
+                <RoundButton
+                  title="Start"
+                  color="#e6fd54"
+                  background="#1d2226b3"
+                  onPress={this.start}
+                />
+              </ButtonsRow>
+            )}
+            {start > 0 && (
+              <ButtonsRow>
+                <RoundButton
+                  title="Lap"
+                  color="#e6fd54"
+                  background="#1d2226"
+                  onPress={this.lap}
+                />
+                <RoundButton
+                  title="Stop"
+                  color="#e6fd54"
+                  background="#1d2226"
+                  onPress={this.stop}
+                />
+              </ButtonsRow>
+            )}
+            {laps.length > 0 && start === 0 && (
+              <ButtonsRow>
+                <RoundButton
+                  title="Reset"
+                  color="#e6fd54"
+                  background="#1d2226"
+                  onPress={this.reset}
+                />
+                <RoundButton
+                  title="Start"
+                  color="#e6fd54"
+                  background="#1d2226"
+                  onPress={this.resume}
+                />
+              </ButtonsRow>
+            )}
+          </View>
+          
         </View>
       </ImageBackground>
     );
@@ -212,8 +220,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 380,
+    paddingTop: 150,
     paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container1: {
+    alignItems: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -229,7 +242,6 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     alignSelf: 'stretch',
     alignItems: 'center',
-    // width: 110,
   },
   button: {
     alignSelf: 'stretch',
@@ -239,6 +251,8 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal:30,
+    marginTop:-150,
   },
   buttonTitle: {
     fontSize: 30,
@@ -258,6 +272,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   lapText: {
+    marginTop:20,
     color: neon,
     fontSize: 18,
   },
@@ -267,7 +282,6 @@ const styles = StyleSheet.create({
   lap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderTopWidth: 1,
     paddingVertical: 10,
   },
   scrollView: {
