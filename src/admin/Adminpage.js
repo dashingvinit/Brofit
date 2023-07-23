@@ -34,16 +34,15 @@ const AdminPage = (props) => {
       longitude,
       owner,
     };
-
+  
     axios
-      .post('/gym', {
-        body: JSON.stringify(formData),
+      .post('/gym', formData, {
         headers: {
-          'Content-Type': 'application/   json',
+          'Content-Type': 'application/json', // Remove the extra space here
         },
       })
       .then((response) => {
-        if (response.ok) {
+        if (response.status===201) { // Check for the correct status code
           alert('Gym added successfully!');
           setShowForm(false);
           setgymName('');
@@ -57,10 +56,10 @@ const AdminPage = (props) => {
         }
       })
       .catch((error) => {
-        console.log(error)
         alert('An error occurred. Please try again.');
       });
   };
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
