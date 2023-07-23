@@ -32,7 +32,8 @@ function FetchQuote() {
   return (
     <View
       style={{
-        marginBottom: 10,
+        marginBottom: 20,
+        marginTop: 40,
         backgroundColor: bgLight,
         paddingTop: 20,
         borderRadius: 30,

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { bgColor, WorkoutPlanData } from './constants/Constants';
@@ -12,20 +13,22 @@ import { bgColor, WorkoutPlanData } from './constants/Constants';
 const WorkoutPlan = (props) => {
   const data = WorkoutPlanData;
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => props.navigation.navigate('Workouts', { item })}>
-      <View>
-        <ImageBackground
-          source={getImageSource(item.bg)}
-          style={styles.cardContainer}
-          resizeMode="cover">
-          <View>
-            <Text style={styles.cardTitle}>{item.title}</Text>
-            <Text style={styles.content}>{item.content}</Text>
-          </View>
-        </ImageBackground>
-      </View>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('Workouts', { item })}>
+        <View>
+          <ImageBackground
+            source={getImageSource(item.bg)}
+            style={styles.cardContainer}
+            resizeMode="cover">
+            <View>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text style={styles.content}>{item.content}</Text>
+            </View>
+          </ImageBackground>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 
   const getImageSource = (bg) => {
@@ -43,20 +46,14 @@ const WorkoutPlan = (props) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <View style={{ alignContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.header}>Workout Plan</Text>
-        </View>
-
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<Text>No plans available.</Text>}
-          contentContainerStyle={{ paddingBottom: 180 }}
-        />
-      </View>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={<Text>No plans available.</Text>}
+        contentContainerStyle={{ paddingBottom: 180 }}
+      />
     </View>
   );
 };
