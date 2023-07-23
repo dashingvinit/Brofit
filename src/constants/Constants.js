@@ -3,8 +3,9 @@ import { barbellShoulderPress, dummbell } from '../assets/lottieFiles';
 
 export const neon = '#e0fe10';
 export const bgColor = '#1c2227';
-// export const bgColor = 'black';
+
 export const bgLight = 'rgba(42, 47, 55, .8)';
+export const offWhite = '#9BA4B5';
 export const margin = 10;
 
 export const Workouts = [

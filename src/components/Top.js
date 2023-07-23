@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import EBtn from './ExitButton';
-import { bgColor, neon } from '../constants/Constants';
+import { bgColor, bgLight, neon, offWhite } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Top = (props) => {
@@ -58,7 +58,7 @@ const Top = (props) => {
             style={{
               fontSize: 12,
               fontWeight: 'bold',
-              color: 'white',
+              color: offWhite,
             }}>
             Welcome Back
           </Text>

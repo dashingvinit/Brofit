@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
   TextInput,
 } from 'react-native';
 import { GraphLoading } from './components';
@@ -65,131 +66,140 @@ const ProfilePage = () => {
     }
   };
 
-  const getDifferenceInDays = (dateString) => {
+  const getDifferenceInDays = async (dateString) => {
     if (!dateString) return null;
-
-    const [day, month, year] = dateString.split('-').map(Number);
-    const givenDate = new Date(year, month - 1, day);
-
-    if (isNaN(givenDate.getTime())) return null;
-
-    const currentDate = new Date();
-
-    const timeDifferenceInMilliseconds = givenDate - currentDate;
-
-    const differenceInDays = Math.floor(
-      timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)
-    );
-    return differenceInDays;
+    try {
+      const [day, month, year] = dateString.split('-').map(Number);
+      const givenDate = new Date(year, month - 1, day);
+      if (isNaN(givenDate.getTime())) return null;
+      const currentDate = new Date();
+      const timeDifferenceInMilliseconds = givenDate - currentDate;
+      const differenceInDays = Math.floor(
+        timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      return differenceInDays;
+    } catch (error) {
+      console.log('Error in getDifferenceInDays', error);
+    }
   };
 
   useEffect(() => {
-    const fetchAndCalculatePlanExpiry = async () => {
-      await fetchUserProfileData();
+    const fetchAndCalculatePlanExpiry = () => {
+      fetchUserProfileData();
       const givenDateString = userData?.planExpiryDate;
-      const differenceInDays = getDifferenceInDays(givenDateString);
-      setPlanExiper(differenceInDays);
-    };
 
+      if (userData && givenDateString) {
+        const differenceInDays = getDifferenceInDays(givenDateString);
+        setPlanExiper(differenceInDays);
+      }
+    };
     fetchAndCalculatePlanExpiry();
   }, []);
 
   if (!userData) return <GraphLoading />;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor, paddingTop: 20 }}>
-      <View style={styles.profileCard}>
-        <View style={styles.profileContainer}>
-          <Image
-            source={require('./assets/images/profile.jpg')}
-            style={{ width: 100, height: 100, borderRadius: 50 }}
-          />
-          <Text style={styles.userName}>{username}</Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 16, color: bgLight }}>
-            {userData?.userId.email}
-          </Text>
-        </View>
-        <View style={styles.profileIcons}>
-          <View style={{ alignItems: 'center' }}>
-            {userData?.status == 'active' ? (
-              <MaterialCommunityIcons
-                name="card-bulleted-outline"
-                size={30}
-                color={bgColor}
-              />
-            ) : (
-              <MaterialCommunityIcons
-                name="card-bulleted-off-outline"
-                size={30}
-                color={bgColor}
-              />
-            )}
-            <Text>{userData?.status}</Text>
-            <Text>Plan</Text>
-          </View>
-          <View style={{ alignItems: 'center' }}>
-            <MaterialCommunityIcons
-              name="calendar-clock-outline"
-              size={30}
-              color={bgColor}
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: bgColor,
+        paddingTop: 20,
+        paddingBottom: 100,
+      }}>
+      <ScrollView>
+        <View style={styles.profileCard}>
+          <View style={styles.profileContainer}>
+            <Image
+              source={require('./assets/images/profile.jpg')}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
             />
-            <Text>Expiries In</Text>
-            <Text>{planExiper} days</Text>
+            <Text style={styles.userName}>{username}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 16, color: bgLight }}>
+              {userData?.userId.email}
+            </Text>
+          </View>
+          <View style={styles.profileIcons}>
+            <View style={{ alignItems: 'center' }}>
+              {userData?.status == 'active' ? (
+                <MaterialCommunityIcons
+                  name="card-bulleted-outline"
+                  size={30}
+                  color={bgColor}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="card-bulleted-off-outline"
+                  size={30}
+                  color={bgColor}
+                />
+              )}
+              <Text>{userData?.status}</Text>
+              <Text>Plan</Text>
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <MaterialCommunityIcons
+                name="calendar-clock-outline"
+                size={30}
+                color={bgColor}
+              />
+              <Text>Expiries In</Text>
+              <Text>{planExiper} days</Text>
+            </View>
           </View>
         </View>
-      </View>
 
-      <View style={styles.container}>
-        {editable ? (
-          <>
-            {/* <TextInput
+        <View style={styles.container}>
+          {editable ? (
+            <>
+              {/* <TextInput
               style={styles.input}
               placeholder="Name"
               value={editName}
               onChangeText={setEditName}
             /> */}
-            <TextInput
-              style={styles.input}
-              placeholder="Age"
-              value={editAge}
-              onChangeText={setEditAge}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Height"
-              value={editHeight}
-              onChangeText={setEditHeight}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Weight"
-              value={editWeight}
-              onChangeText={setEditWeight}
-            />
-            <TouchableOpacity onPress={handleSave} style={styles.button}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <Text style={styles.text}>Age: {userData?.age}</Text>
-            <Text style={styles.text}>Height: {userData?.height}</Text>
-            <Text style={styles.text}>Weight: {userData?.weight}</Text>
-            <Text style={styles.text}>
-              PlanExpiryDate: {userData?.planExpiryDate}
-            </Text>
-            <Text style={styles.text}>
-              Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
-            </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text}>Status: {userData?.status}</Text>
-              <TouchableOpacity onPress={handleEdit} style={styles.button}>
-                <Text style={styles.buttonText}>Edit</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Age"
+                value={editAge}
+                onChangeText={setEditAge}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Height"
+                value={editHeight}
+                onChangeText={setEditHeight}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Weight"
+                value={editWeight}
+                onChangeText={setEditWeight}
+              />
+              <TouchableOpacity onPress={handleSave} style={styles.button}>
+                <Text style={styles.buttonText}>Save</Text>
               </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </View>
+            </>
+          ) : (
+            <>
+              <Text style={styles.text}>Age: {userData?.age}</Text>
+              <Text style={styles.text}>Height: {userData?.height}</Text>
+              <Text style={styles.text}>Weight: {userData?.weight}</Text>
+              <Text style={styles.text}>
+                PlanExpiryDate: {userData?.planExpiryDate}
+              </Text>
+              <Text style={styles.text}>
+                Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
+              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={styles.text}>Status: {userData?.status}</Text>
+                <TouchableOpacity onPress={handleEdit} style={styles.button}>
+                  <Text style={styles.buttonText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
