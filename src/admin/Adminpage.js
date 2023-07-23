@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import {
+  Platform,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import Top from '../components/Top';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, bgLight, neon } from '../constants/Constants';
+import axios from '../constants/Axios';
 
 const AdminPage = (props) => {
   const [showForm, setShowForm] = useState(false);
@@ -54,6 +57,7 @@ const AdminPage = (props) => {
         }
       })
       .catch((error) => {
+        console.log(error)
         alert('An error occurred. Please try again.');
       });
   };
@@ -64,12 +68,12 @@ const AdminPage = (props) => {
         navigation={props.navigation}
         setHandleLogout={props.setHandleLogout}
       />
+      <ScrollView>
       <View style={styles.container}>
         <Text style={styles.heading}>Admins</Text>
         <TouchableOpacity onPress={handleAddGym} style={styles.userContainer}>
           <Text style={styles.userText}>Add Gym</Text>
         </TouchableOpacity>
-
         {showForm && (
           <View style={styles.formContainer}>
             <TextInput
@@ -110,14 +114,17 @@ const AdminPage = (props) => {
               value={owner}
               onChangeText={setowner}
             />
-            <TouchableOpacity
-              onPress={handleFormSubmit}
-              style={styles.submitButton}>
-              <Text style={styles.submitButtonText}>Submit</Text>
-            </TouchableOpacity>
+            <View style={{alignItems:'center',marginTop:10}}>
+              <TouchableOpacity
+                onPress={handleFormSubmit}
+                style={styles.submitButton}>
+                <Text style={styles.submitButtonText}>Submit</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -126,6 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    alignItems:'center',
   },
   heading: {
     fontSize: 32,
@@ -134,8 +142,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   userContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 18,
     marginTop: 50,
@@ -152,18 +158,20 @@ const styles = StyleSheet.create({
     backgroundColor: bgLight,
     borderRadius: 10,
     padding: 20,
+    width: '95%',
   },
   input: {
     backgroundColor: 'white',
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
   },
   submitButton: {
-    backgroundColor: bgLight,
-    borderRadius: 10,
+    backgroundColor: bgColor,
+    borderRadius: 20,
     paddingVertical: 10,
     alignItems: 'center',
+    width:150,
   },
   submitButtonText: {
     fontSize: 16,

@@ -134,10 +134,7 @@ const OwnerAttendance = (props) => {
 
       {!attendanceData.length && !isLoading && (
         <View style={{ marginLeft: 20, marginVertical: 80 }}>
-          <Image
-            source={require('../assets/images/dumbell.gif')}
-            style={{ width: 300, height: 300 }}
-          />
+          
           <Text
             style={{
               fontSize: 28,

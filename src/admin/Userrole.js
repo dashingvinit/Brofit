@@ -129,24 +129,24 @@ const styles = StyleSheet.create({
         color: neon,
     },
     rowContainer: {
-        backgroundColor:bgLight,
-        padding:20,
-        borderRadius: 20,
-        marginTop:30,
-    },
-    rowTextheading:{
-        color:"#ffffff",
-        fontSize:20,
-        fontWeight:'bold',
-        marginRight:10,
-        marginBottom: 20,
-    },
-    rowTextanswer: {
-        color:neon,
-        fontSize:20,
-        fontWeight:'bold',
+      backgroundColor:"yellow",
+      padding:20,
+      borderRadius: 20,
+      marginTop:30,
+  },
+  rowTextheading:{
+      color:"black",
+      fontSize:20,
+      fontWeight:'bold',
+      marginRight:10,
+      marginBottom: 20,
+  },
+  rowTextanswer: {
+      color:bgColor,
+      fontSize:20,
+      fontWeight:'bold',
 
-    },
+  },
 })
 
 export default Userrole
