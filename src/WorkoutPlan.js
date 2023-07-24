@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
+import { GradientBG } from './components';
 import React from 'react';
 import { bgColor, WorkoutPlanData } from './constants/Constants';
 
@@ -45,27 +46,31 @@ const WorkoutPlan = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={<Text>No plans available.</Text>}
-        contentContainerStyle={{ paddingBottom: 180 }}
-      />
-    </View>
+    <GradientBG style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Text style={styles.header}>6 day Workout Plans</Text>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<Text>No plans available.</Text>}
+          contentContainerStyle={{ paddingBottom: 180 }}
+        />
+      </View>
+    </GradientBG>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
-    backgroundColor: bgColor,
+    // backgroundColor: bgColor,
   },
   header: {
     fontSize: 30,
     fontWeight: 'bold',
+    alignSelf: 'center',
     color: 'white',
     marginBottom: 20,
   },

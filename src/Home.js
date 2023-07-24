@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 import { G } from 'react-native-svg';
 
 const Home = (props) => {
@@ -41,8 +42,8 @@ const Home = (props) => {
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('PlanUpdate')}>
                 <View style={{ alignItems: 'center' }}>
-                  <Ionicons
-                    name="list-outline"
+                  <Feather
+                    name="list"
                     style={{
                       color: neon,
                     }}

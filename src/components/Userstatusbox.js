@@ -4,6 +4,7 @@ import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import { neon } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
 const Userstatusbox = () => {
   const [userData, setUserData] = useState(null);
@@ -43,9 +44,8 @@ const Userstatusbox = () => {
           name="ios-heart-dislike-outline"
           style={{
             color: neon,
-            fontWeight: 'bold',
           }}
-          size={50}
+          size={45}
         />
       )}
       <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
