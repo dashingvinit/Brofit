@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
-import { ImageBackground } from 'react-native';
-import { COLORS, icons, images, SIZES } from './constants';
+import { COLORS, SIZES } from './constants';
 import moment from 'moment';
-import { bgColor, bgLight, neon } from './constants/Constants';
+import { neon } from './constants/Constants';
 
 function Timer({ interval, style }) {
   const pad = (n) => (n < 10 ? '0' + n : n);
@@ -36,6 +36,7 @@ function RoundButton({ title, color, background, onPress, disabled }) {
     </TouchableOpacity>
   );
 }
+
 function Lap({ number, interval, fastest, slowest }) {
   const lapStyle = [
     styles.lapText,
@@ -82,136 +83,117 @@ function LapsTable({ laps, timer }) {
 function ButtonsRow({ children }) {
   return <View style={styles.buttonsRow}>{children}</View>;
 }
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      start: 0,
-      now: 0,
-      laps: [],
-    };
-  }
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
 
-  start = () => {
-    const now = new Date().getTime();
-    this.setState({
-      start: now,
-      now,
-      laps: [0],
-    });
-    this.timer = setInterval(() => {
-      this.setState({ now: new Date().getTime() });
-    }, 100);
+export default function App() {
+  const [start, setStart] = useState(0);
+  const [now, setNow] = useState(0);
+  const [laps, setLaps] = useState([]);
+  const [isRunning, setIsRunning] = useState(false);
+  const timerRef = useRef(null);
+
+  const startTimer = () => {
+    setStart((prevStart) => (isRunning ? prevStart : new Date().getTime()));
+    setNow(new Date().getTime());
+    setLaps((prevLaps) => (isRunning ? prevLaps : [0]));
+    setIsRunning(true);
+    timerRef.current = requestAnimationFrame(updateTimer);
   };
 
-  lap = () => {
+  const stopTimer = () => {
+    if (timerRef.current) {
+      cancelAnimationFrame(timerRef.current);
+      timerRef.current = null;
+    }
+    const [firstLap, ...other] = laps;
+    setLaps([firstLap + now - start, ...other]);
+    setStart(0);
+    setNow(0);
+    setIsRunning(false);
+  };
+
+  const updateTimer = () => {
+    setNow(new Date().getTime());
+    timerRef.current = requestAnimationFrame(updateTimer);
+  };
+
+  const lap = () => {
     const timestamp = new Date().getTime();
-    const { laps, now, start } = this.state;
     const [firstLap, ...other] = laps;
-    this.setState({
-      laps: [0, firstLap + now - start, ...other],
-      start: timestamp,
-      now: timestamp,
-    });
+    setLaps([0, firstLap + now - start, ...other]);
+    setStart(timestamp);
+    setNow(timestamp);
   };
 
-  stop = () => {
-    clearInterval(this.timer);
-    const { laps, now, start } = this.state;
-    const [firstLap, ...other] = laps;
-    this.setState({
-      laps: [firstLap + now - start, ...other],
-      start: 0,
-      now: 0,
-    });
+  const reset = () => {
+    setLaps([]);
+    setStart(0);
+    setNow(0);
+    setIsRunning(false);
   };
-  reset = () => {
-    this.setState({
-      laps: [],
-      start: 0,
-      now: 0,
-    });
-  };
-  resume = () => {
-    const now = new Date().getTime();
-    this.setState({
-      start: now,
-      now,
-    });
-    this.timer = setInterval(() => {
-      this.setState({ now: new Date().getTime() });
-    }, 100);
-  };
-  render() {
-    const { now, start, laps } = this.state;
-    const timer = now - start;
-    return (
-      <ImageBackground
-        source={require('./assets/grade1.jpg')}
-        style={styles.backgroundImage}>
-        <View style={styles.container}>
-          <Timer
-            interval={laps.reduce((total, curr) => total + curr, 0) + timer}
-            style={styles.timer}
-          />
-          <LapsTable laps={laps} timer={timer} />
-          <View style={styles.container1}>
-            {laps.length === 0 && (
-              <ButtonsRow>
-                <RoundButton
-                  title="Lap"
-                  color="#e6fd54"
-                  background="#1d2226b3"
-                  disabled
-                />
-                <RoundButton
-                  title="Start"
-                  color="#e6fd54"
-                  background="#1d2226b3"
-                  onPress={this.start}
-                />
-              </ButtonsRow>
-            )}
-            {start > 0 && (
-              <ButtonsRow>
-                <RoundButton
-                  title="Lap"
-                  color="#e6fd54"
-                  background="#1d2226"
-                  onPress={this.lap}
-                />
-                <RoundButton
-                  title="Stop"
-                  color="#e6fd54"
-                  background="#1d2226"
-                  onPress={this.stop}
-                />
-              </ButtonsRow>
-            )}
-            {laps.length > 0 && start === 0 && (
-              <ButtonsRow>
-                <RoundButton
-                  title="Reset"
-                  color="#e6fd54"
-                  background="#1d2226"
-                  onPress={this.reset}
-                />
-                <RoundButton
-                  title="Start"
-                  color="#e6fd54"
-                  background="#1d2226"
-                  onPress={this.resume}
-                />
-              </ButtonsRow>
-            )}
-          </View>
+
+  return (
+    <ImageBackground
+      source={require('./assets/grade1.jpg')}
+      style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <Timer
+          interval={laps.reduce((total, curr) => total + curr, 0) + now - start}
+          style={styles.timer}
+        />
+        <LapsTable laps={laps} timer={now - start} />
+        <View style={styles.container1}>
+          {laps.length === 0 && (
+            <ButtonsRow>
+              <RoundButton
+                title="Lap"
+                color="#e6fd54"
+                background="#1d2226b3"
+                disabled
+              />
+              <RoundButton
+                title="Start"
+                color="#e6fd54"
+                background="#1d2226b3"
+                onPress={startTimer}
+              />
+            </ButtonsRow>
+          )}
+          {start > 0 && (
+            <ButtonsRow>
+              <RoundButton
+                title="Lap"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={lap}
+              />
+              <RoundButton
+                title="Stop"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={stopTimer}
+              />
+            </ButtonsRow>
+          )}
+          {laps.length > 0 && start === 0 && (
+            <ButtonsRow>
+              <RoundButton
+                title="Reset"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={reset}
+              />
+              <RoundButton
+                title="Start"
+                color="#e6fd54"
+                background="#1d2226"
+                onPress={startTimer}
+              />
+            </ButtonsRow>
+          )}
         </View>
-      </ImageBackground>
-    );
-  }
+      </View>
+    </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({
