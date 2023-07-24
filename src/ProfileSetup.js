@@ -25,8 +25,8 @@ const ProfileSetup = (props) => {
     weight: '70',
     height: '10',
     plan: 'no plan',
-    age: '20',
-    gender: undefined,
+    age: 20,
+    gender: 'other',
     address: 'Kathmandu',
   });
 
@@ -34,14 +34,7 @@ const ProfileSetup = (props) => {
     const { weight, height, plan, gender, age } = formData;
 
     try {
-      const response = await axios.post('/userProfile', {
-        weight: '70',
-        height: '10',
-        plan: '1245',
-        age: '20',
-        gender: undefined,
-        address: 'Kathmandu',
-      });
+      const response = await axios.post('/userProfile', formData);
       alert('Setup successful');
       const user = response.data.data;
       props.sethandleLogin();
@@ -125,7 +118,7 @@ const ProfileSetup = (props) => {
               : 'numbers-and-punctuation'
           }
           placeholder="Age"
-          value={formData.age}
+          value={formData.age.toString()}
           onChangeText={(value) => handleInputChange('age', value)}
         />
         <Field
