@@ -57,6 +57,7 @@ const Signup = (props) => {
         await save('expire', expireString);
         await save('token', token);
         await save('user', user);
+        console.log('user', user);
         // Inside handleLogin function
         await setTokenHeader().then(() => {
           console.log('Token Set');

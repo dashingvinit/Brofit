@@ -151,11 +151,17 @@ const ProfileSetup = (props) => {
         </View>
 
         {/* Address Field */}
-        <Field
-          placeholder="Address"
-          value={formData.address}
-          onChangeText={(value) => handleInputChange('address', value)}
-        />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
+            Address:
+          </Text>
+
+          <Field
+            placeholder="Address"
+            value={formData.address}
+            onChangeText={(value) => handleInputChange('address', value)}
+          />
+        </View>
         <Plans onSelect={handlePlanSelect} />
         <Btn
           textColor={bgColor}

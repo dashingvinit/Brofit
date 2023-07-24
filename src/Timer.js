@@ -9,18 +9,27 @@ import {
 } from 'react-native';
 import { COLORS, SIZES } from './constants';
 import moment from 'moment';
-import { neon } from './constants/Constants';
+import {
+  bgColor,
+  bgGlass,
+  bgGlassLight,
+  bgLight,
+  neon,
+} from './constants/Constants';
+import { Hr } from './components';
 
 function Timer({ interval, style }) {
   const pad = (n) => (n < 10 ? '0' + n : n);
   const duration = moment.duration(interval);
   const centiseconds = Math.floor(duration.milliseconds() / 10);
   return (
-    <View style={styles.timerContainer}>
-      <Text style={style}>{pad(duration.minutes())}:</Text>
-      <Text style={style}>{pad(duration.seconds())}:</Text>
-      <Text style={style}>{pad(centiseconds)}</Text>
-    </View>
+    <>
+      <View style={styles.timerContainer}>
+        <Text style={style}>{pad(duration.minutes())}:</Text>
+        <Text style={style}>{pad(duration.seconds())}:</Text>
+        <Text style={style}>{pad(centiseconds)}</Text>
+      </View>
+    </>
   );
 }
 
@@ -63,16 +72,19 @@ function LapsTable({ laps, timer }) {
   }
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={{ height: 450 }}>
+      <View>
         <ScrollView>
           {laps.map((lap, index) => (
-            <Lap
-              number={laps.length - index}
-              key={laps.length - index}
-              interval={index === 0 ? timer + lap : lap}
-              fastest={lap === min}
-              slowest={lap === max}
-            />
+            <>
+              <Lap
+                number={laps.length - index}
+                key={laps.length - index}
+                interval={index === 0 ? timer + lap : lap}
+                fastest={lap === min}
+                slowest={lap === max}
+              />
+              <Hr />
+            </>
           ))}
         </ScrollView>
       </View>
@@ -146,14 +158,14 @@ export default function App() {
             <ButtonsRow>
               <RoundButton
                 title="Lap"
-                color="#e6fd54"
-                background="#1d2226b3"
+                color={bgGlassLight}
+                background={bgGlassLight}
                 disabled
               />
               <RoundButton
                 title="Start"
-                color="#e6fd54"
-                background="#1d2226b3"
+                color={neon}
+                background={bgGlassLight}
                 onPress={startTimer}
               />
             </ButtonsRow>
@@ -162,14 +174,14 @@ export default function App() {
             <ButtonsRow>
               <RoundButton
                 title="Lap"
-                color="#e6fd54"
-                background="#1d2226"
+                color={neon}
+                background={bgGlassLight}
                 onPress={lap}
               />
               <RoundButton
                 title="Stop"
-                color="#e6fd54"
-                background="#1d2226"
+                color="white"
+                background={bgGlassLight}
                 onPress={stopTimer}
               />
             </ButtonsRow>
@@ -178,14 +190,14 @@ export default function App() {
             <ButtonsRow>
               <RoundButton
                 title="Reset"
-                color="#e6fd54"
-                background="#1d2226"
+                color="white"
+                background={bgGlassLight}
                 onPress={reset}
               />
               <RoundButton
                 title="Start"
-                color="#e6fd54"
-                background="#1d2226"
+                color={neon}
+                background={bgColor}
                 onPress={startTimer}
               />
             </ButtonsRow>
@@ -200,15 +212,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 150,
-    paddingHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container1: {
-    alignItems: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 50,
   },
   backgroundImage: {
     flex: 1,
@@ -223,23 +227,29 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
   },
+  container1: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'black',
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    width: '100%',
+  },
   button: {
     alignSelf: 'stretch',
     alignItems: 'center',
-    width: 150,
-    height: 76,
+    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
     borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 30,
-    marginTop: -150,
   },
   buttonTitle: {
-    fontSize: 30,
+    fontSize: 28,
+    color: COLORS.lightWhite,
   },
   buttonBorder: {
-    width: 150,
-    height: 76,
+    width: 120,
+    height: 60,
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
@@ -247,25 +257,26 @@ const styles = StyleSheet.create({
   buttonsRow: {
     flexDirection: 'row',
     alignSelf: 'stretch',
-    justifyContent: 'space-between',
-    marginTop: 80,
-    marginBottom: 30,
+    justifyContent: 'center',
+    marginBottom: 100,
+    marginTop: 40,
+  },
+  lap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+    paddingVertical: 10,
   },
   lapText: {
-    marginTop: 20,
-    color: neon,
+    color: COLORS.lightWhite,
     fontSize: 18,
   },
   lapTimer: {
     width: 30,
   },
-  lap: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-  },
   scrollView: {
     alignSelf: 'stretch',
+    marginHorizontal: 20,
   },
   fastest: {
     color: '#4BC05F',

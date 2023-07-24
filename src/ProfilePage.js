@@ -31,6 +31,7 @@ const ProfilePage = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       setUsername(user.name);
+
       const response = await axios.get(`/userProfile/${user.userId}`);
       const data = await response.data;
       setUserData(data.data);
@@ -113,7 +114,12 @@ const ProfilePage = () => {
               />
               <Text style={styles.userName}>{username}</Text>
               <Text
-                style={{ fontWeight: 'bold', fontSize: 16, color: bgLight }}>
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: bgLight,
+                }}>
                 {userData?.userId.email}
               </Text>
             </View>

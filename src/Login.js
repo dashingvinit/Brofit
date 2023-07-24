@@ -26,8 +26,8 @@ const Login = (props) => {
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
       const user = JSON.stringify(decodedPayload);
-
-      console.log('OwnerLoggedIn', decodedPayload);
+      // console.log('OwnerLoggedIn', decodedPayload);
+      // console.log('user', user);
       await save('user', user);
 
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
@@ -40,15 +40,12 @@ const Login = (props) => {
       await setTokenHeader().then(() => {
         console.log('Token Set');
       });
-
       // console.log('Response:', token);
       props.sethandleLogin();
-      // alert('Login successful');
       props.navigation.navigate('Home2');
     } catch (error) {
       alert('Login failed');
-      console.error('Login failed');
-      console.error('Error:', error);
+      console.error('Login Error:', error);
     }
   };
 
