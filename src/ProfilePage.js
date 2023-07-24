@@ -11,7 +11,13 @@ import {
 import { GraphLoading, TopBack, GradientBG, Hr } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, neon, bgLight } from './constants/Constants';
+import {
+  bgColor,
+  neon,
+  bgLight,
+  bgGlassLight,
+  bgGlass,
+} from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -31,8 +37,11 @@ const ProfilePage = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       setUsername(user.name);
+      const userID = user?.userId ?? user?._id;
 
-      const response = await axios.get(`/userProfile/${user.userId}`);
+      // console.log('User Profile', user);
+
+      const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
       setUserData(data.data);
       setId(data.data._id);
@@ -124,7 +133,15 @@ const ProfilePage = () => {
               </Text>
             </View>
             <View style={styles.profileIcons}>
-              <View style={{ alignItems: 'center' }}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  borderColor: bgColor,
+                  width: '30%',
+                  borderWidth: 2,
+                  padding: 10,
+                  borderRadius: 30,
+                }}>
                 {userData?.status == 'active' ? (
                   <MaterialCommunityIcons
                     name="card-bulleted-outline"
@@ -135,20 +152,45 @@ const ProfilePage = () => {
                   <MaterialCommunityIcons
                     name="card-bulleted-off-outline"
                     size={30}
-                    color={bgColor}
+                    color={bgGlass}
                   />
                 )}
                 <Text>{userData?.status}</Text>
                 <Text>Plan</Text>
               </View>
-              <View style={{ alignItems: 'center' }}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  borderColor: bgColor,
+                  width: '30%',
+                  borderWidth: 2,
+                  padding: 10,
+                  borderRadius: 30,
+                }}>
+                <MaterialCommunityIcons
+                  name="clipboard-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Reg.Id</Text>
+                <Text>10{userData?.userId.registerationNumber}</Text>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  borderColor: bgColor,
+                  width: '30%',
+                  borderWidth: 2,
+                  padding: 10,
+                  borderRadius: 30,
+                }}>
                 <MaterialCommunityIcons
                   name="calendar-clock-outline"
                   size={30}
                   color={bgColor}
                 />
-                <Text>Expiries In</Text>
-                <Text>{planExiper} days</Text>
+                <Text>Exp.In</Text>
+                <Text>{planExiper} d</Text>
               </View>
             </View>
           </View>
@@ -244,6 +286,10 @@ const styles = StyleSheet.create({
     backgroundColor: neon,
     borderRadius: 30,
     marginTop: 20,
+    borderColor: bgColor,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    borderRadius: 30,
   },
   profileContainer: {
     paddingVertical: 30,
@@ -287,6 +333,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 20,
     alignItems: 'flex-start',
+    borderColor: bgColor,
+    borderBottomWidth: 3,
+    borderRightWidth: 3,
+    borderRadius: 30,
   },
   smHeader: {
     fontSize: 38,
@@ -299,6 +349,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 10,
     marginBottom: 200,
+    borderColor: bgColor,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    borderRadius: 30,
   },
   text: {
     color: '#F8F6F4',
@@ -310,6 +364,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff66',
     borderRadius: 30,
     marginTop: 10,
+    borderColor: bgColor,
+    borderBottomWidth: 3,
+    borderRadius: 30,
   },
   editHeader: {
     fontSize: 20,

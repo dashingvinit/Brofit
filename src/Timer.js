@@ -75,7 +75,7 @@ function LapsTable({ laps, timer }) {
       <View>
         <ScrollView>
           {laps.map((lap, index) => (
-            <>
+            <View key={index}>
               <Lap
                 number={laps.length - index}
                 key={laps.length - index}
@@ -84,7 +84,7 @@ function LapsTable({ laps, timer }) {
                 slowest={lap === max}
               />
               <Hr />
-            </>
+            </View>
           ))}
         </ScrollView>
       </View>
@@ -145,7 +145,7 @@ export default function App() {
 
   return (
     <ImageBackground
-      source={require('./assets/grade1.jpg')}
+      source={require('./assets/grade3.jpg')}
       style={styles.backgroundImage}>
       <View style={styles.container}>
         <Timer
@@ -263,8 +263,9 @@ const styles = StyleSheet.create({
   },
   lap: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    // justifyContent: 'flex-start',
     marginTop: 10,
+    marginLeft: 20,
     paddingVertical: 10,
   },
   lapText: {

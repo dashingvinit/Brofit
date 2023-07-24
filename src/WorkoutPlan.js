@@ -48,7 +48,7 @@ const WorkoutPlan = (props) => {
   return (
     <GradientBG style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.header}>6 day Workout Plans</Text>
+        <Text style={styles.header}>6 d workout plan</Text>
         <FlatList
           data={data}
           renderItem={renderItem}
