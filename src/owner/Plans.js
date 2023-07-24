@@ -11,8 +11,7 @@ import { bgColor, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-
+import { GradientBG, TopBack } from '../components';
 const Plans = () => {
   const [plans, setPlans] = useState([]);
   const [gymId, setGymId] = useState('');
@@ -108,113 +107,122 @@ const Plans = () => {
   };
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, backgroundColor: bgColor, paddingBottom: 100 }}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.heading}>Plans</Text>
-          {plans && plans.length > 0 ? (
-            plans.map((plan) => (
-              <View key={plan.name} style={{ flexDirection: 'row' }}>
-                <View style={styles.plainCard}>
-                  <Text style={styles.h1}>{plan.plan}</Text>
-                  <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16 }}>
-                      Name :{' '}
+    <GradientBG>
+      <SafeAreaView style={{ flex: 1, paddingBottom: 100 }}>
+        <ScrollView>
+          <View style={styles.container}>
+            <TopBack>Plans</TopBack>
+            {plans && plans.length > 0 ? (
+              plans.map((plan) => (
+                <View key={plan.name} style={{ flexDirection: 'row' }}>
+                  <View style={styles.plainCard}>
+                    <Text style={styles.h1}>{plan.plan}</Text>
+                    <Text
+                      style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
+                      <Text style={{ color: 'white', fontSize: 16 }}>
+                        Name :{' '}
+                      </Text>
+                      {plan.name}
                     </Text>
-                    {plan.name}
-                  </Text>
-                  <Text style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16 }}>
-                      Price :{' '}
+                    <Text
+                      style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
+                      <Text style={{ color: 'white', fontSize: 16 }}>
+                        Price :{' '}
+                      </Text>
+                      {plan.price}
                     </Text>
-                    {plan.price}
-                  </Text>
-                  <Text style={{ color: neon, fontSize: 16 }}>
-                    <Text style={{ color: 'white', fontSize: 16 }}>
-                      Validity (Days) :{' '}
+                    <Text style={{ color: neon, fontSize: 16 }}>
+                      <Text style={{ color: 'white', fontSize: 16 }}>
+                        Validity (Days) :{' '}
+                      </Text>
+                      {plan.validity}
                     </Text>
-                    {plan.validity}
-                  </Text>
-                </View>
-                <View style={{alignContent:'center', justifyContent:'center'}}>
-                  <TouchableOpacity
-                    onPress={() => handleEdit(plan)}
-                    style={styles.createButton}>
-                    <Text style={styles.createButtonText}>Edit</Text>
-                  </TouchableOpacity>
-                  {/* <TouchableOpacity
+                  </View>
+                  <View
+                    style={{
+                      alignContent: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <TouchableOpacity
+                      onPress={() => handleEdit(plan)}
+                      style={styles.createButton}>
+                      <Text style={styles.createButtonText}>Edit</Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity
                     onPress={() => handleDelete(plan._id)}
                     style={styles.createButton}>
                     <Text style={styles.createButtonText}>Delete</Text>
                   </TouchableOpacity> */}
+                  </View>
                 </View>
-              </View>
-            ))
-          ) : (
-            <Text>No plans found.</Text>
-          )}
-          {!showForm ? (
-            <TouchableOpacity onPress={toggleForm} style={styles.createButton}>
-              <Text style={styles.createButtonText}>Create Plan</Text>
-            </TouchableOpacity>
-          ) : (
-            <View style={styles.createPlanContainer}>
-              <Text style={styles.createPlanText}>
-                {selectedPlan ? 'Edit Plan' : 'Create New Plan'}
-              </Text>
-              {!selectedPlan && (
+              ))
+            ) : (
+              <Text>No plans found.</Text>
+            )}
+            {!showForm ? (
+              <TouchableOpacity
+                onPress={toggleForm}
+                style={styles.createButton}>
+                <Text style={styles.createButtonText}>Create Plan</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.createPlanContainer}>
+                <Text style={styles.createPlanText}>
+                  {selectedPlan ? 'Edit Plan' : 'Create New Plan'}
+                </Text>
+                {!selectedPlan && (
+                  <TextInput
+                    value={gymId}
+                    onChangeText={setGymId}
+                    placeholder="Gym ID"
+                    style={styles.input}
+                  />
+                )}
                 <TextInput
-                  value={gymId}
-                  onChangeText={setGymId}
-                  placeholder="Gym ID"
+                  value={selectedPlan ? editName : name}
+                  onChangeText={selectedPlan ? setEditName : setName}
+                  placeholder="Name"
                   style={styles.input}
                 />
-              )}
-              <TextInput
-                value={selectedPlan ? editName : name}
-                onChangeText={selectedPlan ? setEditName : setName}
-                placeholder="Name"
-                style={styles.input}
-              />
-              <TextInput
-                keyboardType={
-                  Platform.OS === 'android'
-                    ? 'phone-pad'
-                    : Platform.OS === 'ios'
-                    ? 'number-pad'
-                    : 'numbers-and-punctuation'
-                }
-                value={selectedPlan ? editPrice : price}
-                onChangeText={selectedPlan ? setEditPrice : setPrice}
-                placeholder="Price"
-                style={styles.input}
-              />
-              <TextInput
-                keyboardType={
-                  Platform.OS === 'android'
-                    ? 'phone-pad'
-                    : Platform.OS === 'ios'
-                    ? 'number-pad'
-                    : 'numbers-and-punctuation'
-                }
-                value={selectedPlan ? editValidity : validity}
-                onChangeText={selectedPlan ? setEditValidity : setValidity}
-                placeholder="Validity"
-                style={styles.input}
-              />
-              <TouchableOpacity
-                onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
-                style={styles.createButton}>
-                <Text style={styles.createButtonText}>
-                  {selectedPlan ? 'Update Plan' : 'Create Plan'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+                <TextInput
+                  keyboardType={
+                    Platform.OS === 'android'
+                      ? 'phone-pad'
+                      : Platform.OS === 'ios'
+                      ? 'number-pad'
+                      : 'numbers-and-punctuation'
+                  }
+                  value={selectedPlan ? editPrice : price}
+                  onChangeText={selectedPlan ? setEditPrice : setPrice}
+                  placeholder="Price"
+                  style={styles.input}
+                />
+                <TextInput
+                  keyboardType={
+                    Platform.OS === 'android'
+                      ? 'phone-pad'
+                      : Platform.OS === 'ios'
+                      ? 'number-pad'
+                      : 'numbers-and-punctuation'
+                  }
+                  value={selectedPlan ? editValidity : validity}
+                  onChangeText={selectedPlan ? setEditValidity : setValidity}
+                  placeholder="Validity"
+                  style={styles.input}
+                />
+                <TouchableOpacity
+                  onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
+                  style={styles.createButton}>
+                  <Text style={styles.createButtonText}>
+                    {selectedPlan ? 'Update Plan' : 'Create Plan'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </GradientBG>
   );
 };
 
@@ -225,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: bgLight,
     borderRadius: 5,
     paddingBottom: 20,
-    width:250,
+    width: 250,
   },
   h1: {
     fontSize: 20,

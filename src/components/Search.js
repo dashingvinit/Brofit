@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
-import { bgLight, neon } from '../constants/Constants';
+import { bgGlass, bgGlassLight, bgLight, neon } from '../constants/Constants';
 
 const Search = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderColor: neon,
-    backgroundColor: bgLight,
+    backgroundColor: bgGlassLight,
     borderRadius: 20,
     padding: 8,
     marginRight: 8,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   searchButton: {
-    backgroundColor: bgLight,
+    backgroundColor: bgGlass,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 20,
