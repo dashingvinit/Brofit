@@ -1,4 +1,5 @@
 import { View, Text } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
 import React, { useEffect, useState } from 'react';
@@ -23,7 +24,10 @@ const ProfileSetup = (props) => {
   const [formData, setFormData] = useState({
     weight: '70',
     height: '10',
-    plan: '1245',
+    plan: 'no plan',
+    age: '20',
+    gender: undefined,
+    address: 'Kathmandu',
   });
 
   const handleProfileSetup = async () => {
@@ -31,11 +35,12 @@ const ProfileSetup = (props) => {
 
     try {
       const response = await axios.post('/userProfile', {
-        weight,
-        height,
-        plan,
-        gender,
-        age,
+        weight: '70',
+        height: '10',
+        plan: '1245',
+        age: '20',
+        gender: undefined,
+        address: 'Kathmandu',
       });
       alert('Setup successful');
       const user = response.data.data;
@@ -63,10 +68,6 @@ const ProfileSetup = (props) => {
       [field]: value,
     }));
   };
-
-  useEffect(() => {
-    setTokenHeader();
-  }, []);
 
   return (
     <Background>
@@ -138,6 +139,29 @@ const ProfileSetup = (props) => {
           placeholder="Weight"
           value={formData.weight}
           onChangeText={(value) => handleInputChange('weight', value)}
+        />
+        {/* Gender Field */}
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
+            Gender:
+          </Text>
+          <Picker
+            selectedValue={formData.gender}
+            style={{ height: 40, width: 150, color: 'white' }}
+            onValueChange={(itemValue) =>
+              handleInputChange('gender', itemValue)
+            }>
+            <Picker.Item label="Male" value="male" />
+            <Picker.Item label="Female" value="female" />
+            <Picker.Item label="Other" value="other" />
+          </Picker>
+        </View>
+
+        {/* Address Field */}
+        <Field
+          placeholder="Address"
+          value={formData.address}
+          onChangeText={(value) => handleInputChange('address', value)}
         />
         <Plans onSelect={handlePlanSelect} />
         <Btn

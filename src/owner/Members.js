@@ -10,7 +10,7 @@ import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Search from '../components/Search';
+import { Search, GradientBG, Hr } from '../components';
 import { useIsFocused } from '@react-navigation/native';
 import axios from '../constants/Axios';
 
@@ -19,7 +19,7 @@ const Members = (props) => {
 
   const getMembers = async () => {
     try {
-      const response = await axios.get('/gym/4');
+      const response = await axios.get('/gym/1');
       const data = response.data;
       setUsers(data.data.members);
     } catch (error) {
@@ -54,30 +54,32 @@ const Members = (props) => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: bgColor,
-        flex: 1,
-        paddingBottom: 50,
-      }}>
-      
+    <GradientBG>
+      <SafeAreaView
+        style={{
+          flex: 1,
+        }}>
         <View style={styles.container}>
           <Text style={styles.heading}>Gym Members</Text>
           <View style={styles.separator} />
           <Search onSearch={handleSearch} />
           <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {users.map((user, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => handleUserPress(user)}
-              style={styles.userContainer}>
-              <Ionicons name="person" color={neon} size={20}/>
-              <Text style={styles.userText}>{user.name}</Text>
-            </TouchableOpacity>
-          ))}
+            {users.map((user, index) => (
+              <>
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => handleUserPress(user)}
+                  style={styles.userContainer}>
+                  <Ionicons name="person" color={neon} size={20} />
+                  <Text style={styles.userText}>{user.name}</Text>
+                </TouchableOpacity>
+                <Hr />
+              </>
+            ))}
           </ScrollView>
         </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GradientBG>
   );
 };
 
@@ -87,10 +89,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor:bgLight,
-    marginBottom:30,
-    borderRadius:30,
+    borderRadius: 10,
   },
   heading: {
     fontSize: 24,
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
   userText: {
     fontSize: 20,
     color: neon,
-    marginLeft:20,
+    marginLeft: 20,
   },
 });
 

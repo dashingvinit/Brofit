@@ -16,8 +16,10 @@ import Calendar from './Calendar';
 import GradientBG from './GradientBG';
 import Hr from './hr';
 import TopBack from './TopBack';
+import Search from './Search';
 
 export {
+  Search,
   TopBack,
   Calendar,
   Hr,

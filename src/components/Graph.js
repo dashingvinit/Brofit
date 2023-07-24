@@ -5,7 +5,7 @@ import { Dimensions } from 'react-native';
 import GraphLoading from './GraphLoading';
 import React, { useState, useEffect } from 'react';
 import axios from '../constants/Axios';
-import { bgLight, neon } from '../constants/Constants';
+import { bgGlass, bgLight, neon } from '../constants/Constants';
 
 const Graph = () => {
   const [chartData, setChartData] = useState([]);
