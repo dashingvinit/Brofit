@@ -20,7 +20,7 @@ const AdminPage = (props) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [owner, setOwner] = useState('');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [search, setSearch] = useState('');
 
   const handleAddGym = () => {
@@ -36,7 +36,6 @@ const AdminPage = (props) => {
       longitude,
       owner,
     };
-
     axios
       .post('/gym', formData, {
         headers: {
@@ -58,7 +57,7 @@ const AdminPage = (props) => {
         }
       })
       .catch((error) => {
-        alert('An error occurred. Please try again.');
+        alert('An error occurred. Please try again., ', error);
       });
   };
 
@@ -109,7 +108,7 @@ const AdminPage = (props) => {
                   </TouchableOpacity>
                 </View>
 
-                {data == null ? (
+                {data !== null ? (
                   <View style={styles.rowContainer}>
                     <View>
                       <Text style={styles.rowTextheading}>
