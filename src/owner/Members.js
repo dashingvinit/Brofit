@@ -8,7 +8,13 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { bgColor, bgLight, neon } from '../constants/Constants';
+import {
+  bgColor,
+  bgLight,
+  neon,
+  bgGlassLight,
+  bgGlass,
+} from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -66,8 +72,8 @@ const Members = (props) => {
           <View style={styles.separator} />
           <Search onSearch={handleSearch} />
           <View style={styles.userHeader}>
-                <Text style={styles.userText}>Name</Text>
-                <Text style={styles.userText1}>ID</Text>
+            <Text style={styles.userText}>Name</Text>
+            <Text style={styles.userText1}>ID</Text>
           </View>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             {users.map((user, index) => (
@@ -83,8 +89,13 @@ const Members = (props) => {
                       borderRadius: 50,
                     }}
                   />
-                  <Text style={styles.userText}>{user.name}</Text>
-                  <Text style={styles.userText1}>{user.registerationNumber}</Text>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.userText}>{user.name}</Text>
+
+                    <Text style={styles.userText1}>
+                      {user.registerationNumber}
+                    </Text>
+                  </View>
                 </TouchableOpacity>
                 <Hr />
               </View>
@@ -111,35 +122,38 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingVertical: 5,
     marginTop: 10,
     width: '100%',
     paddingHorizontal: 10,
-    borderRadius: 10,
   },
   userHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 10,
+    marginHorizontal: 10,
     borderRadius: 15,
-    height: 40,
     paddingHorizontal: 10,
+    paddingVertical: 5,
     backgroundColor: bgColor,
   },
+  textContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginRight: 20,
+  },
   userText: {
-    flex: 2,
     fontSize: 20,
-    color: neon,
+    color: 'white',
     marginLeft: 10,
   },
   userText1: {
-    flex: 1,
     fontSize: 20,
     color: neon,
-    marginLeft: '50%',
   },
 });
 

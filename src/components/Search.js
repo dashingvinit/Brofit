@@ -47,16 +47,13 @@ const styles = StyleSheet.create({
     padding: 8,
     marginRight: 8,
     color: neon,
-    height: 50,
-    marginLeft: 20,
-    paddingLeft:20,
+    paddingLeft: 20,
   },
   searchButton: {
     backgroundColor: bgGlass,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderRadius: 20,
-    height: 50,
   },
   searchButtonText: {
     color: neon,
