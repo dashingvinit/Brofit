@@ -66,6 +66,7 @@ const AdminPage = (props) => {
       try{
         const response = await axios.get('/gym')
         const dataArray = response.data.data;
+        console.log(dataArray)
         setData(dataArray[dataArray.length - 1]);
         setlength(dataArray.length);
       }catch(error){
