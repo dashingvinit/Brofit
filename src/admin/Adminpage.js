@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  Platform,
   View,
   Text,
   StyleSheet,
@@ -15,14 +14,15 @@ import axios from '../constants/Axios';
 
 const AdminPage = (props) => {
   const [showForm, setShowForm] = useState(false);
-  const [gymName, setgymName] = useState('');
+  const [gymName, setGymName] = useState('');
   const [gymId, setGymId] = useState('');
   const [email, setEmail] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [owner, setowner] = useState('');
+  const [owner, setOwner] = useState('');
   const [data, setData] = useState([]);
-  const [length, setlength] = useState('');
+  const [search, setSearch] = useState('');
+
   const handleAddGym = () => {
     setShowForm(true);
   };
@@ -36,23 +36,23 @@ const AdminPage = (props) => {
       longitude,
       owner,
     };
-  
+
     axios
       .post('/gym', formData, {
         headers: {
-          'Content-Type': 'application/json', // Remove the extra space here
+          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
-        if (response.status===201) { // Check for the correct status code
+        if (response.status === 201) {
           alert('Gym added successfully!');
           setShowForm(false);
-          setgymName('');
+          setGymName('');
           setGymId('');
           setEmail('');
           setLatitude('');
           setLongitude('');
-          setowner('');
+          setOwner('');
         } else {
           alert('Failed to add gym.');
         }
@@ -62,22 +62,16 @@ const AdminPage = (props) => {
       });
   };
 
-  const fetchdata = async() => {
-      try{
-        const response = await axios.get('/gym')
-        const dataArray = response.data.data;
-        console.log(dataArray)
-        setData(dataArray[dataArray.length - 1]);
-        setlength(dataArray.length);
-      }catch(error){
-        console.log(error);
-      }
-  }
-
-  useEffect(() => {
-    fetchdata();
-  }, []);
-  
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`/gym/${search}`);
+      const dataArray = response.data.data;
+      setData(dataArray);
+      console.log(data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
@@ -86,92 +80,98 @@ const AdminPage = (props) => {
         setHandleLogout={props.setHandleLogout}
       />
       <ScrollView>
-      <View style={styles.container}>
-        <Text style={styles.heading}>Admins</Text>
-        <TouchableOpacity onPress={handleAddGym} style={styles.userContainer}>
+        <View style={styles.container}>
+          <Text style={styles.heading}>Admins</Text>
+          <TouchableOpacity onPress={handleAddGym} style={styles.userContainer}>
             <Text style={styles.userText}>Add Gym</Text>
           </TouchableOpacity>
-        {!showForm && (
-          <View style={{marginTop:30}}>
-            {data && (
-              <View>
-                <View>
-                  <View style={{alignItems:'center'}}>
-                    <View style={{backgroundColor:bgLight,height:40,width:250,alignItems:'center',justifyContent:'center',borderRadius:10}}>
-                        <Text style={{fontSize:24,color:neon}}>Latest gym added</Text>
-                    </View>
-                  </View>
-                  <View style={styles.rowContainer}>
-                    <View>
-                      <Text style={styles.rowTextheading}>Gym Name: <Text style={styles.rowTextanswer}>{data.gymName}</Text></Text>
-                      <Text style={styles.rowTextheading}>Owner Name: <Text style={styles.rowTextanswer}>{data.owner}</Text></Text>
-                      <Text style={styles.rowTextheading}>Email: <Text style={styles.rowTextanswer}>{data.email}</Text></Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={{flexDirection:'row'}}>
-                  <View style={styles.rowContainer1}>
-                    <Text style={styles.rowTextheading1}>GymId: <Text style={styles.rowTextanswer1}>{data.gymId}</Text></Text>
-                  </View>
-                  <View style={styles.rowContainer1}>
-                    <Text style={styles.rowTextheading1}>Total Gyms: <Text style={styles.rowTextanswer1}>{length}</Text></Text>
-                  </View>
-                </View>
+          {!showForm && (
+            <View>
+              <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 20 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Gym ID"
+                  value={search}
+                  onChangeText={(text) => setSearch(text)}
+                />
+                <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
+                  <Text style={styles.searchButtonText}>Search</Text>
+                </TouchableOpacity>
               </View>
-            )} 
-          </View>
-        )}
 
-        {showForm && (
-          <View style={styles.formContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="gymName"
-              value={gymName}
-              onChangeText={setgymName}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Gym ID"
-              value={gymId}
-              onChangeText={setGymId}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Latitude"
-              value={latitude}
-              onChangeText={setLatitude}
-              keyboardType="numeric"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Longitude"
-              value={longitude}
-              onChangeText={setLongitude}
-              keyboardType="numeric"
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="owner"
-              value={owner}
-              onChangeText={setowner}
-            />
-            <View style={{alignItems:'center',marginTop:10}}>
-              <TouchableOpacity
-                onPress={handleFormSubmit}
-                style={styles.submitButton}>
-                <Text style={styles.submitButtonText}>Submit</Text>
-              </TouchableOpacity>
+              {data ? (
+                <View style={styles.rowContainer}>
+                  <View>
+                    <Text style={styles.rowTextheading}>
+                      Gym Name: <Text style={styles.rowTextanswer}>{data.gymName}</Text>
+                    </Text>
+                    <Text style={styles.rowTextheading}>
+                      Owner Name: <Text style={styles.rowTextanswer}>{data.owner}</Text>
+                    </Text>
+                    <Text style={styles.rowTextheading}>
+                      Email: <Text style={styles.rowTextanswer}>{data.email}</Text>
+                    </Text>
+                    <Text style={styles.rowTextheading1}>
+                      GymId: <Text style={styles.rowTextanswer1}>{data.gymId}</Text>
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <View style={styles.rowContainer}>
+                  <Text style={styles.dataNotFoundText}>Data not found</Text>
+                </View>
+              )}
             </View>
-          </View>
-        )}
-      </View>
+          )}        
+          
+          {showForm && (
+            <View style={styles.formContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Gym Name"
+                value={gymName}
+                onChangeText={setGymName}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Gym ID"
+                value={gymId}
+                onChangeText={setGymId}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Latitude"
+                value={latitude}
+                onChangeText={setLatitude}
+                keyboardType="numeric"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Longitude"
+                value={longitude}
+                onChangeText={setLongitude}
+                keyboardType="numeric"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Owner Name"
+                value={owner}
+                onChangeText={setOwner}
+              />
+              <View style={{ alignItems: 'center', marginTop: 10 }}>
+                <TouchableOpacity onPress={handleFormSubmit} style={styles.submitButton}>
+                  <Text style={styles.submitButtonText}>Submit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -181,13 +181,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    alignItems:'center'
   },
   heading: {
     fontSize: 32,
     fontWeight: 'bold',
     color: 'white',
-    textAlign: 'center',
+    alignSelf: 'center',
   },
   userContainer: {
     alignItems: 'center',
@@ -197,7 +196,8 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     width: 150,
     marginLeft:20,
-    marginBottom:50
+    marginBottom:50,
+    alignSelf: 'center',
   },
   userContainer1: {
     alignItems: 'center',
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
+    width:250,
   },
   submitButton: {
     backgroundColor: bgColor,
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
     padding:20,
     borderRadius: 20,
     marginTop:30,
-    width: '95%',
+    width: 350,
     marginBottom:30,
   },
   rowContainer1: {
@@ -277,6 +278,21 @@ rowTextanswer1: {
     color:bgColor,
     fontSize:18,
     fontWeight:'bold',
+},
+searchButton: {
+  backgroundColor: bgLight,
+  borderRadius: 10,
+  paddingVertical: 10,
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 100,
+  height: 50,
+  marginLeft:20,
+},
+searchButtonText: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  color: neon,
 },
 });
 

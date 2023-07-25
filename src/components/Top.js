@@ -43,7 +43,7 @@ const Top = (props) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         margin: 10,
-        paddingTop: 40,
+        paddingTop: 10,
       }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <TouchableOpacity
