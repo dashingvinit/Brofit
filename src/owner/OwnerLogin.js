@@ -46,7 +46,7 @@ const OwnerLogin = (props) => {
 
       console.log('Response:', token);
       props.sethandleLogin();
-      alert('Login successful');
+      // alert('Login successful');
       props.navigation.navigate('Home2');
     } catch (error) {
       alert('Login failed');

@@ -32,7 +32,14 @@ const Home = (props) => {
                     }}
                     size={45}
                   />
-                  <Text style={{ fontSize: 20, color: 'white' }}>Active</Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: 'white',
+                    }}>
+                    Active
+                  </Text>
                   <Text
                     style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
                     Members
@@ -51,11 +58,15 @@ const Home = (props) => {
                     }}
                     size={45}
                   />
-                  <Text style={{ fontSize: 20, color: 'white' }}>Inactive</Text>
                   <Text
-                    style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
-                    Subscriptions
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: 'white',
+                    }}>
+                    Inactive
                   </Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>Members</Text>
                 </View>
               </TouchableOpacity>
             </View>

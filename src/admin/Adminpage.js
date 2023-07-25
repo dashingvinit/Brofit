@@ -7,7 +7,7 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import Top from '../components/Top';
+import { Top, GradientBG } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
@@ -21,7 +21,7 @@ const AdminPage = (props) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [owner, setOwner] = useState('');
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [search, setSearch] = useState('');
 
   const handleAddGym = () => {
@@ -37,7 +37,6 @@ const AdminPage = (props) => {
       longitude,
       owner,
     };
-
     axios
       .post('/gym', formData, {
         headers: {
@@ -59,9 +58,21 @@ const AdminPage = (props) => {
         }
       })
       .catch((error) => {
-        alert('An error occurred. Please try again.');
+        alert('An error occurred. Please try again., ', error);
       });
   };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`/gym/${search}`);
+      const dataArray = response.data.data;
+      setData(dataArray);
+      console.log(data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
       <Top
@@ -70,12 +81,49 @@ const AdminPage = (props) => {
       />
       <ScrollView>
         <View style={styles.container}>
-          {!showForm && (
-            <Adminsearch />
-          )}     
+          <Text style={styles.heading}>Admins</Text>
           <TouchableOpacity onPress={handleAddGym} style={styles.userContainer}>
             <Text style={styles.userText}>Add Gym</Text>
           </TouchableOpacity>
+          {!showForm && (
+            <View>
+              <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 20 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Gym ID"
+                  value={search}
+                  onChangeText={(text) => setSearch(text)}
+                />
+                <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
+                  <Text style={styles.searchButtonText}>Search</Text>
+                </TouchableOpacity>
+              </View>
+
+              {data ? (
+                <View style={styles.rowContainer}>
+                  <View>
+                    <Text style={styles.rowTextheading}>
+                      Gym Name: <Text style={styles.rowTextanswer}>{data.gymName}</Text>
+                    </Text>
+                    <Text style={styles.rowTextheading}>
+                      Owner Name: <Text style={styles.rowTextanswer}>{data.owner}</Text>
+                    </Text>
+                    <Text style={styles.rowTextheading}>
+                      Email: <Text style={styles.rowTextanswer}>{data.email}</Text>
+                    </Text>
+                    <Text style={styles.rowTextheading1}>
+                      GymId: <Text style={styles.rowTextanswer1}>{data.gymId}</Text>
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <View style={styles.rowContainer}>
+                  <Text style={styles.dataNotFoundText}>Data not found</Text>
+                </View>
+              )}
+            </View>
+          )}        
+          
           {showForm && (
             <View style={styles.formContainer}>
               <TextInput
@@ -147,8 +195,8 @@ const styles = StyleSheet.create({
     backgroundColor: bgLight,
     borderRadius: 40,
     width: 150,
-    marginLeft:20,
-    marginBottom:50,
+    marginLeft: 20,
+    marginBottom: 50,
     alignSelf: 'center',
   },
   heading1: {
@@ -171,14 +219,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    width:350,
+    width:250,
   },
   submitButton: {
     backgroundColor: bgColor,
     borderRadius: 20,
     paddingVertical: 10,
     alignItems: 'center',
-    width:150,
+    width: 150,
   },
   submitButtonText: {
     fontSize: 16,
@@ -186,44 +234,59 @@ const styles = StyleSheet.create({
     color: neon,
   },
   rowContainer: {
-    backgroundColor:"yellow",
-    padding:20,
+    backgroundColor: 'yellow',
+    padding: 20,
     borderRadius: 20,
-    marginTop:30,
+    marginTop: 30,
     width: 350,
-    marginBottom:30,
+    marginBottom: 30,
   },
   rowContainer1: {
-    backgroundColor:"yellow",
-    padding:20,
+    backgroundColor: 'yellow',
+    padding: 20,
     borderRadius: 15,
-    marginHorizontal:5,
-    marginBottom:20,
+    marginHorizontal: 5,
+    marginBottom: 20,
     width: 170,
   },
-  rowTextheading:{
-      color:bgColor,
-      fontSize:20,
-      fontWeight:'bold',
-      marginRight:10,
-      marginBottom: 20,
+  rowTextheading: {
+    color: bgColor,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginRight: 10,
+    marginBottom: 20,
   },
   rowTextanswer: {
-      color:bgColor,
-      fontSize:20,
-      fontWeight:'bold',
+    color: bgColor,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  rowTextheading1:{
-    color:bgColor,
-    fontSize:18,
-    fontWeight:'bold',
-    marginRight:10,
+  rowTextheading1: {
+    color: bgColor,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 10,
     marginBottom: 20,
 },
 rowTextanswer1: {
     color:bgColor,
     fontSize:18,
     fontWeight:'bold',
+},
+searchButton: {
+  backgroundColor: bgLight,
+  borderRadius: 10,
+  paddingVertical: 10,
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 100,
+  height: 50,
+  marginLeft:20,
+},
+searchButtonText: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  color: neon,
 },
 });
 
