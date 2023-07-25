@@ -12,7 +12,10 @@ export const margin = 10;
 
 export const Workouts = [
   {
-    id: 1,
+    title: 'tricep',
+    image: tricep,
+  },
+  {
     title: 'Chest',
     image: chest,
   },
@@ -28,10 +31,7 @@ export const Workouts = [
     title: 'back',
     image: back,
   },
-  {
-    title: 'tricep',
-    image: tricep,
-  },
+
   {
     title: 'shoulder',
     image: shoulder,

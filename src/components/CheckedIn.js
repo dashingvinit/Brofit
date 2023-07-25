@@ -36,13 +36,16 @@ const CheckedIn = (props) => {
       <Text style={styles.heading}>Active Check-Ins</Text>
       <View style={styles.userListContainer}>
         <View style={styles.userHeader}>
-          <Text style={styles.userName}>ID</Text>
+          <Text style={styles.userName}>Reg. ID</Text>
           <Text style={styles.checkInOut}>Check-In</Text>
           <Text style={styles.checkInOut}>Check-Out</Text>
         </View>
         {users.map((user, index) => (
           <TouchableOpacity key={index} style={styles.userItem}>
-            <Text style={styles.userNameText}>{user.userId.registerationNumber}</Text>
+            <Text style={styles.userNameText}>
+              Reg. Id: {user.userId.registerationNumber} {'\n'}
+              {user.userId.name}
+            </Text>
             <Text style={styles.checkTime}>{user.checkIn}</Text>
             <Text style={styles.checkTime}>{user.checkOut}</Text>
           </TouchableOpacity>
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: bgGlassLight,
     borderRadius: 10,
     paddingVertical: 10,
+    paddingBottom: 50,
   },
   userHeader: {
     flexDirection: 'row',
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
   checkTime: {
     flex: 1,
     textAlign: 'center',
-    color: '#333',
+    color: bgColor,
     fontSize: 16,
   },
 });
