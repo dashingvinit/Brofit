@@ -17,6 +17,7 @@ import GradientBG from './GradientBG';
 import Hr from './hr';
 import TopBack from './TopBack';
 import Search from './Search';
+import Adminsearch from './Adminsearch'
 
 export {
   Search,
@@ -38,4 +39,5 @@ export {
   CheckOut,
   Userstatusbox,
   OwnerStatus,
+  Adminsearch,
 };
