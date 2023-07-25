@@ -4,11 +4,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { bgGlassLight } from '../constants/Constants';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const TopBack = ({ children }) => {
+
+  const navigation = useNavigation();
+
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleBackPress}>
         <Ionicons name="caret-back-outline" size={30} color="white" />
       </TouchableOpacity>
 

@@ -3,6 +3,7 @@ import axios from '../constants/Axios';
 import React, { useEffect, useState } from 'react';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TopBack } from '../components';
 
 const UserProfile = (props) => {
   const user = props.route.params.user;
@@ -39,7 +40,7 @@ const UserProfile = (props) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
-      <Text
+      <TopBack><Text
         style={{
           color: 'white',
           textAlign: 'center',
@@ -47,7 +48,7 @@ const UserProfile = (props) => {
           paddingVertical: 20,
         }}>
         Details of User
-      </Text>
+      </Text></TopBack>
       <View style={styles.container}>
         {userData ? (
           <>
