@@ -65,6 +65,10 @@ const Members = (props) => {
           <TopBack>Gym Members</TopBack>
           <View style={styles.separator} />
           <Search onSearch={handleSearch} />
+          <View style={styles.userHeader}>
+                <Text style={styles.userText}>Name</Text>
+                <Text style={styles.userText1}>ID</Text>
+          </View>
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             {users.map((user, index) => (
               <View key={index}>
@@ -80,6 +84,7 @@ const Members = (props) => {
                     }}
                   />
                   <Text style={styles.userText}>{user.name}</Text>
+                  <Text style={styles.userText1}>{user.registerationNumber}</Text>
                 </TouchableOpacity>
                 <Hr />
               </View>
