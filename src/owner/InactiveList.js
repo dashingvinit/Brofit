@@ -68,6 +68,9 @@ const InactiveList = () => {
           inactiveData.map((member) => (
             <View key={member._id} style={styles.dataContainer}>
               <Text style={styles.dataItem}>
+                ID: <Text style={styles.dataItem1}>{member.userId.registerationNumber}</Text>
+              </Text>
+              <Text style={styles.dataItem}>
                 Name: <Text style={styles.dataItem1}>{member.userId.name}</Text>
               </Text>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

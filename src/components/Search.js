@@ -9,7 +9,7 @@ import {
 import { bgLight, neon } from '../constants/Constants';
 
 const Search = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(null);
 
   const handleSearch = () => {
     onSearch(searchQuery);
@@ -20,7 +20,7 @@ const Search = ({ onSearch }) => {
     <View style={styles.searchContainer}>
       <TextInput
         style={styles.searchInput}
-        placeholder=""
+        placeholder=" "
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
       />
@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
     marginRight: 8,
     color: neon,
     height: 50,
+    marginLeft: 20,
+    paddingLeft:20,
   },
   searchButton: {
     backgroundColor: bgLight,
