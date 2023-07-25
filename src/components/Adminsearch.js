@@ -13,11 +13,13 @@ import { bgColor, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 
 const Adminsearch = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const [search, setSearch] = useState('');
+    const [done, setdone] = useState(false)
 
     const handleSearch = async () => {
         try {
+          setdone(true)
           const response = await axios.get(`/gym/${search}`);
           const dataArray = response.data.data;
           setData(dataArray);
@@ -40,7 +42,7 @@ const Adminsearch = () => {
                 </TouchableOpacity>
               </View>
 
-              {data ? (
+              {data !== null ? (
                 <View style={styles.rowContainer}>
                   <View>
                     <Text style={styles.rowTextheading}>
@@ -58,8 +60,12 @@ const Adminsearch = () => {
                   </View>
                 </View>
               ) : (
-                <View style={styles.rowContainer}>
-                  <Text style={styles.dataNotFoundText}>Data not found</Text>
+                <View>
+                  { done && (
+                    <View style={styles.rowContainer}>
+                        <Text style={styles.dataNotFoundText}>Data not found</Text>
+                    </View>
+                  )}
                 </View>
               )}
             </View>
