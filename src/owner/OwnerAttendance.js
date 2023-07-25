@@ -175,8 +175,6 @@ const OwnerAttendance = (props) => {
                     Attendance Data
                   </Text>
                 </View>
-
-                {/* Adding fixed headings for Name, Check-in, and Check-out */}
                 <View
                   style={{
                     flexDirection: 'row',
@@ -201,19 +199,10 @@ const OwnerAttendance = (props) => {
                     style={{
                       color: 'white',
                       fontSize: 18,
-                      flex: 1,
+                      flex: 0.5,
                       marginLeft: 40,
                     }}>
-                    Check-in
-                  </Text>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      flex: 1,
-                      marginLeft: 40,
-                    }}>
-                    Check-out
+                    ID
                   </Text>
                 </View>
                 <ScrollView>
@@ -243,11 +232,21 @@ const OwnerAttendance = (props) => {
                             />
                             <Text
                               style={{
+                                flex:1,
                                 color: neon,
                                 fontSize: 20,
                                 marginLeft: 20,
                               }}>
                               {dataEntry.userId.name}
+                            </Text>
+                            <Text
+                              style={{
+                                color: neon,
+                                fontSize: 20,
+                                marginLeft: 20,
+                                flex:0.5
+                              }}>
+                              {dataEntry.RegistrationNumber}
                             </Text>
                           </View>
                         </View>
