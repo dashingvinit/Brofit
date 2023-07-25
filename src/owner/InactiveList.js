@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, ScrollView, TouchableOpacity, StyleSheet, RefreshControl } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  RefreshControl,
+} from 'react-native';
+import { TopBack, GradientBG, Hr } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -21,7 +30,7 @@ const InactiveList = () => {
       setLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        console.log('Data not found');
+        // console.log('Data not found');
       } else {
         console.error('Error fetching attendance data:', error);
       }
@@ -40,7 +49,7 @@ const InactiveList = () => {
   }, []);
 
   const handleEdit = (id) => {
-    const updatedStatus = "active";
+    const updatedStatus = 'active';
     const userid = id;
     console.log(userid);
     axios
@@ -55,70 +64,78 @@ const InactiveList = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
-      <View style={{ marginTop: 20, alignItems: 'center' }}>
-        <Text style={styles.heading}>Inactive Members</Text>
-      </View>
-      <ScrollView
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
-      >
-        {loading ? (
-          <ActivityIndicator size="large" />
-        ) : inactiveData.length > 0 ? (
-          inactiveData.map((member) => (
-            <View key={member._id} style={styles.dataContainer}>
-              <Text style={styles.dataItem}>
-                ID: <Text style={styles.dataItem1}>{member.userId.registerationNumber}</Text>
-              </Text>
-              <Text style={styles.dataItem}>
-                Name: <Text style={styles.dataItem1}>{member.userId.name}</Text>
-              </Text>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+    <GradientBG>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TopBack>Inactive Members</TopBack>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }>
+          {loading ? (
+            <ActivityIndicator size="large" />
+          ) : inactiveData.length > 0 ? (
+            inactiveData.map((member) => (
+              <View key={member._id} style={styles.dataContainer}>
                 <Text style={styles.dataItem}>
-                  Status: <Text style={styles.dataItem1}>{member.status}</Text>
+                  ID:{' '}
+                  <Text style={styles.dataItem1}>
+                    {member.userId.registerationNumber}
+                  </Text>
                 </Text>
-                <TouchableOpacity onPress={() => handleEdit(member.userId._id)}>
-                  <Text style={styles.editButton}>Change</Text>
-                </TouchableOpacity>
+                <Text style={styles.dataItem}>
+                  Name:{' '}
+                  <Text style={styles.dataItem1}>{member.userId.name}</Text>
+                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.dataItem}>
+                    Status:{' '}
+                    <Text style={styles.dataItem1}>{member.status}</Text>
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => handleEdit(member.userId._id)}>
+                    <Text style={styles.editButton}>Change</Text>
+                  </TouchableOpacity>
+                </View>
+                <Text style={styles.dataItem}>
+                  Email:{' '}
+                  <Text style={styles.dataItem1}>{member.userId.email}</Text>
+                </Text>
+                {member.plan ? (
+                  <Text style={styles.dataItem}>
+                    Plan:{' '}
+                    <Text style={styles.dataItem1}>{member.plan.name}</Text>
+                  </Text>
+                ) : (
+                  <Text style={styles.dataItem}>
+                    Plan: <Text style={styles.dataItem1}>No plan exists</Text>
+                  </Text>
+                )}
               </View>
-              <Text style={styles.dataItem}>
-                Email: <Text style={styles.dataItem1}>{member.userId.email}</Text>
+            ))
+          ) : (
+            <View style={styles.dataContainer}>
+              <Text style={{ color: neon, fontSize: 20, textAlign: 'center' }}>
+                No Inactive Members
               </Text>
-              {member.plan ? (
-                <Text style={styles.dataItem}>
-                  Plan: <Text style={styles.dataItem1}>{member.plan.name}</Text>
-                </Text>
-              ) : (
-                <Text style={styles.dataItem}>
-                  Plan: <Text style={styles.dataItem1}>No plan exists</Text>
-                </Text>
-              )}
             </View>
-          ))
-        ) : (
-          <View style={styles.dataContainer}>
-            <Text style={{ color: neon, fontSize: 20 }}>No data available</Text>
-          </View>
-        )}
-      </ScrollView>
-    </SafeAreaView>
+          )}
+        </ScrollView>
+      </SafeAreaView>
+    </GradientBG>
   );
 };
 
 const styles = StyleSheet.create({
-  heading: {
-    fontSize: 34,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: 'white',
-  },
   dataContainer: {
     padding: 16,
-    backgroundColor: bgLight,
+    backgroundColor: bgGlass,
     margin: 20,
     borderRadius: 25,
     paddingVertical: 20,
-    marginBottom: -5,
   },
   dataItem: {
     marginBottom: 8,
@@ -135,12 +152,12 @@ const styles = StyleSheet.create({
   editButton: {
     color: neon,
     fontSize: 16,
-    backgroundColor:bgColor,
-    height:30,
-    width:90,
-    textAlign:'center',
-    borderRadius:10,
-    paddingVertical:4,
+    backgroundColor: bgColor,
+    height: 30,
+    width: 90,
+    textAlign: 'center',
+    borderRadius: 10,
+    paddingVertical: 4,
   },
 });
 

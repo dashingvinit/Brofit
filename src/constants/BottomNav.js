@@ -42,6 +42,15 @@ const BottomNav = ({ setHandleLogout }) => {
       activeColor={neon}
       inactiveColor="#3e2465">
       <Tab.Screen
+        name="HomeStack"
+        options={{
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="home" color={color} size={30} />
+          ),
+        }}>
+        {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
+      </Tab.Screen>
+      <Tab.Screen
         name="WorkoutStack"
         component={WorkoutStack}
         options={{
@@ -59,17 +68,6 @@ const BottomNav = ({ setHandleLogout }) => {
           ),
         }}
       />
-
-      <Tab.Screen
-        name="HomeStack"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="home" color={color} size={30} />
-          ),
-        }}>
-        {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
-      </Tab.Screen>
-
       <Tab.Screen
         name="Timer"
         component={Timer}

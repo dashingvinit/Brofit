@@ -43,7 +43,7 @@ const CheckedIn = (props) => {
         {users.map((user, index) => (
           <TouchableOpacity key={index} style={styles.userItem}>
             <Text style={styles.userNameText}>
-              Reg. Id: {user.userId.registerationNumber} {'\n'}
+              Id: {user.userId.registerationNumber} {'\n'}
               {user.userId.name}
             </Text>
             <Text style={styles.checkTime}>{user.checkIn}</Text>
@@ -102,14 +102,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: neon,
     fontSize: 16,
-    marginLeft:30,
   },
   userNameText: {
     flex: 1,
     fontWeight: 'bold',
     color: bgColor,
     fontSize: 16,
-    marginLeft:0,
+    marginLeft: 0,
   },
   checkInOut: {
     flex: 1,
