@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { GradientBG, Hr, TopBack } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -51,15 +51,26 @@ const ActiveList = () => {
           ) : inactiveData.length > 0 ? (
             inactiveData.map((member) => (
               <View key={member._id} style={styles.dataContainer}>
-                <Text style={styles.dataItem}>
-                  ID:{' '}
-                  <Text style={styles.dataItem1}>
-                    {member.userId.registerationNumber}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.dataItem}>
+                    ID:{' '}
+                    <Text style={styles.dataItem1}>
+                      {member.userId.registerationNumber}
+                    </Text>
                   </Text>
-                </Text>
+                  <Text style={styles.dataItem}>
+                    Name:{' '}
+                    <Text style={styles.dataItem1}>{member.userId.name}</Text>
+                  </Text>
+                </View>
+
                 <Text style={styles.dataItem}>
-                  Name:{' '}
-                  <Text style={styles.dataItem1}>{member.userId.name}</Text>
+                  Email:{' '}
+                  <Text style={styles.dataItem1}>{member.userId.email}</Text>
                 </Text>
                 <View
                   style={{
@@ -71,10 +82,6 @@ const ActiveList = () => {
                     <Text style={styles.dataItem1}>{member.status}</Text>
                   </Text>
                 </View>
-                <Text style={styles.dataItem}>
-                  Email:{' '}
-                  <Text style={styles.dataItem1}>{member.userId.email}</Text>
-                </Text>
                 {member.plan ? (
                   <Text style={styles.dataItem}>
                     Plan:{' '}
@@ -90,7 +97,7 @@ const ActiveList = () => {
           ) : (
             <View style={styles.dataContainer}>
               <Text style={{ color: neon, fontSize: 20 }}>
-                No data available
+                No Active Members
               </Text>
             </View>
           )}
@@ -103,23 +110,18 @@ const ActiveList = () => {
 const styles = StyleSheet.create({
   dataContainer: {
     padding: 16,
-    backgroundColor: bgLight,
+    backgroundColor: bgGlass,
     margin: 20,
     borderRadius: 25,
     paddingVertical: 20,
-    marginBottom: -5,
   },
   dataItem: {
-    marginBottom: 8,
     color: 'white',
-    fontSize: 19,
-    paddingVertical: 7,
+    fontSize: 18,
   },
   dataItem1: {
-    marginBottom: 8,
     color: neon,
-    fontSize: 19,
-    paddingVertical: 7,
+    fontSize: 18,
   },
   editButton: {
     color: 'white',

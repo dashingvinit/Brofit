@@ -45,7 +45,8 @@ const Top = (props) => {
         margin: 10,
         paddingTop: 10,
       }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View
+        style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20 }}>
         <TouchableOpacity
           onPress={() => props.navigation.navigate('ProfilePage')}>
           <Image

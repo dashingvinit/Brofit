@@ -43,9 +43,8 @@ const OwnerLogin = (props) => {
         console.log('Token Set');
         setLoading(false);
       });
-
-      console.log('Response:', token);
       props.sethandleLogin();
+      // console.log('Response:', token);
       // alert('Login successful');
       props.navigation.navigate('Home2');
     } catch (error) {

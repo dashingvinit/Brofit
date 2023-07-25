@@ -196,7 +196,7 @@ const AdminPage = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 20,
   },
   heading: {
     fontSize: 32,
