@@ -145,7 +145,7 @@ export default function App() {
 
   return (
     <ImageBackground
-      source={require('./assets/grade3.jpg')}
+      source={require('./assets/FlipBlur.png')}
       style={styles.backgroundImage}>
       <View style={styles.container}>
         <Timer

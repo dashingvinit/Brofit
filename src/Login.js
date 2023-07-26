@@ -29,6 +29,7 @@ const Login = (props) => {
       // console.log('OwnerLoggedIn', decodedPayload);
       // console.log('user', user);
       await save('user', user);
+      console.log('User Saved', user);
 
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
@@ -42,7 +43,13 @@ const Login = (props) => {
       });
       // console.log('Response:', token);
       props.sethandleLogin();
-      props.navigation.navigate('Home2');
+      {
+        user.role === 'owner'
+          ? props.navigation.navigate('Home2')
+          : user.role === 'admin'
+          ? props.navigation.navigate('Home3')
+          : props.navigation.navigate('Home1');
+      }
     } catch (error) {
       alert('Login failed');
       console.error('Login Error:', error);

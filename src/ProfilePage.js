@@ -38,9 +38,6 @@ const ProfilePage = () => {
       const user = JSON.parse(userString);
       setUsername(user.name);
       const userID = user?.userId ?? user?._id;
-
-      // console.log('User Profile', user);
-
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
       setUserData(data.data);
@@ -173,7 +170,7 @@ const ProfilePage = () => {
                   color={bgColor}
                 />
                 <Text>Reg.Id</Text>
-                <Text>10{userData?.userId.registerationNumber}</Text>
+                <Text>{userData?.registerationNumber}</Text>
               </View>
               <View
                 style={{

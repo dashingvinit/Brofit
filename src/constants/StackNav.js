@@ -43,7 +43,7 @@ const StackNav = ({ sethandleLogin }) => {
       {/*added for Owners home */}
       <Stack.Screen name="Home2" component={OwnerHome} />
       {/*added for Admins home */}
-      <Stack.Screen name="Adminpage" component={AdminPage} />
+      <Stack.Screen name="Home3" component={AdminPage} />
     </Stack.Navigator>
   );
 };

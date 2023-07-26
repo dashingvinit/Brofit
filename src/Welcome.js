@@ -48,7 +48,7 @@ const Home = (props) => {
             }}>
             Are you a owner?
           </Text>
-          <Btn
+          {/* <Btn
             bgColor={bgColor}
             textColor={neon}
             btnLabel="Owner Login"
@@ -59,7 +59,7 @@ const Home = (props) => {
             textColor={neon}
             btnLabel="Admin Login"
             Press={() => props.navigation.navigate('AdminLogin')}
-          />
+          /> */}
           <Btn
             bgColor={bgColor}
             textColor={neon}
