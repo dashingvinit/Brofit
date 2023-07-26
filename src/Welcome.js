@@ -1,75 +1,113 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import LottieView from 'lottie-react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
-import { bgColor, neon } from './constants/Constants';
+import { bgColor, bgGlassLight, neon } from './constants/Constants';
 
 const Home = (props) => {
   return (
     <Background>
-      <View style={{ marginHorizontal: 20, marginVertical: 100 }}>
-        <Text style={{ color: 'white', fontSize: 48, fontWeight: 'bold' }}>
-          Welcome to
-        </Text>
-        <Text
-          style={{
-            color: '#e6fd54',
-            fontSize: 64,
-            fontWeight: 'bold',
-            marginBottom: 100,
-          }}>
-          Brofit
-        </Text>
-        <Btn
-          bgColor={neon}
-          textColor={bgColor}
-          btnLabel="Login"
-          Press={() => props.navigation.navigate('Login')}
-        />
-        <Btn
-          bgColor={bgColor}
-          textColor={neon}
-          btnLabel="Signup"
-          // Press={() => props.navigation.navigate('ProfileSetup')}
-          Press={() => props.navigation.navigate('Signup')}
-        />
+      <View style={styles.container}>
+        <View style={styles.iconContainer}>
+          <Text style={{ color: neon, fontSize: 38 }}>Brofit</Text>
+        </View>
 
-        <View
-          style={{
-            marginTop: 40,
-            display: 'flex',
-            justifyContent: 'center',
-          }}>
-          <Text
+        <View style={styles.bottomContainer}>
+          <LottieView
+            source={require('./assets/lottieFiles/limeAnimations.json')}
+            autoPlay
+            loop
             style={{
-              color: 'white',
-              fontSize: 24,
-              marginLeft: 10,
-            }}>
-            Are you a owner?
+              alignItems: 'flex-end',
+            }}
+          />
+
+          <Text style={{ color: neon, fontSize: 32 }}>
+            Unleash Your Inner Strength
           </Text>
-          {/* <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Owner Login"
-            Press={() => props.navigation.navigate('OwnerLogin')}
-          />
+
+          <Text style={styles.bottomText}>
+            - Achieve Your Fitness Goals
+            {'\n'}- Track Your Progress
+            {'\n'}- Personalized Training Programs
+          </Text>
+
           <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Admin Login"
-            Press={() => props.navigation.navigate('AdminLogin')}
-          /> */}
-          <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Profile"
-            Press={() => props.navigation.navigate('ProfileSetup')}
+            bgColor={neon}
+            textColor={bgColor}
+            btnLabel="Lets Go >>>"
+            Press={() => props.navigation.navigate('Login')}
           />
+
+          <View style={styles.redirect}>
+            <Text style={styles.redirectMsg}>New to Brofit?</Text>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Signup')}>
+              <Text style={styles.signup}>SignUp</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Background>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 30,
+    paddingVertical: 20,
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomContainer: {
+    justifyContent: 'center',
+    marginHorizontal: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    width: '100%',
+    // backgroundColor: 'black',
+    // borderWidth: 2,
+    // borderColor: 'white',
+  },
+  bottomText: {
+    color: '#F7FFE5',
+    textShadowColor: '#27374D', // Border color
+    textShadowOffset: { width: 1, height: 1 }, // Offset of the shadow
+    textShadowRadius: 3, // Radius of the shadow
+    fontSize: 18,
+    lineHeight: 30,
+    marginVertical: 10,
+  },
+  redirect: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  redirectMsg: {
+    color: '#ffffff99',
+    fontSize: 12,
+    marginRight: 5,
+  },
+  signup: {
+    color: 'white',
+    fontSize: 14,
+  },
+});
+
 export default Home;
+{
+  /* <Btn
+            bgColor={bgColor}
+            textColor={neon}
+            btnLabel="Profile"
+            Press={() => props.navigation.navigate('ProfileSetup')}
+          /> */
+}

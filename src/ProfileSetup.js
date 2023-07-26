@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
@@ -86,90 +86,85 @@ const ProfileSetup = (props) => {
           Setup your profile😉
         </Text>
       </View>
-      <View
-        style={{
-          backgroundColor: bgColor,
-          height: 700,
-          width: 400,
-          borderTopLeftRadius: 130,
-          paddingTop: 50,
-          paddingBottom: 50,
-          alignItems: 'center',
-        }}>
-        <Field
-          keyboardType={
-            Platform.OS === 'android'
-              ? 'phone-pad'
-              : Platform.OS === 'ios'
-              ? 'number-pad'
-              : 'numbers-and-punctuation'
-          }
-          placeholder="Height"
-          value={formData.height}
-          onChangeText={(value) => handleInputChange('height', value)}
-        />
-
-        <Field
-          keyboardType={
-            Platform.OS === 'android'
-              ? 'phone-pad'
-              : Platform.OS === 'ios'
-              ? 'number-pad'
-              : 'numbers-and-punctuation'
-          }
-          placeholder="Age"
-          value={formData.age.toString()}
-          onChangeText={(value) => handleInputChange('age', value)}
-        />
-        <Field
-          keyboardType={
-            Platform.OS === 'android'
-              ? 'phone-pad'
-              : Platform.OS === 'ios'
-              ? 'number-pad'
-              : 'numbers-and-punctuation'
-          }
-          placeholder="Weight"
-          value={formData.weight}
-          onChangeText={(value) => handleInputChange('weight', value)}
-        />
-        {/* Gender Field */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
-            Gender:
-          </Text>
-          <Picker
-            selectedValue={formData.gender}
-            style={{ height: 40, width: 150, color: 'white' }}
-            onValueChange={(itemValue) =>
-              handleInputChange('gender', itemValue)
-            }>
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
-            <Picker.Item label="Other" value="other" />
-          </Picker>
-        </View>
-
-        {/* Address Field */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
-            Address:
-          </Text>
-
+      <ScrollView>
+        <View
+          style={{
+            flexDirection: 'column',
+          }}>
           <Field
-            placeholder="Address"
-            value={formData.address}
-            onChangeText={(value) => handleInputChange('address', value)}
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Height"
+            value={formData.height}
+            onChangeText={(value) => handleInputChange('height', value)}
+          />
+          <Field
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Age"
+            value={formData.age.toString()}
+            onChangeText={(value) => handleInputChange('age', value)}
+          />
+          <Field
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Weight"
+            value={formData.weight}
+            onChangeText={(value) => handleInputChange('weight', value)}
+          />
+          {/* Gender Field */}
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
+              Gender:
+            </Text>
+            <Picker
+              selectedValue={formData.gender}
+              style={{ height: 40, width: 150, color: 'white' }}
+              onValueChange={(itemValue) =>
+                handleInputChange('gender', itemValue)
+              }>
+              <Picker.Item label="Male" value="male" />
+              <Picker.Item label="Female" value="female" />
+              <Picker.Item label="Other" value="other" />
+            </Picker>
+          </View>
+          {/* Address Field */}
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
+              Address:
+            </Text>
+
+            <Field
+              placeholder="Address"
+              value={formData.address}
+              onChangeText={(value) => handleInputChange('address', value)}
+            />
+          </View>
+          <Plans onSelect={handlePlanSelect} />
+
+          <Btn
+            textColor={bgColor}
+            bgColor={neon}
+            btnLabel="Update"
+            Press={handleProfileSetup}
           />
         </View>
-        <Plans onSelect={handlePlanSelect} />
-        <Btn
-          textColor={bgColor}
-          bgColor={neon}
-          btnLabel="Update"
-          Press={handleProfileSetup}
-        />
-      </View>
+      </ScrollView>
     </Background>
   );
 };

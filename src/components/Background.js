@@ -3,12 +3,20 @@ import { View, ImageBackground } from 'react-native';
 
 const Background = ({ children }) => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ImageBackground
         source={require('../assets/bodyBuilder.jpg')}
-        style={{ height: '100%' }}
+        style={{ flex: 1, resizeMode: 'cover', width: '100%', height: '100%' }}
       />
-      <View style={{ position: 'absolute' }}>{children}</View>
+      <View
+        style={{
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+        }}>
+        {children}
+      </View>
     </View>
   );
 };

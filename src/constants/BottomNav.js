@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 
 import WorkoutStack from '../WorkoutStack';
 import HomeStack from '../HomeStack';
@@ -51,20 +52,20 @@ const BottomNav = ({ setHandleLogout }) => {
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
       <Tab.Screen
+        name="Attendance"
+        component={Attendance}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Feather name="calendar" color={color} size={30} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="WorkoutStack"
         component={WorkoutStack}
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="ios-barbell-outline" color={color} size={30} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ProfilePage"
-        component={ProfilePage}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="user" color={color} size={30} />
           ),
         }}
       />
@@ -78,11 +79,11 @@ const BottomNav = ({ setHandleLogout }) => {
         }}
       />
       <Tab.Screen
-        name="Attendance"
-        component={Attendance}
+        name="ProfilePage"
+        component={ProfilePage}
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="calendar" color={color} size={30} />
+            <Feather name="user" color={color} size={30} />
           ),
         }}
       />

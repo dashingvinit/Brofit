@@ -17,13 +17,15 @@ import GradientBG from './GradientBG';
 import Hr from './hr';
 import TopBack from './TopBack';
 import Search from './Search';
-import Adminsearch from './Adminsearch'
+import Adminsearch from './Adminsearch';
+import Hi from './Hi';
 
 export {
   Search,
   TopBack,
   Calendar,
   Hr,
+  Hi,
   Field,
   FetchQuote,
   GradientBG,
