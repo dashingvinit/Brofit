@@ -22,17 +22,15 @@ const ProfileSetup = (props) => {
   setTokenHeader();
 
   const [formData, setFormData] = useState({
-    weight: '70',
-    height: '10',
+    weight: '',
+    height: '',
     plan: 'no plan',
-    age: 20,
+    age: 21,
     gender: 'other',
     address: 'Kathmandu',
   });
 
   const handleProfileSetup = async () => {
-    const { weight, height, plan, gender, age } = formData;
-
     try {
       const response = await axios.post('/userProfile', formData);
       alert('Setup successful');
@@ -86,7 +84,12 @@ const ProfileSetup = (props) => {
           Setup your profile😉
         </Text>
       </View>
-      <ScrollView>
+      <ScrollView
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          marginTop: 50,
+        }}>
         <View
           style={{
             flexDirection: 'column',

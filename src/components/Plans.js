@@ -44,15 +44,14 @@ const Plans = ({ onSelect }) => {
   }
 
   const renderItem = ({ item }) => (
-    <View style={[styles.card, selectedPlan === item && styles.selectedCard]}>
-      <TouchableOpacity
-        onPress={() => handlePlanClick(item)}
-        underlayColor="#f0f0f0">
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.content}>Price: {item.price}</Text>
-        <Text style={styles.content}>Validity: {item.validity}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      style={[styles.card, selectedPlan === item && styles.selectedCard]}
+      onPress={() => handlePlanClick(item)}
+      underlayColor="#f0f0f0">
+      <Text style={styles.name}>{item.name}</Text>
+      <Text style={styles.content}>Price: {item.price}</Text>
+      <Text style={styles.content}>Validity: {item.validity}</Text>
+    </TouchableOpacity>
   );
 
   return (
@@ -76,11 +75,13 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 300,
     backgroundColor: bgLight,
-    borderRadius: 10,
+    borderRadius: 15,
     alignItems: 'center',
   },
   selectedCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    borderWidth: 2,
+    borderColor: neon,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
   },
   name: {
     fontSize: 20,

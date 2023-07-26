@@ -39,6 +39,12 @@ const Home = (props) => {
             btnLabel="Lets Go >>>"
             Press={() => props.navigation.navigate('Login')}
           />
+          <Btn
+            bgColor={bgColor}
+            textColor={neon}
+            btnLabel="Profile"
+            Press={() => props.navigation.navigate('ProfileSetup')}
+          />
 
           <View style={styles.redirect}>
             <Text style={styles.redirectMsg}>New to Brofit?</Text>
@@ -103,11 +109,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-{
-  /* <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Profile"
-            Press={() => props.navigation.navigate('ProfileSetup')}
-          /> */
-}
