@@ -43,8 +43,7 @@ const ProfilePage = () => {
       const data = await response.data;
       console.log('User Profile Data', response.data);
       setUserData(data.data);
-
-      // setId(data.data._id);
+      setId(data.data._id);
     } catch (error) {
       console.log('User Profile data fetch Error', error);
     }
