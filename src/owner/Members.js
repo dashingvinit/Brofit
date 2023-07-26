@@ -17,7 +17,7 @@ import {
 } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import * as SecureStore from 'expo-secure-store';
 import { Search, GradientBG, Hr, TopBack } from '../components';
 import { useIsFocused } from '@react-navigation/native';
 import axios from '../constants/Axios';
@@ -27,7 +27,10 @@ const Members = (props) => {
 
   const getMembers = async () => {
     try {
-      const response = await axios.get('/gym/2');
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const Id = user.gymId;
+      const response = await axios.get(`/gym/${Id}`);
       const data = response.data;
       setUsers(data.data.members);
     } catch (error) {
