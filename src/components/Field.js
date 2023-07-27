@@ -21,7 +21,7 @@ const Field = (props) => {
       <TextInput
         {...props}
         style={styles.TextInput}
-        placeholderTextColor={'#DDE6ED'}></TextInput>
+        placeholderTextColor={'#EEEEEE'}></TextInput>
     </View>
   );
 };

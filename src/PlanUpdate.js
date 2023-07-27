@@ -55,8 +55,8 @@ const PlanUpdate = () => {
       const user = JSON.parse(userString);
       const gymId = user.gymId;
       const response = await axios.get(`/gym/${gymId}`);
-      const data = response.data;
-      setPlans(data.data.plans);
+      const data = response.data.data;
+      setPlans(data.plans);
     } catch (error) {
       console.log('plans Owner: ' + error);
     }
@@ -92,7 +92,7 @@ const PlanUpdate = () => {
       if (status === 'active') {
         const userString = await SecureStore.getItemAsync('user');
         const user = JSON.parse(userString);
-        const Id = user.userId;
+        const Id = user?.userId || user?._id;
         console.log(planId);
         const response = await axios.patch(`/userProfile/newPlan/${Id}`, {
           planId,

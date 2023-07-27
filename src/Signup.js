@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Background from './components/Background';
+import Background from './components/Background2';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
@@ -46,7 +46,7 @@ const Signup = (props) => {
 
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
-      console.log('user', user);
+      // console.log('user', user);
       await save('user', user);
 
       if (response.data.data.jwt) {
@@ -82,7 +82,7 @@ const Signup = (props) => {
     <Background>
       <View style={styles.container}>
         <View style={{ alignItems: 'center' }}>
-          <Text style={styles.header}>Welcome</Text>
+          <Text style={styles.header}>hi,again</Text>
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
         <View style={{}}>
@@ -165,6 +165,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    marginBottom: 20,
+    marginHorizontal: 20,
   },
   header: {
     color: 'white',
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   redirectMsg: {
-    color: 'grey',
+    color: '#EEEEEE',
     fontSize: 16,
     flexWrap: 'wrap',
     textAlign: 'center',

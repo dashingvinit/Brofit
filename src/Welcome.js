@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import LottieView from 'lottie-react-native';
-import Background from './components/Background';
+import { Background2 } from './components';
 import Btn from './components/Btn';
 import { bgColor, bgGlassLight, neon } from './constants/Constants';
 
 const Home = (props) => {
   return (
-    <Background>
+    <Background2>
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <Text style={{ color: neon, fontSize: 38 }}>Brofit</Text>
@@ -39,12 +39,12 @@ const Home = (props) => {
             btnLabel="Lets Go >>>"
             Press={() => props.navigation.navigate('Login')}
           />
-          <Btn
+          {/* <Btn
             bgColor={bgColor}
             textColor={neon}
             btnLabel="Profile"
             Press={() => props.navigation.navigate('ProfileSetup')}
-          />
+          /> */}
 
           <View style={styles.redirect}>
             <Text style={styles.redirectMsg}>New to Brofit?</Text>
@@ -55,7 +55,7 @@ const Home = (props) => {
           </View>
         </View>
       </View>
-    </Background>
+    </Background2>
   );
 };
 

@@ -7,6 +7,7 @@ import Btn from './components/Btn';
 import { bgColor, bgGlass, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
+import LottieView from 'lottie-react-native';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -96,11 +97,14 @@ const Login = (props) => {
               color: neon,
               fontSize: 24,
               fontWeight: 'bold',
-              textAlign: 'center',
             }}>
             Login to your account
           </Text>
-
+          <LottieView
+            source={require('./assets/lottieFiles/darkDumbellWithHands.json')}
+            autoPlay
+            loop
+          />
           <Field
             placeholder="Email"
             keyboardType="email-address"
@@ -125,7 +129,7 @@ const Login = (props) => {
               onPress={() => props.navigation.navigate('Forgetpassword')}>
               <Text
                 style={{
-                  color: 'white',
+                  color: neon,
                   fontWeight: 'bold',
                   fontSize: 16,
                 }}>

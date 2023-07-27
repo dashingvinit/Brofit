@@ -19,11 +19,14 @@ import TopBack from './TopBack';
 import Search from './Search';
 import Adminsearch from './Adminsearch';
 import Hi from './Hi';
+import Background2 from './Background2';
+import Gender from './Gender';
 
 export {
   Search,
   TopBack,
   Calendar,
+  Gender,
   Hr,
   Hi,
   Field,
@@ -31,6 +34,7 @@ export {
   GradientBG,
   GraphLoading,
   Background,
+  Background2,
   Btn,
   Graph,
   Plans,

@@ -31,7 +31,6 @@ const ProfilePage = () => {
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
   const [planExiper, setPlanExiper] = useState(null);
-  const [userID, setUserID] = useState(null);
 
   const fetchUserProfileData = async () => {
     try {
@@ -41,7 +40,7 @@ const ProfilePage = () => {
       const userID = user?.userId || user?._id;
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
-      console.log('User Profile Data', response.data);
+      // console.log('User Profile Data', response.data);
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
