@@ -17,18 +17,24 @@ import GradientBG from './GradientBG';
 import Hr from './hr';
 import TopBack from './TopBack';
 import Search from './Search';
-import Adminsearch from './Adminsearch'
+import Adminsearch from './Adminsearch';
+import Hi from './Hi';
+import Background2 from './Background2';
+import Gender from './Gender';
 
 export {
   Search,
   TopBack,
   Calendar,
+  Gender,
   Hr,
+  Hi,
   Field,
   FetchQuote,
   GradientBG,
   GraphLoading,
   Background,
+  Background2,
   Btn,
   Graph,
   Plans,

@@ -7,10 +7,10 @@ export default function Btn({ bgColor, btnLabel, textColor, Press }) {
       onPress={Press}
       style={{
         backgroundColor: bgColor,
-        borderRadius: 100,
+        borderRadius: 20,
         alignItems: 'center',
-        width: 350,
-        paddingVertical: 5,
+        width: '100%',
+        paddingVertical: 10,
         marginVertical: 10,
       }}>
       <Text style={{ color: textColor, fontSize: 25, fontWeight: 'bold' }}>

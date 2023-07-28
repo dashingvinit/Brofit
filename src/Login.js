@@ -4,9 +4,10 @@ import axios, { setTokenHeader } from './constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
-import { bgColor, neon } from './constants/Constants';
+import { bgColor, bgGlass, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
+import LottieView from 'lottie-react-native';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -26,10 +27,10 @@ const Login = (props) => {
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
       const user = JSON.stringify(decodedPayload);
-      // console.log('OwnerLoggedIn', decodedPayload);
-      // console.log('user', user);
+      console.log('OwnerLoggedIn', decodedPayload);
+      console.log('user', user);
+      console.log('User Saved', response);
       await save('user', user);
-      console.log('User Saved', user);
 
       const expires = Date.now() + 1000 * 60 * 60; // 1 hour
       const stringExpires = JSON.stringify(expires);
@@ -67,63 +68,76 @@ const Login = (props) => {
 
   return (
     <Background>
-      <View style={{ alignItems: 'center', width: 400 }}>
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 64,
-            fontWeight: 'bold',
-            marginVertical: 50,
-          }}>
-          Login
-        </Text>
-        <View
-          style={{
-            backgroundColor: bgColor,
-            height: 700,
-            width: '100%',
-            borderTopLeftRadius: 130,
-            paddingTop: 100,
-            alignItems: 'center',
-          }}>
-          <Text style={{ fontSize: 40, color: neon, fontWeight: 'bold' }}>
-            Welcome Back
-          </Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'space-between',
+          marginVertical: 20,
+        }}>
+        <View>
           <Text
             style={{
-              color: 'grey',
-              fontSize: 19,
+              color: 'white',
+              fontSize: 64,
               fontWeight: 'bold',
-              marginBottom: 20,
+              textAlign: 'center',
+              marginVertical: 50,
+            }}>
+            Login
+          </Text>
+        </View>
+
+        <View
+          style={{
+            justifyContent: 'center',
+            marginHorizontal: 20,
+          }}>
+          <Text
+            style={{
+              color: neon,
+              fontSize: 24,
+              fontWeight: 'bold',
             }}>
             Login to your account
           </Text>
+          <LottieView
+            source={require('./assets/lottieFiles/darkDumbellWithHands.json')}
+            autoPlay
+            loop
+          />
           <Field
-            placeholder="Email / Username"
+            placeholder="Email"
             keyboardType="email-address"
+            icon="mail"
             value={formData.email}
             onChangeText={(value) => handleInputChange('email', value)}
           />
           <Field
             placeholder="Password"
             secureTextEntry={true}
+            icon="lock"
             value={formData.password}
             onChangeText={(value) => handleInputChange('password', value)}
           />
           <View
             style={{
-              alignItems: 'flex-end',
-              width: '78%',
-              paddingRight: 16,
-              marginBottom: 200,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingRight: 12,
             }}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('Forgetpassword')}>
-              <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
+              <Text
+                style={{
+                  color: neon,
+                  fontWeight: 'bold',
+                  fontSize: 16,
+                }}>
                 Forgot Password ?
               </Text>
             </TouchableOpacity>
           </View>
+
           <Btn
             textColor={bgColor}
             bgColor={neon}
@@ -136,12 +150,12 @@ const Login = (props) => {
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
+            <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>
               Don't have an account ?{' '}
             </Text>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('Signup')}>
-              <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
+              <Text style={{ color: neon, fontWeight: 'bold', fontSize: 14 }}>
                 Signup
               </Text>
             </TouchableOpacity>

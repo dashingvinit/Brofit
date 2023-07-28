@@ -17,7 +17,8 @@ const Userstatusbox = () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      const response = await axios.get(`/userProfile/${user.userId}`);
+      const userID = user?.userId || user?._id;
+      const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
       // console.log(data.data);
       const status = data.data.status;

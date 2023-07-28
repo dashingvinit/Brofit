@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity } from 'react-native';
-import Background from './components/Background';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Background from './components/Background2';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
@@ -46,7 +46,7 @@ const Signup = (props) => {
 
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
-      console.log('user', user);
+      // console.log('user', user);
       await save('user', user);
 
       if (response.data.data.jwt) {
@@ -80,114 +80,56 @@ const Signup = (props) => {
 
   return (
     <Background>
-      <View style={{ alignItems: 'center', width: 400 }}>
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 64,
-            fontWeight: 'bold',
-            marginTop: 50,
-          }}>
-          Welcome
-        </Text>
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 19,
-            fontWeight: 'bold',
-            marginBottom: 20,
-          }}>
-          Create a new account
-        </Text>
-        <View
-          style={{
-            backgroundColor: bgColor,
-            height: 700,
-            width: '100%',
-            borderTopLeftRadius: 130,
-            paddingTop: 50,
-            alignItems: 'center',
-          }}>
+      <View style={styles.container}>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={styles.header}>hi,again</Text>
+          <Text style={styles.headerText}>Create a new account</Text>
+        </View>
+        <View style={{}}>
           <Field
             placeholder="Name"
             value={formData.name}
+            icon="user"
             onChangeText={(value) => handleInputChange('name', value)}
           />
           <Field
             placeholder="Email"
             keyboardType={'email-address'}
             value={formData.email}
+            icon="mail"
             onChangeText={(value) => handleInputChange('email', value)}
           />
           <Field
             placeholder="Gym_Id"
             value={formData.gymId}
+            icon="key"
             onChangeText={(value) => handleInputChange('gymId', value)}
           />
           <Field
             placeholder="Password"
             secureTextEntry={true}
             value={formData.password}
+            icon="lock"
             onChangeText={(value) => handleInputChange('password', value)}
           />
           <Field
             placeholder="Confirm Password"
-            secureTextEntry={true}
+            // secureTextEntry={true}
             value={formData.confirmPassword}
+            icon="eye-off"
             onChangeText={(value) =>
               handleInputChange('confirmPassword', value)
             }
           />
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              textAlign: 'center',
-            }}>
-            <Text
-              style={{
-                color: 'grey',
-                fontSize: 16,
-                flexWrap: 'wrap',
-                textAlign: 'center',
-              }}>
+          <View style={styles.redirectContainer}>
+            <Text style={styles.redirectMsg}>
               By signing in, you agree to our{' '}
             </Text>
-            <Text
-              style={{
-                color: neon,
-                fontWeight: 'bold',
-                fontSize: 16,
-                flexWrap: 'wrap',
-                textAlign: 'center',
-              }}>
-              Terms & Conditions
-            </Text>
+            <Text style={styles.redirectBtn}>Terms & Conditions</Text>
+            <Text style={styles.redirectMsg}> and </Text>
+            <Text style={styles.redirectBtn}>Privacy Policy</Text>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              width: '78%',
-              paddingRight: 16,
-              marginBottom: 10,
-            }}>
-            <Text
-              style={{
-                color: 'grey',
-                fontSize: 16,
-                flexWrap: 'wrap',
-                textAlign: 'center',
-              }}>
-              and{' '}
-            </Text>
-            <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
-              Privacy Policy
-            </Text>
-          </View>
+
           <Btn
             textColor={bgColor}
             bgColor={neon}
@@ -204,20 +146,13 @@ const Signup = (props) => {
               Press={nextPage}
             />
           )}
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}>
+          <View style={styles.redirectContainer}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
               Already have an account ?{' '}
             </Text>
             <TouchableOpacity
               onPress={() => props.navigation.navigate('Login')}>
-              <Text style={{ color: neon, fontWeight: 'bold', fontSize: 16 }}>
-                Login
-              </Text>
+              <Text style={styles.redirectBtn}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -225,5 +160,45 @@ const Signup = (props) => {
     </Background>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    marginHorizontal: 20,
+  },
+  header: {
+    color: 'white',
+    fontSize: 64,
+    fontWeight: 'bold',
+    marginTop: 50,
+  },
+  headerText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  redirectContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    textAlign: 'center',
+  },
+  redirectMsg: {
+    color: '#EEEEEE',
+    fontSize: 16,
+    flexWrap: 'wrap',
+    textAlign: 'center',
+  },
+  redirectBtn: {
+    color: neon,
+    fontWeight: 'bold',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+});
 
 export default Signup;

@@ -1,45 +1,39 @@
-import { View, Text } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
 import React, { useEffect, useState } from 'react';
-import Background from './components/Background';
+import { Background, Gender, Plans, Btn, Field, Hr } from './components';
 import { neon, bgColor } from './constants/Constants';
-import Field from './components/Field';
-import Btn from './components/Btn';
-import Plans from './components/Plans';
 
 const ProfileSetup = (props) => {
-  const setTokenHeader = async () => {
-    const token = await SecureStore.getItemAsync('token');
-    axios.interceptors.request.use((config) => {
-      config.headers['x-access-token'] = token;
-      return config;
-    });
-    console.log('Token set:', token);
-  };
+  // const setTokenHeader = async () => {
+  //   const token = await SecureStore.getItemAsync('token');
+  //   axios.interceptors.request.use((config) => {
+  //     config.headers['x-access-token'] = token;
+  //     return config;
+  //   });
+  //   console.log('Token set:', token);
+  // };
 
   setTokenHeader();
 
   const [formData, setFormData] = useState({
-    weight: '70',
-    height: '10',
+    weight: '',
+    height: '',
     plan: 'no plan',
-    age: 20,
+    age: 21,
     gender: 'other',
     address: 'Kathmandu',
   });
 
   const handleProfileSetup = async () => {
-    const { weight, height, plan, gender, age } = formData;
-
     try {
       const response = await axios.post('/userProfile', formData);
       alert('Setup successful');
       const user = response.data.data;
       props.sethandleLogin();
       props.navigation.navigate('Home1');
-      console.log('Response:', user);
+      // console.log('Response:', user);
     } catch (error) {
       alert('Setup failed');
       console.error('Error:', 'profilesetup', error);
@@ -48,10 +42,19 @@ const ProfileSetup = (props) => {
 
   const handlePlanSelect = (plan) => {
     const selectedPlanName = plan._id;
-    console.log(selectedPlanName);
+    // console.log(selectedPlanName);
     setFormData((prevFormData) => ({
       ...prevFormData,
       plan: selectedPlanName,
+    }));
+  };
+
+  const handleGenderSelect = (gender) => {
+    const selectedGender = gender;
+    // console.log(selectedGender);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      gender: selectedGender,
     }));
   };
 
@@ -64,112 +67,107 @@ const ProfileSetup = (props) => {
 
   return (
     <Background>
-      <View style={{ alignItems: 'center' }}>
+      <View style={{ flex: 1, marginHorizontal: 20 }}>
         <Text
           style={{
-            color: 'white',
-            fontSize: 64,
+            color: neon,
+            fontSize: 40,
             fontWeight: 'bold',
             marginTop: 50,
-            marginRight: 30,
+            textAlign: 'center',
           }}>
           Welcome
         </Text>
         <Text
           style={{
             color: 'white',
-            fontSize: 19,
+            fontSize: 20,
             fontWeight: 'bold',
             marginBottom: 20,
-            marginRight: 30,
+            textAlign: 'center',
           }}>
           Setup your profile😉
         </Text>
       </View>
-      <View
+      <ScrollView
         style={{
-          backgroundColor: bgColor,
-          height: 700,
-          width: 400,
-          borderTopLeftRadius: 130,
-          paddingTop: 50,
-          paddingBottom: 50,
-          alignItems: 'center',
+          flex: 1,
+          paddingHorizontal: 20,
+          paddingBottom: 20,
         }}>
-        <Field
-          keyboardType={
-            Platform.OS === 'android'
-              ? 'phone-pad'
-              : Platform.OS === 'ios'
-              ? 'number-pad'
-              : 'numbers-and-punctuation'
-          }
-          placeholder="Height"
-          value={formData.height}
-          onChangeText={(value) => handleInputChange('height', value)}
-        />
-
-        <Field
-          keyboardType={
-            Platform.OS === 'android'
-              ? 'phone-pad'
-              : Platform.OS === 'ios'
-              ? 'number-pad'
-              : 'numbers-and-punctuation'
-          }
-          placeholder="Age"
-          value={formData.age.toString()}
-          onChangeText={(value) => handleInputChange('age', value)}
-        />
-        <Field
-          keyboardType={
-            Platform.OS === 'android'
-              ? 'phone-pad'
-              : Platform.OS === 'ios'
-              ? 'number-pad'
-              : 'numbers-and-punctuation'
-          }
-          placeholder="Weight"
-          value={formData.weight}
-          onChangeText={(value) => handleInputChange('weight', value)}
-        />
-        {/* Gender Field */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
-            Gender:
-          </Text>
-          <Picker
-            selectedValue={formData.gender}
-            style={{ height: 40, width: 150, color: 'white' }}
-            onValueChange={(itemValue) =>
-              handleInputChange('gender', itemValue)
-            }>
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
-            <Picker.Item label="Other" value="other" />
-          </Picker>
-        </View>
-
-        {/* Address Field */}
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
-            Address:
-          </Text>
-
+        <View
+          style={{
+            flexDirection: 'column',
+          }}>
           <Field
-            placeholder="Address"
-            value={formData.address}
-            onChangeText={(value) => handleInputChange('address', value)}
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Weight"
+            icon="anchor"
+            value={formData.weight}
+            onChangeText={(value) => handleInputChange('weight', value)}
+          />
+          <Field
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Height"
+            icon="edit-3"
+            value={formData.height}
+            onChangeText={(value) => handleInputChange('height', value)}
+          />
+          <Field
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Age"
+            icon="chevrons-up"
+            value={formData.age.toString()}
+            onChangeText={(value) => handleInputChange('age', value)}
+          />
+
+          <Gender onSelect={handleGenderSelect} />
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+
+              width: '100%',
+            }}>
+            <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
+              Address:
+            </Text>
+            <View style={{ width: '100%', flex: 1 }}>
+              <Field
+                placeholder="Address"
+                value={formData.address}
+                onChangeText={(value) => handleInputChange('address', value)}
+              />
+            </View>
+          </View>
+          <Plans onSelect={handlePlanSelect} />
+          <Btn
+            textColor={bgColor}
+            bgColor={neon}
+            btnLabel="Update"
+            Press={handleProfileSetup}
           />
         </View>
-        <Plans onSelect={handlePlanSelect} />
-        <Btn
-          textColor={bgColor}
-          bgColor={neon}
-          btnLabel="Update"
-          Press={handleProfileSetup}
-        />
-      </View>
+      </ScrollView>
     </Background>
   );
 };
