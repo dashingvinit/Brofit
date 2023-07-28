@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import axios from '../constants/Axios';
 import { bgGlassLight, bgLight, neon } from '../constants/Constants';
 import LottieView from 'lottie-react-native';
-import { Hr } from './index';
+
 const Plans = ({ onSelect }) => {
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);

@@ -38,7 +38,7 @@ const Gender = ({ onSelect }) => {
           onPress={() => handleGenderSelect(value)}>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Ionicons name={icon} size={50} color={bgColor} />
-            {/* <Text style={{ textAlign: 'center', fontSize: 14 }}>{label}</Text> */}
+            <Text style={{ textAlign: 'center', fontSize: 14 }}>{label}</Text>
           </View>
         </TouchableOpacity>
       ))}

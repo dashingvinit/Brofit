@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
   profileCard: {
     backgroundColor: neon,
     borderRadius: 30,
-    // marginTop: 20,
     borderColor: bgColor,
     borderRightWidth: 3,
     borderBottomWidth: 3,
@@ -307,7 +306,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 20,
-    paddingHorizontal: 50,
+    paddingHorizontal: 40,
     paddingBottom: 30,
   },
   container: {
