@@ -6,6 +6,7 @@ import Background from './components/Background2';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
+import LottieView from 'lottie-react-native';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -13,6 +14,7 @@ async function save(key, value) {
 
 const Signup = (props) => {
   const [loading, setLoading] = useState(true);
+  const [newloading, setnewLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,6 +31,7 @@ const Signup = (props) => {
   };
 
   const handleSignup = async () => {
+    setnewLoading(true);
     const { name, email, gymId, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
@@ -67,6 +70,7 @@ const Signup = (props) => {
 
       console.log('Token Set');
       setLoading(false);
+      setnewLoading(false);
       alert('SignUp successful');
     } catch (error) {
       alert('SignUp failed');
@@ -75,7 +79,9 @@ const Signup = (props) => {
   };
 
   const nextPage = () => {
+    setnewLoading(true);
     props.navigation.navigate('ProfileSetup');
+    setnewLoading(false);
   };
 
   return (
@@ -141,7 +147,7 @@ const Signup = (props) => {
               textColor={bgColor}
               bgColor={neon}
               btnLabel="Next"
-              loading={loading}
+              loading={true}
               disable={loading}
               Press={nextPage}
             />
@@ -157,6 +163,26 @@ const Signup = (props) => {
           </View>
         </View>
       </View>
+      {newloading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LottieView
+            source={require('../src/assets/lottieFiles/loading1.json')}
+            autoPlay
+            loop
+          />
+        </View>
+      )}
     </Background>
   );
 };

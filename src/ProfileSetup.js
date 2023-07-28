@@ -4,6 +4,7 @@ import axios, { setTokenHeader } from './constants/Axios';
 import React, { useEffect, useState } from 'react';
 import { Background, Gender, Plans, Btn, Field, Hr } from './components';
 import { neon, bgColor } from './constants/Constants';
+import LottieView from 'lottie-react-native';
 
 const ProfileSetup = (props) => {
   // const setTokenHeader = async () => {
@@ -16,6 +17,8 @@ const ProfileSetup = (props) => {
   // };
 
   setTokenHeader();
+  
+  const [newloading, setnewLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     weight: '',
@@ -28,9 +31,11 @@ const ProfileSetup = (props) => {
 
   const handleProfileSetup = async () => {
     try {
+      setnewLoading(true);
       const response = await axios.post('/userProfile', formData);
       alert('Setup successful');
       const user = response.data.data;
+      setnewLoading(false);
       props.sethandleLogin();
       props.navigation.navigate('Home1');
       // console.log('Response:', user);
@@ -168,6 +173,26 @@ const ProfileSetup = (props) => {
           />
         </View>
       </ScrollView>
+      {newloading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LottieView
+            source={require('../src/assets/lottieFiles/loading1.json')}
+            autoPlay
+            loop
+          />
+        </View>
+      )}
     </Background>
   );
 };

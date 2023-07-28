@@ -15,11 +15,14 @@ async function save(key, value) {
 
 const Login = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     const { email, password } = formData;
 
     try {
+      setLoading(true);
+
       const response = await axios.post('/user/signin', {
         email,
         password,
@@ -38,11 +41,12 @@ const Login = (props) => {
       await save('token', token);
       await save('expire', stringExpires); // Wait for the token to be saved
 
-      // Inside handleLogin function
       await setTokenHeader().then(() => {
         console.log('Token Set');
       });
-      // console.log('Response:', token);
+
+      setLoading(false);
+
       props.sethandleLogin();
       {
         user.role === 'owner'
@@ -52,6 +56,7 @@ const Login = (props) => {
           : props.navigation.navigate('Home1');
       }
     } catch (error) {
+      setLoading(false);
       alert('Login failed');
       console.error('Login Error:', error);
     }
@@ -73,7 +78,8 @@ const Login = (props) => {
           flex: 1,
           justifyContent: 'space-between',
           marginVertical: 20,
-        }}>
+        }}
+      >
         <View>
           <Text
             style={{
@@ -82,7 +88,8 @@ const Login = (props) => {
               fontWeight: 'bold',
               textAlign: 'center',
               marginVertical: 50,
-            }}>
+            }}
+          >
             Login
           </Text>
         </View>
@@ -91,13 +98,15 @@ const Login = (props) => {
           style={{
             justifyContent: 'center',
             marginHorizontal: 20,
-          }}>
+          }}
+        >
           <Text
             style={{
               color: neon,
               fontSize: 24,
               fontWeight: 'bold',
-            }}>
+            }}
+          >
             Login to your account
           </Text>
           <LottieView
@@ -124,15 +133,18 @@ const Login = (props) => {
               flexDirection: 'row',
               justifyContent: 'flex-end',
               paddingRight: 12,
-            }}>
+            }}
+          >
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Forgetpassword')}>
+              onPress={() => props.navigation.navigate('Forgetpassword')}
+            >
               <Text
                 style={{
                   color: neon,
                   fontWeight: 'bold',
                   fontSize: 16,
-                }}>
+                }}
+              >
                 Forgot Password ?
               </Text>
             </TouchableOpacity>
@@ -143,18 +155,21 @@ const Login = (props) => {
             bgColor={neon}
             btnLabel="Login"
             Press={handleLogin}
+            disabled={loading}
           />
           <View
             style={{
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>
               Don't have an account ?{' '}
             </Text>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Signup')}>
+              onPress={() => props.navigation.navigate('Signup')}
+            >
               <Text style={{ color: neon, fontWeight: 'bold', fontSize: 14 }}>
                 Signup
               </Text>
@@ -162,6 +177,26 @@ const Login = (props) => {
           </View>
         </View>
       </View>
+      {loading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <LottieView
+            source={require('../src/assets/lottieFiles/loading1.json')}
+            autoPlay
+            loop
+          />
+        </View>
+      )}
     </Background>
   );
 };
