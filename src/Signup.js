@@ -12,7 +12,7 @@ async function save(key, value) {
 }
 
 const Signup = (props) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,6 +29,7 @@ const Signup = (props) => {
   };
 
   const handleSignup = async () => {
+    setLoading(true);
     const { name, email, gymId, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
@@ -141,8 +142,6 @@ const Signup = (props) => {
               textColor={bgColor}
               bgColor={neon}
               btnLabel="Next"
-              loading={loading}
-              disable={loading}
               Press={nextPage}
             />
           )}
