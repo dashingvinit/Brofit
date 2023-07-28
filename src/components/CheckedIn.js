@@ -12,7 +12,7 @@ import {
 import { ScrollView } from 'react-native';
 
 const CheckedIn = (props) => {
-  const [users, setUsers] = useState([]);
+  const [usersData, setUsers] = useState([]);
 
   const getCheckIn = async () => {
     try {
@@ -21,10 +21,16 @@ const CheckedIn = (props) => {
       const gymId = user.gymId;
       const response = await axios.get(`/attendance/${gymId}`);
       const data = response.data;
+      // console.log('Owner Home checkedIN', data);
       setUsers(data.data);
     } catch (error) {
       console.log('Owner Home checkedIN', error);
     }
+  };
+
+  const handleUserPress = async (member) => {
+    const user = member.userId;
+    props.navigation.navigate('UserProfile', { user });
   };
 
   useEffect(() => {
@@ -40,14 +46,17 @@ const CheckedIn = (props) => {
           <Text style={styles.checkInOut}>Check-In</Text>
           <Text style={styles.checkInOut}>Check-Out</Text>
         </View>
-        {users.map((user, index) => (
-          <TouchableOpacity key={index} style={styles.userItem}>
+        {usersData.map((member, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.userItem}
+            onPress={() => handleUserPress(member)}>
             <Text style={styles.userNameText}>
-              Id: {user.userId.registerationNumber} {'\n'}
-              {user.userId.name}
+              Id: {member.userId.registerationNumber} {'\n'}
+              {member.userId.name}
             </Text>
-            <Text style={styles.checkTime}>{user.checkIn}</Text>
-            <Text style={styles.checkTime}>{user.checkOut}</Text>
+            <Text style={styles.checkTime}>{member.checkIn}</Text>
+            <Text style={styles.checkTime}>{member.checkOut}</Text>
           </TouchableOpacity>
         ))}
       </View>

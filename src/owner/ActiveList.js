@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from 'react-native';
 import { GradientBG, Hr, TopBack } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,7 +14,7 @@ import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
-const ActiveList = () => {
+const ActiveList = (props) => {
   const [inactiveData, setInactiveData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +26,7 @@ const ActiveList = () => {
       const response = await axios.get(`/userProfile/${gymId}/active`);
       const data = await response.data.data;
       setInactiveData(data);
+
       setLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -37,6 +39,11 @@ const ActiveList = () => {
     }
   };
 
+  const handleUserPress = async (member) => {
+    const user = member.userId;
+    props.navigation.navigate('UserProfile', { user });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -45,61 +52,47 @@ const ActiveList = () => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>Active Members</TopBack>
-        <ScrollView>
+        <ScrollView style={styles.scroll}>
           {loading ? (
             <ActivityIndicator size="large" />
-          ) : inactiveData.length > 0 ? (
-            inactiveData.map((member) => (
-              <View key={member._id} style={styles.dataContainer}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.dataItem}>
-                    ID:{' '}
-                    <Text style={styles.dataItem1}>
-                      {member.userId.registerationNumber}
-                    </Text>
-                  </Text>
-                  <Text style={styles.dataItem}>
-                    Name:{' '}
-                    <Text style={styles.dataItem1}>{member.userId.name}</Text>
-                  </Text>
-                </View>
-
-                <Text style={styles.dataItem}>
-                  Email:{' '}
-                  <Text style={styles.dataItem1}>{member.userId.email}</Text>
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.dataItem}>
-                    Status:{' '}
-                    <Text style={styles.dataItem1}>{member.status}</Text>
-                  </Text>
-                </View>
-                {member.plan ? (
-                  <Text style={styles.dataItem}>
-                    Plan:{' '}
-                    <Text style={styles.dataItem1}>{member.plan.name}</Text>
-                  </Text>
-                ) : (
-                  <Text style={styles.dataItem}>
-                    Plan: <Text style={styles.dataItem1}>No plan exists</Text>
-                  </Text>
-                )}
-              </View>
-            ))
           ) : (
-            <View style={styles.dataContainer}>
-              <Text style={{ color: neon, fontSize: 20 }}>
-                No Active Members
-              </Text>
-            </View>
+            <>
+              <View style={styles.userHeader}>
+                <Text style={styles.userText}>Name</Text>
+                <Text style={styles.userText1}>ID</Text>
+              </View>
+              {inactiveData.length > 0 ? (
+                inactiveData.map((member, index) => (
+                  <View key={index}>
+                    <TouchableOpacity
+                      style={styles.dataContainer}
+                      onPress={() => handleUserPress(member)}>
+                      <View style={styles.flexRow}>
+                        <View style={styles.flexRow}>
+                          <Image
+                            source={require('../assets/images/profile.jpg')}
+                            style={{
+                              width: 35,
+                              height: 35,
+                              borderRadius: 50,
+                            }}
+                          />
+                          <Text style={styles.dataItem1}>
+                            {member?.userId?.name}
+                          </Text>
+                        </View>
+                        <Text style={styles.dataItem1}>
+                          {member?.userId?.registerationNumber}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <Hr />
+                  </View>
+                ))
+              ) : (
+                <Text>No inactive members found.</Text>
+              )}
+            </>
           )}
         </ScrollView>
       </SafeAreaView>
@@ -108,12 +101,41 @@ const ActiveList = () => {
 };
 
 const styles = StyleSheet.create({
+  userHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: bgColor,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  userText: {
+    fontSize: 24,
+    color: 'white',
+  },
+  userText1: {
+    fontSize: 24,
+    color: neon,
+  },
+  scroll: {
+    flex: 1,
+    paddingBottom: 50,
+  },
   dataContainer: {
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical: 5,
+    marginHorizontal: 10,
     backgroundColor: bgGlass,
-    margin: 20,
-    borderRadius: 25,
-    paddingVertical: 20,
+    borderRadius: 10,
   },
   dataItem: {
     color: 'white',

@@ -5,9 +5,8 @@ const hr = () => {
   return (
     <View
       style={{
-        marginTop: 10,
         borderBottomColor: 'white',
-        marginHorizontal: 10,
+        marginHorizontal: 20,
         borderBottomWidth: 1,
       }}
     />

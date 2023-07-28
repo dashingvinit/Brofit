@@ -32,7 +32,7 @@ const Members = (props) => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user.gymId;
-      const response = await axios.get(`/gym/${Id}`);
+      const response = await axios.get(`/gym/mems/${Id}`);
       const data = response.data;
       setUsers(data.data.members);
     } catch (error) {
@@ -73,7 +73,7 @@ const Members = (props) => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user.gymId;
-      const response = await axios.get(`/gym/${Id}`);
+      const response = await axios.get(`/gym/mems/${Id}`);
       const data = response.data;
       setUsers(data.data.members);
     } catch (error) {
@@ -90,7 +90,6 @@ const Members = (props) => {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <TopBack>Gym Members</TopBack>
-          <View style={styles.separator} />
           <Search onSearch={handleSearch} />
           <View style={styles.userHeader}>
             <Text style={styles.userText}>Name</Text>
@@ -102,16 +101,14 @@ const Members = (props) => {
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={handleRefresh}
-                colors={['blue']} 
+                colors={['blue']}
               />
-            }
-          >
-            {users.map((user, index) => (
+            }>
+            {users?.map((user, index) => (
               <View key={index}>
                 <TouchableOpacity
                   onPress={() => handleUserPress(user)}
-                  style={styles.userContainer}
-                >
+                  style={styles.userContainer}>
                   <Image
                     source={require('../assets/images/profile.jpg')}
                     style={{
@@ -121,7 +118,7 @@ const Members = (props) => {
                     }}
                   />
                   <View style={styles.textContainer}>
-                    <Text style={styles.userText}>{user.name}</Text>
+                    <Text style={styles.userText}> {user.name}</Text>
 
                     <Text style={styles.userText1}>
                       {user.registerationNumber}
@@ -139,17 +136,12 @@ const Members = (props) => {
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-  },
   container: {
     flex: 1,
   },
-  heading: {
-    fontSize: 21,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 100,
   },
   userContainer: {
     flexDirection: 'row',
@@ -159,17 +151,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 10,
   },
-  userHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 10,
-    marginHorizontal: 10,
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: bgColor,
-  },
   textContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -177,10 +158,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 20,
   },
+  userHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: bgColor,
+  },
   userText: {
     fontSize: 20,
     color: 'white',
-    marginLeft: 10,
   },
   userText1: {
     fontSize: 20,

@@ -14,7 +14,7 @@ import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
-const InactiveList = () => {
+const InactiveList = (props) => {
   const [inactiveData, setInactiveData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -44,9 +44,10 @@ const InactiveList = () => {
     setRefreshing(false);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const handleUserPress = async (member) => {
+    const user = member.userId;
+    props.navigation.navigate('UserProfile', { user });
+  };
 
   const handleEdit = (id) => {
     const updatedStatus = 'active';
@@ -54,19 +55,26 @@ const InactiveList = () => {
     console.log(userid);
     axios
       .patch(`/userProfile/plan/${userid}`, { status: updatedStatus })
-      .then((response) => {
-        const responseData = response.data;
-        setInactiveData(responseData.data);
+      .then(() => {
+        fetchData(); // Fetch the updated data again after successful PATCH request
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>Inactive Members</TopBack>
+        <View style={styles.userHeader}>
+          <Text style={styles.userText}>Name</Text>
+          <Text style={styles.userText1}>ID</Text>
+        </View>
         <ScrollView
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
@@ -74,47 +82,24 @@ const InactiveList = () => {
           {loading ? (
             <ActivityIndicator size="large" />
           ) : inactiveData.length > 0 ? (
-            inactiveData.map((member) => (
-              <View key={member._id} style={styles.dataContainer}>
+            inactiveData.map((member, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.dataContainer}
+                onPress={() => handleUserPress(member)}>
                 <Text style={styles.dataItem}>
                   ID:{' '}
                   <Text style={styles.dataItem1}>
                     {member.userId.registerationNumber}
                   </Text>
                 </Text>
-                <Text style={styles.dataItem}>
-                  Name:{' '}
-                  <Text style={styles.dataItem1}>{member.userId.name}</Text>
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <Text style={styles.dataItem}>
-                    Status:{' '}
-                    <Text style={styles.dataItem1}>{member.status}</Text>
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => handleEdit(member.userId._id)}>
-                    <Text style={styles.editButton}>Change</Text>
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.dataItem}>
-                  Email:{' '}
-                  <Text style={styles.dataItem1}>{member.userId.email}</Text>
-                </Text>
-                {member.plan ? (
-                  <Text style={styles.dataItem}>
-                    Plan:{' '}
-                    <Text style={styles.dataItem1}>{member.plan.name}</Text>
-                  </Text>
-                ) : (
-                  <Text style={styles.dataItem}>
-                    Plan: <Text style={styles.dataItem1}>No plan exists</Text>
-                  </Text>
-                )}
-              </View>
+
+                <Text style={styles.dataItem1}>{member.userId.name}</Text>
+
+                <TouchableOpacity onPress={() => handleEdit(member.userId._id)}>
+                  <Text style={styles.editButton}>Change</Text>
+                </TouchableOpacity>
+              </TouchableOpacity>
             ))
           ) : (
             <View style={styles.dataContainer}>
@@ -128,36 +113,56 @@ const InactiveList = () => {
     </GradientBG>
   );
 };
-
 const styles = StyleSheet.create({
+  userHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: bgColor,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  userText: {
+    fontSize: 24,
+    color: 'white',
+  },
+  userText1: {
+    fontSize: 24,
+    color: neon,
+  },
+  scroll: {
+    flex: 1,
+    paddingBottom: 50,
+  },
   dataContainer: {
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical: 5,
+    marginHorizontal: 10,
     backgroundColor: bgGlass,
-    margin: 20,
-    borderRadius: 25,
-    paddingVertical: 20,
+    borderRadius: 10,
   },
   dataItem: {
-    marginBottom: 8,
     color: 'white',
-    fontSize: 19,
-    paddingVertical: 7,
+    fontSize: 18,
   },
   dataItem1: {
-    marginBottom: 8,
     color: neon,
-    fontSize: 19,
-    paddingVertical: 7,
+    fontSize: 18,
   },
   editButton: {
-    color: neon,
-    fontSize: 16,
-    backgroundColor: bgColor,
-    height: 30,
-    width: 90,
-    textAlign: 'center',
-    borderRadius: 10,
-    paddingVertical: 4,
+    color: 'white',
+    fontSize: 20,
+    backgroundColor: bgLight,
+    fontWeight: 'bold',
   },
 });
 

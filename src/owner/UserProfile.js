@@ -6,17 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBack } from '../components';
 
 const UserProfile = (props) => {
-  const user = props.route.params.user;
-  // console.log(user.userId._id);
+  const user = props.route.params.user._id;
+  console.log(user);
   const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    fetchUserProfileData();
-  }, []);
 
   const fetchUserProfileData = async () => {
     try {
-      const response = await axios.get(`/userProfile/${user._id}`);
+      const response = await axios.get(`/userProfile/${user}`);
+      // console.log(response.data);
       const data = response.data.data;
       setUserData(data);
     } catch (error) {
@@ -24,9 +21,12 @@ const UserProfile = (props) => {
     }
   };
 
-  const handleStatus = () => {
-    const updatedStatus = "active";
+  useEffect(() => {
+    fetchUserProfileData();
+  }, []);
 
+  const handleStatus = () => {
+    const updatedStatus = 'active';
     axios
       .patch(`/userProfile/plan/${user._id}`, { status: updatedStatus })
       .then((response) => {
@@ -40,28 +40,45 @@ const UserProfile = (props) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
-      <TopBack><Text
-        style={{
-          color: 'white',
-          textAlign: 'center',
-          fontSize: 34,
-          paddingVertical: 20,
-        }}>
-        Details of User
-      </Text></TopBack>
+      <TopBack>
+        <Text
+          style={{
+            color: 'white',
+            textAlign: 'center',
+            fontSize: 34,
+            paddingVertical: 20,
+          }}>
+          Details of User
+        </Text>
+      </TopBack>
       <View style={styles.container}>
         {userData ? (
           <>
-            <Text style={styles.text}>Name: <Text style={styles.text1}>{user.name}</Text></Text>
-            <Text style={styles.text}>Email: <Text style={styles.text1}>{userData.userId.email}</Text></Text>
-            <Text style={styles.text}>Age: <Text style={styles.text1}>{userData.age}</Text></Text>
-            <Text style={styles.text}>Height: <Text style={styles.text1}>{userData.height}</Text></Text>
-            <Text style={styles.text}>Weight: <Text style={styles.text1}>{userData.weight}</Text></Text>
             <Text style={styles.text}>
-              Plan: <Text style={styles.text1}>{userData.plan ? userData.plan.name : 'Plans not found'}</Text>
+              Name: <Text style={styles.text1}>{userData?.userId?.name}</Text>
+            </Text>
+            <Text style={styles.text}>
+              Email: <Text style={styles.text1}>{userData?.userId?.email}</Text>
+            </Text>
+            <Text style={styles.text}>
+              Age: <Text style={styles.text1}>{userData.age}</Text>
+            </Text>
+            <Text style={styles.text}>
+              Height: <Text style={styles.text1}>{userData.height}</Text>
+            </Text>
+            <Text style={styles.text}>
+              Weight: <Text style={styles.text1}>{userData.weight}</Text>
+            </Text>
+            <Text style={styles.text}>
+              Plan:{' '}
+              <Text style={styles.text1}>
+                {userData.plan ? userData.plan.name : 'Plans not found'}
+              </Text>
             </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text}>Status: <Text style={styles.text1}>{userData.status}</Text></Text>
+              <Text style={styles.text}>
+                Status: <Text style={styles.text1}>{userData.status}</Text>
+              </Text>
               <TouchableOpacity onPress={handleStatus} style={styles.button}>
                 <Text style={styles.buttonText}>Change</Text>
               </TouchableOpacity>

@@ -29,18 +29,14 @@ const Plans = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString); // Parse the user string to an object
       const gymId = user.gymId;
-      console.log('gymId: ' + gymId);
       const response = await axios.get(`/gym/${gymId}`);
       const data = response.data;
+      // console.log('plans: ', data.data.plans);
       setPlans(data.data.plans);
     } catch (error) {
       console.log('plans Owner: ' + error);
     }
   };
-
-  useEffect(() => {
-    getPlans();
-  }, []);
 
   // const handleDelete = async (planId) => {
   //   try {
@@ -105,6 +101,10 @@ const Plans = () => {
       console.log('Error:', error);
     }
   };
+
+  useEffect(() => {
+    getPlans();
+  }, []);
 
   return (
     <GradientBG>
