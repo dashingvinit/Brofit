@@ -1,17 +1,27 @@
-import React from 'react';
-import { Graph, Top, CheckedIn, OwnerStatus, GradientBG } from '../components';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
+import { Graph, Top, CheckedIn, OwnerStatus, GradientBG } from '../components';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = (props) => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 2000);
+  };
+
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
@@ -19,11 +29,16 @@ const Home = (props) => {
           navigation={props.navigation}
           setHandleLogout={props.setHandleLogout}
         />
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} colors={['blue']} />
+          }
+        >
           <View style={styles.boxesContainer}>
             <View style={styles.box}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('ActiveList')}>
+                onPress={() => props.navigation.navigate('ActiveList')}
+              >
                 <View style={{ alignItems: 'center' }}>
                   <Ionicons
                     name="list-outline"
@@ -37,11 +52,11 @@ const Home = (props) => {
                       fontSize: 20,
                       fontWeight: 'bold',
                       color: 'white',
-                    }}>
+                    }}
+                  >
                     Active
                   </Text>
-                  <Text
-                    style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                  <Text style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
                     Members
                   </Text>
                 </View>
@@ -49,7 +64,8 @@ const Home = (props) => {
             </View>
             <View style={styles.box}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('InactiveList')}>
+                onPress={() => props.navigation.navigate('InactiveList')}
+              >
                 <View style={{ alignItems: 'center' }}>
                   <Ionicons
                     name="cloud-offline-outline"
@@ -63,7 +79,8 @@ const Home = (props) => {
                       fontSize: 20,
                       fontWeight: 'bold',
                       color: 'white',
-                    }}>
+                    }}
+                  >
                     Inactive
                   </Text>
                   <Text style={{ color: 'white', fontSize: 14 }}>Members</Text>
