@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  RefreshControl,
 } from 'react-native';
 import {
   bgColor,
@@ -24,6 +25,7 @@ import axios from '../constants/Axios';
 
 const Members = (props) => {
   const [users, setUsers] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -35,7 +37,7 @@ const Members = (props) => {
       setUsers(data.data.members);
     } catch (error) {
       {
-        alert('Member Fetch errror: ' + error.message);
+        alert('Member Fetch error: ' + error.message);
       }
     }
   };
@@ -64,12 +66,28 @@ const Members = (props) => {
     }
   };
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+
+    try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const Id = user.gymId;
+      const response = await axios.get(`/gym/${Id}`);
+      const data = response.data;
+      setUsers(data.data.members);
+    } catch (error) {
+      {
+        alert('Member Fetch error: ' + error.message);
+      }
+    }
+
+    setRefreshing(false);
+  };
+
   return (
     <GradientBG>
-      <SafeAreaView
-        style={{
-          flex: 1,
-        }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <TopBack>Gym Members</TopBack>
           <View style={styles.separator} />
@@ -78,12 +96,22 @@ const Members = (props) => {
             <Text style={styles.userText}>Name</Text>
             <Text style={styles.userText1}>ID</Text>
           </View>
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleRefresh}
+                colors={['blue']} 
+              />
+            }
+          >
             {users.map((user, index) => (
               <View key={index}>
                 <TouchableOpacity
                   onPress={() => handleUserPress(user)}
-                  style={styles.userContainer}>
+                  style={styles.userContainer}
+                >
                   <Image
                     source={require('../assets/images/profile.jpg')}
                     style={{

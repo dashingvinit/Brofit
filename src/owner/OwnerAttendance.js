@@ -39,6 +39,7 @@ const OwnerAttendance = (props) => {
       const date = `${searchDay}-${searchMonth}-${searchYear}`;
       const response = await axios.get(`attendance/${Id}/${date}`);
       const data = response.data.data;
+      console.log(response.data.data);
       setAttendanceData(data);
       setIsLoading(false);
     } catch (error) {
@@ -246,7 +247,7 @@ const OwnerAttendance = (props) => {
                                 marginLeft: 20,
                                 flex:0.5
                               }}>
-                              {dataEntry.RegistrationNumber}
+                              {dataEntry.userId.registerationNumber}
                             </Text>
                           </View>
                         </View>
