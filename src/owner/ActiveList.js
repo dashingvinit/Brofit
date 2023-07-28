@@ -56,7 +56,7 @@ const ActiveList = (props) => {
           {loading ? (
             <ActivityIndicator size="large" />
           ) : (
-            <>
+            <View style={styles.scrollContainer}>
               <View style={styles.userHeader}>
                 <Text style={styles.userText}>Name</Text>
                 <Text style={styles.userText1}>ID</Text>
@@ -75,6 +75,7 @@ const ActiveList = (props) => {
                               width: 35,
                               height: 35,
                               borderRadius: 50,
+                              marginRight: 10,
                             }}
                           />
                           <Text style={styles.dataItem1}>
@@ -92,7 +93,7 @@ const ActiveList = (props) => {
               ) : (
                 <Text>No inactive members found.</Text>
               )}
-            </>
+            </View>
           )}
         </ScrollView>
       </SafeAreaView>
@@ -127,7 +128,9 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingBottom: 50,
+  },
+  scrollContainer: {
+    paddingBottom: 100,
   },
   dataContainer: {
     paddingHorizontal: 20,

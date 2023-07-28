@@ -60,7 +60,6 @@ const Signup = (props) => {
         await save('expire', expireString);
         await save('token', token);
         await save('user', user);
-        console.log('user', user);
         // Inside handleLogin function
         await setTokenHeader().then(() => {
           console.log('Token Set');
@@ -174,8 +173,7 @@ const Signup = (props) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <LottieView
             source={require('../src/assets/lottieFiles/loading1.json')}
             autoPlay

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from '../constants/Axios';
+import LoadingSkeleton from '../components/LoadingSkeleton';
 import {
   bgColor,
   bgGlass,
@@ -13,15 +14,18 @@ import { ScrollView } from 'react-native';
 
 const CheckedIn = (props) => {
   const [usersData, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getCheckIn = async () => {
     try {
+      setLoading(true);
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const gymId = user.gymId;
       const response = await axios.get(`/attendance/${gymId}`);
       const data = response.data;
       // console.log('Owner Home checkedIN', data);
+      setLoading(false);
       setUsers(data.data);
     } catch (error) {
       console.log('Owner Home checkedIN', error);
@@ -46,6 +50,7 @@ const CheckedIn = (props) => {
           <Text style={styles.checkInOut}>Check-In</Text>
           <Text style={styles.checkInOut}>Check-Out</Text>
         </View>
+        {loading && <LoadingSkeleton />}
         {usersData.map((member, index) => (
           <TouchableOpacity
             key={index}

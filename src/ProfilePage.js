@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { GradientBG, Hr, Hi } from './components';
+import { GradientBG, Hr, Hi, LoadingSkeleton } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -23,16 +23,16 @@ import * as SecureStore from 'expo-secure-store';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [editable, setEditable] = useState(false);
   // const [editName, setEditName] = useState('');
   const [editAge, setEditAge] = useState('');
   const [editHeight, setEditHeight] = useState('');
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
   const [planExiper, setPlanExiper] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchUserProfileData = async () => {
+    setLoading(true);
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
@@ -42,6 +42,7 @@ const ProfilePage = () => {
       const data = await response.data;
       // console.log('User Profile Data', response.data);
       setUserData(data.data);
+      setLoading(false);
       setId(data.data._id);
     } catch (error) {
       console.log('User Profile data fetch Error', error);
@@ -50,7 +51,6 @@ const ProfilePage = () => {
 
   const handleEdit = () => {
     setEditable(true);
-    // setEditName(username);
     setEditAge(userData.age.toString()); // Convert to string for TextInput
     setEditHeight(userData.height.toString()); // Convert to string for TextInput
     setEditWeight(userData.weight.toString()); // Convert to string for TextInput
@@ -113,6 +113,7 @@ const ProfilePage = () => {
     <GradientBG style={{ flex: 1 }}>
       {/* <SafeAreaView style={{ flex: 1 }}> */}
       <ScrollView style={{ flex: 1 }}>
+        {loading && <LoadingSkeleton />}
         <View style={styles.profileCard}>
           <View style={styles.profileContainer}>
             <Image
@@ -194,72 +195,39 @@ const ProfilePage = () => {
         </View>
         <Hr />
 
-        {editable ? (
-          <>
-            <View style={styles.container}>
-              {/* <TextInput
-              style={styles.input}
-              placeholder="Name"
-              value={editName}
-              onChangeText={setEditName}
-            /> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Age"
-                value={editAge}
-                onChangeText={setEditAge}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Height"
-                value={editHeight}
-                onChangeText={setEditHeight}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Weight"
-                value={editWeight}
-                onChangeText={setEditWeight}
-              />
-              <TouchableOpacity onPress={handleSave} style={styles.button}>
-                <Text style={styles.buttonText}>Save</Text>
+        <>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}>
+            <View style={styles.smContainer}>
+              <Text>Height</Text>
+              <Text style={styles.smHeader}>{userData?.height}</Text>
+              <Text style={{ fontSize: 12 }}>Inch</Text>
+            </View>
+            <View style={styles.smContainer}>
+              <Text>Weight</Text>
+              <Text style={styles.smHeader}>{userData?.weight}</Text>
+              <Text style={{ fontSize: 12 }}>KG</Text>
+            </View>
+            <View style={styles.smContainer}>
+              <Text>Age</Text>
+              <Text style={styles.smHeader}>{userData?.age}</Text>
+              <Text style={{ fontSize: 12 }}>Yrs</Text>
+            </View>
+          </View>
+
+          <View style={styles.editContainer}>
+            <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
+              <Text style={styles.editHeader}>Edit Profile Settings</Text>
+              <TouchableOpacity onPress={handleEdit} style={styles.button}>
+                <Text style={styles.buttonText}>Edit</Text>
               </TouchableOpacity>
             </View>
-          </>
-        ) : (
-          <>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}>
-              <View style={styles.smContainer}>
-                <Text>Height</Text>
-                <Text style={styles.smHeader}>{userData?.height}</Text>
-                <Text style={{ fontSize: 12 }}>Inch</Text>
-              </View>
-              <View style={styles.smContainer}>
-                <Text>Weight</Text>
-                <Text style={styles.smHeader}>{userData?.weight}</Text>
-                <Text style={{ fontSize: 12 }}>KG</Text>
-              </View>
-              <View style={styles.smContainer}>
-                <Text>Age</Text>
-                <Text style={styles.smHeader}>{userData?.age}</Text>
-                <Text style={{ fontSize: 12 }}>Yrs</Text>
-              </View>
-            </View>
+          </View>
+        </>
 
-            <View style={styles.editContainer}>
-              <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
-                <Text style={styles.editHeader}>Edit Profile Settings</Text>
-                <TouchableOpacity onPress={handleEdit} style={styles.button}>
-                  <Text style={styles.buttonText}>Edit</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </>
-        )}
         <Hr />
         <View style={styles.bottomContainer}>
           <Text style={styles.smHeader}>Plan details:</Text>
@@ -274,6 +242,7 @@ const ProfilePage = () => {
           </View>
         </View>
       </ScrollView>
+
       {/* </SafeAreaView> */}
     </GradientBG>
   );
@@ -324,8 +293,8 @@ const styles = StyleSheet.create({
   },
   smContainer: {
     backgroundColor: '#F8FFDB',
-    height: 200,
-    width: 125,
+    height: 180,
+    minWidth: 123,
     marginHorizontal: 10,
     borderRadius: 30,
     marginTop: 10,

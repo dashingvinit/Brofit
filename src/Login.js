@@ -78,8 +78,7 @@ const Login = (props) => {
           flex: 1,
           justifyContent: 'space-between',
           marginVertical: 20,
-        }}
-      >
+        }}>
         <View>
           <Text
             style={{
@@ -88,8 +87,7 @@ const Login = (props) => {
               fontWeight: 'bold',
               textAlign: 'center',
               marginVertical: 50,
-            }}
-          >
+            }}>
             Login
           </Text>
         </View>
@@ -98,15 +96,13 @@ const Login = (props) => {
           style={{
             justifyContent: 'center',
             marginHorizontal: 20,
-          }}
-        >
+          }}>
           <Text
             style={{
               color: neon,
               fontSize: 24,
               fontWeight: 'bold',
-            }}
-          >
+            }}>
             Login to your account
           </Text>
           <LottieView
@@ -133,18 +129,15 @@ const Login = (props) => {
               flexDirection: 'row',
               justifyContent: 'flex-end',
               paddingRight: 12,
-            }}
-          >
+            }}>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Forgetpassword')}
-            >
+              onPress={() => props.navigation.navigate('Forgetpassword')}>
               <Text
                 style={{
                   color: neon,
                   fontWeight: 'bold',
                   fontSize: 16,
-                }}
-              >
+                }}>
                 Forgot Password ?
               </Text>
             </TouchableOpacity>
@@ -162,14 +155,12 @@ const Login = (props) => {
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
-            }}
-          >
+            }}>
             <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>
               Don't have an account ?{' '}
             </Text>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('Signup')}
-            >
+              onPress={() => props.navigation.navigate('Signup')}>
               <Text style={{ color: neon, fontWeight: 'bold', fontSize: 14 }}>
                 Signup
               </Text>
@@ -188,10 +179,9 @@ const Login = (props) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <LottieView
-            source={require('../src/assets/lottieFiles/loading1.json')}
+            source={require('../src/assets/lottieFiles/loadingSkeliton.json')}
             autoPlay
             loop
           />
