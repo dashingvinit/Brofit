@@ -89,10 +89,10 @@ const PlanUpdate = () => {
 
   const handlePlanSelection = async (planId) => {
     try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const Id = user?.userId || user?._id;
       if (status === 'active') {
-        const userString = await SecureStore.getItemAsync('user');
-        const user = JSON.parse(userString);
-        const Id = user?.userId || user?._id;
         console.log(planId);
         const response = await axios.patch(`/userProfile/newPlan/${Id}`, {
           planId,
@@ -105,6 +105,12 @@ const PlanUpdate = () => {
         const chosenPlan = plans.find((plan) => plan._id === planId);
         setSelectedPlan(chosenPlan);
         saveSelectedPlan(chosenPlan);
+        console.log(chosenPlan);
+        const response1 = await axios.patch(`/userProfile/newPlan/${Id}`, {
+          planId,
+        });        
+        console.log(planId);
+
       }
     } catch (error) {
       console.log('Failed to update plan:', error);
