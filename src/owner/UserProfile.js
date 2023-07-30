@@ -213,6 +213,13 @@ const UserProfile = (props) => {
             <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
         </View>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.smHeader}>Profile Details:</Text>
+          <Text style={styles.text}>Address: {userData?.address}</Text>
+          <Text style={styles.text}>
+            Contact: {userData?.contact ? userData.contact : 'Not submitted'}
+          </Text>
+        </View>
       </ScrollView>
     </GradientBG>
   );

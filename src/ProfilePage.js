@@ -111,7 +111,6 @@ const ProfilePage = () => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
-      {/* <SafeAreaView style={{ flex: 1 }}> */}
       <ScrollView style={{ flex: 1 }}>
         {loading && <LoadingSkeleton />}
         <View style={styles.profileCard}>
@@ -241,9 +240,15 @@ const ProfilePage = () => {
             <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
         </View>
-      </ScrollView>
 
-      {/* </SafeAreaView> */}
+        <View style={styles.bottomContainer}>
+          <Text style={styles.smHeader}>Profile Details:</Text>
+          <Text style={styles.text}>Address: {userData?.address}</Text>
+          <Text style={styles.text}>
+            Contact: {userData?.contact ? userData.contact : 'Not submitted'}
+          </Text>
+        </View>
+      </ScrollView>
     </GradientBG>
   );
 };
