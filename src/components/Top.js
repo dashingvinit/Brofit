@@ -22,6 +22,7 @@ const Top = (props) => {
   const handleLogout = async () => {
     try {
       await SecureStore.deleteItemAsync('token');
+      await SecureStore.deleteItemAsync('user');
       // alert('token deleted ');
       console.log('Token deleted');
       props.setHandleLogout();
