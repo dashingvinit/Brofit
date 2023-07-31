@@ -201,7 +201,7 @@ const UserProfile = (props) => {
         </>
 
         <Hr />
-        <View style={styles.bottomContainer}>
+        <View style={styles.bottomContainer1}>
           <Text style={styles.smHeader}>Plan details:</Text>
           <Text style={styles.text}>
             Plan Expires: {userData?.planExpiryDate}
@@ -212,6 +212,14 @@ const UserProfile = (props) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
+        </View>
+        <View style={styles.bottomContainer}>
+          <Text style={styles.smHeader}>Profile Details:</Text>
+          <Text style={styles.text}>Address: {userData?.address}</Text>
+          <Text style={styles.text}>
+            Contact:{' '}
+            {userData?.userId.contact ? userData.contact : 'Not submitted'}
+          </Text>
         </View>
       </ScrollView>
     </GradientBG>
@@ -239,6 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginTop: 20,
+    textAlign: 'center',
   },
   profileIcons: {
     flexDirection: 'row',
@@ -285,6 +294,16 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 10,
     marginBottom: 100,
+    borderColor: bgColor,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    borderRadius: 30,
+  },
+  bottomContainer1: {
+    padding: 20,
+    backgroundColor: 'pink',
+    borderRadius: 30,
+    marginTop: 10,
     borderColor: bgColor,
     borderRightWidth: 3,
     borderBottomWidth: 3,

@@ -97,7 +97,7 @@ const InactiveList = (props) => {
                   </View>
                   <TouchableOpacity
                     onPress={() => handleEdit(member.userId._id)}>
-                    <Text style={styles.editButton}>Change</Text>
+                    <Text style={styles.editButton}>Activate</Text>
                   </TouchableOpacity>
                 </TouchableOpacity>
               ))

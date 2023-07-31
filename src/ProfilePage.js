@@ -23,6 +23,7 @@ import * as SecureStore from 'expo-secure-store';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
+  const [username, setUsername] = useState();
   // const [editName, setEditName] = useState('');
   const [editAge, setEditAge] = useState('');
   const [editHeight, setEditHeight] = useState('');
@@ -111,7 +112,6 @@ const ProfilePage = () => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
-      {/* <SafeAreaView style={{ flex: 1 }}> */}
       <ScrollView style={{ flex: 1 }}>
         {loading && <LoadingSkeleton />}
         <View style={styles.profileCard}>
@@ -229,7 +229,7 @@ const ProfilePage = () => {
         </>
 
         <Hr />
-        <View style={styles.bottomContainer}>
+        <View style={styles.bottomContainer1}>
           <Text style={styles.smHeader}>Plan details:</Text>
           <Text style={styles.text}>
             Plan Expires: {userData?.planExpiryDate}
@@ -241,9 +241,15 @@ const ProfilePage = () => {
             <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
         </View>
-      </ScrollView>
 
-      {/* </SafeAreaView> */}
+        <View style={styles.bottomContainer}>
+          <Text style={styles.smHeader}>Profile Details:</Text>
+          <Text style={styles.text}>Address: {userData?.address}</Text>
+          <Text style={styles.text}>
+            Contact: {userData?.contact ? userData.contact : 'Not submitted'}
+          </Text>
+        </View>
+      </ScrollView>
     </GradientBG>
   );
 };
@@ -269,6 +275,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginTop: 20,
+    textAlign: 'center',
   },
   profileIcons: {
     flexDirection: 'row',
@@ -309,6 +316,16 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: 'bold',
     paddingVertical: 15,
+  },
+  bottomContainer1: {
+    padding: 20,
+    backgroundColor: 'pink',
+    borderRadius: 30,
+    marginTop: 10,
+    borderColor: bgColor,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    borderRadius: 30,
   },
   bottomContainer: {
     padding: 20,
