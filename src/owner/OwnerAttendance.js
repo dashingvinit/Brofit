@@ -39,7 +39,6 @@ const OwnerAttendance = (props) => {
       const date = `${searchDay}-${searchMonth}-${searchYear}`;
       const response = await axios.get(`attendance/${Id}/${date}`);
       const data = response.data.data;
-      console.log(response.data.data);
       setAttendanceData(data);
       setIsLoading(false);
     } catch (error) {
@@ -216,7 +215,7 @@ const OwnerAttendance = (props) => {
                     }}>
                     {attendanceData.map((dataEntry) => (
                       <TouchableOpacity
-                        key={dataEntry._id}
+                      key={dataEntry._id}
                         onPress={() => handlePress(dataEntry.userId)}>
                         <View
                           style={{
