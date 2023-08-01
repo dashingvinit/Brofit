@@ -17,8 +17,7 @@ const Calender = () => {
       const response = await axios.get(`/userProfile/calendar/${Id}`);
       // console.log(response.data);
       const data = await response.data;
-      console.log(data.data);
-      // setUserData(data.data.attendance);
+      setUserData(data.data.attendance);
 
       const markedDatesObj = {};
       data.data.attendance.forEach((entry) => {
