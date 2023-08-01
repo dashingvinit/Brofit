@@ -17,6 +17,7 @@ const Calender = () => {
       const response = await axios.get(`/userProfile/calendar/${Id}`);
       // console.log(response.data);
       const data = await response.data;
+      console.log(data.data);
       // setUserData(data.data.attendance);
 
       const markedDatesObj = {};
@@ -39,7 +40,7 @@ const Calender = () => {
       });
       setMarkedDates(markedDatesObj);
     } catch (error) {
-      console.log('h'+ error);
+      console.log('h' + error);
     }
   };
 

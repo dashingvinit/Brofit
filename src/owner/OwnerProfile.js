@@ -38,37 +38,14 @@ const ProfilePage = () => {
       const user = JSON.parse(userString);
       setUsername(user.name);
       const userID = user?.gymId;
-      console.log('User ID', userID);
+      // console.log('User ID', userID);
       const response = await axios.get(`/gym/${userID}`);
       const data = await response.data;
+      // console.log('User Profile data', data.data);
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
       console.log('User Profile data fetch Error', error);
-    }
-  };
-
-  const handleEdit = () => {
-    setEditable(true);
-    // setEditName(username);
-    setEditAge(userData.age.toString()); // Convert to string for TextInput
-    setEditHeight(userData.height.toString()); // Convert to string for TextInput
-    setEditWeight(userData.weight.toString()); // Convert to string for TextInput
-  };
-
-  const handleSave = async () => {
-    try {
-      const updatedData = {
-        age: parseFloat(editAge),
-        height: editHeight,
-        weight: editWeight,
-      };
-
-      await axios.patch(`/userProfile/${Id}`, updatedData);
-      fetchUserProfileData();
-      setEditable(false);
-    } catch (error) {
-      console.log('Update Profile Error', error);
     }
   };
 
@@ -118,7 +95,7 @@ const ProfilePage = () => {
               source={require('../assets/images/profile.jpg')}
               style={{ width: 100, height: 100, borderRadius: 50 }}
             />
-            <Text style={styles.userName}>{username}</Text>
+            <Text style={styles.userName}>{userData?.gymName}</Text>
             <Text
               style={{
                 fontWeight: 'bold',
@@ -130,7 +107,7 @@ const ProfilePage = () => {
             </Text>
           </View>
           <View style={styles.profileIcons}>
-            {/* <View
+            <View
               style={{
                 alignItems: 'center',
                 borderColor: bgColor,
@@ -139,22 +116,14 @@ const ProfilePage = () => {
                 padding: 10,
                 borderRadius: 30,
               }}>
-              {userData?.status == 'active' ? (
-                <MaterialCommunityIcons
-                  name="card-bulleted-outline"
-                  size={30}
-                  color={bgColor}
-                />
-              ) : (
-                <MaterialCommunityIcons
-                  name="card-bulleted-off-outline"
-                  size={30}
-                  color={bgGlass}
-                />
-              )}
-              <Text>{userData?.status}</Text>
-              <Text>Plan</Text>
-            </View> */}
+              <MaterialCommunityIcons
+                name="card-bulleted-outline"
+                size={30}
+                color={bgColor}
+              />
+              <Text>Plans</Text>
+              <Text>{userData?.plans.length}</Text>
+            </View>
             <View
               style={{
                 alignItems: 'center',
@@ -186,107 +155,86 @@ const ProfilePage = () => {
                 size={30}
                 color={bgColor}
               />
-              <Text>MMMM</Text>
-              <Text> d</Text>
+              <Text>Users</Text>
+              <Text>50</Text>
             </View>
           </View>
         </View>
-        <Hr />
 
-        {editable ? (
-          <>
-            <View style={styles.container}>
-              {/* <TextInput
-              style={styles.input}
-              placeholder="Name"
-              value={editName}
-              onChangeText={setEditName}
-            /> */}
-              <TextInput
-                style={styles.input}
-                placeholder="Age"
-                value={editAge}
-                onChangeText={setEditAge}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Height"
-                value={editHeight}
-                onChangeText={setEditHeight}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Weight"
-                value={editWeight}
-                onChangeText={setEditWeight}
-              />
-              <TouchableOpacity onPress={handleSave} style={styles.button}>
-                <Text style={styles.buttonText}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        ) : (
-          <>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-              }}>
-              <View style={styles.smContainer}>
-                <Text>Height</Text>
-                <Text style={styles.smHeader}>{userData?.height}</Text>
-                <Text style={{ fontSize: 12 }}>Inch</Text>
-              </View>
-              <View style={styles.smContainer}>
-                <Text>Weight</Text>
-                <Text style={styles.smHeader}>{userData?.weight}</Text>
-                <Text style={{ fontSize: 12 }}>KG</Text>
-              </View>
-              <View style={styles.smContainer}>
-                <Text>Age</Text>
-                <Text style={styles.smHeader}>{userData?.age}</Text>
-                <Text style={{ fontSize: 12 }}>Yrs</Text>
-              </View>
-            </View>
-
-            <View style={styles.editContainer}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingVertical: 10,
-                }}>
-                <View style={{ paddingVertical: 20 }}>
-                  <Text style={styles.editHeader}>Edit Profile Settings</Text>
-                  <Text style={styles.editText}>{userData?.updatedAt}</Text>
-                </View>
-                <TouchableOpacity onPress={handleEdit} style={styles.button}>
-                  <Text style={styles.buttonText}>Edit</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </>
-        )}
-        <Hr />
-        {/* <View style={styles.bottomContainer}>
-          <Text style={styles.smHeader}>Plan details:</Text>
-          <Text style={styles.text}>
-            Plan Expires: {userData?.planExpiryDate}
-          </Text>
-          <Text style={styles.text}>
-            Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
-          </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.text}>Status: {userData?.status}</Text>
+        {/* <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}>
+          <View style={styles.smContainer}>
+            <Text>Height</Text>
+            <Text style={styles.smHeader}>{userData?.height}</Text>
+            <Text style={{ fontSize: 12 }}>Inch</Text>
           </View>
-        </View> */}
-        <Hr />
-        {/* <View style={styles.bottomContainer2}>
-          <Text style={styles.smHeader}>Profile Details</Text>
-          <Text style={styles.text}>Address: {userData?.planExpiryDate}</Text>
-          <Text style={styles.text}>Phone: {userData?.planExpiryDate}</Text>
-          <Text style={styles.text}>Member sinse: {userData?.createdAt}</Text>
-        </View> */}
+          <View style={styles.smContainer}>
+            <Text>Weight</Text>
+            <Text style={styles.smHeader}>{userData?.weight}</Text>
+            <Text style={{ fontSize: 12 }}>KG</Text>
+          </View>
+          <View style={styles.smContainer}>
+            <Text>Age</Text>
+            <Text style={styles.smHeader}>{userData?.age}</Text>
+            <Text style={{ fontSize: 12 }}>Yrs</Text>
+          </View>
+        </View>
+        <Hr /> */}
+
+        <View
+          style={{
+            paddingHorizontal: 20,
+            backgroundColor: 'orange',
+            borderRadius: 20,
+            borderRightWidth: 3,
+            borderBottomWidth: 3,
+            marginBottom: 10,
+          }}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: bgColor }}>
+            Plan Details
+          </Text>
+
+          {userData?.plans.map((item, index) => {
+            return (
+              <View key={index}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginTop: 20,
+                  }}>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: bgLight }}>
+                      Plan Name
+                    </Text>
+                    <Text style={{ fontSize: 16, color: bgColor }}>
+                      {item.name}
+                    </Text>
+                  </View>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: bgLight }}>
+                      Plan Price
+                    </Text>
+                    <Text style={{ fontSize: 16, color: bgColor }}>
+                      {item.price}
+                    </Text>
+                  </View>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: bgLight }}>
+                      Plan Days
+                    </Text>
+                    <Text style={{ fontSize: 16, color: bgColor }}>
+                      {item.validity}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            );
+          })}
+        </View>
       </ScrollView>
     </GradientBG>
   );
@@ -304,7 +252,6 @@ const styles = StyleSheet.create({
   profileContainer: {
     paddingBottom: 30,
     paddingTop: 50,
-    paddingHorizontal: 80,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -313,6 +260,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginTop: 20,
+    textAlign: 'center',
   },
   profileIcons: {
     flexDirection: 'row',
@@ -321,19 +269,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 40,
     paddingBottom: 30,
-  },
-  container: {
-    padding: 20,
-    backgroundColor: '#ffffff66',
-    borderRadius: 30,
-    marginTop: 10,
-  },
-  input: {
-    color: '#AAC8A7',
-    backgroundColor: '#FAF3F0',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
   },
   smContainer: {
     backgroundColor: '#F8FFDB',
@@ -353,66 +288,6 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: 'bold',
     paddingVertical: 15,
-  },
-  editContainer: {
-    backgroundColor: '#ffffff66',
-    borderRadius: 30,
-    marginVertical: 10,
-    borderColor: bgColor,
-    borderBottomWidth: 3,
-  },
-  editHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingHorizontal: 20,
-    color: bgColor,
-  },
-  editText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    paddingHorizontal: 20,
-    color: bgColor,
-  },
-  button: {
-    backgroundColor: bgColor,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    marginRight: 10,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: neon,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  bottomContainer: {
-    padding: 20,
-    backgroundColor: '#ed8268',
-    borderRadius: 30,
-    marginTop: 10,
-    marginBottom: 10,
-    borderColor: bgColor,
-    borderRightWidth: 3,
-    borderBottomWidth: 3,
-  },
-  text: {
-    color: 'black',
-    marginVertical: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  bottomContainer2: {
-    padding: 20,
-    backgroundColor: '#0E8388',
-    borderRadius: 30,
-    marginTop: 10,
-    marginBottom: 100,
-    borderColor: bgColor,
-    borderRightWidth: 3,
-    borderBottomWidth: 3,
   },
 });
 
