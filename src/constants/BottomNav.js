@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { customSlideTransition } from './CustomTransition';
 
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -35,12 +36,13 @@ const BottomNav = ({ setHandleLogout }) => {
           fontWeight: 'bold',
           marginBottom: 10,
         },
-
+        cardStyleInterpolator: customSlideTransition,
         tabBarActiveTintColor: neon,
         tabBarInactiveTintColor: 'white',
       }}
       initialRouteName="HomeStack"
       activeColor={neon}
+      cardStyleInterpolator={customSlideTransition}
       inactiveColor="#3e2465">
       <Tab.Screen
         name="HomeStack"
@@ -83,7 +85,7 @@ const BottomNav = ({ setHandleLogout }) => {
         component={ProfilePage}
         options={{
           tabBarIcon: ({ color }) => (
-            <Feather name="user" color={color} size={30} />
+            <AntDesign name="user" color={color} size={30} />
           ),
         }}
       />

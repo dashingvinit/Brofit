@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { bgColor, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import TopBack from './TopBack';
+import GradientBG from './GradientBG';
 
 const Workouts = ({ route }) => {
   const [workouts, setWorkouts] = useState([]);
@@ -15,44 +17,46 @@ const Workouts = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <TopBack>{item.title}</TopBack>
-      <Text style={styles.content}>{item.content}</Text>
-      <ScrollView>
-        <View style={{ paddingBottom: 100 }}>
-          {workouts.map((workout) => (
-            <View style={styles.cards} key={workout.name}>
-              {/* <LottieView
+    <GradientBG>
+      <View style={styles.container}>
+        <SafeAreaView>
+          <TopBack>{item.title}</TopBack>
+          <Text style={styles.content}>{item.content}</Text>
+          <ScrollView>
+            <View style={{ paddingBottom: 100 }}>
+              {workouts.map((workout) => (
+                <View style={styles.cards} key={workout.name}>
+                  {/* <LottieView
               style={styles.lottieContainer}
               source={workout.lottieFile}
               autoPlay
               loop
             /> */}
-              <Text style={styles.wHeading}>{workout.name}</Text>
-              <View style={styles.contentCard}>
-                <Text>Reps: {workout.reps}</Text>
-                <Text>Sets: {workout.sets}</Text>
-              </View>
-              <View>
-                {/* <Text style={styles.wHeading}>{workout.name}</Text>
+                  <Text style={styles.wHeading}>{workout.name}</Text>
+                  <View style={styles.contentCard}>
+                    <Text>Reps: {workout.reps}</Text>
+                    <Text>Sets: {workout.sets}</Text>
+                  </View>
+                  <View>
+                    {/* <Text style={styles.wHeading}>{workout.name}</Text>
               <View style={styles.contentCard}>
                 <Text>Reps: {workout.reps}</Text>
                 <Text>Sets: {workout.sets}</Text>
               </View> */}
-              </View>
+                  </View>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
-      </ScrollView>
-    </View>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+    </GradientBG>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    backgroundColor: bgColor,
   },
   headers: {
     fontSize: 32,
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: bgLight,
+    backgroundColor: bgGlass,
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,

@@ -5,9 +5,9 @@ import { bgColor, bgGlassLight, neon } from '../constants/Constants';
 
 const Gender = ({ onSelect }) => {
   const genders = [
-    { label: 'Male', value: 'male', color: '#FD8D14', icon: 'male' },
-    { label: 'Female', value: 'female', color: '#FEBBCC', icon: 'female' },
-    { label: 'C++', value: 'other', color: '#A1CCD1', icon: 'male-female' },
+    { label: 'Male', value: 'male', color: '#E7AB79', icon: 'male' },
+    { label: 'Female', value: 'female', color: '#ED8D8D', icon: 'female' },
+    { label: 'C++', value: 'other', color: '#DDDDDD', icon: 'male-female' },
   ];
 
   const [selectedGender, setSelectedGender] = useState(null);

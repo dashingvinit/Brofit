@@ -3,8 +3,8 @@ import {
   Graph,
   Top,
   WorkoutCards,
+  Runtimer,
   Userstatusbox,
-  Loading,
   GradientBG,
 } from './components';
 import {
@@ -13,7 +13,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
+import { SixdayWorkOut } from './assets/images';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -23,11 +25,6 @@ const Home = (props) => {
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
-        {/* Circular lights */}
-        <View style={styles.lightTopLeft} />
-        <View style={styles.lightTopRight} />
-        <View style={styles.lightBottomLeft} />
-        <View style={styles.lightBottomRight} />
         <Top
           navigation={props.navigation}
           setHandleLogout={props.setHandleLogout}
@@ -79,20 +76,24 @@ const Home = (props) => {
             </View>
           </View>
           <Graph />
-          <WorkoutCards navigation={props.navigation} />
+          <Runtimer />
+          {/* <WorkoutCards navigation={props.navigation} /> */}
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('SixDayWorkoutPlan');
+            }}>
+            <View style={styles.card}>
+              <ImageBackground
+                source={SixdayWorkOut}
+                style={styles.imageBackground}
+                resizeMode="cover"
+              />
+            </View>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </GradientBG>
   );
-};
-
-const commonLightStyles = {
-  width: 300,
-  height: 300,
-  borderRadius: 150,
-  position: 'absolute',
-  opacity: 0.5,
-  background: 'conic-gradient(rgba(255, 255, 255, 0.8) 100%, transparent 70%)',
 };
 
 const styles = StyleSheet.create({
@@ -112,26 +113,17 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
   },
-
-  lightTopLeft: {
-    ...commonLightStyles,
-    top: -150,
-    left: -150,
+  card: {
+    height: 250,
+    margin: 10,
+    borderRadius: 20,
+    overflow: 'hidden',
+    marginBottom: 200,
   },
-  lightTopRight: {
-    ...commonLightStyles,
-    top: -150,
-    right: -150,
-  },
-  lightBottomLeft: {
-    ...commonLightStyles,
-    bottom: -150,
-    left: -150,
-  },
-  lightBottomRight: {
-    ...commonLightStyles,
-    bottom: -150,
-    right: -150,
+  imageBackground: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
 });
 

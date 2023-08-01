@@ -23,8 +23,12 @@ import Background2 from './Background2';
 import Gender from './Gender';
 import DayWiseWorkouts from './6dayWorkouts';
 import SixDayWorkoutPlan from './6dWorkoutPlan';
+import WorkoutClass from './WorkoutClass';
+import Runtimer from './Runtimer';
 
 export {
+  Runtimer,
+  WorkoutClass,
   DayWiseWorkouts,
   SixDayWorkoutPlan,
   Search,

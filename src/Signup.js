@@ -67,10 +67,10 @@ const Signup = (props) => {
         });
       }
 
-      console.log('Token Set');
+      // console.log('Token Set');
       setLoading(false);
       setnewLoading(false);
-      alert('SignUp successful');
+      // alert('SignUp successful');
     } catch (error) {
       alert('SignUp failed');
       setLoading(true);

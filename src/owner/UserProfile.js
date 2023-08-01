@@ -218,7 +218,7 @@ const UserProfile = (props) => {
           <Text style={styles.text}>Address: {userData?.address}</Text>
           <Text style={styles.text}>
             Contact:{' '}
-            {userData?.userId.contact ? userData.contact : 'Not submitted'}
+            {userData?.phoneNumber ? userData.phoneNumber : 'Not submitted'}
           </Text>
         </View>
       </ScrollView>

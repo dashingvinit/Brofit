@@ -4,32 +4,41 @@ import {
   StyleSheet,
   ImageBackground,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, bgGlass, bgLight, neon } from './constants/Constants';
-import { GradientBG, TopBack, Hr } from './components';
+import { GradientBG, TopBack, Hr, WorkoutClass, Runtimer } from './components';
 import { SixdayWorkOut } from './assets/images';
 
 const Workouts = (props) => {
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
-        <TouchableOpacity
-          onPress={() => {
-            props.navigation.navigate('SixDayWorkoutPlan');
-          }}>
-          <View style={styles.card}>
-            <ImageBackground
-              source={SixdayWorkOut}
-              style={styles.imageBackground}
-              resizeMode="cover"
-            />
+        <TopBack>Workout Plans</TopBack>
+        <ScrollView>
+          <Runtimer />
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('SixDayWorkoutPlan');
+            }}>
+            <View style={styles.card}>
+              <ImageBackground
+                source={SixdayWorkOut}
+                style={styles.imageBackground}
+                resizeMode="cover"
+              />
+            </View>
+          </TouchableOpacity>
+
+          <View style={{ marginHorizontal: 10, paddingBottom: 100 }}>
+            <WorkoutClass navigation={props.navigation} />
           </View>
-        </TouchableOpacity>
-        <View style={styles.BottomContainer}>
+        </ScrollView>
+        {/* <View style={styles.BottomContainer}>
           <Text style={styles.BottomContainerText}>Workouts</Text>
-        </View>
+        </View> */}
       </SafeAreaView>
     </GradientBG>
   );

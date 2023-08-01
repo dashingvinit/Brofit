@@ -49,7 +49,7 @@ const WorkoutPlan = (props) => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
         <TopBack>6 day WorkOut Routin</TopBack>
         <FlatList
           data={data}
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
   },
 
   cardContainer: {
-    height: 200,
+    minHeight: 210,
+    maxHeight: 300,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',

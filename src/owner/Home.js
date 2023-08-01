@@ -31,17 +31,19 @@ const Home = (props) => {
         />
         <ScrollView
           refreshControl={
-            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} colors={['blue']} />
-          }
-        >
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={onRefresh}
+              colors={['blue']}
+            />
+          }>
           <View style={styles.boxesContainer}>
             <View style={styles.box}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('ActiveList')}
-              >
+                onPress={() => props.navigation.navigate('ActiveList')}>
                 <View style={{ alignItems: 'center' }}>
                   <Ionicons
-                    name="list-outline"
+                    name="flame-sharp"
                     style={{
                       color: neon,
                     }}
@@ -52,11 +54,11 @@ const Home = (props) => {
                       fontSize: 20,
                       fontWeight: 'bold',
                       color: 'white',
-                    }}
-                  >
+                    }}>
                     Active
                   </Text>
-                  <Text style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
+                  <Text
+                    style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
                     Members
                   </Text>
                 </View>
@@ -64,11 +66,10 @@ const Home = (props) => {
             </View>
             <View style={styles.box}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('InactiveList')}
-              >
+                onPress={() => props.navigation.navigate('InactiveList')}>
                 <View style={{ alignItems: 'center' }}>
                   <Ionicons
-                    name="cloud-offline-outline"
+                    name="cog-outline"
                     style={{
                       color: neon,
                     }}
@@ -79,8 +80,7 @@ const Home = (props) => {
                       fontSize: 20,
                       fontWeight: 'bold',
                       color: 'white',
-                    }}
-                  >
+                    }}>
                     Inactive
                   </Text>
                   <Text style={{ color: 'white', fontSize: 14 }}>Members</Text>
