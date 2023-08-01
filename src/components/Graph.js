@@ -84,7 +84,7 @@ const Graph = () => {
       style={{
         flex: 1,
         borderRadius: 20,
-        backgroundColor: bgLight,
+        backgroundColor: bgGlass,
         padding: 10,
         margin: 6,
       }}>

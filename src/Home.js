@@ -16,7 +16,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { SixdayWorkOut } from './assets/images';
-import { bgColor, bgLight, neon } from './constants/Constants';
+import { bgColor, bgGlass, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
     height: 120,
-    backgroundColor: bgLight,
+    backgroundColor: bgGlass,
     margin: 6,
     justifyContent: 'center',
     alignItems: 'center',
