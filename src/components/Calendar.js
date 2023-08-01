@@ -13,11 +13,13 @@ const Calender = () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      const Id = user.userId;
+      const Id = user?.userId || user?._id;
+      console.log(Id)
       const response = await axios.get(`/userProfile/calendar/${Id}`);
       // console.log(response.data);
       const data = await response.data;
-      setUserData(data.data.attendance);
+      console.log(data.data);
+      // setUserData(data.data.attendance);
 
       const markedDatesObj = {};
       data.data.attendance.forEach((entry) => {
@@ -39,7 +41,7 @@ const Calender = () => {
       });
       setMarkedDates(markedDatesObj);
     } catch (error) {
-      console.log(error);
+      console.log('h'+ error);
     }
   };
 
