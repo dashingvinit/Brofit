@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { GradientBG, Hr, Hi, LoadingSkeleton } from './components';
+import { GradientBG, Hr, Hi } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -23,17 +23,16 @@ import * as SecureStore from 'expo-secure-store';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState(null);
+  const [editable, setEditable] = useState(false);
   // const [editName, setEditName] = useState('');
   const [editAge, setEditAge] = useState('');
   const [editHeight, setEditHeight] = useState('');
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
   const [planExiper, setPlanExiper] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const fetchUserProfileData = async () => {
-    setLoading(true);
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
@@ -41,9 +40,8 @@ const ProfilePage = () => {
       const userID = user?.userId || user?._id;
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
-      // console.log('User Profile Data', response.data);
+      //console.log('User Profile Data', response.data);
       setUserData(data.data);
-      setLoading(false);
       setId(data.data._id);
     } catch (error) {
       console.log('User Profile data fetch Error', error);
@@ -52,6 +50,7 @@ const ProfilePage = () => {
 
   const handleEdit = () => {
     setEditable(true);
+    // setEditName(username);
     setEditAge(userData.age.toString()); // Convert to string for TextInput
     setEditHeight(userData.height.toString()); // Convert to string for TextInput
     setEditWeight(userData.weight.toString()); // Convert to string for TextInput
@@ -113,14 +112,13 @@ const ProfilePage = () => {
   return (
     <GradientBG style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
-        {loading && <LoadingSkeleton />}
         <View style={styles.profileCard}>
           <View style={styles.profileContainer}>
             <Image
               source={require('./assets/images/profile.jpg')}
               style={{ width: 100, height: 100, borderRadius: 50 }}
             />
-            {/* <Text style={styles.userName}>{username}</Text> */}
+            <Text style={styles.userName}>{username}</Text>
             <Text
               style={{
                 fontWeight: 'bold',
@@ -195,41 +193,82 @@ const ProfilePage = () => {
         </View>
         <Hr />
 
-        <>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}>
-            <View style={styles.smContainer}>
-              <Text>Height</Text>
-              <Text style={styles.smHeader}>{userData?.height}</Text>
-              <Text style={{ fontSize: 12 }}>Inch</Text>
-            </View>
-            <View style={styles.smContainer}>
-              <Text>Weight</Text>
-              <Text style={styles.smHeader}>{userData?.weight}</Text>
-              <Text style={{ fontSize: 12 }}>KG</Text>
-            </View>
-            <View style={styles.smContainer}>
-              <Text>Age</Text>
-              <Text style={styles.smHeader}>{userData?.age}</Text>
-              <Text style={{ fontSize: 12 }}>Yrs</Text>
-            </View>
-          </View>
-
-          <View style={styles.editContainer}>
-            <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
-              <Text style={styles.editHeader}>Edit Profile Settings</Text>
-              <TouchableOpacity onPress={handleEdit} style={styles.button}>
-                <Text style={styles.buttonText}>Edit</Text>
+        {editable ? (
+          <>
+            <View style={styles.container}>
+              {/* <TextInput
+              style={styles.input}
+              placeholder="Name"
+              value={editName}
+              onChangeText={setEditName}
+            /> */}
+              <TextInput
+                style={styles.input}
+                placeholder="Age"
+                value={editAge}
+                onChangeText={setEditAge}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Height"
+                value={editHeight}
+                onChangeText={setEditHeight}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Weight"
+                value={editWeight}
+                onChangeText={setEditWeight}
+              />
+              <TouchableOpacity onPress={handleSave} style={styles.button}>
+                <Text style={styles.buttonText}>Save</Text>
               </TouchableOpacity>
             </View>
-          </View>
-        </>
+          </>
+        ) : (
+          <>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
+              <View style={styles.smContainer}>
+                <Text>Height</Text>
+                <Text style={styles.smHeader}>{userData?.height}</Text>
+                <Text style={{ fontSize: 12 }}>Inch</Text>
+              </View>
+              <View style={styles.smContainer}>
+                <Text>Weight</Text>
+                <Text style={styles.smHeader}>{userData?.weight}</Text>
+                <Text style={{ fontSize: 12 }}>KG</Text>
+              </View>
+              <View style={styles.smContainer}>
+                <Text>Age</Text>
+                <Text style={styles.smHeader}>{userData?.age}</Text>
+                <Text style={{ fontSize: 12 }}>Yrs</Text>
+              </View>
+            </View>
 
+            <View style={styles.editContainer}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingVertical: 10,
+                }}>
+                <View style={{ paddingVertical: 20 }}>
+                  <Text style={styles.editHeader}>Edit Profile Settings</Text>
+                  <Text style={styles.editText}>{userData?.updatedAt}</Text>
+                </View>
+                <TouchableOpacity onPress={handleEdit} style={styles.button}>
+                  <Text style={styles.buttonText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        )}
         <Hr />
-        <View style={styles.bottomContainer1}>
+        <View style={styles.bottomContainer}>
           <Text style={styles.smHeader}>Plan details:</Text>
           <Text style={styles.text}>
             Plan Expires: {userData?.planExpiryDate}
@@ -241,13 +280,12 @@ const ProfilePage = () => {
             <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
         </View>
-
-        <View style={styles.bottomContainer}>
-          <Text style={styles.smHeader}>Profile Details:</Text>
-          <Text style={styles.text}>Address: {userData?.address}</Text>
-          <Text style={styles.text}>
-            Contact: {userData?.contact ? userData.contact : 'Not submitted'}
-          </Text>
+        <Hr />
+        <View style={styles.bottomContainer2}>
+          <Text style={styles.smHeader}>Profile Details</Text>
+          <Text style={styles.text}>Address: {userData?.planExpiryDate}</Text>
+          <Text style={styles.text}>Phone: {userData?.planExpiryDate}</Text>
+          <Text style={styles.text}>Member sinse: {userData?.createdAt}</Text>
         </View>
       </ScrollView>
     </GradientBG>
@@ -261,7 +299,7 @@ const styles = StyleSheet.create({
     borderColor: bgColor,
     borderRightWidth: 3,
     borderBottomWidth: 3,
-    borderRadius: 30,
+    marginBottom: 10,
   },
   profileContainer: {
     paddingBottom: 30,
@@ -275,7 +313,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginTop: 20,
-    textAlign: 'center',
   },
   profileIcons: {
     flexDirection: 'row',
@@ -300,8 +337,8 @@ const styles = StyleSheet.create({
   },
   smContainer: {
     backgroundColor: '#F8FFDB',
-    height: 180,
-    minWidth: 123,
+    height: 200,
+    width: 125,
     marginHorizontal: 10,
     borderRadius: 30,
     marginTop: 10,
@@ -317,51 +354,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingVertical: 15,
   },
-  bottomContainer1: {
-    padding: 20,
-    backgroundColor: 'pink',
-    borderRadius: 30,
-    marginTop: 10,
-    borderColor: bgColor,
-    borderRightWidth: 3,
-    borderBottomWidth: 3,
-    borderRadius: 30,
-  },
-  bottomContainer: {
-    padding: 20,
-    backgroundColor: '#ed8268',
-    borderRadius: 30,
-    marginTop: 10,
-    marginBottom: 100,
-    borderColor: bgColor,
-    borderRightWidth: 3,
-    borderBottomWidth: 3,
-    borderRadius: 30,
-  },
-  text: {
-    color: 'black',
-    marginVertical: 10,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
   editContainer: {
     backgroundColor: '#ffffff66',
     borderRadius: 30,
-    marginTop: 10,
+    marginVertical: 10,
     borderColor: bgColor,
     borderBottomWidth: 3,
-    borderRadius: 30,
   },
   editHeader: {
     fontSize: 20,
     fontWeight: 'bold',
-    padding: 20,
+    paddingHorizontal: 20,
+    color: bgColor,
+  },
+  editText: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    paddingHorizontal: 20,
     color: bgColor,
   },
   button: {
     backgroundColor: bgColor,
     paddingHorizontal: 30,
     paddingVertical: 5,
+    marginRight: 10,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -371,6 +387,32 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  bottomContainer: {
+    padding: 20,
+    backgroundColor: '#ed8268',
+    borderRadius: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    borderColor: bgColor,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+  },
+  text: {
+    color: 'black',
+    marginVertical: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  bottomContainer2: {
+    padding: 20,
+    backgroundColor: '#0E8388',
+    borderRadius: 30,
+    marginTop: 10,
+    marginBottom: 100,
+    borderColor: bgColor,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
   },
 });
 
