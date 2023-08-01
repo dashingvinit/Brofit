@@ -7,9 +7,10 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import { GradientBG } from './components';
+import { GradientBG, TopBack } from './components';
 import React from 'react';
-import { bgColor, WorkoutPlanData } from './constants/Constants';
+import { WorkoutPlanData } from './constants/Constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WorkoutPlan = (props) => {
   const data = WorkoutPlanData;
@@ -47,8 +48,8 @@ const WorkoutPlan = (props) => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Text style={styles.header}>6 d workout plan</Text>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TopBack>6 day WorkOut Routin</TopBack>
         <FlatList
           data={data}
           renderItem={renderItem}
@@ -57,16 +58,12 @@ const WorkoutPlan = (props) => {
           ListEmptyComponent={<Text>No plans available.</Text>}
           contentContainerStyle={{ paddingBottom: 180 }}
         />
-      </View>
+      </SafeAreaView>
     </GradientBG>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 40,
-    // backgroundColor: bgColor,
-  },
   header: {
     fontSize: 30,
     fontWeight: 'bold',

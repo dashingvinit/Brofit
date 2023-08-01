@@ -37,11 +37,10 @@ const ProfilePage = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       setUsername(user.name);
-      const userID = user?.userId || user?._id;
-      // console.log('User ID', userID);
+      const userID = user?.gymId;
+      console.log('User ID', userID);
       const response = await axios.get(`/gym/${userID}`);
       const data = await response.data;
-      console.log('User Profile Data', response.data);
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
@@ -127,11 +126,11 @@ const ProfilePage = () => {
                 fontSize: 16,
                 color: bgLight,
               }}>
-              {userData?.userId.email}
+              {userData?.email}
             </Text>
           </View>
           <View style={styles.profileIcons}>
-            <View
+            {/* <View
               style={{
                 alignItems: 'center',
                 borderColor: bgColor,
@@ -155,7 +154,7 @@ const ProfilePage = () => {
               )}
               <Text>{userData?.status}</Text>
               <Text>Plan</Text>
-            </View>
+            </View> */}
             <View
               style={{
                 alignItems: 'center',
@@ -170,8 +169,8 @@ const ProfilePage = () => {
                 size={30}
                 color={bgColor}
               />
-              <Text>Reg.Id</Text>
-              <Text>{userData?.userId.registerationNumber}</Text>
+              <Text>Gym.Id</Text>
+              <Text>{userData?.gymId}</Text>
             </View>
             <View
               style={{
@@ -187,8 +186,8 @@ const ProfilePage = () => {
                 size={30}
                 color={bgColor}
               />
-              <Text>Exp.In</Text>
-              <Text>{planExiper} d</Text>
+              <Text>MMMM</Text>
+              <Text> d</Text>
             </View>
           </View>
         </View>
@@ -269,7 +268,7 @@ const ProfilePage = () => {
           </>
         )}
         <Hr />
-        <View style={styles.bottomContainer}>
+        {/* <View style={styles.bottomContainer}>
           <Text style={styles.smHeader}>Plan details:</Text>
           <Text style={styles.text}>
             Plan Expires: {userData?.planExpiryDate}
@@ -280,14 +279,14 @@ const ProfilePage = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
-        </View>
+        </View> */}
         <Hr />
-        <View style={styles.bottomContainer2}>
+        {/* <View style={styles.bottomContainer2}>
           <Text style={styles.smHeader}>Profile Details</Text>
           <Text style={styles.text}>Address: {userData?.planExpiryDate}</Text>
           <Text style={styles.text}>Phone: {userData?.planExpiryDate}</Text>
           <Text style={styles.text}>Member sinse: {userData?.createdAt}</Text>
-        </View>
+        </View> */}
       </ScrollView>
     </GradientBG>
   );

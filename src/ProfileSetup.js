@@ -25,7 +25,7 @@ const ProfileSetup = (props) => {
     height: '',
     plan: 'no plan',
     age: 21,
-    contact: '1234567890',
+    phoneNumber: '1234567890',
     gender: 'other',
     address: 'Kathmandu',
   });
@@ -73,116 +73,118 @@ const ProfileSetup = (props) => {
 
   return (
     <Background>
-      <View style={{ flex: 1, marginHorizontal: 20 }}>
-        <Text
-          style={{
-            color: neon,
-            fontSize: 40,
-            fontWeight: 'bold',
-            marginTop: 50,
-            textAlign: 'center',
-          }}>
-          Welcome
-        </Text>
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginBottom: 20,
-            textAlign: 'center',
-          }}>
-          Setup your profile😉
-        </Text>
-      </View>
       <ScrollView
         style={{
           flex: 1,
           paddingHorizontal: 20,
           paddingBottom: 20,
         }}>
-        <View
-          style={{
-            flexDirection: 'column',
-          }}>
-          <Field
-            keyboardType={
-              Platform.OS === 'android'
-                ? 'phone-pad'
-                : Platform.OS === 'ios'
-                ? 'number-pad'
-                : 'numbers-and-punctuation'
-            }
-            placeholder="Weight"
-            icon="anchor"
-            value={formData.weight}
-            onChangeText={(value) => handleInputChange('weight', value)}
-          />
-          <Field
-            keyboardType={
-              Platform.OS === 'android'
-                ? 'phone-pad'
-                : Platform.OS === 'ios'
-                ? 'number-pad'
-                : 'numbers-and-punctuation'
-            }
-            placeholder="Height"
-            icon="edit-3"
-            value={formData.height}
-            onChangeText={(value) => handleInputChange('height', value)}
-          />
-          <Field
-            keyboardType={
-              Platform.OS === 'android'
-                ? 'phone-pad'
-                : Platform.OS === 'ios'
-                ? 'number-pad'
-                : 'numbers-and-punctuation'
-            }
-            placeholder="Age"
-            icon="chevrons-up"
-            value={formData.age.toString()}
-            onChangeText={(value) => handleInputChange('age', value)}
-          />{' '}
-          <Field
-            keyboardType={
-              Platform.OS === 'android'
-                ? 'phone-pad'
-                : Platform.OS === 'ios'
-                ? 'number-pad'
-                : 'numbers-and-punctuation'
-            }
-            placeholder="Number"
-            icon="chevrons-up"
-            value={formData.contact.toString()}
-            onChangeText={(value) => handleInputChange('contact', value)}
-          />
-          <Gender onSelect={handleGenderSelect} />
+        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+          <View style={{ flex: 1, marginHorizontal: 20 }}>
+            <Text
+              style={{
+                color: neon,
+                fontSize: 40,
+                fontWeight: 'bold',
+                marginTop: 50,
+                textAlign: 'center',
+              }}>
+              Welcome
+            </Text>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginBottom: 20,
+                textAlign: 'center',
+              }}>
+              Setup your profile😉
+            </Text>
+          </View>
           <View
             style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-
-              width: '100%',
+              flexDirection: 'column',
             }}>
-            <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
-              Address:
-            </Text>
-            <View style={{ width: '100%', flex: 1 }}>
-              <Field
-                placeholder="Address"
-                value={formData.address}
-                onChangeText={(value) => handleInputChange('address', value)}
-              />
+            <Field
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'phone-pad'
+                  : Platform.OS === 'ios'
+                  ? 'number-pad'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder="Weight"
+              icon="anchor"
+              value={formData.weight}
+              onChangeText={(value) => handleInputChange('weight', value)}
+            />
+            <Field
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'phone-pad'
+                  : Platform.OS === 'ios'
+                  ? 'number-pad'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder="Height"
+              icon="edit-3"
+              value={formData.height}
+              onChangeText={(value) => handleInputChange('height', value)}
+            />
+            <Field
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'phone-pad'
+                  : Platform.OS === 'ios'
+                  ? 'number-pad'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder="Age"
+              icon="chevrons-up"
+              value={formData.age.toString()}
+              onChangeText={(value) => handleInputChange('age', value)}
+            />
+            <Field
+              keyboardType={
+                Platform.OS === 'android'
+                  ? 'phone-pad'
+                  : Platform.OS === 'ios'
+                  ? 'number-pad'
+                  : 'numbers-and-punctuation'
+              }
+              placeholder="Number"
+              icon="chevrons-up"
+              value={formData.phoneNumber.toString()}
+              onChangeText={(value) => handleInputChange('phoneNumber', value)}
+            />
+            <Gender onSelect={handleGenderSelect} />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+
+                width: '100%',
+              }}>
+              <Text style={{ color: 'white', fontSize: 16, marginRight: 10 }}>
+                Address:
+              </Text>
+              <View style={{ width: '100%', flex: 1 }}>
+                <Field
+                  placeholder="Address"
+                  value={formData.address}
+                  onChangeText={(value) => handleInputChange('address', value)}
+                />
+              </View>
             </View>
+            <Plans onSelect={handlePlanSelect} />
+            <Btn
+              textColor={bgColor}
+              bgColor={neon}
+              btnLabel="Update"
+              Press={handleProfileSetup}
+            />
           </View>
-          <Plans onSelect={handlePlanSelect} />
-          <Btn
-            textColor={bgColor}
-            bgColor={neon}
-            btnLabel="Update"
-            Press={handleProfileSetup}
-          />
         </View>
       </ScrollView>
       {newloading && (

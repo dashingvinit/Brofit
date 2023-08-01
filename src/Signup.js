@@ -13,7 +13,7 @@ async function save(key, value) {
 }
 
 const Signup = (props) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [newloading, setnewLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
