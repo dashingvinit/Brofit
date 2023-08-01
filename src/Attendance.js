@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TouchableOpacity, Text, ScrollView, Alert, RefreshControl } from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
+import LottieView from 'lottie-react-native';
 
 const Attendance = () => {
   const [attendance, setAttendance] = useState();
+  const [refreshing, setRefreshing] = useState(false);
+  const [newloading, setnewLoading] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
 
   const handleCheckin = async () => {
     setAttendance('Checked In');
@@ -15,7 +25,7 @@ const Attendance = () => {
 
   const handleCheckout = async () => {
     Alert.alert(
-      'Bro, Are you sure you want to leave?',
+      'Bro, Are you sure you want to leave ?',
       '',
       [
         {
@@ -28,9 +38,10 @@ const Attendance = () => {
             try {
               const userString = await SecureStore.getItemAsync('user');
               const user = JSON.parse(userString);
-              const Id = user.userId;
+              const Id = user?.userId || user?._id;
               const response = await axios.patch(`/attendance/${Id}`);
               setAttendance('Checked Out');
+              alert('Sucessfully checkedOut')
             } catch (error) {
               alert('Error: ' + error);
             }
@@ -44,9 +55,26 @@ const Attendance = () => {
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 160 }}>
-          <FetchQuote />
-          <Calendar />
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 160 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            color={'blue'}
+          />
+        }>
+        <FetchQuote />
+          {refreshing ? (
+            <LottieView
+            source={require('../src/assets/lottieFiles/graphLoading.json')} 
+            autoPlay
+            loop
+            style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 20 }}
+          />
+          ) : (
+            <Calendar />
+          )}
         </ScrollView>
         <View
           style={{
