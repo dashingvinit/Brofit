@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView, Alert } from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
 import { bgColor, bgLight, neon } from './constants/Constants';
@@ -14,16 +14,31 @@ const Attendance = () => {
   };
 
   const handleCheckout = async () => {
-    try {
-      const userString = await SecureStore.getItemAsync('user');
-      const user = JSON.parse(userString);
-      const Id = user.userId;
-      const response = await axios.patch(`/attendance/${Id}`);
-      // console.log(response.data);
-      setAttendance('Checked Out');
-    } catch (error) {
-      alert('Error: ' + error);
-    }
+    Alert.alert(
+      'Bro, Are you sure you want to leave?',
+      '',
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            try {
+              const userString = await SecureStore.getItemAsync('user');
+              const user = JSON.parse(userString);
+              const Id = user.userId;
+              const response = await axios.patch(`/attendance/${Id}`);
+              setAttendance('Checked Out');
+            } catch (error) {
+              alert('Error: ' + error);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   return (
