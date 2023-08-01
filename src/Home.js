@@ -16,8 +16,7 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
-import { G } from 'react-native-svg';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = (props) => {
   return (
@@ -42,8 +41,8 @@ const Home = (props) => {
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('PlanUpdate')}>
                 <View style={{ alignItems: 'center' }}>
-                  <Feather
-                    name="list"
+                  <MaterialCommunityIcons
+                    name="card-bulleted-outline"
                     style={{
                       color: neon,
                     }}
