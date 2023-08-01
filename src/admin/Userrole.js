@@ -30,17 +30,17 @@ const Userrole = () => {
 
   const handleUpdate = () => {
     axios
-      .patch(`/user/${userData._id}`, { role: role.toLowerCase() }) 
+      .patch(`/user/${userData._id}`, { role: role.toLowerCase() })
       .then(response => {
-        const responseData = response.data;
         handleSearch();
-        setRole(''); 
+        setRole('');
         setEditMode(false);
       })
       .catch(error => {
         console.error(error);
       });
   };
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: bgColor }}>
