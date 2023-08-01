@@ -41,7 +41,7 @@ const ProfilePage = () => {
       // console.log('User ID', userID);
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
-       console.log('User Profile Data', response.data);
+      //  console.log('User Profile Data', response.data);
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
