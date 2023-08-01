@@ -24,7 +24,7 @@ const PlanUpdate = () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      const Id = user.userId;
+      const Id = user.userId || user._id;
       const response = await axios.get(`/userProfile/${Id}`);
       const data = response.data;
       // console.log(data);

@@ -13,7 +13,7 @@ async function save(key, value) {
 }
 
 const Signup = (props) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [newloading, setnewLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -73,6 +73,7 @@ const Signup = (props) => {
       alert('SignUp successful');
     } catch (error) {
       alert('SignUp failed');
+      setLoading(true);
       console.error('Error:', error);
     }
   };

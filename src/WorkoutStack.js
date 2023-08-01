@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import WorkoutPlan from './WorkoutPlan';
 import Workouts from './Workouts';
+import { DayWiseWorkouts, SixDayWorkoutPlan } from './components';
 
 const WorkoutStack = () => {
   return (
@@ -12,8 +12,9 @@ const WorkoutStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="WorkoutPlan" component={WorkoutPlan} />
       <Stack.Screen name="Workouts" component={Workouts} />
+      <Stack.Screen name="SixDayWorkoutPlan" component={SixDayWorkoutPlan} />
+      <Stack.Screen name="DayWiseWorkouts" component={DayWiseWorkouts} />
     </Stack.Navigator>
   );
 };

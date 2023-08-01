@@ -15,7 +15,7 @@ const Calender = () => {
       const user = JSON.parse(userString);
       const Id = user.userId;
       const response = await axios.get(`/userProfile/calendar/${Id}`);
-      console.log(response.data);
+      // console.log(response.data);
       const data = await response.data;
       setUserData(data.data.attendance);
 

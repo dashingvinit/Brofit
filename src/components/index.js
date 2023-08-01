@@ -21,8 +21,12 @@ import Adminsearch from './Adminsearch';
 import Hi from './Hi';
 import Background2 from './Background2';
 import Gender from './Gender';
+import DayWiseWorkouts from './6dayWorkouts';
+import SixDayWorkoutPlan from './6dWorkoutPlan';
 
 export {
+  DayWiseWorkouts,
+  SixDayWorkoutPlan,
   Search,
   TopBack,
   Calendar,
