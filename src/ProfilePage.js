@@ -120,7 +120,7 @@ const ProfilePage = () => {
               source={require('./assets/images/profile.jpg')}
               style={{ width: 100, height: 100, borderRadius: 50 }}
             />
-            <Text style={styles.userName}>{username}</Text>
+            {/* <Text style={styles.userName}>{username}</Text> */}
             <Text
               style={{
                 fontWeight: 'bold',

@@ -17,7 +17,7 @@ const ProfileSetup = (props) => {
   // };
 
   setTokenHeader();
-  
+
   const [newloading, setnewLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -25,6 +25,7 @@ const ProfileSetup = (props) => {
     height: '',
     plan: 'no plan',
     age: 21,
+    contact: '1234567890',
     gender: 'other',
     address: 'Kathmandu',
   });
@@ -142,10 +143,21 @@ const ProfileSetup = (props) => {
             icon="chevrons-up"
             value={formData.age.toString()}
             onChangeText={(value) => handleInputChange('age', value)}
+          />{' '}
+          <Field
+            keyboardType={
+              Platform.OS === 'android'
+                ? 'phone-pad'
+                : Platform.OS === 'ios'
+                ? 'number-pad'
+                : 'numbers-and-punctuation'
+            }
+            placeholder="Number"
+            icon="chevrons-up"
+            value={formData.contact.toString()}
+            onChangeText={(value) => handleInputChange('contact', value)}
           />
-
           <Gender onSelect={handleGenderSelect} />
-
           <View
             style={{
               flexDirection: 'row',
@@ -184,8 +196,7 @@ const ProfileSetup = (props) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <LottieView
             source={require('../src/assets/lottieFiles/loading1.json')}
             autoPlay
