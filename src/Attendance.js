@@ -11,6 +11,7 @@ const Attendance = () => {
   const [attendance, setAttendance] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [newloading, setnewLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -21,6 +22,7 @@ const Attendance = () => {
 
   const handleCheckin = async () => {
     setAttendance('Checked In');
+    setLoading(false)
   };
 
   const handleCheckout = async () => {
@@ -35,6 +37,7 @@ const Attendance = () => {
         {
           text: 'Yes',
           onPress: async () => {
+            setLoading(true)
             try {
               const userString = await SecureStore.getItemAsync('user');
               const user = JSON.parse(userString);
@@ -45,6 +48,7 @@ const Attendance = () => {
             } catch (error) {
               alert('Error: ' + error);
             }
+            setLoading(false)
           },
         },
       ],
@@ -105,6 +109,7 @@ const Attendance = () => {
               justifyContent: 'space-between',
               paddingHorizontal: 30,
             }}>
+            
             <CheckIn checkINStatus={handleCheckin} />
 
             <TouchableOpacity
@@ -124,6 +129,25 @@ const Attendance = () => {
             </TouchableOpacity>
           </View>
         </View>
+        {loading && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <LottieView
+            source={require('../src/assets/lottieFiles/loadingSkeliton.json')}
+            autoPlay
+            loop
+          />
+        </View>
+      )}
       </View>
     </GradientBG>
   );

@@ -14,11 +14,9 @@ const Calender = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user?.userId || user?._id;
-      console.log(Id)
       const response = await axios.get(`/userProfile/calendar/${Id}`);
       // console.log(response.data);
       const data = await response.data;
-      console.log(data.data);
       // setUserData(data.data.attendance);
 
       const markedDatesObj = {};
