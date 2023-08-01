@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { bgColor, bgLight, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = (props) => {
@@ -42,8 +43,9 @@ const Home = (props) => {
                 onPress={() => props.navigation.navigate('PlanUpdate')}>
                 <View style={{ alignItems: 'center' }}>
                   <MaterialCommunityIcons
-                    name="card-bulleted-outline"
+                    name="shield-crown-outline"
                     style={{
+                      // color: '#ffd700',
                       color: neon,
                     }}
                     size={50}

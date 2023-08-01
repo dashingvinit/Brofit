@@ -38,9 +38,10 @@ const ProfilePage = () => {
       const user = JSON.parse(userString);
       setUsername(user.name);
       const userID = user?.userId || user?._id;
+      // console.log('User ID', userID);
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
-      //console.log('User Profile Data', response.data);
+      //  console.log('User Profile Data', response.data);
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
@@ -283,9 +284,9 @@ const ProfilePage = () => {
         <Hr />
         <View style={styles.bottomContainer2}>
           <Text style={styles.smHeader}>Profile Details</Text>
-          <Text style={styles.text}>Address: {userData?.planExpiryDate}</Text>
-          <Text style={styles.text}>Phone: {userData?.planExpiryDate}</Text>
-          <Text style={styles.text}>Member sinse: {userData?.createdAt}</Text>
+          <Text style={styles.text}>Address: {userData?.address}</Text>
+          <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
+          <Text style={styles.text}>Member since: {userData?.createdAt}</Text>
         </View>
       </ScrollView>
     </GradientBG>

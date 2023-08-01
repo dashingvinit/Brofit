@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GradientBG } from './components';
+import { GradientBG, TopBack } from './components';
 import * as SecureStore from 'expo-secure-store';
 import {
   View,
@@ -8,7 +8,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { bgColor, bgGlass, bgLight, neon } from './constants/Constants';
 import axios from './constants/Axios';
@@ -28,6 +27,7 @@ const PlanUpdate = () => {
       const Id = user.userId;
       const response = await axios.get(`/userProfile/${Id}`);
       const data = response.data;
+      // console.log(data);
       setUserPlans(data.data.plan);
       setStatus(data.data.status);
       if (data.data.planExpiryDate) {
@@ -108,9 +108,8 @@ const PlanUpdate = () => {
         console.log(chosenPlan);
         const response1 = await axios.patch(`/userProfile/newPlan/${Id}`, {
           planId,
-        });        
+        });
         console.log(planId);
-
       }
     } catch (error) {
       console.log('Failed to update plan:', error);
@@ -121,9 +120,7 @@ const PlanUpdate = () => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1, paddingBottom: 100 }}>
         <ScrollView>
-          <View style={{ alignItems: 'center', marginBottom: 20 }}>
-            <Text style={{ color: 'white', fontSize: 34 }}>Gym Plan</Text>
-          </View>
+          <TopBack>Gym Plan</TopBack>
           {status === 'inactive' ? (
             <View style={{ margin: 20, flexDirection: 'row' }}>
               <Text style={{ color: 'white', fontSize: 18 }}>
