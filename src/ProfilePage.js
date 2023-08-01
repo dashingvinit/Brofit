@@ -41,7 +41,7 @@ const ProfilePage = () => {
       // console.log('User ID', userID);
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
-      //  console.log('User Profile Data', response.data);
+       console.log('User Profile Data', response.data);
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
@@ -100,6 +100,9 @@ const ProfilePage = () => {
     };
     fetchAndCalculatePlanExpiry();
   }, [userData?.planExpiryDate]);
+
+  const formattedUpdatedAt = userData?.updatedAt ? new Date(userData.updatedAt).toISOString().split('T')[0] : '';
+  const formattedcreatedAt = userData?.createdAt ? new Date(userData.createdAt).toISOString().split('T')[0] : '';
 
   if (!userData)
     return (
@@ -236,7 +239,7 @@ const ProfilePage = () => {
               <View style={styles.smContainer}>
                 <Text>Height</Text>
                 <Text style={styles.smHeader}>{userData?.height}</Text>
-                <Text style={{ fontSize: 12 }}>Inch</Text>
+                <Text style={{ fontSize: 12 }}>Feet</Text>
               </View>
               <View style={styles.smContainer}>
                 <Text>Weight</Text>
@@ -259,7 +262,7 @@ const ProfilePage = () => {
                 }}>
                 <View style={{ paddingVertical: 20 }}>
                   <Text style={styles.editHeader}>Edit Profile Settings</Text>
-                  <Text style={styles.editText}>{userData?.updatedAt}</Text>
+                  <Text style={styles.editText}>{formattedUpdatedAt}</Text>
                 </View>
                 <TouchableOpacity onPress={handleEdit} style={styles.button}>
                   <Text style={styles.buttonText}>Edit</Text>
@@ -286,7 +289,7 @@ const ProfilePage = () => {
           <Text style={styles.smHeader}>Profile Details</Text>
           <Text style={styles.text}>Address: {userData?.address}</Text>
           <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
-          <Text style={styles.text}>Member since: {userData?.createdAt}</Text>
+          <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
         </View>
       </ScrollView>
     </GradientBG>

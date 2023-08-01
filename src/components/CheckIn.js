@@ -42,13 +42,13 @@ const CheckIn = ({ checkINStatus }) => {
     try {
       const response = await axios.post('/attendance');
       checkINStatus();
-      Alert('Checked IN')
+      alert('Checked IN')
     } catch (error) {
       if (error.response && error.response.status === 500) {
         alert('Internal Server Error: Please try again later.');
       } else {
         console.log('Error: ' + error.message);
-        Alert('You are not in the gym')
+        alert('You are not in the gym')
       }
     }
   };
