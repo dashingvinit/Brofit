@@ -1,1 +1,1 @@
-# Brofit
+# Frontend folder of Brofit
