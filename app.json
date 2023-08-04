@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Brofit",
-    "slug": "your-app-slug",
+    "slug": "brofit",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,8 +28,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cbfc60d3-d9ec-4ea0-975c-cc0064b78344"
+        "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
       }
-    }
+    },
+    "owner": "dashing_vinit"
   }
 }
