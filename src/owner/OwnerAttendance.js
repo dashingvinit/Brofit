@@ -213,9 +213,9 @@ const OwnerAttendance = (props) => {
                       marginTop: 20,
                       marginBottom: 60,
                     }}>
-                    {attendanceData.map((dataEntry) => (
+                    {attendanceData.map((dataEntry, index) => (
                       <TouchableOpacity
-                      key={dataEntry._id}
+                        key={index}
                         onPress={() => handlePress(dataEntry.userId)}>
                         <View
                           style={{
@@ -232,7 +232,7 @@ const OwnerAttendance = (props) => {
                             />
                             <Text
                               style={{
-                                flex:1,
+                                flex: 1,
                                 color: neon,
                                 fontSize: 20,
                                 marginLeft: 20,
@@ -244,7 +244,7 @@ const OwnerAttendance = (props) => {
                                 color: neon,
                                 fontSize: 20,
                                 marginLeft: 20,
-                                flex:0.5
+                                flex: 0.5,
                               }}>
                               {dataEntry.userId.registerationNumber}
                             </Text>
