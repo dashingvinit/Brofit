@@ -33,7 +33,7 @@ const ActiveList = (props) => {
         console.log('Data not found');
         setInactiveData([]);
       } else {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching activelist data:', error);
       }
       setLoading(false);
     }

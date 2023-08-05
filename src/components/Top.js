@@ -15,16 +15,16 @@ const Top = (props) => {
       const user = JSON.parse(userObject);
       setName(user.name);
     } catch (error) {
-      console.log(error);
+      console.log('top', error);
     }
   };
 
   const handleLogout = async () => {
     try {
       await SecureStore.deleteItemAsync('token');
-      // await SecureStore.deleteItemAsync('user');
+      await SecureStore.deleteItemAsync('user');
       // alert('token deleted ');
-      console.log('Token deleted');
+      // console.log('Token deleted');
       props.setHandleLogout();
       props.navigation.navigate('Welcome');
     } catch (error) {

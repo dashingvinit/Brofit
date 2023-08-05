@@ -32,7 +32,7 @@ const UserProfile = (props) => {
       // console.log('User Profile Data', data);
       setUserData(data);
     } catch (error) {
-      console.log('User Profile Error', error);
+      console.log('Checked In Users Error', error);
     }
   };
   const getDifferenceInDays = async (dateString) => {

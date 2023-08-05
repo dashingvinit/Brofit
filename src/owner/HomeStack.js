@@ -13,6 +13,7 @@ import OwnerProfile from './OwnerProfile';
 const HomeStack = ({ setHandleLogout }) => {
   return (
     <Stack.Navigator
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false,
       }}>

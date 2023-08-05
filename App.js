@@ -32,6 +32,7 @@ function App() {
 
   const sethandleLogin = () => {
     setIsLoggedIn(true);
+    getUser();
   };
 
   const setHandleLogout = () => {
@@ -44,8 +45,10 @@ function App() {
       const expire = await SecureStore.getItemAsync('expire');
       const expires = JSON.parse(expire);
       if (expires > Date.now() && token) {
+        // console.log('Token:', token);
         setIsLoggedIn(true);
       } else {
+        // console.log('Token is expired or user is not logged in');
         setIsLoggedIn(false);
         deleteItemFromSecureStore('token');
       }
@@ -60,7 +63,7 @@ function App() {
       const userObj = JSON.parse(user);
       const userRole = userObj?.role;
       setUserRole(userRole);
-      console.log('Role:', userRole);
+      //  console.log('Role:', userRole);
       // console.log('User:', userObj);
     } catch (error) {
       console.log(error);
@@ -82,7 +85,6 @@ function App() {
     }
   };
 
-  // Use the useMemo hook to memoize the result of renderNavbarBasedOnRole
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
   return (

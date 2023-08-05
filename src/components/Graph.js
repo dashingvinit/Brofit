@@ -15,7 +15,7 @@ const Graph = () => {
     const userString = await SecureStore.getItemAsync('user');
     const user = JSON.parse(userString); // Parse the user string to an object
     const gymId = user.gymId;
-    console.log('gymId', gymId);
+    // console.log('gymId', gymId);
     const response = await axios.get(`/gym/graph/${gymId}`);
     if (response) {
       // console.log(response.data.data);
@@ -23,7 +23,8 @@ const Graph = () => {
       setChartData(data);
       setIsLoading(false);
     } else {
-      console.log('Error fetching data');
+      console.log('Error fetching graph data');
+      alert('Error fetching graph data');
     }
   };
 

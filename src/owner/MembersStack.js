@@ -9,6 +9,7 @@ import UserProfile from './UserProfile';
 const MembersStack = () => {
   return (
     <Stack.Navigator
+      initialRouteName="Members1"
       screenOptions={{
         headerShown: false,
       }}>

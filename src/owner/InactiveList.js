@@ -30,7 +30,7 @@ const InactiveList = (props) => {
       setLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        // console.log('Data not found');
+        console.log('Data not found');
       } else {
         console.error('Error fetching attendance data:', error);
       }

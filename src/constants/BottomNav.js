@@ -36,13 +36,12 @@ const BottomNav = ({ setHandleLogout }) => {
           fontWeight: 'bold',
           marginBottom: 10,
         },
-        cardStyleInterpolator: customSlideTransition,
+        // cardStyleInterpolator: customSlideTransition,
         tabBarActiveTintColor: neon,
         tabBarInactiveTintColor: 'white',
       }}
       initialRouteName="HomeStack"
       activeColor={neon}
-      cardStyleInterpolator={customSlideTransition}
       inactiveColor="#3e2465">
       <Tab.Screen
         name="HomeStack"
