@@ -1,5 +1,4 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Welcome from '../Welcome';
 import Signup from '../Signup';
@@ -13,16 +12,30 @@ import AdminPage from '../admin/Adminpage';
 import Forgetpassword from '../Forgetpassword';
 import ConfirmPass from '../ConfirmPassword';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const StackNav = ({ sethandleLogin }) => {
+  const forFade = ({ current }) => ({
+    cardStyle: {
+      opacity: current.progress,
+    },
+  });
+
   try {
     return (
       <Stack.Navigator
         initialRouteName="Welcome"
         screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Welcome" component={Welcome} />
-        <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+          options={{ cardStyleInterpolator: forFade }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{ cardStyleInterpolator: forFade }}
+        />
         <Stack.Screen name="ProfileSetup">
           {(props) => (
             <ProfileSetup {...props} sethandleLogin={sethandleLogin} />

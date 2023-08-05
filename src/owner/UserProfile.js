@@ -297,7 +297,6 @@ const styles = StyleSheet.create({
     borderColor: bgColor,
     borderRightWidth: 3,
     borderBottomWidth: 3,
-    borderRadius: 30,
   },
   bottomContainer1: {
     padding: 20,
@@ -307,7 +306,6 @@ const styles = StyleSheet.create({
     borderColor: bgColor,
     borderRightWidth: 3,
     borderBottomWidth: 3,
-    borderRadius: 30,
   },
   text: {
     color: 'black',

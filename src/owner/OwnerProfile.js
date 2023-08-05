@@ -161,29 +161,6 @@ const ProfilePage = () => {
           </View>
         </View>
 
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-          }}>
-          <View style={styles.smContainer}>
-            <Text>Height</Text>
-            <Text style={styles.smHeader}>{userData?.height}</Text>
-            <Text style={{ fontSize: 12 }}>Inch</Text>
-          </View>
-          <View style={styles.smContainer}>
-            <Text>Weight</Text>
-            <Text style={styles.smHeader}>{userData?.weight}</Text>
-            <Text style={{ fontSize: 12 }}>KG</Text>
-          </View>
-          <View style={styles.smContainer}>
-            <Text>Age</Text>
-            <Text style={styles.smHeader}>{userData?.age}</Text>
-            <Text style={{ fontSize: 12 }}>Yrs</Text>
-          </View>
-        </View>
-        <Hr /> */}
-
         <View
           style={{
             paddingHorizontal: 20,
@@ -282,7 +259,6 @@ const styles = StyleSheet.create({
     borderColor: bgColor,
     borderBottomWidth: 3,
     borderRightWidth: 3,
-    borderRadius: 30,
   },
   smHeader: {
     fontSize: 38,

@@ -101,8 +101,12 @@ const ProfilePage = () => {
     fetchAndCalculatePlanExpiry();
   }, [userData?.planExpiryDate]);
 
-  const formattedUpdatedAt = userData?.updatedAt ? new Date(userData.updatedAt).toISOString().split('T')[0] : '';
-  const formattedcreatedAt = userData?.createdAt ? new Date(userData.createdAt).toISOString().split('T')[0] : '';
+  const formattedUpdatedAt = userData?.updatedAt
+    ? new Date(userData.updatedAt).toISOString().split('T')[0]
+    : '';
+  const formattedcreatedAt = userData?.createdAt
+    ? new Date(userData.createdAt).toISOString().split('T')[0]
+    : '';
 
   if (!userData)
     return (
@@ -351,7 +355,6 @@ const styles = StyleSheet.create({
     borderColor: bgColor,
     borderBottomWidth: 3,
     borderRightWidth: 3,
-    borderRadius: 30,
   },
   smHeader: {
     fontSize: 38,

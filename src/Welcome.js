@@ -78,15 +78,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     width: '100%',
-    // backgroundColor: 'black',
-    // borderWidth: 2,
-    // borderColor: 'white',
   },
   bottomText: {
     color: '#F7FFE5',
-    textShadowColor: '#27374D', // Border color
-    textShadowOffset: { width: 1, height: 1 }, // Offset of the shadow
-    textShadowRadius: 3, // Radius of the shadow
+    textShadowColor: '#27374D',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
     fontSize: 18,
     lineHeight: 30,
     marginVertical: 10,

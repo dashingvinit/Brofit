@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './src/constants/Axios';
@@ -89,7 +90,8 @@ function App() {
 
   return (
     <NavigationContainer linking={linking}>
-      {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
+      <StackNav sethandleLogin={sethandleLogin} />
+      {/* {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />} */}
     </NavigationContainer>
   );
 }
