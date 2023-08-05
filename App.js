@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './src/constants/Axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNav from './src/constants/BottomNav';
 import StackNav from './src/constants/StackNav';
@@ -17,7 +17,7 @@ function App() {
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role, setRole] = useState('');
+  const [userRole, setUserRole] = useState(null);
 
   setTokenHeader();
 
@@ -58,8 +58,8 @@ function App() {
     try {
       const user = await SecureStore.getItemAsync('user');
       const userObj = JSON.parse(user);
-      const userRole = userObj.role;
-      setRole(userRole);
+      const userRole = userObj?.role;
+      setUserRole(userRole);
       console.log('Role:', userRole);
       // console.log('User:', userObj);
     } catch (error) {
@@ -73,23 +73,21 @@ function App() {
   }, []);
 
   const renderNavbarBasedOnRole = () => {
-    getUser();
-    if (role === 'owner') {
+    if (userRole === 'owner') {
       return <OwnerNav setHandleLogout={setHandleLogout} />;
-    } else if (role === 'admin') {
+    } else if (userRole === 'admin') {
       return <AdminNav setHandleLogout={setHandleLogout} />;
     } else {
       return <BottomNav setHandleLogout={setHandleLogout} />;
     }
   };
 
+  // Use the useMemo hook to memoize the result of renderNavbarBasedOnRole
+  const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
+
   return (
     <NavigationContainer linking={linking}>
-      {isLoggedIn ? (
-        renderNavbarBasedOnRole()
-      ) : (
-        <StackNav sethandleLogin={sethandleLogin} />
-      )}
+      {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
     </NavigationContainer>
   );
 }
