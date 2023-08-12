@@ -19,6 +19,7 @@ const ProfileSetup = (props) => {
   setTokenHeader();
 
   const [newloading, setnewLoading] = useState(false);
+  const [isPlanSelected, setIsPlanSelected] = useState(false);
 
   const [formData, setFormData] = useState({
     weight: '',
@@ -42,6 +43,7 @@ const ProfileSetup = (props) => {
       // console.log('Response:', user);
     } catch (error) {
       alert('Setup failed');
+      setnewLoading(false);
       console.error('Error:', 'profilesetup', error);
     }
   };
@@ -53,6 +55,7 @@ const ProfileSetup = (props) => {
       ...prevFormData,
       plan: selectedPlanName,
     }));
+    setIsPlanSelected(true); 
   };
 
   const handleGenderSelect = (gender) => {
@@ -182,12 +185,16 @@ const ProfileSetup = (props) => {
               </View>
             </View>
             <Plans onSelect={handlePlanSelect} />
-            <Btn
-              textColor={bgColor}
-              bgColor={neon}
-              btnLabel="Update"
-              Press={handleProfileSetup}
-            />
+            <View>
+  {isPlanSelected && (
+    <Btn
+      textColor={bgColor}
+      bgColor={neon}
+      btnLabel="Update"
+      Press={handleProfileSetup}
+    />
+  )}
+</View>
           </View>
         </View>
         {newloading && (
@@ -203,7 +210,7 @@ const ProfileSetup = (props) => {
               alignItems: 'center',
             }}>
             <LottieView
-              source={require('./assets/lottieFiles/loading1.json')}
+              source={require('./assets/lottieFiles/loadingSkeliton.json')}
               autoPlay
               loop
             />

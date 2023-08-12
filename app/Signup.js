@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
@@ -35,7 +35,7 @@ const Signup = (props) => {
     const { name, email, gymId, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      alert('Invalid Credentials');
       return;
     }
 
@@ -51,7 +51,6 @@ const Signup = (props) => {
       const user = JSON.stringify(userJSON);
       // console.log('user', user);
       await save('user', user);
-
       if (response.data.data.jwt) {
         const token = response.data.data.jwt;
         const expires = Date.now() + 1000 * 60 * 60; // 1hr
@@ -64,6 +63,14 @@ const Signup = (props) => {
         await setTokenHeader().then(() => {
           console.log('Token Set');
           setLoading(false);
+          
+          const parsedUser = JSON.parse(user); 
+          console.log(parsedUser.role);  
+          if (parsedUser.role == "owner") {
+            props.navigation.navigate('Login')
+          } else {
+            nextPage();
+          }        
         });
       }
 
@@ -73,8 +80,8 @@ const Signup = (props) => {
       // alert('SignUp successful');
     } catch (error) {
       alert('SignUp failed');
-      setLoading(true);
-      console.error('Error:', error);
+      setnewLoading(false);
+      console.error('Error:', error.message);
     }
   };
 
@@ -91,7 +98,8 @@ const Signup = (props) => {
           <Text style={styles.header}>hi,again</Text>
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
-        <View style={{}}>
+        <ScrollView>
+        <View style={{paddingTop:'60%'}}>
           <Field
             placeholder="Name"
             value={formData.name}
@@ -142,16 +150,9 @@ const Signup = (props) => {
             btnLabel="Signup"
             Press={handleSignup}
           />
-          {loading ? null : (
-            <Btn
-              textColor={bgColor}
-              bgColor={neon}
-              btnLabel="Next"
-              loading={true}
-              disable={loading}
-              Press={nextPage}
-            />
-          )}
+
+          
+
           <View style={styles.redirectContainer}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
               Already have an account ?{' '}
@@ -162,6 +163,7 @@ const Signup = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+        </ScrollView>
       </View>
       {newloading && (
         <View
