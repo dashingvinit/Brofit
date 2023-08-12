@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { COLORS, SIZES } from './constants';
+
 import moment from 'moment';
 import {
   bgColor,
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   timer: {
-    color: COLORS.lightWhite,
+    color: 'white',
     fontSize: 66,
     fontWeight: '200',
     alignSelf: 'stretch',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     fontSize: 28,
-    color: COLORS.lightWhite,
+    color: 'white',
   },
   buttonBorder: {
     width: 120,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   lapText: {
-    color: COLORS.lightWhite,
+    color: 'white',
     fontSize: 18,
   },
   lapTimer: {

@@ -58,7 +58,7 @@ const Login = (props) => {
     } catch (error) {
       setLoading(false);
       alert('Login failed');
-      console.error('Login Error:', error);
+      // console.error('Login Error:', error);
     }
   };
 
@@ -181,7 +181,7 @@ const Login = (props) => {
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('../src/assets/lottieFiles/loadingSkeliton.json')}
+            source={require('./assets/lottieFiles/loadingSkeliton.json')}
             autoPlay
             loop
           />

@@ -176,7 +176,7 @@ const Signup = (props) => {
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('../src/assets/lottieFiles/loading1.json')}
+            source={require('./assets/lottieFiles/loading1.json')}
             autoPlay
             loop
           />

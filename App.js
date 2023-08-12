@@ -1,21 +1,20 @@
-import 'react-native-gesture-handler';
 import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
-import axios, { setTokenHeader } from './src/constants/Axios';
+import axios, { setTokenHeader } from './app/constants/Axios';
 import { useState, useEffect, useMemo } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomNav from './src/constants/BottomNav';
-import StackNav from './src/constants/StackNav';
-import AdminNav from './src/constants/AdminNav';
-import OwnerNav from './src/constants/OwnerNav';
+import BottomNav from './app/constants/BottomNav';
+import StackNav from './app/constants/StackNav';
+import AdminNav from './app/constants/AdminNav';
+import OwnerNav from './app/constants/OwnerNav';
 
 function App() {
-  const linking = {
-    prefixes: ['https://brofit.onrender.com', 'brofit://'],
-    config: {
-      screens: {},
-    },
-  };
+  // const linking = {
+  //   prefixes: ['https://brofit.onrender.com', 'brofit://'],
+  //   config: {
+  //     screens: {},
+  //   },
+  // };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -89,9 +88,10 @@ function App() {
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
   return (
-    <NavigationContainer linking={linking}>
-      <StackNav sethandleLogin={sethandleLogin} />
-      {/* {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />} */}
+    <NavigationContainer
+    // linking={linking}
+    >
+      {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
     </NavigationContainer>
   );
 }

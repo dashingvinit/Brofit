@@ -13,6 +13,9 @@
     "scheme": "yourapp",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "supportsTablet": true
     },
     "android": {
@@ -31,6 +34,12 @@
         "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
       }
     },
-    "owner": "dashing_vinit"
+    "owner": "dashing_vinit",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f2fe1d2d-da34-4d6d-b53d-70a41531f195"
+    }
   }
 }

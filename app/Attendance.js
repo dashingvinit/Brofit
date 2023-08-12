@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, Alert, RefreshControl } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Alert,
+  RefreshControl,
+} from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
 import { bgColor, bgLight, neon } from './constants/Constants';
@@ -22,7 +29,7 @@ const Attendance = () => {
 
   const handleCheckin = async () => {
     setAttendance('Checked In');
-    setLoading(false)
+    setLoading(false);
   };
 
   const handleCheckout = async () => {
@@ -37,18 +44,18 @@ const Attendance = () => {
         {
           text: 'Yes',
           onPress: async () => {
-            setLoading(true)
+            setLoading(true);
             try {
               const userString = await SecureStore.getItemAsync('user');
               const user = JSON.parse(userString);
               const Id = user?.userId || user?._id;
               const response = await axios.patch(`/attendance/${Id}`);
               setAttendance('Checked Out');
-              alert('Sucessfully checkedOut')
+              alert('Sucessfully checkedOut');
             } catch (error) {
               alert('Error: ' + error);
             }
-            setLoading(false)
+            setLoading(false);
           },
         },
       ],
@@ -59,23 +66,28 @@ const Attendance = () => {
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: 160 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            color={'blue'}
-          />
-        }>
-        <FetchQuote />
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 160 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              color={'blue'}
+            />
+          }>
+          <FetchQuote />
           {refreshing ? (
             <LottieView
-            source={require('../src/assets/lottieFiles/graphLoading.json')} 
-            autoPlay
-            loop
-            style={{ width: 300, height: 300, alignSelf: 'center', marginTop: 20 }}
-          />
+              source={require('./assets/lottieFiles/graphLoading.json')}
+              autoPlay
+              loop
+              style={{
+                width: 300,
+                height: 300,
+                alignSelf: 'center',
+                marginTop: 20,
+              }}
+            />
           ) : (
             <Calendar />
           )}
@@ -109,7 +121,6 @@ const Attendance = () => {
               justifyContent: 'space-between',
               paddingHorizontal: 30,
             }}>
-            
             <CheckIn checkINStatus={handleCheckin} />
 
             <TouchableOpacity
@@ -130,24 +141,24 @@ const Attendance = () => {
           </View>
         </View>
         {loading && (
-        <View
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <LottieView
-            source={require('../src/assets/lottieFiles/loadingSkeliton.json')}
-            autoPlay
-            loop
-          />
-        </View>
-      )}
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <LottieView
+              source={require('./assets/lottieFiles/loadingSkeliton.json')}
+              autoPlay
+              loop
+            />
+          </View>
+        )}
       </View>
     </GradientBG>
   );
