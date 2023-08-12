@@ -1,13 +1,33 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
+// import 'react-native-gesture-handler';
+// import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './src/constants/Axios';
-import { useState, useEffect, useMemo } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+// import { useState, useEffect, useMemo } from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
 import BottomNav from './src/constants/BottomNav';
-import StackNav from './src/constants/StackNav';
+// import StackNav from './src/constants/StackNav';
 import AdminNav from './src/constants/AdminNav';
 import OwnerNav from './src/constants/OwnerNav';
+import StackNav from './src/constants/StackNav'; // Adjust the path if needed
+
+import React, { useEffect, useState ,useMemo} from 'react';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from 'react-native';
+import { GradientBG, Hr } from './src/components';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native'; 
+import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
+import { bgColor, bgGlass, neon } from './src/constants/Constants';
+// import axios from './src/constants/Axios';
+
+const Stack = createNativeStackNavigator();
 
 function App() {
   const linking = {
@@ -90,8 +110,13 @@ function App() {
 
   return (
     <NavigationContainer linking={linking}>
-      <StackNav sethandleLogin={sethandleLogin} />
-      {/* {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />} */}
+      <Stack.Navigator>
+      <Stack.Screen name="L" options={{ headerShown: false }}>
+        {(props) => (
+          <StackNav {...props} sethandleLogin={sethandleLogin}/>
+        )} 
+      </Stack.Screen>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
