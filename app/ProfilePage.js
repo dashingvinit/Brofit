@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Modal,
 } from 'react-native';
 import { GradientBG, Hr, Hi } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,6 +21,7 @@ import {
 } from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
+import MsgModal from './components/MsgModal';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
@@ -31,6 +33,7 @@ const ProfilePage = () => {
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
   const [planExiper, setPlanExiper] = useState(null);
+  const [msg,setmsg] = useState(false);
 
   const fetchUserProfileData = async () => {
     try {
@@ -71,6 +74,7 @@ const ProfilePage = () => {
     } catch (error) {
       console.log('Update Profile Error', error);
     }
+    setmsg(true);
   };
 
   const getDifferenceInDays = async (dateString) => {
@@ -100,6 +104,16 @@ const ProfilePage = () => {
     };
     fetchAndCalculatePlanExpiry();
   }, [userData?.planExpiryDate]);
+
+  useEffect(() => {
+    if (msg) {
+      const timeout = setTimeout(() => {
+        setmsg(false);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [msg]);
 
   const formattedUpdatedAt = userData?.updatedAt
     ? new Date(userData.updatedAt).toISOString().split('T')[0]
@@ -295,6 +309,13 @@ const ProfilePage = () => {
           <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
           <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
         </View>
+        <Modal
+          visible={msg}
+          transparent
+          onRequestClose={() => setmsg(false)}>
+          <MsgModal message={"Profile Updated 😉"}/>
+        </Modal>
+
       </ScrollView>
     </GradientBG>
   );

@@ -14,6 +14,7 @@ import { bgColor, bgLight, neon } from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import LottieView from 'lottie-react-native';
+import MsgModal from './components/MsgModal';
 
 const Attendance = () => {
   const [attendance, setAttendance] = useState();
@@ -120,28 +121,7 @@ const Attendance = () => {
           </View>
         </Modal>
         <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#00000099',
-            }}>
-            <View
-              style={{
-                width: '65%',
-                height: '12%',
-                backgroundColor: bgColor,
-                borderRadius: 25,
-                justifyContent: 'center',
-              }}>
-              <View style={{ alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, color: neon }}>
-                  See you tommorow, Bro💪🏻
-                </Text>
-              </View>
-            </View>
-          </View>
+          <MsgModal message={"See you tomorrow, Bro💪🏻"}/>
         </Modal>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 160 }}

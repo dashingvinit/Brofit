@@ -12,6 +12,7 @@ import * as Location from 'expo-location';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
 import LottieView from 'lottie-react-native';
+import MsgModal from './MsgModal';
 
 const CheckIn = ({ checkINStatus }) => {
   const [location, setLocation] = useState(null);
@@ -77,7 +78,7 @@ const CheckIn = ({ checkINStatus }) => {
     if (already) {
       const timeout = setTimeout(() => {
         setalready(false);
-      }, 2000);
+      }, 1000);
 
       return () => clearTimeout(timeout);
     }
@@ -144,28 +145,7 @@ const CheckIn = ({ checkINStatus }) => {
         visible={already}
         transparent
         onRequestClose={() => setalready(false)}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#00000099',
-          }}>
-          <View
-            style={{
-              width: '65%',
-              height: '12%',
-              backgroundColor: bgColor,
-              borderRadius: 25,
-              justifyContent: 'center',
-            }}>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 18, color: neon }}>
-                Sorry Not again 😉
-              </Text>
-            </View>
-          </View>
-        </View>
+        <MsgModal message={"See you tomorrow, Bro💪🏻" }/>
       </Modal>
     </View>
   );
