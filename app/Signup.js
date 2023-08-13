@@ -4,15 +4,17 @@ import axios, { setTokenHeader } from './constants/Axios';
 import {
   View,
   Text,
+  TextInput,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
-import { bgColor, neon } from './constants/Constants';
+import { bgColor, bgGlass, neon } from './constants/Constants';
 import Field from './components/Field';
 import LottieView from 'lottie-react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -20,6 +22,8 @@ async function save(key, value) {
 
 const Signup = (props) => {
   const [loading, setLoading] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
   const [newloading, setnewLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -30,10 +34,15 @@ const Signup = (props) => {
   });
 
   const handleInputChange = (field, value) => {
+    setErrMsg('');
     setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: value,
     }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   const handleSignup = async () => {
@@ -41,10 +50,10 @@ const Signup = (props) => {
     const { name, email, gymId, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
-      alert('Invalid Credentials');
+      setErrMsg('Password do not match');
+      setnewLoading(false);
       return;
     }
-
     try {
       const response = await axios.post('user/signup', {
         name,
@@ -52,16 +61,14 @@ const Signup = (props) => {
         gymId,
         password,
       });
-
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
       // console.log('user', user);
       await save('user', user);
       if (response.data.data.jwt) {
         const token = response.data.data.jwt;
-        const expires = Date.now() + 1000 * 60 * 60; // 1hr
+        const expires = Date.now() + 1000 * 60 * 60 * 24 * 365; // 1yr
         const expireString = JSON.stringify(expires);
-
         await save('expire', expireString);
         await save('token', token);
         await save('user', user);
@@ -69,7 +76,6 @@ const Signup = (props) => {
         await setTokenHeader().then(() => {
           console.log('Token Set');
           setLoading(false);
-
           const parsedUser = JSON.parse(user);
           console.log(parsedUser.role);
           if (parsedUser.role == 'owner') {
@@ -79,14 +85,11 @@ const Signup = (props) => {
           }
         });
       }
-      // console.log('Token Set');
       setLoading(false);
       setnewLoading(false);
-      // alert('SignUp successful');
     } catch (error) {
       alert('SignUp failed');
       setnewLoading(false);
-      //console.error('Error:', error.message);
     }
   };
 
@@ -124,16 +127,61 @@ const Signup = (props) => {
               icon="key"
               onChangeText={(value) => handleInputChange('gymId', value)}
             />
-            <Field
+            {errMsg !== '' && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 10,
+                }}>
+                <Text style={{ color: 'red' }}>{errMsg}</Text>
+              </View>
+            )}
+            <View style={{ position: 'relative' }}>
+              <TextInput
+                style={{
+                  borderWidth: 1,
+                  borderColor: neon,
+                  borderRadius: 15,
+                  color: 'white',
+                  width: '100%',
+                  padding: 10,
+                  fontSize: 14,
+                  backgroundColor: bgGlass,
+                  marginVertical: 10,
+                }}
+                placeholderTextColor={'#EEEEEE'}
+                placeholder="Password"
+                secureTextEntry={!showPassword}
+                value={formData.password}
+                onChangeText={(value) => handleInputChange('password', value)}
+              />
+              <TouchableOpacity
+                onPress={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  top: 25,
+                  right: 10,
+                  zIndex: 2,
+                  opacity: 0.5,
+                }}>
+                <Ionicons
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color={neon}
+                />
+              </TouchableOpacity>
+            </View>
+            {/* <Field
               placeholder="Password"
-              secureTextEntry={true}
+              secureTextEntry={!showPassword}
               value={formData.password}
               icon="lock"
               onChangeText={(value) => handleInputChange('password', value)}
-            />
+            /> */}
             <Field
               placeholder="Confirm Password"
-              // secureTextEntry={true}
+              secureTextEntry={!showPassword}
               value={formData.confirmPassword}
               icon="eye-off"
               onChangeText={(value) =>

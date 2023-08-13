@@ -46,30 +46,30 @@ const Graph = () => {
 
   const data = {
     labels: [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-      '20',
-      '21',
-      '22',
-      '23',
-      '24',
+      '12 am',
+      '1 am',
+      '2 am',
+      '3 am',
+      '4 am',
+      '5 am',
+      '6 am',
+      '7 am',
+      '8 am',
+      '9 am',
+      '10 am',
+      '11 am',
+      '12 pm',
+      '1 pm',
+      '2 pm',
+      '3 pm',
+      '4 pm',
+      '5 pm',
+      '6 pm',
+      '7 pm',
+      '8 pm',
+      '9 pm',
+      '10 pm',
+      '11 pm',
     ],
     datasets: [
       {
@@ -94,7 +94,7 @@ const Graph = () => {
       ) : (
         <ScrollView
           horizontal
-          contentContainerStyle={{ width: screenWidth * 2 }}>
+          contentContainerStyle={{ width: screenWidth * 2.5 - 20 }}>
           <View>
             <Text
               style={{
@@ -108,11 +108,10 @@ const Graph = () => {
             </Text>
             <BarChart
               data={data}
-              width={2 * screenWidth}
-              height={220}
-              yAxisInterval={0}
-              withHorizontalLabels={true}
-              contentInset={{ left: 0, right: 10 }}
+              width={2.5 * screenWidth}
+              height={250}
+              yAxisInterval={1}
+              contentInset={{ left: 30, right: 10 }}
               chartConfig={{
                 backgroundGradientFrom: '#1E2923',
                 backgroundGradientFromOpacity: 0,
@@ -120,7 +119,7 @@ const Graph = () => {
                 backgroundGradientToOpacity: 0.1,
                 color: (opacity = 1) => `rgba(224, 254, 16, ${opacity})`,
                 strokeWidth: 3,
-                barPercentage: 0.7,
+                barPercentage: 1,
                 useShadowColorFromDataset: false,
               }}
               style={{
@@ -128,6 +127,7 @@ const Graph = () => {
                 borderRadius: 20,
               }}
               verticalLabelRotation={0}
+              showBarTops={true}
             />
           </View>
         </ScrollView>

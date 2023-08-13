@@ -7,15 +7,15 @@ import BottomNav from './app/constants/BottomNav';
 import StackNav from './app/constants/StackNav';
 import AdminNav from './app/constants/AdminNav';
 import OwnerNav from './app/constants/OwnerNav';
-import { StatusBar,View,SafeAreaView,StyleSheet } from 'react-native';
+import { StatusBar, View, SafeAreaView, StyleSheet } from 'react-native';
 
 function App() {
-  // const linking = {
-  //   prefixes: ['https://brofit.onrender.com', 'brofit://'],
-  //   config: {
-  //     screens: {},
-  //   },
-  // };
+  const linking = {
+    prefixes: ['https://brofit.onrender.com', 'brofit://'],
+    config: {
+      screens: {},
+    },
+  };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -93,11 +93,11 @@ function App() {
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle="light-content" 
+        barStyle="light-content"
       />
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <View style={styles.content}>
-        {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
+          {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
         </View>
       </NavigationContainer>
     </SafeAreaView>

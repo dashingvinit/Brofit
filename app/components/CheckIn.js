@@ -21,7 +21,7 @@ const CheckIn = ({ checkINStatus }) => {
   const [checkInMsg, setCheckInMsg] = useState(null);
   const [disableButton, setDisableButton] = useState(false);
   const [Loading, setLoading] = useState(false);
-  const [already, setalready]=useState(false);
+  const [already, setalready] = useState(false);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -42,7 +42,7 @@ const CheckIn = ({ checkINStatus }) => {
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
-          //  console.log('location:', location);
+          // console.log('location:', location);
         } catch (error) {
           console.error('Error getting current location:', error);
         }
@@ -78,7 +78,7 @@ const CheckIn = ({ checkINStatus }) => {
       const timeout = setTimeout(() => {
         setalready(false);
       }, 2000);
-      
+
       return () => clearTimeout(timeout);
     }
   }, [already]);
@@ -105,7 +105,6 @@ const CheckIn = ({ checkINStatus }) => {
       }
     }
   };
-
 
   return (
     <View>
@@ -142,20 +141,32 @@ const CheckIn = ({ checkINStatus }) => {
         </View>
       )}
       <Modal
-          visible={already}
-          transparent
-          onRequestClose={()=>
-            setalready(false)
-          }
-      >
-            <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
-              <View style={{width:'65%',height:'12%',backgroundColor:bgColor,borderRadius:25,justifyContent:'center'}}>
-                <View style={{alignItems:'center'}}>
-                  <Text style={{fontSize:18,color:neon}}>Sorry Not again 😉</Text>
-                </View>
-              </View>
+        visible={already}
+        transparent
+        onRequestClose={() => setalready(false)}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#00000099',
+          }}>
+          <View
+            style={{
+              width: '65%',
+              height: '12%',
+              backgroundColor: bgColor,
+              borderRadius: 25,
+              justifyContent: 'center',
+            }}>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontSize: 18, color: neon }}>
+                Sorry Not again 😉
+              </Text>
             </View>
-          </Modal>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
