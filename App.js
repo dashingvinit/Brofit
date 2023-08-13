@@ -7,7 +7,7 @@ import BottomNav from './app/constants/BottomNav';
 import StackNav from './app/constants/StackNav';
 import AdminNav from './app/constants/AdminNav';
 import OwnerNav from './app/constants/OwnerNav';
-import { StatusBar,View } from 'react-native';
+import { StatusBar,View,SafeAreaView,StyleSheet } from 'react-native';
 
 function App() {
   // const linking = {
@@ -89,15 +89,28 @@ function App() {
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <StatusBar hidden />
-      <NavigationContainer
-      // linking={linking}
-      >
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content" 
+      />
+      <NavigationContainer>
+        <View style={styles.content}>
         {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
+        </View>
       </NavigationContainer>
-    </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+  },
+});
 
 export default App;
