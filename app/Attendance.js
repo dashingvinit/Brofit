@@ -6,10 +6,12 @@ import {
   ScrollView,
   Alert,
   RefreshControl,
+  Modal,
+  Pressable
 } from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
-import { bgLight } from './constants/Constants';
+import { bgColor, bgLight, neon } from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import LottieView from 'lottie-react-native';
@@ -19,6 +21,8 @@ const Attendance = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [newloading, setnewLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [warning, setwarning] = useState(false);
+  const [msg, setmsg] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -33,39 +37,78 @@ const Attendance = () => {
   };
 
   const handleCheckout = async () => {
-    Alert.alert(
-      'Bro, Are you sure you want to leave ?',
-      '',
-      [
-        {
-          text: 'No',
-          style: 'cancel',
-        },
-        {
-          text: 'Yes',
-          onPress: async () => {
-            setLoading(true);
-            try {
-              const userString = await SecureStore.getItemAsync('user');
-              const user = JSON.parse(userString);
-              const Id = user?.userId || user?._id;
-              const response = await axios.patch(`/attendance/${Id}`);
-              setAttendance('Checked Out');
-              alert('Sucessfully checkedOut');
-            } catch (error) {
-              alert('Error: ' + error);
-            }
-            setLoading(false);
-          },
-        },
-      ],
-      { cancelable: true }
-    );
+    setwarning(true);
+  };
+
+  const handleout = async () => {
+    setwarning(false);
+    setLoading(true);
+    try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const Id = user?.userId || user?._id;
+      const response = await axios.patch(`/attendance/${Id}`);
+      setAttendance('Checked Out');
+    } catch (error) {
+      alert('Error: ' + error);
+    }
+    setLoading(false);
+    setmsg(true);
   };
 
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
+        <Modal visible={warning}
+        transparent
+        onRequestClose={()=>
+          setwarning(false)
+        }
+        >
+          <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
+            <View style={{width:'80%',height:'18%',backgroundColor:"white",borderRadius:25,marginBottom:0}}>
+              <View style={{paddingBottom:0}}>
+                <View style={{alignItems:'center',backgroundColor:bgLight,justifyContent:'center',borderTopLeftRadius:20,borderTopRightRadius:20,paddingTop:10,paddingBottom:10}}>
+                  <Text style={{fontSize:20,}}>Sure! 😣</Text>
+                </View>
+                <View style={{marginTop:20,alignItems:'center'}}>
+                  <Text style={{fontSize:18,}}>Bro , u done for the day ?</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'flex-end', alignItems: 'flex-end', padding:0 ,gap:20}}>
+                  <View style={{ backgroundColor: neon, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 5 }}>
+                    <Pressable onPress={() => setwarning(false)}>
+                      <Text style={{ fontSize: 16 }}>No</Text>
+                    </Pressable>
+                  </View>
+                  <View style={{ backgroundColor: neon, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 5, borderBottomRightRadius:20 }}>
+                    <Pressable onPress={handleout}>
+                      <Text style={{ fontSize: 16 }}>Yes</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal visible={msg}
+          transparent
+          onRequestClose={()=>
+            setmsg(false)
+          }
+          >
+            <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
+            <View style={{width:'80%',height:'18%',backgroundColor:"white",borderRadius:25,marginBottom:0}}>
+                <View style={{marginTop:20,alignItems:'center'}}>
+                  <Text style={{fontSize:18,}}>See you tommorow, Bro💪🏻</Text>
+                </View>
+                <View style={{marginTop: 30, justifyContent: 'flex-end',marginLeft:'70%', padding:0}}>
+                    <Pressable onPress={() => setmsg(false)}>
+                      <Text style={{ fontSize: 16 }}>Ok</Text>
+                    </Pressable>
+                </View>
+              </View>
+          </View>
+          </Modal>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 160 }}
           refreshControl={
@@ -132,7 +175,7 @@ const Attendance = () => {
                 borderRadius: 30,
                 width: 150,
               }}
-              disabled={attendance === 'Checked In' ? false : true}
+              // disabled={attendance === 'Checked In' ? false : true}
               onPress={handleCheckout}>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>
                 {' '}
@@ -164,5 +207,7 @@ const Attendance = () => {
     </GradientBG>
   );
 };
+
+
 
 export default Attendance;
