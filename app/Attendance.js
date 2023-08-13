@@ -113,7 +113,7 @@ const Attendance = () => {
               fontSize: 18,
               padding: 20,
             }}>
-            {attendance ? attendance : 'Not Checked In'}
+            {attendance ? attendance : ''}
           </Text>
           <View
             style={{

@@ -13,38 +13,55 @@ import LottieView from 'lottie-react-native';
 
 const CheckIn = ({ checkINStatus }) => {
   const [location, setLocation] = useState(null);
+  const [targetLocation, setTargetLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+
   const [checkInMsg, setCheckInMsg] = useState(null);
   const [disableButton, setDisableButton] = useState(false);
   const [Loading, setLoading] = useState(false);
 
-  let targetLocation = { latitude: 30.7440291, longitude: 76.6389241 };
-
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
+    const getLocation = async () => {
+      try {
+        const response = await axios.get('/gym/location/2');
+        const targetLocation = {
+          latitude: response.data.data.latitude,
+          longitude: response.data.data.longitude,
+        };
+        // console.log('targetLocation:', targetLocation);
+        setTargetLocation(targetLocation);
+
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+        try {
+          let location = await Location.getCurrentPositionAsync({});
+          setLocation(location);
+          //  console.log('location:', location);
+        } catch (error) {
+          console.error('Error getting current location:', error);
+        }
+      } catch (error) {
+        console.error('Error fetching target location:', error);
       }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      //console.log(location);
-    })();
+    };
+
+    getLocation();
   }, []);
 
   useEffect(() => {
-    if (location) {
+    if (location && targetLocation) {
       const latitudeDifference = Math.abs(
         location.coords.latitude - targetLocation.latitude
       );
       const longitudeDifference = Math.abs(
         location.coords.longitude - targetLocation.longitude
       );
-      // Convert degree differences to meters
       const latitudeInMeters = latitudeDifference * 111139;
       const longitudeInMeters = longitudeDifference * 111139;
-      // Check if within 5 meters
+
       if (latitudeInMeters < 5 && longitudeInMeters < 5) {
         setDisableButton(false);
       } else {

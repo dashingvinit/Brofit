@@ -177,12 +177,12 @@ const Signup = (props) => {
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0,0,0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('./assets/lottieFiles/loading1.json')}
+            source={require('./assets/lottieFiles/greenTik.json')}
             autoPlay
             loop
           />
