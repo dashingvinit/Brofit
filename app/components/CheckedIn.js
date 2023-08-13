@@ -57,8 +57,7 @@ const CheckedIn = (props) => {
             style={styles.userItem}
             onPress={() => handleUserPress(member)}>
             <Text style={styles.userNameText}>
-              Id: {member.userId.registerationNumber} {'\n'}
-              {member.userId.name}
+              {member.userId.registerationNumber} {member.userId.name}
             </Text>
             <Text style={styles.checkTime}>{member.checkIn}</Text>
             <Text style={styles.checkTime}>{member.checkOut}</Text>
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 20,
     borderRadius: 10,
-    backgroundColor: bgLight,
+    backgroundColor: bgGlass,
   },
   heading: {
     fontSize: 32,
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 50,
     paddingHorizontal: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8FFCE',
   },
   userName: {
     flex: 1,
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
   userNameText: {
     flex: 1,
     fontWeight: 'bold',
-    color: bgColor,
+    color: '#1C1427',
     fontSize: 16,
     marginLeft: 0,
   },
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
   checkTime: {
     flex: 1,
     textAlign: 'center',
-    color: bgColor,
+    color: '#1C1427',
     fontSize: 16,
   },
 });

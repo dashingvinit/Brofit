@@ -1,49 +1,61 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import { bgColor, neon, bgLight } from '../constants/Constants';
-import { Location, Permissions } from 'expo';
+import * as Location from 'expo-location';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
 import LottieView from 'lottie-react-native';
 
-const CheckIn = ({ checkINStatus}) => {
-  const [userLocation, setUserLocation] = useState(null);
-  const [disableButton, setDisableButton] = useState(true);
-  const[Loading, setLoading] = useState(false)
+const CheckIn = ({ checkINStatus }) => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [checkInMsg, setCheckInMsg] = useState(null);
+  const [disableButton, setDisableButton] = useState(false);
+  const [Loading, setLoading] = useState(false);
 
-  const targetLocation = { latitude: 12.3456, longitude: 78.9101 };
+  let targetLocation = { latitude: 30.7440291, longitude: 76.6389241 };
 
-  // const getPermission = async () => {
-  //   const { status } = await Permissions.askForegroundPermissionsAsync();
-  //   if (status !== 'granted') {
-  //     alert('Permission to access location was denied');
-  //     return; 
-  //   }
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      //console.log(location);
+    })();
+  }, []);
 
-  //   const location = await Location.getCurrentPositionAsync({});
-  //   setUserLocation(location.coords);
-  // };
-
-  // useEffect(() => {
-  //   getPermission();
-  // }, []);
-
-  // useEffect(() => {
-  //   if (userLocation && targetLocation) {
-  //     const distance = Location.distanceBetween(
-  //       userLocation.latitude,
-  //       userLocation.longitude,
-  //       targetLocation.latitude,
-  //       targetLocation.longitude
-  //     );
-
-  //     setDisableButton(distance > 100);
-  //   }
-  // }, [userLocation]);
+  useEffect(() => {
+    if (location) {
+      const latitudeDifference = Math.abs(
+        location.coords.latitude - targetLocation.latitude
+      );
+      const longitudeDifference = Math.abs(
+        location.coords.longitude - targetLocation.longitude
+      );
+      // Convert degree differences to meters
+      const latitudeInMeters = latitudeDifference * 111139;
+      const longitudeInMeters = longitudeDifference * 111139;
+      // Check if within 5 meters
+      if (latitudeInMeters < 5 && longitudeInMeters < 5) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+  }, [location, targetLocation]);
 
   const handleCheckIn = async () => {
     try {
       setLoading(true);
-      setDisableButton(true);
       const response = await axios.post('/attendance');
       checkINStatus();
       alert('Checked IN');
@@ -52,9 +64,14 @@ const CheckIn = ({ checkINStatus}) => {
     } catch (error) {
       if (error.response && error.response.status === 500) {
         alert('Internal Server Error: Please try again later.');
+        setLoading(false);
+      }
+      if (error.response && error.response.status === 403) {
+        alert('Already Checked IN');
+        setLoading(false);
       } else {
-        console.log('Error: ' + error.message);
-        alert('You are not in the gym');
+        alert('Error: ' + error);
+        setLoading(false);
       }
     }
   };
@@ -70,7 +87,7 @@ const CheckIn = ({ checkINStatus}) => {
           borderRadius: 30,
           width: 150,
         }}
-        // disabled={disableButton}
+        disabled={disableButton}
         onPress={handleCheckIn}>
         <Text style={{ color: bgColor, fontWeight: 'bold' }}>CheckIN</Text>
       </TouchableOpacity>

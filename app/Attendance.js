@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
-import { bgColor, bgLight, neon } from './constants/Constants';
+import { bgLight } from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import LottieView from 'lottie-react-native';
@@ -132,6 +132,7 @@ const Attendance = () => {
                 borderRadius: 30,
                 width: 150,
               }}
+              disabled={attendance === 'Checked In' ? false : true}
               onPress={handleCheckout}>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>
                 {' '}

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
@@ -63,17 +69,16 @@ const Signup = (props) => {
         await setTokenHeader().then(() => {
           console.log('Token Set');
           setLoading(false);
-          
-          const parsedUser = JSON.parse(user); 
-          console.log(parsedUser.role);  
-          if (parsedUser.role == "owner") {
-            props.navigation.navigate('Login')
+
+          const parsedUser = JSON.parse(user);
+          console.log(parsedUser.role);
+          if (parsedUser.role == 'owner') {
+            props.navigation.navigate('Login');
           } else {
             nextPage();
-          }        
+          }
         });
       }
-
       // console.log('Token Set');
       setLoading(false);
       setnewLoading(false);
@@ -81,7 +86,7 @@ const Signup = (props) => {
     } catch (error) {
       alert('SignUp failed');
       setnewLoading(false);
-      console.error('Error:', error.message);
+      //console.error('Error:', error.message);
     }
   };
 
@@ -99,70 +104,69 @@ const Signup = (props) => {
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
         <ScrollView>
-        <View style={{paddingTop:'60%'}}>
-          <Field
-            placeholder="Name"
-            value={formData.name}
-            icon="user"
-            onChangeText={(value) => handleInputChange('name', value)}
-          />
-          <Field
-            placeholder="Email"
-            keyboardType={'email-address'}
-            value={formData.email}
-            icon="mail"
-            onChangeText={(value) => handleInputChange('email', value)}
-          />
-          <Field
-            placeholder="Gym_Id"
-            value={formData.gymId}
-            icon="key"
-            onChangeText={(value) => handleInputChange('gymId', value)}
-          />
-          <Field
-            placeholder="Password"
-            secureTextEntry={true}
-            value={formData.password}
-            icon="lock"
-            onChangeText={(value) => handleInputChange('password', value)}
-          />
-          <Field
-            placeholder="Confirm Password"
-            // secureTextEntry={true}
-            value={formData.confirmPassword}
-            icon="eye-off"
-            onChangeText={(value) =>
-              handleInputChange('confirmPassword', value)
-            }
-          />
-          <View style={styles.redirectContainer}>
-            <Text style={styles.redirectMsg}>
-              By signing in, you agree to our{' '}
-            </Text>
-            <Text style={styles.redirectBtn}>Terms & Conditions</Text>
-            <Text style={styles.redirectMsg}> and </Text>
-            <Text style={styles.redirectBtn}>Privacy Policy</Text>
+          <View style={{ paddingTop: '60%' }}>
+            <Field
+              placeholder="Name"
+              value={formData.name}
+              icon="user"
+              onChangeText={(value) => handleInputChange('name', value)}
+            />
+            <Field
+              placeholder="Email"
+              keyboardType={'email-address'}
+              value={formData.email}
+              icon="mail"
+              onChangeText={(value) => handleInputChange('email', value)}
+            />
+            <Field
+              placeholder="Gym_Id"
+              value={formData.gymId}
+              icon="key"
+              onChangeText={(value) => handleInputChange('gymId', value)}
+            />
+            <Field
+              placeholder="Password"
+              secureTextEntry={true}
+              value={formData.password}
+              icon="lock"
+              onChangeText={(value) => handleInputChange('password', value)}
+            />
+            <Field
+              placeholder="Confirm Password"
+              // secureTextEntry={true}
+              value={formData.confirmPassword}
+              icon="eye-off"
+              onChangeText={(value) =>
+                handleInputChange('confirmPassword', value)
+              }
+            />
+            <View style={styles.redirectContainer}>
+              <Text style={styles.redirectMsg}>
+                By signing in, you agree to our{' '}
+              </Text>
+              <Text style={styles.redirectBtn}>Terms & Conditions</Text>
+              <Text style={styles.redirectMsg}> and </Text>
+              <Text style={styles.redirectBtn}>Privacy Policy</Text>
+            </View>
+
+            <Btn
+              textColor={bgColor}
+              bgColor={neon}
+              btnLabel="Signup"
+              Press={handleSignup}
+            />
+
+            <View style={styles.redirectContainer}>
+              <Text
+                style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
+                Already have an account ?{' '}
+              </Text>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('Login')}>
+                <Text style={styles.redirectBtn}>Login</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-          <Btn
-            textColor={bgColor}
-            bgColor={neon}
-            btnLabel="Signup"
-            Press={handleSignup}
-          />
-
-          
-
-          <View style={styles.redirectContainer}>
-            <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
-              Already have an account ?{' '}
-            </Text>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate('Login')}>
-              <Text style={styles.redirectBtn}>Login</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
         </ScrollView>
       </View>
       {newloading && (

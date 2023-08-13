@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { bgColor, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
@@ -108,37 +108,34 @@ const Plans = () => {
 
   return (
     <GradientBG>
-      <SafeAreaView style={{ flex: 1, paddingBottom: 100 }}>
-        <ScrollView>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TopBack>Plans</TopBack>
+        <ScrollView style={{ flex: 1 }}>
           <View style={styles.container}>
-            <TopBack>Plans</TopBack>
             {plans && plans.length > 0 ? (
               plans.map((plan) => (
-                <View key={plan.name} style={{ flexDirection: 'row' }}>
+                <View key={plan.name}>
                   <View style={styles.plainCard}>
-                    <Text style={styles.h1}>{plan.plan}</Text>
-                    <Text
-                      style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
+                    <Text style={styles.cardText}>
                       <Text style={{ color: 'white', fontSize: 16 }}>
                         Name :{' '}
                       </Text>
                       {plan.name}
                     </Text>
-                    <Text
-                      style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
+                    <Text style={styles.cardText}>
                       <Text style={{ color: 'white', fontSize: 16 }}>
                         Price :{' '}
                       </Text>
                       {plan.price}
                     </Text>
-                    <Text style={{ color: neon, fontSize: 16 }}>
+                    <Text style={styles.cardText}>
                       <Text style={{ color: 'white', fontSize: 16 }}>
                         Validity (Days) :{' '}
                       </Text>
                       {plan.validity}
                     </Text>
-                  </View>
-                  <View
+
+                    {/* <View
                     style={{
                       alignContent: 'center',
                       justifyContent: 'center',
@@ -148,12 +145,18 @@ const Plans = () => {
                       style={styles.createButton}>
                       <Text style={styles.createButtonText}>Edit</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity
-                    onPress={() => handleDelete(plan._id)}
-                    style={styles.createButton}>
-                    <Text style={styles.createButtonText}>Delete</Text>
-                  </TouchableOpacity> */}
+                    <TouchableOpacity
+                      onPress={() => handleDelete(plan._id)}
+                      style={styles.createButton}>
+                      <Text style={styles.createButtonText}>Delete</Text>
+                    </TouchableOpacity>
+                  </View> */}
                   </View>
+                  <TouchableOpacity
+                    onPress={() => handleEdit(plan)}
+                    style={styles.editBtn}>
+                    <Text style={styles.editBtnText}>Edit</Text>
+                  </TouchableOpacity>
                 </View>
               ))
             ) : (
@@ -227,17 +230,47 @@ const Plans = () => {
 };
 
 const styles = StyleSheet.create({
-  plainCard: {
-    margin: 10,
-    paddingHorizontal: 20,
-    backgroundColor: bgLight,
-    borderRadius: 5,
-    paddingBottom: 20,
-    width: 250,
+  container: {
+    flex: 1,
+    paddingBottom: 50,
   },
-  h1: {
-    fontSize: 20,
+  plainCard: {
+    marginTop: 10,
+    marginHorizontal: 20,
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    backgroundColor: bgGlass,
+    borderTopEndRadius: 25,
+    borderTopStartRadius: 25,
+  },
+  cardText: {
+    color: neon,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  editBtn: {
+    marginHorizontal: 20,
+    backgroundColor: neon,
+    borderBottomEndRadius: 25,
+    borderBottomStartRadius: 25,
+  },
+  editBtnText: {
+    color: bgColor,
+    fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: 10,
+  },
+  createButton: {
+    backgroundColor: bgGlass,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+    height: 50,
+    margin: 20,
   },
   heading: {
     fontSize: 32,
@@ -245,20 +278,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-  },
-  container: {
-    flex: 1,
-  },
-  createButton: {
-    backgroundColor: bgLight,
-    borderRadius: 10,
-    paddingVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    alignContent: 'center',
-    height: 50,
-    margin: 20,
   },
   createButtonText: {
     fontSize: 20,
