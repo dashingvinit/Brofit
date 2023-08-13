@@ -11,7 +11,8 @@ import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
-import { GradientBG, TopBack } from '../components';
+import { GradientBG, TopBack, LoadingSkeleton } from '../components';
+
 const Plans = () => {
   const [plans, setPlans] = useState([]);
   const [gymId, setGymId] = useState('');
@@ -160,7 +161,7 @@ const Plans = () => {
                 </View>
               ))
             ) : (
-              <Text>No plans found.</Text>
+              <LoadingSkeleton />
             )}
             {!showForm ? (
               <TouchableOpacity
@@ -195,7 +196,7 @@ const Plans = () => {
                       ? 'number-pad'
                       : 'numbers-and-punctuation'
                   }
-                  value={selectedPlan ? editPrice : price}
+                  value={selectedPlan ? editPrice.toString() : price}
                   onChangeText={selectedPlan ? setEditPrice : setPrice}
                   placeholder="Price"
                   style={styles.input}
@@ -208,7 +209,7 @@ const Plans = () => {
                       ? 'number-pad'
                       : 'numbers-and-punctuation'
                   }
-                  value={selectedPlan ? editValidity : validity}
+                  value={selectedPlan ? editValidity.toString() : validity}
                   onChangeText={selectedPlan ? setEditValidity : setValidity}
                   placeholder="Validity"
                   style={styles.input}

@@ -55,7 +55,7 @@ const ProfileSetup = (props) => {
       ...prevFormData,
       plan: selectedPlanName,
     }));
-    setIsPlanSelected(true); 
+    setIsPlanSelected(true);
   };
 
   const handleGenderSelect = (gender) => {
@@ -186,15 +186,15 @@ const ProfileSetup = (props) => {
             </View>
             <Plans onSelect={handlePlanSelect} />
             <View>
-  {isPlanSelected && (
-    <Btn
-      textColor={bgColor}
-      bgColor={neon}
-      btnLabel="Update"
-      Press={handleProfileSetup}
-    />
-  )}
-</View>
+              {isPlanSelected && (
+                <Btn
+                  textColor={bgColor}
+                  bgColor={neon}
+                  btnLabel="Update"
+                  Press={handleProfileSetup}
+                />
+              )}
+            </View>
           </View>
         </View>
         {newloading && (
