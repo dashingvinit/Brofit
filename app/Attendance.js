@@ -50,11 +50,21 @@ const Attendance = () => {
       const response = await axios.patch(`/attendance/${Id}`);
       setAttendance('Checked Out');
     } catch (error) {
-      alert('Error: ' + error);
+      console.log('Error: ' + error);
     }
     setLoading(false);
     setmsg(true);
   };
+
+  useEffect(() => {
+    if (msg) {
+      const timeout = setTimeout(() => {
+        setmsg(false);
+      }, 1000);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [msg]);
 
   return (
     <GradientBG>
@@ -66,27 +76,22 @@ const Attendance = () => {
         }
         >
           <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
-            <View style={{width:'80%',height:'18%',backgroundColor:"white",borderRadius:25,marginBottom:0}}>
-              <View style={{paddingBottom:0}}>
-                <View style={{alignItems:'center',backgroundColor:bgLight,justifyContent:'center',borderTopLeftRadius:20,borderTopRightRadius:20,paddingTop:10,paddingBottom:10}}>
-                  <Text style={{fontSize:20,}}>Sure! 😣</Text>
-                </View>
+            <View style={{width:'60%',height:'12%',backgroundColor:bgColor,borderRadius:25,marginBottom:0}}>
                 <View style={{marginTop:20,alignItems:'center'}}>
-                  <Text style={{fontSize:18,}}>Bro , u done for the day ?</Text>
+                  <Text style={{fontSize:18,color:neon}}>Bro, are you leaving ?</Text>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: 30, justifyContent: 'flex-end', alignItems: 'flex-end', padding:0 ,gap:20}}>
-                  <View style={{ backgroundColor: neon, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 5 }}>
+                <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'flex-end', alignItems: 'flex-end' ,gap:10,marginRight:20}}>
+                  <View style={{ alignItems: 'center', paddingVertical: 5 }}>
                     <Pressable onPress={() => setwarning(false)}>
-                      <Text style={{ fontSize: 16 }}>No</Text>
+                      <Text style={{ fontSize: 16,color:neon }}>No</Text>
                     </Pressable>
                   </View>
-                  <View style={{ backgroundColor: neon, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 5, borderBottomRightRadius:20 }}>
+                  <View style={{alignItems: 'center', paddingHorizontal: 20, paddingVertical: 5}}>
                     <Pressable onPress={handleout}>
-                      <Text style={{ fontSize: 16 }}>Yes</Text>
+                      <Text style={{ fontSize: 16,color:neon}}>Yes</Text>
                     </Pressable>
                   </View>
                 </View>
-              </View>
             </View>
           </View>
         </Modal>
@@ -97,17 +102,12 @@ const Attendance = () => {
           }
           >
             <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
-            <View style={{width:'80%',height:'18%',backgroundColor:"white",borderRadius:25,marginBottom:0}}>
-                <View style={{marginTop:20,alignItems:'center'}}>
-                  <Text style={{fontSize:18,}}>See you tommorow, Bro💪🏻</Text>
-                </View>
-                <View style={{marginTop: 30, justifyContent: 'flex-end',marginLeft:'70%', padding:0}}>
-                    <Pressable onPress={() => setmsg(false)}>
-                      <Text style={{ fontSize: 16 }}>Ok</Text>
-                    </Pressable>
-                </View>
+              <View style={{width:'65%',height:'12%',backgroundColor:bgColor,borderRadius:25,justifyContent:'center'}}>
+                  <View style={{alignItems:'center'}}>
+                    <Text style={{fontSize:18,color:neon}}>See you tommorow, Bro💪🏻</Text>
+                  </View>
               </View>
-          </View>
+            </View>
           </Modal>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 160 }}

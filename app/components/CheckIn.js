@@ -4,6 +4,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
+  Modal,
+  Pressable,
 } from 'react-native';
 import { bgColor, neon, bgLight } from '../constants/Constants';
 import * as Location from 'expo-location';
@@ -19,6 +21,7 @@ const CheckIn = ({ checkINStatus }) => {
   const [checkInMsg, setCheckInMsg] = useState(null);
   const [disableButton, setDisableButton] = useState(false);
   const [Loading, setLoading] = useState(false);
+  const [already, setalready]=useState(false);
 
   useEffect(() => {
     const getLocation = async () => {
@@ -70,6 +73,16 @@ const CheckIn = ({ checkINStatus }) => {
     }
   }, [location, targetLocation]);
 
+  useEffect(() => {
+    if (already) {
+      const timeout = setTimeout(() => {
+        setalready(false);
+      }, 2000);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [already]);
+
   const handleCheckIn = async () => {
     try {
       setLoading(true);
@@ -84,7 +97,7 @@ const CheckIn = ({ checkINStatus }) => {
         setLoading(false);
       }
       if (error.response && error.response.status === 403) {
-        alert('Already Checked IN');
+        setalready(true);
         setLoading(false);
       } else {
         alert('Error: ' + error);
@@ -92,6 +105,7 @@ const CheckIn = ({ checkINStatus }) => {
       }
     }
   };
+
 
   return (
     <View>
@@ -127,6 +141,21 @@ const CheckIn = ({ checkINStatus }) => {
           />
         </View>
       )}
+      <Modal
+          visible={already}
+          transparent
+          onRequestClose={()=>
+            setalready(false)
+          }
+      >
+            <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
+              <View style={{width:'65%',height:'12%',backgroundColor:bgColor,borderRadius:25,justifyContent:'center'}}>
+                <View style={{alignItems:'center'}}>
+                  <Text style={{fontSize:18,color:neon}}>Sorry Not again 😉</Text>
+                </View>
+              </View>
+            </View>
+          </Modal>
     </View>
   );
 };
