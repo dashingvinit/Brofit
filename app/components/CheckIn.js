@@ -1,60 +1,119 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  Modal,
+  Pressable,
+} from 'react-native';
 import { bgColor, neon, bgLight } from '../constants/Constants';
-import { Location, Permissions } from 'expo';
+import * as Location from 'expo-location';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
 import LottieView from 'lottie-react-native';
+import MsgModal from './MsgModal';
 
-const CheckIn = ({ checkINStatus}) => {
-  const [userLocation, setUserLocation] = useState(null);
-  const [disableButton, setDisableButton] = useState(true);
-  const[Loading, setLoading] = useState(false)
+const CheckIn = ({ checkINStatus }) => {
+  const [location, setLocation] = useState(null);
+  const [targetLocation, setTargetLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  const targetLocation = { latitude: 12.3456, longitude: 78.9101 };
-
-  // const getPermission = async () => {
-  //   const { status } = await Permissions.askForegroundPermissionsAsync();
-  //   if (status !== 'granted') {
-  //     alert('Permission to access location was denied');
-  //     return; 
-  //   }
-
-  //   const location = await Location.getCurrentPositionAsync({});
-  //   setUserLocation(location.coords);
-  // };
+  const [checkInMsg, setCheckInMsg] = useState(null);
+  const [disableButton, setDisableButton] = useState(false);
+  const [Loading, setLoading] = useState(false);
+  const [already, setalready] = useState(false);
+  const [check, setcheck] = useState(false);
 
   // useEffect(() => {
-  //   getPermission();
+  //   const getLocation = async () => {
+  //     try {
+  //       const response = await axios.get('/gym/location/2');
+  //       const targetLocation = {
+  //         latitude: response.data.data.latitude,
+  //         longitude: response.data.data.longitude,
+  //       };
+  //       // console.log('targetLocation:', targetLocation);
+  //       setTargetLocation(targetLocation);
+
+  //       let { status } = await Location.requestForegroundPermissionsAsync();
+  //       if (status !== 'granted') {
+  //         setErrorMsg('Permission to access location was denied');
+  //         return;
+  //       }
+  //       try {
+  //         let location = await Location.getCurrentPositionAsync({});
+  //         setLocation(location);
+  //         // console.log('location:', location);
+  //       } catch (error) {
+  //         console.error('Error getting current location:', error);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching target location:', error);
+  //     }
+  //   };
+
+  //   getLocation();
   // }, []);
 
   // useEffect(() => {
-  //   if (userLocation && targetLocation) {
-  //     const distance = Location.distanceBetween(
-  //       userLocation.latitude,
-  //       userLocation.longitude,
-  //       targetLocation.latitude,
-  //       targetLocation.longitude
+  //   if (location && targetLocation) {
+  //     const latitudeDifference = Math.abs(
+  //       location.coords.latitude - targetLocation.latitude
   //     );
+  //     const longitudeDifference = Math.abs(
+  //       location.coords.longitude - targetLocation.longitude
+  //     );
+  //     const latitudeInMeters = latitudeDifference * 111139;
+  //     const longitudeInMeters = longitudeDifference * 111139;
 
-  //     setDisableButton(distance > 100);
+  //     if (latitudeInMeters < 5 && longitudeInMeters < 5) {
+  //       setDisableButton(false);
+  //     } else {
+  //       setDisableButton(true);
+  //     }
   //   }
-  // }, [userLocation]);
+  // }, [location, targetLocation]);
+
+  useEffect(() => {
+    if (already) {
+      const timeout = setTimeout(() => {
+        setalready(false);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [already]);
+
+  useEffect(() => {
+    if (check) {
+      const timeout = setTimeout(() => {
+        setcheck(false);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [check]);
 
   const handleCheckIn = async () => {
     try {
       setLoading(true);
-      setDisableButton(true);
       const response = await axios.post('/attendance');
       checkINStatus();
-      alert('Checked IN');
+      setcheck(true);
       setLoading(false);
       setDisableButton(false);
     } catch (error) {
       if (error.response && error.response.status === 500) {
         alert('Internal Server Error: Please try again later.');
+        setLoading(false);
+      }
+      if (error.response && error.response.status === 403) {
+        setalready(true);
+        setLoading(false);
       } else {
-        console.log('Error: ' + error.message);
-        alert('You are not in the gym');
+        alert('Error: ' + error);
+        setLoading(false);
       }
     }
   };
@@ -70,7 +129,7 @@ const CheckIn = ({ checkINStatus}) => {
           borderRadius: 30,
           width: 150,
         }}
-        // disabled={disableButton}
+        disabled={disableButton}
         onPress={handleCheckIn}>
         <Text style={{ color: bgColor, fontWeight: 'bold' }}>CheckIN</Text>
       </TouchableOpacity>
@@ -93,6 +152,19 @@ const CheckIn = ({ checkINStatus}) => {
           />
         </View>
       )}
+      <Modal
+        visible={already}
+        transparent
+        onRequestClose={() => setalready(false)}>
+        <MsgModal message={"Not again, Bro💪🏻" }/>
+      </Modal>
+
+      <Modal
+        visible={check}
+        transparent
+        onRequestClose={() => setcheck(false)}>
+        <MsgModal message={"Get started 😉" }/>
+      </Modal>
     </View>
   );
 };

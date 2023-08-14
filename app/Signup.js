@@ -91,6 +91,7 @@ const Signup = (props) => {
           <Text style={styles.header}>hi,again</Text>
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
+        <Scrollview>
         <View style={{}}>
           <Field
             placeholder="Name"
@@ -162,6 +163,7 @@ const Signup = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+        </Scrollview>
       </View>
       {newloading && (
         <View
