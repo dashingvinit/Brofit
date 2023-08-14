@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GradientBG, TopBack } from './components';
+import { GradientBG, TopBack, Hr } from './components';
 import * as SecureStore from 'expo-secure-store';
 import {
   View,
@@ -9,9 +9,10 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { bgColor, bgGlass, bgLight, neon } from './constants/Constants';
+import { neon } from './constants/Constants';
 import axios from './constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import LottieView from 'lottie-react-native';
 
 const PlanUpdate = () => {
   const [Userplans, setUserPlans] = useState([]);
@@ -97,19 +98,18 @@ const PlanUpdate = () => {
         const response = await axios.patch(`/userProfile/newPlan/${Id}`, {
           planId,
         });
-        console.log(response.data);
-        console.log(planId);
         UserPlans();
         setSelectedPlan(null);
       } else {
+        alert('Plan Updated');
         const chosenPlan = plans.find((plan) => plan._id === planId);
         setSelectedPlan(chosenPlan);
         saveSelectedPlan(chosenPlan);
-        console.log(chosenPlan);
+        // console.log(chosenPlan);
         const response1 = await axios.patch(`/userProfile/newPlan/${Id}`, {
           planId,
         });
-        console.log(planId);
+        // console.log(planId);
       }
     } catch (error) {
       console.log('Failed to update plan:', error);
@@ -118,125 +118,86 @@ const PlanUpdate = () => {
 
   return (
     <GradientBG>
-      <SafeAreaView style={{ flex: 1, paddingBottom: 100 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TopBack>Gym Plan</TopBack>
         <ScrollView>
-          <TopBack>Gym Plan</TopBack>
+          {status === 'inactive' && selectedPlan && (
+            <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
+              <Text style={styles.Header}>Selected Plan :</Text>
+              <View style={styles.planContainer1}>
+                <View>
+                  <Text style={styles.planName}>{selectedPlan.name}</Text>
+                  <Text style={styles.planPrice}>₹ {selectedPlan.price}</Text>
+                  <Text style={styles.planPrice}>
+                    {selectedPlan.validity} days
+                  </Text>
+                </View>
+                <View>
+                  <LottieView
+                    source={require('./assets/lottieFiles/premiumGoldCrown.json')}
+                    autoPlay
+                    loop
+                    style={{ height: 120, width: 120, marginRight: 10 }}
+                  />
+                </View>
+              </View>
+            </View>
+          )}
+          <Hr />
+
           {status === 'inactive' ? (
-            <View style={{ margin: 20, flexDirection: 'row' }}>
-              <Text style={{ color: 'white', fontSize: 18 }}>
-                Want to Select New plan ??
-              </Text>
-              <TouchableOpacity
-                onPress={() => setSelectedPlan(null)}
-                style={{
-                  backgroundColor: bgGlass,
-                  marginLeft: 20,
-                  height: 40,
-                  width: 120,
-                  borderRadius: 15,
-                }}>
-                <Text
-                  style={{
-                    color: neon,
-                    fontSize: 18,
-                    paddingHorizontal: 14,
-                    paddingVertical: 8,
-                  }}>
-                  New Plan
-                </Text>
-              </TouchableOpacity>
+            <View style={styles.changeBtn}>
+              <Text style={styles.changePlan}>Change Plan :</Text>
             </View>
           ) : (
-            <View style={{ alignItems: 'center' }}>
-              <View style={styles.planContainer}>
-                <Text style={styles.planName}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>
-                    Plan Name :{' '}
-                  </Text>
-                  {Userplans.name}
-                </Text>
-                <Text style={styles.planValidity}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>
-                    Validity (Days) :{' '}
-                  </Text>
-                  {Userplans.validity}
-                </Text>
-                <Text style={styles.planExpiry}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>
-                    Expiry :{' '}
-                  </Text>
-                  {date}
-                </Text>
-              </View>
-            </View>
-          )}
-
-          {status === 'inactive' &&
-            !selectedPlan &&
-            plans.map((plan) => (
-              <View key={plan.name} style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={() => handlePlanSelection(plan._id)}>
-                  <View style={styles.plainCard}>
-                    <Text style={styles.h1}>{plan.plan}</Text>
-                    <Text
-                      style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
-                      <Text style={{ color: 'white', fontSize: 16 }}>
-                        Name :{' '}
-                      </Text>
-                      {plan.name}
-                    </Text>
-                    <Text
-                      style={{ color: neon, fontSize: 16, marginBottom: 10 }}>
-                      <Text style={{ color: 'white', fontSize: 16 }}>
-                        Price :{' '}
-                      </Text>
-                      {plan.price}
-                    </Text>
-                    <Text style={{ color: neon, fontSize: 16 }}>
-                      <Text style={{ color: 'white', fontSize: 16 }}>
-                        Validity (Days) :{' '}
-                      </Text>
-                      {plan.validity}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            ))}
-
-          {status === 'inactive' && selectedPlan && (
-            <View>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 18,
-                  marginLeft: 30,
-                  color: neon,
-                  fontSize: 20,
-                  marginTop: 50,
-                  marginBottom: 20,
-                }}>
-                Selected Plan
-              </Text>
+            <View style={{ margin: 10 }}>
               <View style={styles.planContainer1}>
-                <Text style={styles.planName}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>
-                    Plan Name :{' '}
-                  </Text>
-                  {selectedPlan.name}
-                </Text>
-                <Text style={styles.planValidity}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>Price : </Text>
-                  {selectedPlan.price}
-                </Text>
-                <Text style={styles.planValidity}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>
-                    Validity (Days) :{' '}
-                  </Text>
-                  {selectedPlan.validity}
-                </Text>
+                <View style={{ justifyContent: 'center' }}>
+                  <Text style={styles.planName}>{Userplans.name}</Text>
+                  <Text style={styles.planPrice}>{Userplans.validity}</Text>
+                  <Text style={styles.planPrice}>{date}</Text>
+                </View>
+                <View>
+                  <LottieView
+                    source={require('./assets/lottieFiles/premiumGoldCrown.json')}
+                    autoPlay
+                    loop
+                    style={{ height: 120, width: 120 }}
+                  />
+                </View>
               </View>
             </View>
           )}
+          <View style={{ paddingBottom: 100 }}>
+            {status === 'inactive' &&
+              plans.map((plan) => (
+                <View
+                  key={plan.name}
+                  style={{
+                    marginHorizontal: 20,
+                    marginVertical: 10,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => handlePlanSelection(plan._id)}>
+                    <View style={styles.planContainer2}>
+                      <View>
+                        <Text style={styles.planName}>{plan.name} </Text>
+                        <Text style={styles.planPrice}>₹ {plan.price}</Text>
+                        <Text style={styles.planPrice}>{plan.validity}</Text>
+                      </View>
+                      <View>
+                        <LottieView
+                          source={require('./assets/lottieFiles/meteor.json')}
+                          autoPlay
+                          loop
+                          style={{ height: 120, width: 120 }}
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ))}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </GradientBG>
@@ -244,49 +205,59 @@ const PlanUpdate = () => {
 };
 
 const styles = StyleSheet.create({
-  planContainer: {
-    backgroundColor: bgGlass,
-    padding: 16,
-    margin: 8,
-    borderRadius: 25,
-    width: 350,
-    marginLeft: 20,
+  Header: {
+    color: 'white',
+    color: neon,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 15,
+    marginBottom: 10,
   },
   planContainer1: {
-    backgroundColor: bgLight,
-    padding: 16,
-    margin: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#614BC3',
+    padding: 15,
     borderRadius: 25,
-    width: 350,
-    marginLeft: 20,
-  },
-  h1: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  plainCard: {
-    margin: 10,
-    paddingHorizontal: 20,
-    backgroundColor: bgLight,
-    borderRadius: 5,
-    paddingBottom: 20,
-    marginLeft: 100,
+    borderRightColor: '#F8DE22',
+    borderBottomColor: '#F8DE22',
+    borderRightWidth: 2,
+    borderBottomWidth: 5,
   },
   planName: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 12,
-    color: neon,
+    color: '#BEADFA',
   },
-  planValidity: {
-    fontSize: 20,
-    color: neon,
+  planPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
     marginBottom: 12,
+    color: '#F8DE22',
   },
-  planExpiry: {
-    fontSize: 20,
+  changeBtn: {
+    marginHorizontal: 10,
+    marginTop: 10,
+    // backgroundColor: '#C8FFE0',
+    // borderRadius: 10,
+  },
+  changePlan: {
     color: neon,
-    marginBottom: 12,
+    fontSize: 24,
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+  },
+  planContainer2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#9F91CC',
+    padding: 15,
+    borderRadius: 25,
+    borderRightColor: '#F8DE22',
+    borderBottomColor: '#F8DE22',
+    borderRightWidth: 2,
+    borderBottomWidth: 5,
   },
 });
 

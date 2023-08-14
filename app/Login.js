@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
-import { bgColor, bgGlass, neon } from './constants/Constants';
+import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
 import LottieView from 'lottie-react-native';
@@ -15,6 +15,7 @@ async function save(key, value) {
 
 const Login = (props) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
@@ -44,9 +45,7 @@ const Login = (props) => {
       await setTokenHeader().then(() => {
         console.log('Token Set');
       });
-
       setLoading(false);
-
       props.sethandleLogin();
       {
         user.role === 'owner'
@@ -55,14 +54,19 @@ const Login = (props) => {
           ? props.navigation.navigate('Home3')
           : props.navigation.navigate('Home1');
       }
+      Keyboard.dismiss();
     } catch (error) {
       setLoading(false);
-      alert('Login failed');
-      // console.error('Login Error:', error);
+      if ((error.response && error.response.status === 400) || 404) {
+        setError('Invalid email or password');
+      } else {
+        console.error('Error logging in:');
+      }
     }
   };
 
   const handleInputChange = (field, value) => {
+    setError('');
     setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: value,
@@ -105,11 +109,12 @@ const Login = (props) => {
             }}>
             Login to your account
           </Text>
-          <LottieView
+          {/* <LottieView
             source={require('./assets/lottieFiles/darkDumbellWithHands.json')}
             autoPlay
             loop
-          />
+          /> */}
+
           <Field
             placeholder="Email"
             keyboardType="email-address"
@@ -117,6 +122,7 @@ const Login = (props) => {
             value={formData.email}
             onChangeText={(value) => handleInputChange('email', value)}
           />
+
           <Field
             placeholder="Password"
             secureTextEntry={true}
@@ -124,6 +130,17 @@ const Login = (props) => {
             value={formData.password}
             onChangeText={(value) => handleInputChange('password', value)}
           />
+          {error !== '' && (
+            <Text
+              style={{
+                color: 'red',
+                fontSize: 14,
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}>
+              {error}
+            </Text>
+          )}
           <View
             style={{
               flexDirection: 'row',

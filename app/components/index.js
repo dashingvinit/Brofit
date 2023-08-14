@@ -25,8 +25,10 @@ import DayWiseWorkouts from './6dayWorkouts';
 import SixDayWorkoutPlan from './6dWorkoutPlan';
 import WorkoutClass from './WorkoutClass';
 import Runtimer from './Runtimer';
+import LoadingSkeleton from './LoadingSkeleton';
 
 export {
+  LoadingSkeleton,
   Runtimer,
   WorkoutClass,
   DayWiseWorkouts,

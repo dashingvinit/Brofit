@@ -7,7 +7,17 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  Modal,
+  Pressable,
+} from 'react-native';
 import { bgColor, neon, bgLight } from '../constants/Constants';
+import * as Location from 'expo-location';
 import * as Location from 'expo-location';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
@@ -111,7 +121,14 @@ const CheckIn = ({ checkINStatus }) => {
       if (error.response && error.response.status === 403) {
         setalready(true);
         setLoading(false);
+        setLoading(false);
+      }
+      if (error.response && error.response.status === 403) {
+        setalready(true);
+        setLoading(false);
       } else {
+        alert('Error: ' + error);
+        setLoading(false);
         alert('Error: ' + error);
         setLoading(false);
       }

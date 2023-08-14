@@ -57,6 +57,15 @@ const ActiveList = (props) => {
             <ActivityIndicator size="large" />
           ) : (
             <View style={styles.scrollContainer}>
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                }}>
+                Total: {inactiveData.length}
+              </Text>
               <View style={styles.userHeader}>
                 <Text style={styles.userText}>Name</Text>
                 <Text style={styles.userText1}>ID</Text>

@@ -14,14 +14,14 @@ const Home = (props) => {
         </View>
 
         <View style={styles.bottomContainer}>
-          <LottieView
+          {/* <LottieView
             source={require('./assets/lottieFiles/limeAnimations.json')}
             autoPlay
             loop
             style={{
               alignItems: 'flex-end',
             }}
-          />
+          /> */}
 
           <Text style={{ color: neon, fontSize: 32 }}>
             Unleash Your Inner Strength

@@ -10,12 +10,12 @@ import OwnerNav from './app/constants/OwnerNav';
 import { StatusBar, View, SafeAreaView, StyleSheet } from 'react-native';
 
 function App() {
-  // const linking = {
-  //   prefixes: ['https://brofit.onrender.com', 'brofit://'],
-  //   config: {
-  //     screens: {},
-  //   },
-  // };
+  const linking = {
+    prefixes: ['https://brofit.onrender.com', 'brofit://'],
+    config: {
+      screens: {},
+    },
+  };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);

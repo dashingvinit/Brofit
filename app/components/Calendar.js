@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
 import { bgColor, bgLight, neon } from '../constants/Constants';
@@ -6,7 +6,6 @@ import * as SecureStore from 'expo-secure-store';
 import axios from '../constants/Axios';
 
 const Calender = () => {
-  const [userData, setUserData] = useState(null);
   const [markedDates, setMarkedDates] = useState({});
 
   const fetchattendance = async () => {
@@ -17,8 +16,6 @@ const Calender = () => {
       const response = await axios.get(`/userProfile/calendar/${Id}`);
       // console.log(response.data);
       const data = await response.data;
-      setUserData(data.data.attendance);
-
       const markedDatesObj = {};
       data.data.attendance.forEach((entry) => {
         const day = entry.day;

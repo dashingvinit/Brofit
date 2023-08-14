@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
-import { bgColor, neon } from './constants/Constants';
+import { bgColor, bgGlass, neon } from './constants/Constants';
 import Field from './components/Field';
 import LottieView from 'lottie-react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
@@ -14,6 +22,8 @@ async function save(key, value) {
 
 const Signup = (props) => {
   const [loading, setLoading] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
   const [newloading, setnewLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -24,10 +34,15 @@ const Signup = (props) => {
   });
 
   const handleInputChange = (field, value) => {
+    setErrMsg('');
     setFormData((prevFormData) => ({
       ...prevFormData,
       [field]: value,
     }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   const handleSignup = async () => {
@@ -35,10 +50,10 @@ const Signup = (props) => {
     const { name, email, gymId, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setErrMsg('Password do not match');
+      setnewLoading(false);
       return;
     }
-
     try {
       const response = await axios.post('user/signup', {
         name,
@@ -46,17 +61,14 @@ const Signup = (props) => {
         gymId,
         password,
       });
-
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
       // console.log('user', user);
       await save('user', user);
-
       if (response.data.data.jwt) {
         const token = response.data.data.jwt;
-        const expires = Date.now() + 1000 * 60 * 60; // 1hr
+        const expires = Date.now() + 1000 * 60 * 60 * 24 * 365; // 1yr
         const expireString = JSON.stringify(expires);
-
         await save('expire', expireString);
         await save('token', token);
         await save('user', user);
@@ -64,17 +76,20 @@ const Signup = (props) => {
         await setTokenHeader().then(() => {
           console.log('Token Set');
           setLoading(false);
+          const parsedUser = JSON.parse(user);
+          console.log(parsedUser.role);
+          if (parsedUser.role == 'owner') {
+            props.navigation.navigate('Login');
+          } else {
+            nextPage();
+          }
         });
       }
-
-      // console.log('Token Set');
       setLoading(false);
       setnewLoading(false);
-      // alert('SignUp successful');
     } catch (error) {
       alert('SignUp failed');
-      setLoading(true);
-      console.error('Error:', error);
+      setnewLoading(false);
     }
   };
 
@@ -173,12 +188,12 @@ const Signup = (props) => {
             bottom: 0,
             left: 0,
             right: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0,0,0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('./assets/lottieFiles/loading1.json')}
+            source={require('./assets/lottieFiles/greenTik.json')}
             autoPlay
             loop
           />
