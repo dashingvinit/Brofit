@@ -206,7 +206,6 @@ const PlanUpdate = () => {
 
 const styles = StyleSheet.create({
   Header: {
-    color: 'white',
     color: neon,
     fontSize: 24,
     fontWeight: 'bold',

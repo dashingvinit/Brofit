@@ -7,17 +7,7 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  Modal,
-  Pressable,
-} from 'react-native';
 import { bgColor, neon, bgLight } from '../constants/Constants';
-import * as Location from 'expo-location';
 import * as Location from 'expo-location';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
