@@ -53,27 +53,27 @@ const CheckIn = ({ checkINStatus }) => {
       }
     };
 
-  //   getLocation();
-  // }, []);
+    getLocation();
+  }, []);
 
-  // useEffect(() => {
-  //   if (location && targetLocation) {
-  //     const latitudeDifference = Math.abs(
-  //       location.coords.latitude - targetLocation.latitude
-  //     );
-  //     const longitudeDifference = Math.abs(
-  //       location.coords.longitude - targetLocation.longitude
-  //     );
-  //     const latitudeInMeters = latitudeDifference * 111139;
-  //     const longitudeInMeters = longitudeDifference * 111139;
+  useEffect(() => {
+    if (location && targetLocation) {
+      const latitudeDifference = Math.abs(
+        location.coords.latitude - targetLocation.latitude
+      );
+      const longitudeDifference = Math.abs(
+        location.coords.longitude - targetLocation.longitude
+      );
+      const latitudeInMeters = latitudeDifference * 111139;
+      const longitudeInMeters = longitudeDifference * 111139;
 
-  //     if (latitudeInMeters < 5 && longitudeInMeters < 5) {
-  //       setDisableButton(false);
-  //     } else {
-  //       setDisableButton(true);
-  //     }
-  //   }
-  // }, [location, targetLocation]);
+      if (latitudeInMeters < 5 && longitudeInMeters < 5) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+  }, [location, targetLocation]);
 
   useEffect(() => {
     if (already) {
@@ -163,14 +163,11 @@ const CheckIn = ({ checkINStatus }) => {
         visible={already}
         transparent
         onRequestClose={() => setalready(false)}>
-        <MsgModal message={"Not again, Bro💪🏻" }/>
+        <MsgModal message={'Not again, Bro💪🏻'} />
       </Modal>
 
-      <Modal
-        visible={check}
-        transparent
-        onRequestClose={() => setcheck(false)}>
-        <MsgModal message={"Get started 😉" }/>
+      <Modal visible={check} transparent onRequestClose={() => setcheck(false)}>
+        <MsgModal message={'Get started 😉'} />
       </Modal>
     </View>
   );
