@@ -20,7 +20,7 @@ const CheckIn = ({ checkINStatus }) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [checkInMsg, setCheckInMsg] = useState(null);
-  const [disableButton, setDisableButton] = useState(false);
+  const [disableButton, setDisableButton] = useState(true);
   const [Loading, setLoading] = useState(false);
   const [already, setalready] = useState(false);
   const [check, setcheck] = useState(false);
@@ -33,9 +33,7 @@ const CheckIn = ({ checkINStatus }) => {
           latitude: response.data.data.latitude,
           longitude: response.data.data.longitude,
         };
-        //console.log('targetLocation:', targetLocation);
         setTargetLocation(targetLocation);
-
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           setErrorMsg('Permission to access location was denied');
@@ -44,7 +42,6 @@ const CheckIn = ({ checkINStatus }) => {
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
-          //console.log('location:', location);
         } catch (error) {
           console.error('Error getting current location:', error);
         }
@@ -52,7 +49,6 @@ const CheckIn = ({ checkINStatus }) => {
         console.error('Error fetching target location:', error);
       }
     };
-
     getLocation();
   }, []);
 
@@ -80,7 +76,6 @@ const CheckIn = ({ checkINStatus }) => {
       const timeout = setTimeout(() => {
         setalready(false);
       }, 1000);
-
       return () => clearTimeout(timeout);
     }
   }, [already]);
@@ -90,7 +85,6 @@ const CheckIn = ({ checkINStatus }) => {
       const timeout = setTimeout(() => {
         setcheck(false);
       }, 1000);
-
       return () => clearTimeout(timeout);
     }
   }, [check]);

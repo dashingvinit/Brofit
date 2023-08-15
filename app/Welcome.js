@@ -22,6 +22,7 @@ const Home = (props) => {
         <View style={styles.bottomContainer}>
           <Text
             style={{
+              //fontFamily: 'Poppins-Black',
               letterSpacing: 1,
               color: neon,
               fontSize: 32,

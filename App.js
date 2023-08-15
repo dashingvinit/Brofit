@@ -1,21 +1,31 @@
-import * as React from 'react';
-import * as SecureStore from 'expo-secure-store';
-import axios, { setTokenHeader } from './app/constants/Axios';
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { StatusBar, View, SafeAreaView, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import * as SecureStore from 'expo-secure-store';
+import { setTokenHeader } from './app/constants/Axios';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
 import BottomNav from './app/constants/BottomNav';
 import StackNav from './app/constants/StackNav';
 import AdminNav from './app/constants/AdminNav';
 import OwnerNav from './app/constants/OwnerNav';
-import { StatusBar, View, SafeAreaView, StyleSheet } from 'react-native';
 
 function App() {
-  const linking = {
-    prefixes: ['https://brofit.onrender.com', 'brofit://'],
-    config: {
-      screens: {},
-    },
-  };
+  // const [fontsLoaded] = useFonts({
+  //   'Poppins-Black': require('./assets/fonts/Poppins-Black.ttf'),
+  // });
+
+  // useEffect(() => {
+  //   async function prepare() {
+  //     await SplashScreen.preventAutoHideAsync();
+  //     await new Promise((resolve) => setTimeout(resolve, 2000));
+  //     await SplashScreen.hideAsync();
+  //   }
+  //   prepare();
+  // }, []);
+
+  // if (!fontsLoaded) return null;
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -25,7 +35,6 @@ function App() {
   const deleteItemFromSecureStore = async (key) => {
     try {
       await SecureStore.deleteItemAsync(key);
-      // console.log('Item deleted successfully');
     } catch (error) {
       console.error('Failed to delete item:', error);
     }
@@ -46,26 +55,11 @@ function App() {
       const expire = await SecureStore.getItemAsync('expire');
       const expires = JSON.parse(expire);
       if (expires > Date.now() && token) {
-        // console.log('Token:', token);
         setIsLoggedIn(true);
       } else {
-        // console.log('Token is expired or user is not logged in');
         setIsLoggedIn(false);
         deleteItemFromSecureStore('token');
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getUser = async () => {
-    try {
-      const user = await SecureStore.getItemAsync('user');
-      const userObj = JSON.parse(user);
-      const userRole = userObj?.role;
-      setUserRole(userRole);
-      //  console.log('Role:', userRole);
-      // console.log('User:', userObj);
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +69,17 @@ function App() {
     getToken();
     getUser();
   }, []);
+
+  const getUser = async () => {
+    try {
+      const user = await SecureStore.getItemAsync('user');
+      const userObj = JSON.parse(user);
+      const userRole = userObj?.role ?? 'undefined';
+      setUserRole(userRole);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const renderNavbarBasedOnRole = () => {
     if (userRole === 'owner') {
@@ -86,6 +91,13 @@ function App() {
     }
   };
 
+  const linking = {
+    prefixes: ['https://brofit.onrender.com', 'brofit://'],
+    config: {
+      screens: {},
+    },
+  };
+
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
   return (
@@ -95,9 +107,7 @@ function App() {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <NavigationContainer 
-      // linking={linking}
-      >
+      <NavigationContainer linking={linking}>
         <View style={styles.content}>
           {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
         </View>
