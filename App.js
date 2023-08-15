@@ -95,7 +95,9 @@ function App() {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <NavigationContainer linking={linking}>
+      <NavigationContainer 
+      // linking={linking}
+      >
         <View style={styles.content}>
           {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
         </View>

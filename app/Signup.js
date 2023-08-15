@@ -108,7 +108,7 @@ const Signup = (props) => {
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
         <ScrollView>
-          <View style={{ paddingTop: '60%' }}>
+          <View style={{}}>
             <Field
               placeholder="Name"
               value={formData.name}
@@ -176,7 +176,7 @@ const Signup = (props) => {
 
             <Field
               placeholder="Confirm Password"
-              secureTextEntry={!showPassword}
+              // secureTextEntry={true}
               value={formData.confirmPassword}
               icon="eye-off"
               onChangeText={(value) =>
@@ -198,7 +198,16 @@ const Signup = (props) => {
               btnLabel="Signup"
               Press={handleSignup}
             />
-
+            {loading ? null : (
+              <Btn
+                textColor={bgColor}
+                bgColor={neon}
+                btnLabel="Next"
+                loading={true}
+                disable={loading}
+                Press={nextPage}
+              />
+            )}
             <View style={styles.redirectContainer}>
               <Text
                 style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>

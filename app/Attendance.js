@@ -4,9 +4,10 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  Alert,
   RefreshControl,
   Modal,
-  Pressable,
+  Pressable
 } from 'react-native';
 
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
@@ -18,6 +19,7 @@ import LottieView from 'lottie-react-native';
 const Attendance = () => {
   const [attendance, setAttendance] = useState();
   const [refreshing, setRefreshing] = useState(false);
+  const [newloading, setnewLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [warning, setwarning] = useState(false);
   const [msg, setmsg] = useState(false);
@@ -59,7 +61,7 @@ const Attendance = () => {
       const timeout = setTimeout(() => {
         setmsg(false);
       }, 1000);
-
+      
       return () => clearTimeout(timeout);
     }
   }, [msg]);
@@ -67,82 +69,46 @@ const Attendance = () => {
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
-        <Modal
-          visible={warning}
+        <Modal visible={warning}
+        transparent
+        onRequestClose={()=>
+          setwarning(false)
+        }
+        >
+          <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
+            <View style={{width:'60%',height:'12%',backgroundColor:bgColor,borderRadius:25,marginBottom:0}}>
+                <View style={{marginTop:20,alignItems:'center'}}>
+                  <Text style={{fontSize:18,color:neon}}>Bro, are you leaving ?</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'flex-end', alignItems: 'flex-end' ,gap:10,marginRight:20}}>
+                  <View style={{ alignItems: 'center', paddingVertical: 5 }}>
+                    <Pressable onPress={() => setwarning(false)}>
+                      <Text style={{ fontSize: 16,color:neon }}>No</Text>
+                    </Pressable>
+                  </View>
+                  <View style={{alignItems: 'center', paddingHorizontal: 20, paddingVertical: 5}}>
+                    <Pressable onPress={handleout}>
+                      <Text style={{ fontSize: 16,color:neon}}>Yes</Text>
+                    </Pressable>
+                  </View>
+                </View>
+            </View>
+          </View>
+        </Modal>
+        <Modal visible={msg}
           transparent
-          onRequestClose={() => setwarning(false)}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#00000099',
-            }}>
-            <View
-              style={{
-                width: '60%',
-                height: '12%',
-                backgroundColor: bgColor,
-                borderRadius: 25,
-                marginBottom: 0,
-              }}>
-              <View style={{ marginTop: 20, alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, color: neon }}>
-                  Bro, are you leaving ?
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 20,
-                  justifyContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  gap: 10,
-                  marginRight: 20,
-                }}>
-                <View style={{ alignItems: 'center', paddingVertical: 5 }}>
-                  <Pressable onPress={() => setwarning(false)}>
-                    <Text style={{ fontSize: 16, color: neon }}>No</Text>
-                  </Pressable>
-                </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    paddingHorizontal: 20,
-                    paddingVertical: 5,
-                  }}>
-                  <Pressable onPress={handleout}>
-                    <Text style={{ fontSize: 16, color: neon }}>Yes</Text>
-                  </Pressable>
-                </View>
+          onRequestClose={()=>
+            setmsg(false)
+          }
+          >
+            <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:"#00000099"}}>
+              <View style={{width:'65%',height:'12%',backgroundColor:bgColor,borderRadius:25,justifyContent:'center'}}>
+                  <View style={{alignItems:'center'}}>
+                    <Text style={{fontSize:18,color:neon}}>See you tommorow, Bro💪🏻</Text>
+                  </View>
               </View>
             </View>
-          </View>
-        </Modal>
-        <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#00000099',
-            }}>
-            <View
-              style={{
-                width: '65%',
-                height: '12%',
-                backgroundColor: bgColor,
-                borderRadius: 25,
-                justifyContent: 'center',
-              }}>
-              <View style={{ alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, color: neon }}>
-                  See you tommorow, Bro💪🏻
-                </Text>
-              </View>
-            </View>
-          </View>
-        </Modal>
+          </Modal>
         <ScrollView
           contentContainerStyle={{ paddingBottom: 160 }}
           refreshControl={
@@ -209,7 +175,7 @@ const Attendance = () => {
                 borderRadius: 30,
                 width: 150,
               }}
-              disabled={attendance === 'Checked In' ? false : true}
+              // disabled={attendance === 'Checked In' ? false : true}
               onPress={handleCheckout}>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>
                 CheckOUT
@@ -240,5 +206,7 @@ const Attendance = () => {
     </GradientBG>
   );
 };
+
+
 
 export default Attendance;
