@@ -109,11 +109,6 @@ const Login = (props) => {
             }}>
             Login to your account
           </Text>
-          {/* <LottieView
-            source={require('./assets/lottieFiles/darkDumbellWithHands.json')}
-            autoPlay
-            loop
-          /> */}
 
           <Field
             placeholder="Email"

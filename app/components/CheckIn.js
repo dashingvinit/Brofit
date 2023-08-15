@@ -31,7 +31,7 @@ const CheckIn = ({ checkINStatus }) => {
           latitude: response.data.data.latitude,
           longitude: response.data.data.longitude,
         };
-        // console.log('targetLocation:', targetLocation);
+        console.log('targetLocation:', targetLocation);
         setTargetLocation(targetLocation);
 
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -42,7 +42,7 @@ const CheckIn = ({ checkINStatus }) => {
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
-          // console.log('location:', location);
+          console.log('location:', location);
         } catch (error) {
           console.error('Error getting current location:', error);
         }

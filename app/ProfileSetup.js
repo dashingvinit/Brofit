@@ -7,15 +7,6 @@ import { neon, bgColor } from './constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const ProfileSetup = (props) => {
-  // const setTokenHeader = async () => {
-  //   const token = await SecureStore.getItemAsync('token');
-  //   axios.interceptors.request.use((config) => {
-  //     config.headers['x-access-token'] = token;
-  //     return config;
-  //   });
-  //   console.log('Token set:', token);
-  // };
-
   setTokenHeader();
 
   const [newloading, setnewLoading] = useState(false);
@@ -39,8 +30,7 @@ const ProfileSetup = (props) => {
 
       setnewLoading(false);
       props.sethandleLogin();
-      props.navigation.navigate('Home1');
-      // console.log('Response:', user);
+      SecureStore.setItemAsync('profileSet', 'true');
     } catch (error) {
       alert('Setup failed');
       setnewLoading(false);

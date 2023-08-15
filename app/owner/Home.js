@@ -8,7 +8,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { Graph, Top, CheckedIn, OwnerStatus, GradientBG } from '../components';
-import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
+import { bgGlass, neon } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 

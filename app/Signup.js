@@ -78,6 +78,7 @@ const Signup = (props) => {
           setLoading(false);
           const parsedUser = JSON.parse(user);
           console.log(parsedUser.role);
+
           if (parsedUser.role == 'owner') {
             props.navigation.navigate('Login');
           } else {
@@ -172,13 +173,7 @@ const Signup = (props) => {
                 />
               </TouchableOpacity>
             </View>
-            {/* <Field
-              placeholder="Password"
-              secureTextEntry={!showPassword}
-              value={formData.password}
-              icon="lock"
-              onChangeText={(value) => handleInputChange('password', value)}
-            /> */}
+
             <Field
               placeholder="Confirm Password"
               secureTextEntry={!showPassword}

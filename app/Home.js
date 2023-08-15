@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Graph,
-  Top,
-  WorkoutCards,
-  Runtimer,
-  Userstatusbox,
-  GradientBG,
-} from './components';
+import { Graph, Top, Runtimer, Userstatusbox, GradientBG } from './components';
 import {
   View,
   Text,
@@ -15,10 +8,10 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import { SixdayWorkOut } from './assets/images';
-import { bgColor, bgGlass, bgLight, neon } from './constants/Constants';
+import { bgGlass, neon } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = (props) => {

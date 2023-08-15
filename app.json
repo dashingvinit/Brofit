@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "scheme": "yourapp",
     "userInterfaceStyle": "automatic",
@@ -21,7 +21,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#000000"
       },
       "package": "com.yourcompany.yourapp",
       "versionCode": 1
@@ -29,25 +29,17 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-        }
-      ]
-    ],
     "extra": {
       "eas": {
-        "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
+        "projectId": "ee6244a8-4482-4a9b-a24b-191d4e8ed70d"
       }
     },
-    "owner": "dashing_vinit",
+    "owner": "dashv",
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/f2fe1d2d-da34-4d6d-b53d-70a41531f195"
+      "url": "https://u.expo.dev/ee6244a8-4482-4a9b-a24b-191d4e8ed70d"
     }
   }
 }

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { bgColor, bgGlassLight, neon } from '../constants/Constants';
+import { bgColor, neon } from '../constants/Constants';
 
 const Gender = ({ onSelect }) => {
   const genders = [

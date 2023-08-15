@@ -13,7 +13,13 @@ export default function Btn({ bgColor, btnLabel, textColor, Press }) {
         paddingVertical: 10,
         marginVertical: 10,
       }}>
-      <Text style={{ color: textColor, fontSize: 25, fontWeight: 'bold' }}>
+      <Text
+        style={{
+          color: textColor,
+          // fontFamily: 'Panton-BlackCaps',
+          fontSize: 25,
+          letterSpacing: 1,
+        }}>
         {btnLabel}
       </Text>
     </TouchableOpacity>

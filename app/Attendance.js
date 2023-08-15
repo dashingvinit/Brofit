@@ -212,8 +212,7 @@ const Attendance = () => {
               disabled={attendance === 'Checked In' ? false : true}
               onPress={handleCheckout}>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                {' '}
-                CheckOUT{' '}
+                CheckOUT
               </Text>
             </TouchableOpacity>
           </View>

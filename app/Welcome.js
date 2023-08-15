@@ -10,20 +10,22 @@ const Home = (props) => {
     <Background2>
       <View style={styles.container}>
         <View style={styles.iconContainer}>
-          <Text style={{ color: neon, fontSize: 38 }}>Brofit</Text>
+          <Text
+            style={{
+              color: neon,
+              fontSize: 38,
+            }}>
+            Brofit
+          </Text>
         </View>
 
         <View style={styles.bottomContainer}>
-          {/* <LottieView
-            source={require('./assets/lottieFiles/limeAnimations.json')}
-            autoPlay
-            loop
+          <Text
             style={{
-              alignItems: 'flex-end',
-            }}
-          /> */}
-
-          <Text style={{ color: neon, fontSize: 32 }}>
+              letterSpacing: 1,
+              color: neon,
+              fontSize: 32,
+            }}>
             Unleash Your Inner Strength
           </Text>
 
@@ -39,12 +41,6 @@ const Home = (props) => {
             btnLabel="Lets Go >>>"
             Press={() => props.navigation.navigate('Login')}
           />
-          {/* <Btn
-            bgColor={bgColor}
-            textColor={neon}
-            btnLabel="Profile"
-            Press={() => props.navigation.navigate('ProfileSetup')}
-          /> */}
 
           <View style={styles.redirect}>
             <Text style={styles.redirectMsg}>New to Brofit?</Text>
