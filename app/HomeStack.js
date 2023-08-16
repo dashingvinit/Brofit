@@ -7,6 +7,7 @@ import Welcome from './Welcome';
 import Home from './Home';
 import PlanUpdate from './PlanUpdate';
 import { DayWiseWorkouts, SixDayWorkoutPlan } from './components';
+import ProfileSetup from './ProfileSetup';
 // import AnimatedVideos from './AnimatedVideos';
 
 const HomeStack = ({ setHandleLogout }) => {
@@ -18,6 +19,7 @@ const HomeStack = ({ setHandleLogout }) => {
       <Stack.Screen name="HomeScreen">
         {(props) => <Home {...props} setHandleLogout={setHandleLogout} />}
       </Stack.Screen>
+      <Stack.Screen name="ProfileSetup" component={ProfileSetup} />
       <Stack.Screen name="PlanUpdate" component={PlanUpdate} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="SixDayWorkoutPlan" component={SixDayWorkoutPlan} />

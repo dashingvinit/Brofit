@@ -61,7 +61,7 @@ const ProfilePage = () => {
     setEditAge(userData.age.toString()); // Convert to string for TextInput
     setEditHeight(userData.height.toString()); // Convert to string for TextInput
     setEditWeight(userData.weight.toString()); // Convert to string for TextInput
-    // setEditContact(userData.contact); 
+    setEditContact(userData.phoneNumber); 
     setEditAddress(userData.address);
   };
 
@@ -71,7 +71,7 @@ const ProfilePage = () => {
         age: parseFloat(editAge),
         height: editHeight,
         weight: editWeight,
-        // contact: editContact, 
+        phoneNumber: editContact, 
         address: editAddress
       };
 
@@ -249,21 +249,26 @@ const ProfilePage = () => {
                 value={editWeight}
                 onChangeText={setEditWeight}
               />
-              {/* <TextInput
+              <TextInput
                 style={styles.input}
                 placeholder="Contact"
                 value={editContact}
                 onChangeText={setEditContact}
-              /> */}
+              />
               <TextInput
                 style={styles.input}
                 placeholder="Address"
                 value={editAddress}
                 onChangeText={setEditAddress}
               />
-              <TouchableOpacity onPress={handleSave} style={styles.button}>
-                <Text style={styles.buttonText}>Save</Text>
-              </TouchableOpacity>
+              <View style={{flexDirection:'row',alignItems:'center'}}>
+                <TouchableOpacity onPress={()=>setEditable(false)} style={styles.button}>
+                  <Text style={styles.buttonText}>cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleSave} style={styles.button}>
+                  <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </>
         ) : (
