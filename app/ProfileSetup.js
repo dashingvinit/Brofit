@@ -17,7 +17,7 @@ const ProfileSetup = (props) => {
     weight: '',
     height: '',
     plan: 'no plan',
-    age: 21,
+    age: undefined,
     phoneNumber: '',
     gender: 'other',
     address: 'Kathmandu',
@@ -150,7 +150,7 @@ const ProfileSetup = (props) => {
               }
               placeholder="Age (yrs)"
               icon="chevrons-up"
-              value={formData.age.toString()}
+              value={formData.age}
               onChangeText={(value) => handleInputChange('age', value)}
             />
             <Field

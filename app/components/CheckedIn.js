@@ -43,10 +43,10 @@ const CheckedIn = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Active Check-Ins</Text>
+      <Text style={styles.heading}>Todays Check-Ins</Text>
       <View style={styles.userListContainer}>
         <View style={styles.userHeader}>
-          <Text style={styles.userName}>ID</Text>
+          <Text style={styles.userName}>ID. Name</Text>
           <Text style={styles.checkInOut}>Check-In</Text>
           <Text style={styles.checkInOut}>Check-Out</Text>
         </View>
@@ -56,12 +56,10 @@ const CheckedIn = (props) => {
             key={index}
             style={styles.userItem}
             onPress={() => handleUserPress(member)}>
-            <View>
-              <Text style={styles.userNameText}>
-                {member.userId.registerationNumber}
-              </Text>
+            <Text style={styles.userNameText}>
+              {member.userId.registerationNumber}.{' '}
               <Text style={styles.userNameText}>{member.userId.name}</Text>
-            </View>
+            </Text>
 
             <Text style={styles.checkTime}>{member.checkIn}</Text>
             <Text style={styles.checkTime}>{member.checkOut}</Text>
@@ -120,23 +118,23 @@ const styles = StyleSheet.create({
     color: neon,
     fontSize: 16,
   },
-  userNameText: {
-    flex: 1,
-    fontWeight: 'bold',
-    color: '#1C1427',
-    fontSize: 16,
-    marginLeft: 0,
-  },
   checkInOut: {
     flex: 1,
     textAlign: 'center',
     color: '#fff',
     fontSize: 16,
   },
+  userNameText: {
+    flex: 1,
+    fontWeight: 'bold',
+    color: '#17594A',
+    fontSize: 16,
+    marginLeft: 0,
+  },
   checkTime: {
     flex: 1,
     textAlign: 'center',
-    color: '#1C1427',
+    color: '#17594A',
     fontSize: 16,
   },
 });
