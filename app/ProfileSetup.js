@@ -30,6 +30,7 @@ const ProfileSetup = (props) => {
       setnewLoading(false);
       props.sethandleLogin();
       SecureStore.setItemAsync('profileSet', 'true');
+      props.navigation.navigate('Home1');
     } catch (error) {
       alert('Setup failed');
       setnewLoading(false);

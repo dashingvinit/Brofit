@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
@@ -176,7 +177,7 @@ const Signup = (props) => {
 
             <Field
               placeholder="Confirm Password"
-              // secureTextEntry={true}
+              secureTextEntry={!showPassword}
               value={formData.confirmPassword}
               icon="eye-off"
               onChangeText={(value) =>

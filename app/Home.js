@@ -35,12 +35,18 @@ const Home = (props) => {
                   <MaterialCommunityIcons
                     name="shield-crown-outline"
                     style={{
-                      // color: '#ffd700',
                       color: neon,
                     }}
                     size={50}
                   />
-                  <Text style={{ fontSize: 20, color: 'white' }}>Plan</Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: 'white',
+                    }}>
+                    Plan
+                  </Text>
                   <Text
                     style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
                     Selected
@@ -59,7 +65,14 @@ const Home = (props) => {
                     }}
                     size={50}
                   />
-                  <Text style={{ fontSize: 20, color: 'white' }}>Track</Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      color: 'white',
+                    }}>
+                    Track
+                  </Text>
                   <Text
                     style={{ color: 'white', fontWeight: '100', fontSize: 14 }}>
                     Time
