@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
   RefreshControl,
+  Modal,
 } from 'react-native';
 import {
   bgColor,
@@ -22,10 +23,12 @@ import * as SecureStore from 'expo-secure-store';
 import { Search, GradientBG, Hr, TopBack } from '../components';
 import { useIsFocused } from '@react-navigation/native';
 import axios from '../constants/Axios';
+import MsgModal from '../components/MsgModal';
 
 const Members = (props) => {
   const [users, setUsers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [found,setfound] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -49,6 +52,15 @@ const Members = (props) => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    if (found) {
+      const timeout = setTimeout(() => {
+        setfound(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [found]);
+
   const handleUserPress = async (user) => {
     props.navigation.navigate('UserProfile', { user });
   };
@@ -58,9 +70,7 @@ const Members = (props) => {
       user.registerationNumber.toString().includes(query.toLowerCase())
     );
     if (filteredUsers.length === 0 || null) {
-      Alert.alert('User Not Found', 'No member found with the given name.', [
-        { text: 'OK', onPress: () => setUsers(users) },
-      ]);
+      setfound(true);
     } else {
       setUsers(filteredUsers);
     }
@@ -129,6 +139,9 @@ const Members = (props) => {
               </View>
             ))}
           </ScrollView>
+          <Modal visible={found} transparent onRequestClose={() => setfound(false)}>
+            <MsgModal message={'No Members 😔'} />
+          </Modal>
         </View>
       </SafeAreaView>
     </GradientBG>

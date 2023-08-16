@@ -56,9 +56,14 @@ const CheckedIn = (props) => {
             key={index}
             style={styles.userItem}
             onPress={() => handleUserPress(member)}>
-            <Text style={styles.userNameText}>
-              {member.userId.registerationNumber} {member.userId.name}
-            </Text>
+            <View style={{flex:1}}>
+              <Text style={styles.userNameText}>
+                {member.userId.registerationNumber}
+              </Text>
+              <Text style={styles.userNameText}>
+              {member.userId.name}
+              </Text>
+            </View>
             <Text style={styles.checkTime}>{member.checkIn}</Text>
             <Text style={styles.checkTime}>{member.checkOut}</Text>
           </TouchableOpacity>

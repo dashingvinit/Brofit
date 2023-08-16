@@ -20,7 +20,8 @@ const Search = ({ onSearch }) => {
     <View style={styles.searchContainer}>
       <TextInput
         style={styles.searchInput}
-        placeholder=" "
+        placeholder="ID"
+        placeholderTextColor={'white'}
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
       />

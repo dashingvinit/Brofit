@@ -6,12 +6,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Modal,
 } from 'react-native';
 import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 import { GradientBG, TopBack, LoadingSkeleton } from '../components';
+import MsgModal from '../components/MsgModal';
 
 const Plans = () => {
   const [plans, setPlans] = useState([]);
@@ -24,6 +26,9 @@ const Plans = () => {
   const [editName, setEditName] = useState('');
   const [editPrice, setEditPrice] = useState('');
   const [editValidity, setEditValidity] = useState('');
+  const [plandone, setplandone] = useState(false);
+  const [showCancelButton, setShowCancelButton] = useState(false);
+  const [createplandone, setcreateplandone] = useState(false);
 
   const getPlans = async () => {
     try {
@@ -58,7 +63,7 @@ const Plans = () => {
         price,
         validity,
       });
-      alert('Plan created');
+      setcreateplandone(true);
       toggleForm();
       setGymId('');
       setName('');
@@ -86,7 +91,9 @@ const Plans = () => {
       setEditValidity('');
     }
     setShowForm(!showForm);
+    setShowCancelButton(!showCancelButton); 
   };
+  
 
   const handleUpdatePlan = async () => {
     try {
@@ -95,7 +102,7 @@ const Plans = () => {
         price: editPrice,
         validity: editValidity,
       });
-      alert('Plan updated');
+      setplandone(true);
       toggleForm();
       getPlans();
     } catch (error) {
@@ -106,6 +113,24 @@ const Plans = () => {
   useEffect(() => {
     getPlans();
   }, []);
+
+  useEffect(() => {
+    if (plandone) {
+      const timeout = setTimeout(() => {
+        setplandone(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [plandone]);
+
+  useEffect(() => {
+    if (createplandone) {
+      const timeout = setTimeout(() => {
+        setcreateplandone(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [createplandone]);
 
   return (
     <GradientBG>
@@ -214,16 +239,31 @@ const Plans = () => {
                   placeholder="Validity"
                   style={styles.input}
                 />
-                <TouchableOpacity
-                  onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
-                  style={styles.createButton}>
-                  <Text style={styles.createButtonText}>
-                    {selectedPlan ? 'Update Plan' : 'Create Plan'}
-                  </Text>
-                </TouchableOpacity>
+                <View style={{flexDirection:'row',alignItems:'center',marginLeft:'10%'}}>
+                  <TouchableOpacity onPress={() => {
+                      toggleForm();
+                      setShowCancelButton(false);
+                    }}
+                    style={styles.createButton}>
+                    <Text style={styles.createButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
+                    style={styles.createButton}>
+                    <Text style={styles.createButtonText}>
+                      {selectedPlan ? 'Update Plan' : 'Create Plan'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             )}
           </View>
+          <Modal visible={plandone} transparent onRequestClose={() => setplandone(false)}>
+            <MsgModal message={'Plan Updated 🏋🏽'} />
+          </Modal>
+          <Modal visible={createplandone} transparent onRequestClose={() => setcreateplandone(false)}>
+            <MsgModal message={'Plan created 🏋🏽'} />
+          </Modal>
         </ScrollView>
       </SafeAreaView>
     </GradientBG>
