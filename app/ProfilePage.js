@@ -34,6 +34,9 @@ const ProfilePage = () => {
   const [Id, setId] = useState('');
   const [planExiper, setPlanExiper] = useState(null);
   const [msg,setmsg] = useState(false);
+  const [editContact, setEditContact] = useState('');
+  const [editAddress, setEditAddress] = useState('');
+
 
   const fetchUserProfileData = async () => {
     try {
@@ -58,6 +61,8 @@ const ProfilePage = () => {
     setEditAge(userData.age.toString()); // Convert to string for TextInput
     setEditHeight(userData.height.toString()); // Convert to string for TextInput
     setEditWeight(userData.weight.toString()); // Convert to string for TextInput
+    // setEditContact(userData.contact); 
+    setEditAddress(userData.address);
   };
 
   const handleSave = async () => {
@@ -66,6 +71,8 @@ const ProfilePage = () => {
         age: parseFloat(editAge),
         height: editHeight,
         weight: editWeight,
+        // contact: editContact, 
+        address: editAddress
       };
 
       await axios.patch(`/userProfile/${Id}`, updatedData);
@@ -241,6 +248,18 @@ const ProfilePage = () => {
                 placeholder="Weight"
                 value={editWeight}
                 onChangeText={setEditWeight}
+              />
+              {/* <TextInput
+                style={styles.input}
+                placeholder="Contact"
+                value={editContact}
+                onChangeText={setEditContact}
+              /> */}
+              <TextInput
+                style={styles.input}
+                placeholder="Address"
+                value={editAddress}
+                onChangeText={setEditAddress}
               />
               <TouchableOpacity onPress={handleSave} style={styles.button}>
                 <Text style={styles.buttonText}>Save</Text>

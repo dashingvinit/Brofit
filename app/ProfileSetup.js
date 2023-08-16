@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Background, Gender, Plans, Btn, Field, Hr } from './components';
 import { neon, bgColor } from './constants/Constants';
 import LottieView from 'lottie-react-native';
+import Home from './Home';
 
 const ProfileSetup = (props) => {
   setTokenHeader();
@@ -17,28 +18,41 @@ const ProfileSetup = (props) => {
     height: '',
     plan: 'no plan',
     age: 21,
-    phoneNumber: '1234567890',
+    phoneNumber: '',
     gender: 'other',
     address: 'Kathmandu',
   });
 
   const handleProfileSetup = async () => {
+    setnewLoading(true);
+    const profile = await SecureStore.getItemAsync('profileSet');
+    const a = await SecureStore.getItemAsync('a');
     try {
-      setnewLoading(true);
       const response = await axios.post('/userProfile', formData);
       alert('Setup successful');
-      setnewLoading(false);
-      props.sethandleLogin();
-      SecureStore.setItemAsync('profileSet', 'true');
+      console.log('profile',profile)
+      console.log('profile a',a);
+      if(profile==='false' && a==='false')
+      {
+        props.sethandleLogin();
+        SecureStore.setItemAsync('profileSet', 'true');
+      }
+      if(profile==='false' && a==='true')
+      {
+        console.log('helo');
+        SecureStore.setItemAsync('profileSet', 'true');
+        props.navigation.navigate('Home1');
+      }
     } catch (error) {
       alert('Setup failed');
-      setnewLoading(false);
       console.error('Error:', 'profilesetup', error);
     }
+    setnewLoading(false);
   };
 
   const handlePlanSelect = (plan) => {
     const selectedPlanName = plan._id;
+    // console.log(selectedPlanName);
     setFormData((prevFormData) => ({
       ...prevFormData,
       plan: selectedPlanName,
@@ -48,6 +62,7 @@ const ProfileSetup = (props) => {
 
   const handleGenderSelect = (gender) => {
     const selectedGender = gender;
+    // console.log(selectedGender);
     setFormData((prevFormData) => ({
       ...prevFormData,
       gender: selectedGender,
@@ -72,6 +87,7 @@ const ProfileSetup = (props) => {
           style={{
             flex: 1,
             justifyContent: 'space-around',
+            marginBottom:'15%',
           }}>
           <View style={{ flex: 1, marginHorizontal: 20 }}>
             <Text
@@ -108,7 +124,7 @@ const ProfileSetup = (props) => {
                   ? 'number-pad'
                   : 'numbers-and-punctuation'
               }
-              placeholder="Weight"
+              placeholder="Weight (kg)"
               icon="anchor"
               value={formData.weight}
               onChangeText={(value) => handleInputChange('weight', value)}
@@ -121,7 +137,7 @@ const ProfileSetup = (props) => {
                   ? 'number-pad'
                   : 'numbers-and-punctuation'
               }
-              placeholder="Height"
+              placeholder="Height (ft)"
               icon="edit-3"
               value={formData.height}
               onChangeText={(value) => handleInputChange('height', value)}
@@ -134,7 +150,7 @@ const ProfileSetup = (props) => {
                   ? 'number-pad'
                   : 'numbers-and-punctuation'
               }
-              placeholder="Age"
+              placeholder="Age (yrs)"
               icon="chevrons-up"
               value={formData.age.toString()}
               onChangeText={(value) => handleInputChange('age', value)}
@@ -147,7 +163,7 @@ const ProfileSetup = (props) => {
                   ? 'number-pad'
                   : 'numbers-and-punctuation'
               }
-              placeholder="Number"
+              placeholder="Ph No."
               icon="chevrons-up"
               value={formData.phoneNumber.toString()}
               onChangeText={(value) => handleInputChange('phoneNumber', value)}

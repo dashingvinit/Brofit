@@ -186,7 +186,9 @@ const Plans = () => {
                 </View>
               ))
             ) : (
-              <LoadingSkeleton />
+              <View style={{alignItems:'center'}}>
+                <Text style={{color:neon,fontSize:20}}>No Plans</Text>
+              </View>
             )}
             {!showForm ? (
               <TouchableOpacity

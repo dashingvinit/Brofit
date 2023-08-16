@@ -13,6 +13,7 @@ import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
 import LottieView from 'lottie-react-native';
 import MsgModal from './MsgModal';
+import * as SecureStore from 'expo-secure-store';
 
 const CheckIn = ({ checkINStatus }) => {
   const [location, setLocation] = useState(null);
@@ -28,7 +29,10 @@ const CheckIn = ({ checkINStatus }) => {
   useEffect(() => {
     const getLocation = async () => {
       try {
-        const response = await axios.get('/gym/location/2');
+        const userString = await SecureStore.getItemAsync('user');
+        const user = JSON.parse(userString);
+        const Id = user.gymId;
+        const response = await axios.get(`/gym/location/${Id}`);
         const targetLocation = {
           latitude: response.data.data.latitude,
           longitude: response.data.data.longitude,
@@ -62,7 +66,6 @@ const CheckIn = ({ checkINStatus }) => {
       );
       const latitudeInMeters = latitudeDifference * 111139;
       const longitudeInMeters = longitudeDifference * 111139;
-
       if (latitudeInMeters < 5 && longitudeInMeters < 5) {
         setDisableButton(false);
       } else {

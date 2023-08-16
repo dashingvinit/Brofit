@@ -26,7 +26,11 @@ const Userstatusbox = () => {
         status.charAt(0).toUpperCase() + status.slice(1);
       setUserData(capitalizedUserData);
     } catch (error) {
-      console.log('User Profile Error', error);
+      if (error.response && error.response.status === 400) {
+        console.log('no data');
+      } else {
+        console.log('User Profile Error', error);
+      }
     }
   };
 
