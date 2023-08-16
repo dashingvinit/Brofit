@@ -11,22 +11,9 @@ import StackNav from './app/constants/StackNav';
 import AdminNav from './app/constants/AdminNav';
 import OwnerNav from './app/constants/OwnerNav';
 
+SplashScreen.preventAutoHideAsync();
+
 function App() {
-  // const [fontsLoaded] = useFonts({
-  //   'Poppins-Black': require('./assets/fonts/Poppins-Black.ttf'),
-  // });
-
-  // useEffect(() => {
-  //   async function prepare() {
-  //     await SplashScreen.preventAutoHideAsync();
-  //     await new Promise((resolve) => setTimeout(resolve, 2000));
-  //     await SplashScreen.hideAsync();
-  //   }
-  //   prepare();
-  // }, []);
-
-  // if (!fontsLoaded) return null;
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
 
@@ -83,20 +70,28 @@ function App() {
 
   const renderNavbarBasedOnRole = () => {
     if (userRole === 'owner') {
+      SplashScreen.hideAsync();
       return <OwnerNav setHandleLogout={setHandleLogout} />;
     } else if (userRole === 'admin') {
+      SplashScreen.hideAsync();
       return <AdminNav setHandleLogout={setHandleLogout} />;
     } else {
+      SplashScreen.hideAsync();
       return <BottomNav setHandleLogout={setHandleLogout} />;
     }
   };
 
-  const linking = {
-    prefixes: ['https://brofit.onrender.com', 'brofit://'],
-    config: {
-      screens: {},
-    },
-  };
+  // const linking = {
+  //   prefixes: ['brofit://'],
+  //   config: {
+  //     screens: {
+  //       Forgetpassword: 'forgetpassword',
+  //       ConfirmPass: 'confirmpass',
+  //     },
+  //   },
+  // };
+
+  // DeepLinking.addScheme('brofit');
 
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
@@ -107,7 +102,9 @@ function App() {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <NavigationContainer linking={linking}>
+      <NavigationContainer
+      // linking={linking}
+      >
         <View style={styles.content}>
           {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
         </View>

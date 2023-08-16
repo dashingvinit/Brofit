@@ -143,8 +143,6 @@ const PlanUpdate = () => {
               </View>
             </View>
           )}
-          <Hr />
-
           {status === 'inactive' ? (
             <View style={styles.changeBtn}>
               <Text style={styles.changePlan}>Change Plan :</Text>

@@ -13,16 +13,9 @@ import AdminPage from '../admin/Adminpage';
 import Forgetpassword from '../Forgetpassword';
 import ConfirmPass from '../ConfirmPassword';
 
-// const Stack = createStackNavigator();
 const Stack = createNativeStackNavigator();
 
 const StackNav = ({ sethandleLogin }) => {
-  // const forFade = ({ current }) => ({
-  //   cardStyle: {
-  //     opacity: current.progress,
-  //   },
-  // });
-
   try {
     return (
       <Stack.Navigator

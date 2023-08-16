@@ -27,7 +27,6 @@ const ProfileSetup = (props) => {
       setnewLoading(true);
       const response = await axios.post('/userProfile', formData);
       alert('Setup successful');
-
       setnewLoading(false);
       props.sethandleLogin();
       SecureStore.setItemAsync('profileSet', 'true');
@@ -40,7 +39,6 @@ const ProfileSetup = (props) => {
 
   const handlePlanSelect = (plan) => {
     const selectedPlanName = plan._id;
-    // console.log(selectedPlanName);
     setFormData((prevFormData) => ({
       ...prevFormData,
       plan: selectedPlanName,
@@ -50,7 +48,6 @@ const ProfileSetup = (props) => {
 
   const handleGenderSelect = (gender) => {
     const selectedGender = gender;
-    // console.log(selectedGender);
     setFormData((prevFormData) => ({
       ...prevFormData,
       gender: selectedGender,

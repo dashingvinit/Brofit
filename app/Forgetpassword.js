@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity } from 'react-native';
+import axios from './constants/Axios';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Background2 } from './components';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
@@ -82,4 +82,7 @@ const Forgetpassword = () => {
     </Background2>
   );
 };
+
+const styles = StyleSheet.create({});
+
 export default Forgetpassword;

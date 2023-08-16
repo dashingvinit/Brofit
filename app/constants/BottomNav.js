@@ -17,18 +17,43 @@ const Tab = createBottomTabNavigator();
 const BottomNav = ({ setHandleLogout }) => {
   return (
     <Tab.Navigator
-      screenOptions={{
+      initialRouteName="HomeStack" // Make sure "HomeStack" is a valid screen name
+      screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          backgroundColor: bgLight,
+          backgroundColor: 'rgb(0, 0, 0)',
           opacity: 0.9,
           height: 60,
           borderTopWidth: 0,
           elevation: 0,
           margin: 10,
           borderRadius: 20,
+        },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'HomeStack') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'WorkoutStack') {
+            iconName = focused ? 'md-barbell' : 'md-barbell-outline';
+          } else if (route.name === 'Timer') {
+            iconName = focused ? 'ios-timer' : 'ios-timer-outline';
+          } else if (route.name === 'Attendance') {
+            iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
+          } else if (route.name === 'ProfilePage') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+
+          return (
+            <Ionicons
+              name={iconName}
+              size={30}
+              color={color}
+              style={{ marginTop: 5 }}
+            />
+          );
         },
         tabBarLabelStyle: {
           fontSize: 14,
@@ -37,55 +62,16 @@ const BottomNav = ({ setHandleLogout }) => {
         },
         tabBarActiveTintColor: neon,
         tabBarInactiveTintColor: 'white',
-      }}
-      initialRouteName="HomeStack"
-      activeColor={neon}
-      inactiveColor="#3e2465">
-      <Tab.Screen
-        name="HomeStack"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="home" color={color} size={30} />
-          ),
-        }}>
+        activeColor: neon,
+        inactiveColor: '#3e2465',
+      })}>
+      <Tab.Screen name="HomeStack">
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
-      <Tab.Screen
-        name="Attendance"
-        component={Attendance}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Feather name="calendar" color={color} size={30} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="WorkoutStack"
-        component={WorkoutStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-barbell-outline" color={color} size={30} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Timer"
-        component={Timer}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-timer-outline" color={color} size={30} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ProfilePage"
-        component={ProfilePage}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <AntDesign name="user" color={color} size={30} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Attendance" component={Attendance} />
+      <Tab.Screen name="WorkoutStack" component={WorkoutStack} />
+      <Tab.Screen name="Timer" component={Timer} />
+      <Tab.Screen name="ProfilePage" component={ProfilePage} />
     </Tab.Navigator>
   );
 };
