@@ -29,7 +29,7 @@ const ProfileSetup = (props) => {
     const a = await SecureStore.getItemAsync('a');
     try {
       const response = await axios.post('/userProfile', formData);
-      alert('Setup successful');
+      // alert('Setup successful');
       console.log('profile', profile);
       console.log('profile a', a);
       if (profile === 'false' && a === 'false') {
@@ -150,6 +150,7 @@ const ProfileSetup = (props) => {
               }
               placeholder="Age (yrs)"
               icon="chevrons-up"
+              value={formData.age}
               value={formData.age}
               onChangeText={(value) => handleInputChange('age', value)}
             />
