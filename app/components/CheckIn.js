@@ -165,6 +165,6 @@ const CheckIn = ({ checkINStatus }) => {
       </Modal>
     </View>
   );
-};
+}
 
 export default CheckIn;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Image,
+  Modal,
 } from 'react-native';
 import {
   bgColor,
@@ -22,6 +23,7 @@ import * as SecureStore from 'expo-secure-store';
 import Userprofile from './UserProfile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { G } from 'react-native-svg';
+import MsgModal from '../components/MsgModal';
 
 const OwnerAttendance = (props) => {
   const [searchDay, setSearchDay] = useState('');
@@ -29,6 +31,7 @@ const OwnerAttendance = (props) => {
   const [searchYear, setSearchYear] = useState('');
   const [attendanceData, setAttendanceData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [found, setfound] = useState(false);
 
   const searchAttendance = async () => {
     try {
@@ -44,7 +47,7 @@ const OwnerAttendance = (props) => {
     } catch (error) {
       setIsLoading(false);
       if (error.response && error.response.status === 404) {
-        alert('Data not found.');
+        setfound(true);
         console.log(error);
       } else {
         console.error('Error fetching attendance data:', error);
@@ -55,6 +58,15 @@ const OwnerAttendance = (props) => {
   const handlePress = async (user) => {
     props.navigation.navigate('UserProfile', { user });
   };
+
+  useEffect(() => {
+    if (found) {
+      const timeout = setTimeout(() => {
+        setfound(false);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [found]);
 
   return (
     <GradientBG>
@@ -77,7 +89,7 @@ const OwnerAttendance = (props) => {
               textAlign: 'center',
             }}
             keyboardType="number-pad"
-            placeholder="DD"
+            placeholder="05"
             onChangeText={(text) => setSearchDay(text)}
             value={searchDay}
             maxLength={2}
@@ -96,7 +108,7 @@ const OwnerAttendance = (props) => {
               textAlign: 'center',
             }}
             keyboardType="number-pad"
-            placeholder="MM"
+            placeholder="08"
             onChangeText={(text) => setSearchMonth(text)}
             value={searchMonth}
             maxLength={2}
@@ -115,7 +127,7 @@ const OwnerAttendance = (props) => {
               textAlign: 'center',
             }}
             keyboardType="number-pad"
-            placeholder="YYYY"
+            placeholder="2023"
             onChangeText={(text) => setSearchYear(text)}
             value={searchYear}
             maxLength={4}
@@ -258,6 +270,9 @@ const OwnerAttendance = (props) => {
             </ScrollView>
           )
         )}
+        <Modal visible={found} transparent onRequestClose={() => setfound(false)}>
+            <MsgModal message={'Oops, No Data 😔'} />
+        </Modal>
       </SafeAreaView>
     </GradientBG>
   );
