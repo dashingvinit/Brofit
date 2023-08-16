@@ -76,7 +76,7 @@ function App() {
     } else if (userRole === 'admin') {
       SplashScreen.hideAsync();
       return <AdminNav setHandleLogout={setHandleLogout} />;
-    } else if (userRole === 'user') {
+    } else {
       SplashScreen.hideAsync();
       return <BottomNav setHandleLogout={setHandleLogout} />;
     }
