@@ -16,6 +16,7 @@ SplashScreen.preventAutoHideAsync();
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const [isProfileSet, setIsProfileSet] = useState(false);
 
   setTokenHeader();
 
@@ -75,23 +76,11 @@ function App() {
     } else if (userRole === 'admin') {
       SplashScreen.hideAsync();
       return <AdminNav setHandleLogout={setHandleLogout} />;
-    } else {
+    } else if (userRole === 'user') {
       SplashScreen.hideAsync();
       return <BottomNav setHandleLogout={setHandleLogout} />;
     }
   };
-
-  // const linking = {
-  //   prefixes: ['brofit://'],
-  //   config: {
-  //     screens: {
-  //       Forgetpassword: 'forgetpassword',
-  //       ConfirmPass: 'confirmpass',
-  //     },
-  //   },
-  // };
-
-  // DeepLinking.addScheme('brofit');
 
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
@@ -102,9 +91,7 @@ function App() {
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <NavigationContainer
-      // linking={linking}
-      >
+      <NavigationContainer>
         <View style={styles.content}>
           {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
         </View>

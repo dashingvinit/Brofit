@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Graph, Top, Runtimer, Userstatusbox, GradientBG } from './components';
 import {
   View,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { SixdayWorkOut } from './assets/images';
-import { bgGlass, neon,bgColor } from './constants/Constants';
+import { bgGlass, neon, bgColor } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MsgModal from './components/MsgModal';
@@ -28,23 +28,22 @@ const Home = (props) => {
   const fetch = async () => {
     try {
       const userString = await SecureStore.getItemAsync('profileSet');
-      SecureStore.setItemAsync('a','true')
-      console.log(userString)
-      if(userString==='false'){
-        setprofile(true);
-      }
-    } catch (error){
-        console.log('User Profile Error', error);
-      }
-    };
-
-    useEffect(() => {
-      if (profile) {
+      SecureStore.setItemAsync('a', 'true');
+      if (userString === 'false') {
         props.navigation.navigate('ProfileSetup');
-        setprofile(false);
+        //setprofile(true);
       }
-    }, [profile]);
+    } catch (error) {
+      console.log('User Profile Error', error);
+    }
+  };
 
+  // useEffect(() => {
+  //   if (profile) {
+  //     props.navigation.navigate('ProfileSetup');
+  //     setprofile(false);
+  //   }
+  // }, [profile]);
 
   return (
     <GradientBG>

@@ -23,6 +23,7 @@ const Login = (props) => {
 
     try {
       setLoading(true);
+      Keyboard.dismiss();
 
       const response = await axios.post('/user/signin', {
         email,
@@ -31,12 +32,9 @@ const Login = (props) => {
       const token = response.data.data;
       const decodedPayload = jwtDecode(token);
       const user = JSON.stringify(decodedPayload);
-      // console.log('OwnerLoggedIn', decodedPayload);
-      // console.log('user', user);
-      // console.log('User Saved', response);
       await save('user', user);
 
-      const expires = Date.now() + 1000 * 60 * 60; // 1 hour
+      const expires = Date.now() + 1000 * 60 * 60 * 24 * 365; // 1 year
       const stringExpires = JSON.stringify(expires);
 
       await save('token', token);
@@ -54,7 +52,6 @@ const Login = (props) => {
           ? props.navigation.navigate('Home3')
           : props.navigation.navigate('Home1');
       }
-      Keyboard.dismiss();
     } catch (error) {
       setLoading(false);
       if ((error.response && error.response.status === 400) || 404) {

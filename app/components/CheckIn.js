@@ -37,6 +37,7 @@ const CheckIn = ({ checkINStatus }) => {
           latitude: response.data.data.latitude,
           longitude: response.data.data.longitude,
         };
+        //console.log(targetLocation);
         setTargetLocation(targetLocation);
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -46,6 +47,7 @@ const CheckIn = ({ checkINStatus }) => {
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
+          // console.log(location);
         } catch (error) {
           console.error('Error getting current location:', error);
         }
@@ -168,6 +170,6 @@ const CheckIn = ({ checkINStatus }) => {
       </Modal>
     </View>
   );
-}
+};
 
 export default CheckIn;

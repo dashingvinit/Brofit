@@ -145,7 +145,7 @@ export default function App() {
 
   return (
     <ImageBackground
-      source={require('./assets/grade1.jpg')}
+      source={require('./assets/grade2.jpg')}
       style={styles.backgroundImage}>
       <View style={styles.container}>
         <Timer

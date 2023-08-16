@@ -5,10 +5,12 @@ import Background from './components/Background';
 import Btn from './components/Btn';
 import { bgColor, neon, bgGlass } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LottieView from 'lottie-react-native';
 
 const ConfirmPassword = (props) => {
   const _id = props.route.params._id;
-  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [formData, setFormData] = useState({
     password: '',
     confirmPassword: '',
@@ -26,6 +28,7 @@ const ConfirmPassword = (props) => {
   };
 
   const handlePasswordReset = async () => {
+    setLoading(true);
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       return;
@@ -36,7 +39,7 @@ const ConfirmPassword = (props) => {
         password: formData.password,
       });
       console.log(response.data);
-      alert('Password reset successful');
+      setLoading(false);
       props.navigation.navigate('Login');
     } catch (error) {
       console.log(error);
@@ -149,6 +152,25 @@ const ConfirmPassword = (props) => {
             Press={handlePasswordReset}
           />
         </View>
+        {loading && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: 'rgba(0,0,0, 0.5)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <LottieView
+              source={require('./assets/lottieFiles/greenTik.json')}
+              autoPlay
+              loop
+            />
+          </View>
+        )}
       </View>
     </Background>
   );

@@ -39,7 +39,7 @@ const ProfileSetup = (props) => {
       if (profile === 'false' && a === 'true') {
         console.log('helo');
         SecureStore.setItemAsync('profileSet', 'true');
-        props.navigation.navigate('Home1');
+        props.navigation.navigate('HomeScreen');
       }
     } catch (error) {
       alert('Setup failed');

@@ -6,10 +6,11 @@ import { Background2 } from './components';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
 import Field from './components/Field';
-import jwtDecode from 'jwt-decode';
+import LottieView from 'lottie-react-native';
 
 const Forgetpassword = (props) => {
   const [formData, setFormData] = useState({ email: '', otp: '' });
+  const [loading, setLoading] = useState(false);
   const [res, setRes] = useState(null);
 
   const handleInputChange = (field, value) => {
@@ -20,26 +21,31 @@ const Forgetpassword = (props) => {
   };
 
   const handleReset = async () => {
+    setLoading(true);
     try {
-      console.log(formData);
+      //console.log(formData);
       const response = await axios.post('/forgotPass', {
         email: formData.email,
       });
       const OTP = response.data.data;
       setRes(OTP);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleOTP = async () => {
+    setLoading(true);
     const UserOtp = formData.otp;
     console.log(UserOtp);
     const ServerOtp = res.otp;
     console.log(ServerOtp);
     if (UserOtp == ServerOtp) {
+      setLoading(false);
       props.navigation.navigate('ConfirmPass', { _id: res.userId });
     } else {
+      setLoading(false);
       alert('Wrong OTP');
     }
   };
@@ -85,6 +91,25 @@ const Forgetpassword = (props) => {
             </View>
           )}
         </View>
+        {loading && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: 'rgba(0,0,0, 0.5)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <LottieView
+              source={require('./assets/lottieFiles/greenTik.json')}
+              autoPlay
+              loop
+            />
+          </View>
+        )}
       </View>
     </Background2>
   );
@@ -110,7 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   info: {
-    color: 'grey',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
   },
