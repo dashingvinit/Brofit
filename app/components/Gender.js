@@ -7,7 +7,7 @@ const Gender = ({ onSelect }) => {
   const genders = [
     { label: 'Male', value: 'male', color: '#E7AB79', icon: 'male' },
     { label: 'Female', value: 'female', color: '#ED8D8D', icon: 'female' },
-    { label: 'C++', value: 'other', color: '#DDDDDD', icon: 'male-female' },
+    { label: 'Other', value: 'other', color: '#DDDDDD', icon: 'male-female' },
   ];
 
   const [selectedGender, setSelectedGender] = useState(null);

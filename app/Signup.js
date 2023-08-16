@@ -47,6 +47,7 @@ const Signup = (props) => {
   };
 
   const handleSignup = async () => {
+    
     setnewLoading(true);
     const { name, email, gymId, password, confirmPassword } = formData;
 
@@ -65,6 +66,8 @@ const Signup = (props) => {
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
       // console.log('user', user);
+      SecureStore.setItemAsync('profileSet', 'false')
+      SecureStore.setItemAsync('a', 'false')
       await save('user', user);
       if (response.data.data.jwt) {
         const token = response.data.data.jwt;
@@ -79,7 +82,7 @@ const Signup = (props) => {
           setLoading(false);
           const parsedUser = JSON.parse(user);
           console.log(parsedUser.role);
-
+        
           if (parsedUser.role == 'owner') {
             props.navigation.navigate('Login');
           } else {
@@ -88,7 +91,8 @@ const Signup = (props) => {
         });
       }
       setLoading(false);
-      setnewLoading(false);
+      setnewLoading(false);      
+      
     } catch (error) {
       alert('SignUp failed');
       setnewLoading(false);
@@ -199,16 +203,16 @@ const Signup = (props) => {
               btnLabel="Signup"
               Press={handleSignup}
             />
-            {loading ? null : (
+            {/* {loading ? null : (
               <Btn
                 textColor={bgColor}
                 bgColor={neon}
                 btnLabel="Next"
                 loading={true}
-                disable={loading}
+                disable={false}
                 Press={nextPage}
               />
-            )}
+            )} */}
             <View style={styles.redirectContainer}>
               <Text
                 style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
