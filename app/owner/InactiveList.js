@@ -26,7 +26,11 @@ const InactiveList = (props) => {
       const gymId = user.gymId;
       const response = await axios.get(`/userProfile/${gymId}/inactive`);
       const data = await response.data.data;
-      setInactiveData(data);
+      if (data.some(member => member.userId)) {
+        setInactiveData(data);
+      } else {
+        setInactiveData([]);
+      }
       setLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -90,23 +94,20 @@ const InactiveList = (props) => {
                   style={styles.dataContainer}
                   onPress={() => handleUserPress(member)}>
                   <View style={styles.flexRow}>
-                    <Text style={styles.dataItem1}>{member.userId.name}</Text>
+                    <Text style={styles.dataItem1}>{member?.userId?.name}</Text>
                     <Text style={styles.dataItem1}>
-                      {member.userId.registerationNumber}
+                      {member?.userId?.registerationNumber}
                     </Text>
                   </View>
                   <TouchableOpacity
-                    onPress={() => handleEdit(member.userId._id)}>
+                    onPress={() => handleEdit(member?.userId?._id)}>
                     <Text style={styles.editButton}>Activate</Text>
                   </TouchableOpacity>
                 </TouchableOpacity>
               ))
             ) : (
-              <View style={styles.dataContainer}>
-                <Text
-                  style={{ color: neon, fontSize: 20, textAlign: 'center' }}>
-                  No Inactive Members
-                </Text>
+              <View style={{alignItems:'center',marginTop:20}}>
+                <Text style={{color:neon,fontSize:20}}> No Inactive Members </Text>
               </View>
             )}
           </View>

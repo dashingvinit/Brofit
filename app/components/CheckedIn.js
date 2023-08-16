@@ -46,7 +46,8 @@ const CheckedIn = (props) => {
       <Text style={styles.heading}>Active Check-Ins</Text>
       <View style={styles.userListContainer}>
         <View style={styles.userHeader}>
-          <Text style={styles.userName}>Reg. ID</Text>
+          <Text style={styles.userName}>ID</Text>
+          <Text style={styles.userName}>Name</Text>
           <Text style={styles.checkInOut}>Check-In</Text>
           <Text style={styles.checkInOut}>Check-Out</Text>
         </View>
@@ -56,14 +57,12 @@ const CheckedIn = (props) => {
             key={index}
             style={styles.userItem}
             onPress={() => handleUserPress(member)}>
-            <View style={{flex:1}}>
-              <Text style={styles.userNameText}>
-                {member.userId.registerationNumber}
-              </Text>
-              <Text style={styles.userNameText}>
-              {member.userId.name}
-              </Text>
-            </View>
+            <Text style={styles.userNameText}>
+              {member.userId.registerationNumber}
+            </Text>
+            <Text style={styles.userNameText}>
+            {member.userId.name}
+            </Text>
             <Text style={styles.checkTime}>{member.checkIn}</Text>
             <Text style={styles.checkTime}>{member.checkOut}</Text>
           </TouchableOpacity>

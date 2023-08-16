@@ -13,12 +13,13 @@ const Plans = ({ onSelect }) => {
     const userString = await SecureStore.getItemAsync('user');
     const user = JSON.parse(userString);
     const gymId = user.gymId;
-    // console.log('gymId', gymId);
+    console.log('gymId', gymId);
     await axios
       .get(`/plan/${gymId}`)
       .then((response) => {
         const plans = response.data.data;
         setPlans(plans);
+        // console.log(plans);
       })
       .catch((error) => {
         console.error('Error:', error);

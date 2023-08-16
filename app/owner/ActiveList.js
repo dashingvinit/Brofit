@@ -100,7 +100,9 @@ const ActiveList = (props) => {
                   </View>
                 ))
               ) : (
-                <Text>No inactive members found.</Text>
+                <View style={{alignItems:'center',marginTop:20}}>
+                  <Text style={{color:neon,fontSize:20}}> No Active Members </Text>
+                </View>
               )}
             </View>
           )}
