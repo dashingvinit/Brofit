@@ -33,10 +33,9 @@ const ProfilePage = () => {
   const [editWeight, setEditWeight] = useState('');
   const [Id, setId] = useState('');
   const [planExiper, setPlanExiper] = useState(null);
-  const [msg,setmsg] = useState(false);
+  const [msg, setmsg] = useState(false);
   const [editContact, setEditContact] = useState('');
   const [editAddress, setEditAddress] = useState('');
-
 
   const fetchUserProfileData = async () => {
     try {
@@ -61,7 +60,7 @@ const ProfilePage = () => {
     setEditAge(userData.age.toString()); // Convert to string for TextInput
     setEditHeight(userData.height.toString()); // Convert to string for TextInput
     setEditWeight(userData.weight.toString()); // Convert to string for TextInput
-    setEditContact(userData.phoneNumber); 
+    setEditContact(userData.phoneNumber);
     setEditAddress(userData.address);
   };
 
@@ -71,8 +70,8 @@ const ProfilePage = () => {
         age: parseFloat(editAge),
         height: editHeight,
         weight: editWeight,
-        phoneNumber: editContact, 
-        address: editAddress
+        phoneNumber: editContact,
+        address: editAddress,
       };
 
       await axios.patch(`/userProfile/${Id}`, updatedData);
@@ -261,8 +260,10 @@ const ProfilePage = () => {
                 value={editAddress}
                 onChangeText={setEditAddress}
               />
-              <View style={{flexDirection:'row',alignItems:'center'}}>
-                <TouchableOpacity onPress={()=>setEditable(false)} style={styles.button}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity
+                  onPress={() => setEditable(false)}
+                  style={styles.button}>
                   <Text style={styles.buttonText}>cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleSave} style={styles.button}>
@@ -328,18 +329,14 @@ const ProfilePage = () => {
         </View>
         <Hr />
         <View style={styles.bottomContainer2}>
-          <Text style={styles.smHeader}>Profile Details</Text>
+          <Text style={styles.smHeader}>Account details</Text>
           <Text style={styles.text}>Address: {userData?.address}</Text>
           <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
           <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
         </View>
-        <Modal
-          visible={msg}
-          transparent
-          onRequestClose={() => setmsg(false)}>
-          <MsgModal message={"Profile Updated 😉"}/>
+        <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
+          <MsgModal message={'Profile Updated 😉'} />
         </Modal>
-
       </ScrollView>
     </GradientBG>
   );
@@ -442,7 +439,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     padding: 20,
-    backgroundColor: '#ed8268',
+    backgroundColor: '#1B6B93',
     borderRadius: 30,
     marginTop: 10,
     marginBottom: 10,
@@ -458,11 +455,11 @@ const styles = StyleSheet.create({
   },
   bottomContainer2: {
     padding: 20,
-    backgroundColor: '#0E8388',
+    backgroundColor: '#4FC0D0',
     borderRadius: 30,
     marginTop: 10,
     marginBottom: 100,
-    borderColor: bgColor,
+    borderColor: '#164B60',
     borderRightWidth: 3,
     borderBottomWidth: 3,
   },

@@ -104,7 +104,7 @@ const Graph = () => {
                 marginLeft: 4,
                 color: 'white',
               }}>
-              Gym Activity - 5 min intervals between updates - 24hrs of data
+              Gym Activity
             </Text>
             <BarChart
               data={data}

@@ -181,11 +181,13 @@ const PlanUpdate = () => {
                       <View>
                         <Text style={styles.planName}>{plan.name} </Text>
                         <Text style={styles.planPrice}>₹ {plan.price}</Text>
-                        <Text style={styles.planPrice}>{plan.validity}</Text>
+                        <Text style={styles.planPrice}>
+                          {plan.validity} days
+                        </Text>
                       </View>
                       <View>
                         <LottieView
-                          source={require('./assets/lottieFiles/meteor.json')}
+                          source={require('./assets/lottieFiles/dollarSign.json')}
                           autoPlay
                           loop
                           style={{ height: 120, width: 120 }}
@@ -213,7 +215,7 @@ const styles = StyleSheet.create({
   planContainer1: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#614BC3',
+    backgroundColor: '#1A5D1A',
     padding: 15,
     borderRadius: 25,
     borderRightColor: '#F8DE22',
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 12,
-    color: '#BEADFA',
+    color: '#F7FFE5',
   },
   planPrice: {
     fontSize: 18,
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
   planContainer2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#9F91CC',
+    backgroundColor: '#1B6B93',
     padding: 15,
     borderRadius: 25,
     borderRightColor: '#F8DE22',

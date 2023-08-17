@@ -14,73 +14,60 @@ const Tab = createBottomTabNavigator();
 const OwnerNav = ({ setHandleLogout }) => {
   return (
     <Tab.Navigator
-      screenOptions={{
+      initialRouteName="HomeStack" // Make sure "HomeStack" is a valid screen name
+      screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          bottom: 10,
-          left: 10,
-          right: 10,
-          backgroundColor: bgLight,
+          backgroundColor: 'rgb(0, 0, 0)',
           opacity: 0.9,
           height: 60,
           borderTopWidth: 0,
-          elevation: 3,
+          elevation: 0,
+          margin: 10,
           borderRadius: 20,
+        },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Plans') {
+            iconName = focused ? 'list' : 'list-outline';
+          } else if (route.name === 'Timer') {
+            iconName = focused ? 'ios-timer' : 'ios-timer-outline';
+          } else if (route.name === 'Members') {
+            iconName = focused ? 'people' : 'people-outline';
+          } else if (route.name === 'ProfilePage') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
+
+          return (
+            <Ionicons
+              name={iconName}
+              size={30}
+              color={color}
+              style={{ marginTop: 5 }}
+            />
+          );
         },
         tabBarLabelStyle: {
           fontSize: 14,
           fontWeight: 'bold',
           marginBottom: 10,
         },
-
         tabBarActiveTintColor: neon,
         tabBarInactiveTintColor: 'white',
-      }}
-      initialRouteName="Home"
-      activeColor={neon}
-      inactiveColor="#3e2465"
-      keyboardHidesTabBar={true}>
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-home-outline" color={color} size={30} />
-          ),
-        }}>
+        activeColor: neon,
+        inactiveColor: '#3e2465',
+      })}>
+      <Tab.Screen name="Home">
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
-
-      <Tab.Screen
-        name="Members"
-        component={MembersStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="ios-people" color={color} size={30} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Plans"
-        component={Plans}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="md-list" color={color} size={30} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="AttendanceStack"
-        component={AttendanceStack}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="checkmark-done" color={color} size={30} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Members" component={MembersStack} />
+      <Tab.Screen name="Plans" component={Plans} />
+      <Tab.Screen name="AttendanceStack" component={AttendanceStack} />
     </Tab.Navigator>
   );
 };

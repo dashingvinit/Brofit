@@ -47,7 +47,7 @@ const CheckIn = ({ checkINStatus }) => {
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
-          // console.log(location);
+          console.log(location);
         } catch (error) {
           console.error('Error getting current location:', error);
         }
