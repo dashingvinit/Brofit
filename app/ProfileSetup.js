@@ -20,7 +20,7 @@ const ProfileSetup = (props) => {
     age: undefined,
     phoneNumber: '',
     gender: 'other',
-    address: 'Kathmandu',
+    address: '',
   });
 
   const handleProfileSetup = async () => {

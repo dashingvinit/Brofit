@@ -18,13 +18,37 @@ import * as SecureStore from 'expo-secure-store';
 const CheckIn = ({ checkINStatus }) => {
   const [location, setLocation] = useState(null);
   const [targetLocation, setTargetLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  const [checkInMsg, setCheckInMsg] = useState(null);
   const [disableButton, setDisableButton] = useState(true);
   const [Loading, setLoading] = useState(false);
-  const [already, setalready] = useState(false);
-  const [check, setcheck] = useState(false);
+  const [already, setAlready] = useState(false);
+  const [check, setCheck] = useState(false);
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const earthRadius = 6371000; // Earth's radius in meters
+    const dLat = Math.abs(degToRad(lat2 - lat1));
+    const dLon = Math.abs(degToRad(lon2 - lon1));
+    console.log(dLat);
+    console.log(dLon);
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadius * c;
+
+    return distance;
+  };
+
+  const degToRad = (deg) => {
+    return deg * (Math.PI / 180);
+  };
+
+  const isUserWithinThreshold = (userLat, userLon, gymLat, gymLon, threshold) => {
+    const distance = calculateDistance(userLat, userLon, gymLat, gymLon);
+    console.log(distance);
+    return distance <= threshold;
+  };
 
   useEffect(() => {
     const getLocation = async () => {
@@ -37,17 +61,16 @@ const CheckIn = ({ checkINStatus }) => {
           latitude: response.data.data.latitude,
           longitude: response.data.data.longitude,
         };
-        //console.log(targetLocation);
         setTargetLocation(targetLocation);
+
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
           return;
         }
+
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
-          console.log(location);
         } catch (error) {
           console.error('Error getting current location:', error);
         }
@@ -59,22 +82,54 @@ const CheckIn = ({ checkINStatus }) => {
   }, []);
 
   useEffect(() => {
+    console.log(location);
+    console.log(targetLocation);
     if (location && targetLocation) {
-      const latitudeDifference = Math.abs(
-        location.coords.latitude - targetLocation.latitude
+      console.log('hel')
+      const userLatitude = location.coords.latitude;
+      const userLongitude = location.coords.longitude;
+      const gymLatitude = targetLocation.latitude;
+      const gymLongitude = targetLocation.longitude;
+      const thresholdDistance = 100; // 100 meters
+
+      const isWithinThreshold = isUserWithinThreshold(
+        userLatitude,
+        userLongitude,
+        gymLatitude,
+        gymLongitude,
+        thresholdDistance
       );
-      const longitudeDifference = Math.abs(
-        location.coords.longitude - targetLocation.longitude
-      );
-      const latitudeInMeters = latitudeDifference * 111139;
-      const longitudeInMeters = longitudeDifference * 111139;
-      if (latitudeInMeters < 5 && longitudeInMeters < 5) {
+
+      if (isWithinThreshold) {
         setDisableButton(false);
       } else {
         setDisableButton(true);
       }
     }
   }, [location, targetLocation]);
+
+  // useEffect(() => {
+  //   if (location && targetLocation) {
+  //     const latitudeDifference = Math.abs(30.768914 - 30.7688754);
+  //     const longitudeDifference = Math.abs(76.576187 - 76.57561);
+  //     // latitudeDifference = Math.abs(30.768914 - 30.7688754);
+  //     // longitudeDifference = Math.abs(76.576187 - 76.57561);
+  //     const latitudeInMeters = latitudeDifference * 111139;
+  //     const longitudeInMeters = longitudeDifference * 111139;
+  //     console.log(latitudeInMeters)
+  //     console.log(longitudeInMeters);
+  //     if (latitudeInMeters < 5 && longitudeInMeters < 5) {
+  //       console.log('inside if');
+  //       setDisableButton(false);
+  //     } else {
+  //       setDisableButton(true);
+  //       console.log('inside else');
+  //     }
+  //   }
+  //   else{
+  //     console.log('hello')
+  //   }
+  // }, [location, targetLocation]);
 
   useEffect(() => {
     if (already) {
