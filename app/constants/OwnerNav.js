@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 const OwnerNav = ({ setHandleLogout }) => {
   return (
     <Tab.Navigator
-      initialRouteName="HomeStack" // Make sure "HomeStack" is a valid screen name
+      initialRouteName="Home" // Make sure "HomeStack" is a valid screen name
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
@@ -35,8 +35,8 @@ const OwnerNav = ({ setHandleLogout }) => {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Plans') {
             iconName = focused ? 'list' : 'list-outline';
-          } else if (route.name === 'Timer') {
-            iconName = focused ? 'ios-timer' : 'ios-timer-outline';
+          } else if (route.name === 'AttendanceStack') {
+            iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
           } else if (route.name === 'Members') {
             iconName = focused ? 'people' : 'people-outline';
           } else if (route.name === 'ProfilePage') {
@@ -59,8 +59,6 @@ const OwnerNav = ({ setHandleLogout }) => {
         },
         tabBarActiveTintColor: neon,
         tabBarInactiveTintColor: 'white',
-        activeColor: neon,
-        inactiveColor: '#3e2465',
       })}>
       <Tab.Screen name="Home">
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
