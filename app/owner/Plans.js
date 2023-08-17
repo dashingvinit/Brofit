@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 import { GradientBG, TopBack, LoadingSkeleton } from '../components';
 import MsgModal from '../components/MsgModal';
+import LottieView from 'lottie-react-native';
 
 const Plans = () => {
   const [plans, setPlans] = useState([]);
@@ -44,16 +45,16 @@ const Plans = () => {
     }
   };
 
-  // const handleDelete = async (planId) => {
-  //   try {
-  //     const response = await axios.delete(`/plan/${planId}`);
-  //     const data1 = await response.data;
-  //     setPlans(data1.data.plans);
-  //     getPlans();
-  //   } catch (error) {
-  //     console.log('Error:', error);
-  //   }
-  // };
+  const handleDelete = async (planId) => {
+    try {
+      const response = await axios.delete(`/plan/${planId}`);
+      const data1 = await response.data;
+      setPlans(data1.data.plans);
+      getPlans();
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
 
   const handleCreatePlan = async () => {
     try {
@@ -91,9 +92,8 @@ const Plans = () => {
       setEditValidity('');
     }
     setShowForm(!showForm);
-    setShowCancelButton(!showCancelButton); 
+    setShowCancelButton(!showCancelButton);
   };
-  
 
   const handleUpdatePlan = async () => {
     try {
@@ -142,41 +142,50 @@ const Plans = () => {
               plans.map((plan) => (
                 <View key={plan.name}>
                   <View style={styles.plainCard}>
-                    <Text style={styles.cardText}>
-                      <Text style={{ color: 'white', fontSize: 16 }}>
-                        Name :{' '}
+                    <View>
+                      <Text style={styles.cardText}>
+                        <Text style={{ color: 'white', fontSize: 16 }}>
+                          Name :{' '}
+                        </Text>
+                        {plan.name}
                       </Text>
-                      {plan.name}
-                    </Text>
-                    <Text style={styles.cardText}>
-                      <Text style={{ color: 'white', fontSize: 16 }}>
-                        Price :{' '}
+                      <Text style={styles.cardText}>
+                        <Text style={{ color: 'white', fontSize: 16 }}>
+                          Price :{' '}
+                        </Text>
+                        {plan.price}
                       </Text>
-                      {plan.price}
-                    </Text>
-                    <Text style={styles.cardText}>
-                      <Text style={{ color: 'white', fontSize: 16 }}>
-                        Validity (Days) :{' '}
+                      <Text style={styles.cardText}>
+                        <Text style={{ color: 'white', fontSize: 16 }}>
+                          Validity (Days) :{' '}
+                        </Text>
+                        {plan.validity}
                       </Text>
-                      {plan.validity}
-                    </Text>
-
+                    </View>
+                    <View>
+                      <LottieView
+                        source={require('../assets/lottieFiles/dollarSign.json')}
+                        autoPlay
+                        loop
+                        style={{ height: 100, width: 100 }}
+                      />
+                    </View>
                     {/* <View
-                    style={{
-                      alignContent: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <TouchableOpacity
-                      onPress={() => handleEdit(plan)}
-                      style={styles.createButton}>
-                      <Text style={styles.createButtonText}>Edit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => handleDelete(plan._id)}
-                      style={styles.createButton}>
-                      <Text style={styles.createButtonText}>Delete</Text>
-                    </TouchableOpacity>
-                  </View> */}
+                      style={{
+                        alignContent: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => handleEdit(plan)}
+                        style={styles.createButton}>
+                        <Text style={styles.createButtonText}>Edit</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => handleDelete(plan._id)}
+                        style={styles.createButton}>
+                        <Text style={styles.createButtonText}>Delete</Text>
+                      </TouchableOpacity>
+                    </View> */}
                   </View>
                   <TouchableOpacity
                     onPress={() => handleEdit(plan)}
@@ -186,8 +195,8 @@ const Plans = () => {
                 </View>
               ))
             ) : (
-              <View style={{alignItems:'center'}}>
-                <Text style={{color:neon,fontSize:20}}>No Plans</Text>
+              <View style={{ alignItems: 'center' }}>
+                <Text style={{ color: neon, fontSize: 20 }}>No Plans</Text>
               </View>
             )}
             {!showForm ? (
@@ -241,8 +250,14 @@ const Plans = () => {
                   placeholder="Validity"
                   style={styles.input}
                 />
-                <View style={{flexDirection:'row',alignItems:'center',marginLeft:'10%'}}>
-                  <TouchableOpacity onPress={() => {
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginLeft: '10%',
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
                       toggleForm();
                       setShowCancelButton(false);
                     }}
@@ -260,10 +275,16 @@ const Plans = () => {
               </View>
             )}
           </View>
-          <Modal visible={plandone} transparent onRequestClose={() => setplandone(false)}>
+          <Modal
+            visible={plandone}
+            transparent
+            onRequestClose={() => setplandone(false)}>
             <MsgModal message={'Plan Updated 🏋🏽'} />
           </Modal>
-          <Modal visible={createplandone} transparent onRequestClose={() => setcreateplandone(false)}>
+          <Modal
+            visible={createplandone}
+            transparent
+            onRequestClose={() => setcreateplandone(false)}>
             <MsgModal message={'Plan created 🏋🏽'} />
           </Modal>
         </ScrollView>
@@ -275,9 +296,11 @@ const Plans = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 50,
+    paddingBottom: 100,
   },
   plainCard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 10,
     marginHorizontal: 20,
     paddingTop: 20,

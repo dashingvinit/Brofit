@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 const OwnerNav = ({ setHandleLogout }) => {
   return (
     <Tab.Navigator
-      initialRouteName="Home" // Make sure "HomeStack" is a valid screen name
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
@@ -34,13 +34,11 @@ const OwnerNav = ({ setHandleLogout }) => {
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Plans') {
-            iconName = focused ? 'list' : 'list-outline';
+            iconName = focused ? 'newspaper' : 'newspaper-outline';
           } else if (route.name === 'AttendanceStack') {
             iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
           } else if (route.name === 'Members') {
             iconName = focused ? 'people' : 'people-outline';
-          } else if (route.name === 'ProfilePage') {
-            iconName = focused ? 'person' : 'person-outline';
           }
 
           return (
@@ -48,7 +46,7 @@ const OwnerNav = ({ setHandleLogout }) => {
               name={iconName}
               size={30}
               color={color}
-              style={{ marginTop: 5 }}
+              style={{ marginTop: 0 }}
             />
           );
         },

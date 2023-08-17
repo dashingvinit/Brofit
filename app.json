@@ -7,10 +7,10 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#000000"
     },
-    "scheme": "yourapp",
+    "scheme": "brofit",
     "userInterfaceStyle": "automatic",
     "ios": {
       "config": {
@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.yourcompany.yourapp",
+      "package": "com.brogrammers.brofit",
       "versionCode": 1
     },
     "web": {
@@ -39,15 +39,15 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "ee6244a8-4482-4a9b-a24b-191d4e8ed70d"
+        "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
       }
     },
-    "owner": "dashv",
+    "owner": "dashing_vinit",
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/ee6244a8-4482-4a9b-a24b-191d4e8ed70d"
+      "url": "https://u.expo.dev/f2fe1d2d-da34-4d6d-b53d-70a41531f195"
     }
   }
 }

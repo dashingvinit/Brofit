@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Alert,
   RefreshControl,
   Modal,
 } from 'react-native';
@@ -18,7 +17,6 @@ import {
   bgGlass,
 } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as SecureStore from 'expo-secure-store';
 import { Search, GradientBG, Hr, TopBack } from '../components';
 import { useIsFocused } from '@react-navigation/native';
@@ -28,7 +26,7 @@ import MsgModal from '../components/MsgModal';
 const Members = (props) => {
   const [users, setUsers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [found,setfound] = useState(false);
+  const [found, setfound] = useState(false);
 
   const getMembers = async () => {
     try {
@@ -139,7 +137,10 @@ const Members = (props) => {
               </View>
             ))}
           </ScrollView>
-          <Modal visible={found} transparent onRequestClose={() => setfound(false)}>
+          <Modal
+            visible={found}
+            transparent
+            onRequestClose={() => setfound(false)}>
             <MsgModal message={'No Members 😔'} />
           </Modal>
         </View>

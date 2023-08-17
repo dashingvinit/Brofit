@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import { View, Text, TouchableOpacity, Keyboard } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Keyboard,
+  TextInput,
+} from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
-import { bgColor, neon } from './constants/Constants';
+import { bgColor, neon, bgGlass } from './constants/Constants';
 import Field from './components/Field';
 import jwtDecode from 'jwt-decode';
 import LottieView from 'lottie-react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
 }
 
 const Login = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   const handleLogin = async () => {
     const { email, password } = formData;
@@ -114,14 +126,48 @@ const Login = (props) => {
             value={formData.email}
             onChangeText={(value) => handleInputChange('email', value)}
           />
-
-          <Field
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={{
+                borderWidth: 1,
+                borderColor: neon,
+                borderRadius: 15,
+                color: 'white',
+                width: '100%',
+                padding: 10,
+                fontSize: 14,
+                backgroundColor: bgGlass,
+                marginVertical: 10,
+              }}
+              placeholderTextColor={'#EEEEEE'}
+              placeholder="Password"
+              secureTextEntry={!showPassword}
+              value={formData.password}
+              onChangeText={(value) => handleInputChange('password', value)}
+            />
+            <TouchableOpacity
+              onPress={togglePasswordVisibility}
+              style={{
+                position: 'absolute',
+                top: 25,
+                right: 10,
+                zIndex: 2,
+                opacity: 0.5,
+              }}>
+              <Ionicons
+                name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                size={24}
+                color={neon}
+              />
+            </TouchableOpacity>
+          </View>
+          {/* <Field
             placeholder="Password"
             secureTextEntry={true}
             icon="lock"
             value={formData.password}
             onChangeText={(value) => handleInputChange('password', value)}
-          />
+          /> */}
           {error !== '' && (
             <Text
               style={{

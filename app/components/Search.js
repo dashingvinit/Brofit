@@ -20,7 +20,7 @@ const Search = ({ onSearch }) => {
     <View style={styles.searchContainer}>
       <TextInput
         style={styles.searchInput}
-        placeholder="ID"
+        placeholder="Search by ID"
         placeholderTextColor={'white'}
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 20,
     paddingVertical: 12,
   },
   searchInput: {

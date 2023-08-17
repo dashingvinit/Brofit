@@ -27,16 +27,16 @@ const CheckIn = ({ checkINStatus }) => {
     const earthRadius = 6371000; // Earth's radius in meters
     const dLat = Math.abs(degToRad(lat2 - lat1));
     const dLon = Math.abs(degToRad(lon2 - lon1));
-    console.log(dLat);
-    console.log(dLon);
-
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
+    // console.log(dLat);
+    // console.log(dLon);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(degToRad(lat1)) *
+        Math.cos(degToRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = earthRadius * c;
-
     return distance;
   };
 
@@ -44,7 +44,13 @@ const CheckIn = ({ checkINStatus }) => {
     return deg * (Math.PI / 180);
   };
 
-  const isUserWithinThreshold = (userLat, userLon, gymLat, gymLon, threshold) => {
+  const isUserWithinThreshold = (
+    userLat,
+    userLon,
+    gymLat,
+    gymLon,
+    threshold
+  ) => {
     const distance = calculateDistance(userLat, userLon, gymLat, gymLon);
     console.log(distance);
     return distance <= threshold;
@@ -62,12 +68,10 @@ const CheckIn = ({ checkINStatus }) => {
           longitude: response.data.data.longitude,
         };
         setTargetLocation(targetLocation);
-
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           return;
         }
-
         try {
           let location = await Location.getCurrentPositionAsync({});
           setLocation(location);
@@ -82,10 +86,10 @@ const CheckIn = ({ checkINStatus }) => {
   }, []);
 
   useEffect(() => {
-    console.log(location);
-    console.log(targetLocation);
+    // console.log(location);
+    // console.log(targetLocation);
     if (location && targetLocation) {
-      console.log('hel')
+      // console.log('hel');
       const userLatitude = location.coords.latitude;
       const userLongitude = location.coords.longitude;
       const gymLatitude = targetLocation.latitude;
@@ -108,53 +112,12 @@ const CheckIn = ({ checkINStatus }) => {
     }
   }, [location, targetLocation]);
 
-  // useEffect(() => {
-  //   if (location && targetLocation) {
-  //     const latitudeDifference = Math.abs(30.768914 - 30.7688754);
-  //     const longitudeDifference = Math.abs(76.576187 - 76.57561);
-  //     // latitudeDifference = Math.abs(30.768914 - 30.7688754);
-  //     // longitudeDifference = Math.abs(76.576187 - 76.57561);
-  //     const latitudeInMeters = latitudeDifference * 111139;
-  //     const longitudeInMeters = longitudeDifference * 111139;
-  //     console.log(latitudeInMeters)
-  //     console.log(longitudeInMeters);
-  //     if (latitudeInMeters < 5 && longitudeInMeters < 5) {
-  //       console.log('inside if');
-  //       setDisableButton(false);
-  //     } else {
-  //       setDisableButton(true);
-  //       console.log('inside else');
-  //     }
-  //   }
-  //   else{
-  //     console.log('hello')
-  //   }
-  // }, [location, targetLocation]);
-
-  useEffect(() => {
-    if (already) {
-      const timeout = setTimeout(() => {
-        setalready(false);
-      }, 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [already]);
-
-  useEffect(() => {
-    if (check) {
-      const timeout = setTimeout(() => {
-        setcheck(false);
-      }, 1000);
-      return () => clearTimeout(timeout);
-    }
-  }, [check]);
-
   const handleCheckIn = async () => {
     try {
       setLoading(true);
       const response = await axios.post('/attendance');
       checkINStatus();
-      setcheck(true);
+      setCheck(true);
       setLoading(false);
       setDisableButton(false);
     } catch (error) {
@@ -163,12 +126,11 @@ const CheckIn = ({ checkINStatus }) => {
         setLoading(false);
       }
       if (error.response && error.response.status === 403) {
-        setalready(true);
-        setLoading(false);
+        setAlready(true);
         setLoading(false);
       }
       if (error.response && error.response.status === 403) {
-        setalready(true);
+        setAlready(true);
         setLoading(false);
       } else {
         alert('Error: ' + error);
@@ -179,20 +141,52 @@ const CheckIn = ({ checkINStatus }) => {
     }
   };
 
+  useEffect(() => {
+    if (already) {
+      const timeout = setTimeout(() => {
+        setAlready(false);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [already]);
+
+  useEffect(() => {
+    if (check) {
+      const timeout = setTimeout(() => {
+        setCheck(false);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [check]);
+
+  const buttonStyle = {
+    marginRight: 5,
+    paddingVertical: 20,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    width: 150,
+    justifyContent: 'center', // To center the text vertically
+    alignItems: 'center', // To center the text horizontally
+  };
+
+  // Define styles for different states of the button
+  const enabledButtonStyle = {
+    ...buttonStyle,
+    backgroundColor: neon,
+  };
+
+  const disabledButtonStyle = {
+    ...buttonStyle,
+    backgroundColor: 'gray', // Change this color to your desired color for disabled state
+  };
+
   return (
     <View>
       <TouchableOpacity
-        style={{
-          marginRight: 5,
-          backgroundColor: neon,
-          paddingVertical: 20,
-          paddingHorizontal: 40,
-          borderRadius: 30,
-          width: 150,
-        }}
+        style={disableButton ? disabledButtonStyle : enabledButtonStyle}
         disabled={disableButton}
         onPress={handleCheckIn}>
-        <Text style={{ color: bgColor, fontWeight: 'bold' }}>CheckIN</Text>
+        <Text style={{ color: bgColor, fontWeight: 'bold' }}>Check In</Text>
       </TouchableOpacity>
       {Loading && (
         <View
@@ -216,8 +210,8 @@ const CheckIn = ({ checkINStatus }) => {
       <Modal
         visible={already}
         transparent
-        onRequestClose={() => setalready(false)}>
-        <MsgModal message={'Not again, Bro💪🏻'} />
+        onRequestClose={() => setAlready(false)}>
+        <MsgModal message={'Already checkin 💪🏻'} />
       </Modal>
 
       <Modal visible={check} transparent onRequestClose={() => setcheck(false)}>
@@ -228,3 +222,26 @@ const CheckIn = ({ checkINStatus }) => {
 };
 
 export default CheckIn;
+
+// useEffect(() => {
+//   if (location && targetLocation) {
+//     const latitudeDifference = Math.abs(30.768914 - 30.7688754);
+//     const longitudeDifference = Math.abs(76.576187 - 76.57561);
+//     // latitudeDifference = Math.abs(30.768914 - 30.7688754);
+//     // longitudeDifference = Math.abs(76.576187 - 76.57561);
+//     const latitudeInMeters = latitudeDifference * 111139;
+//     const longitudeInMeters = longitudeDifference * 111139;
+//     console.log(latitudeInMeters)
+//     console.log(longitudeInMeters);
+//     if (latitudeInMeters < 5 && longitudeInMeters < 5) {
+//       console.log('inside if');
+//       setDisableButton(false);
+//     } else {
+//       setDisableButton(true);
+//       console.log('inside else');
+//     }
+//   }
+//   else{
+//     console.log('hello')
+//   }
+// }, [location, targetLocation]);

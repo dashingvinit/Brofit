@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,24 +6,17 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Image,
   Modal,
+  StyleSheet,
 } from 'react-native';
-import {
-  bgColor,
-  bgGlass,
-  bgGlassLight,
-  bgLight,
-  neon,
-} from '../constants/Constants';
-import { GradientBG, Top, TopBack } from '../components';
+import { bgGlass, bgGlassLight, bgLight, neon } from '../constants/Constants';
+import { GradientBG, TopBack, CheckedIn } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
-import Userprofile from './UserProfile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { G } from 'react-native-svg';
 import MsgModal from '../components/MsgModal';
+import LottieView from 'lottie-react-native';
 
 const OwnerAttendance = (props) => {
   const [searchDay, setSearchDay] = useState('');
@@ -72,210 +65,200 @@ const OwnerAttendance = (props) => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>Attendance</TopBack>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            paddingTop: 10,
-          }}>
+        <View style={styles.inputContainer}>
           <TextInput
-            style={{
-              backgroundColor: bgGlassLight,
-              paddingVertical: 10,
-              paddingHorizontal: 15,
-              marginBottom: 16,
-              borderRadius: 12,
-              color: neon,
-              textAlign: 'center',
-            }}
+            style={styles.input}
             keyboardType="number-pad"
             placeholder="05"
             onChangeText={(text) => setSearchDay(text)}
             value={searchDay}
             maxLength={2}
           />
-          <Text style={{ color: neon, fontSize: 34, marginHorizontal: 10 }}>
-            /
-          </Text>
+          <Text style={styles.slash}>/</Text>
           <TextInput
-            style={{
-              backgroundColor: bgGlassLight,
-              paddingVertical: 10,
-              paddingHorizontal: 15,
-              marginBottom: 16,
-              borderRadius: 12,
-              color: neon,
-              textAlign: 'center',
-            }}
+            style={styles.input}
             keyboardType="number-pad"
             placeholder="08"
             onChangeText={(text) => setSearchMonth(text)}
             value={searchMonth}
             maxLength={2}
           />
-          <Text style={{ color: neon, fontSize: 34, marginHorizontal: 10 }}>
-            /
-          </Text>
+          <Text style={styles.slash}>/</Text>
           <TextInput
-            style={{
-              backgroundColor: bgGlassLight,
-              paddingVertical: 10,
-              paddingHorizontal: 15,
-              marginBottom: 16,
-              borderRadius: 12,
-              color: neon,
-              textAlign: 'center',
-            }}
+            style={styles.input}
             keyboardType="number-pad"
             placeholder="2023"
             onChangeText={(text) => setSearchYear(text)}
             value={searchYear}
             maxLength={4}
           />
-          <TouchableOpacity
-            style={{
-              backgroundColor: bgGlass,
-              paddingHorizontal: 12,
-              paddingVertical: 12,
-              alignItems: 'center',
-              borderRadius: 12,
-              marginLeft: 20,
-              height: 50,
-              width: 80,
-            }}
-            onPress={searchAttendance}>
+          <TouchableOpacity style={styles.searchBtn} onPress={searchAttendance}>
             <Text style={{ color: neon, fontWeight: 'bold' }}>Search</Text>
           </TouchableOpacity>
         </View>
 
         {!attendanceData.length && !isLoading && (
-          <View style={{ marginLeft: 20, marginVertical: 80 }}>
-            <Text
+          <>
+            <View
               style={{
-                fontSize: 28,
-                fontWeight: 'bold',
-                color: 'white',
-                textAlign: 'center',
-                marginVertical: 50,
+                alignItems: 'center',
               }}>
-              Data need to be searched
-            </Text>
-          </View>
+              <LottieView
+                source={require('../assets/lottieFiles/searchExplain.json')}
+                autoPlay
+                loop
+                style={{ width: 200, height: 200 }}
+              />
+              <Text style={styles.label}>
+                Search for a date to view the attendance of that day.
+              </Text>
+            </View>
+            <CheckedIn navigation={props.navigation} />
+          </>
         )}
 
         {isLoading ? (
-          <ActivityIndicator size="large" color={neon} />
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+            }}>
+            <LottieView
+              source={require('../assets/lottieFiles/searchSkeleton.json')}
+              autoPlay
+              loop
+              style={{ width: 400, height: 400 }}
+            />
+            {/* <ActivityIndicator size="large" color={neon} /> */}
+          </View>
         ) : (
           attendanceData.length > 0 && (
-            <ScrollView>
-              <View>
-                <View
-                  style={{
-                    backgroundColor: bgLight,
-                    borderRadius: 25,
-                    width: 240,
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 20,
-                      textAlign: 'center',
-                      paddingVertical: 20,
-                    }}>
-                    Attendance Data
-                  </Text>
+            <>
+              <View style={styles.dataContainer}>
+                <Text style={styles.heading}>Attendance Data</Text>
+                <View style={styles.labelContainer}>
+                  <Text style={styles.label}>Name</Text>
+                  <Text style={styles.label}>ID</Text>
                 </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginHorizontal: 8,
-                    marginTop: 30,
-                    marginBottom: 5,
-                    backgroundColor: bgLight,
-                    borderRadius: 25,
-                    height: 50,
-                    paddingTop: 10,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      flex: 1,
-                      marginLeft: 30,
-                    }}>
-                    Name
-                  </Text>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      flex: 0.5,
-                      marginLeft: 40,
-                    }}>
-                    ID
-                  </Text>
-                </View>
-                <ScrollView>
-                  <View
-                    style={{
-                      backgroundColor: bgLight,
-                      borderRadius: 25,
-                      marginTop: 20,
-                      marginBottom: 60,
-                    }}>
+              </View>
+              <ScrollView>
+                <View style={{ flex: 1, paddingBottom: 100 }}>
+                  <ScrollView style={styles.scrollContainer}>
                     {attendanceData.map((dataEntry, index) => (
                       <TouchableOpacity
                         key={index}
                         onPress={() => handlePress(dataEntry.userId)}>
-                        <View
-                          style={{
-                            height: 50,
-                            marginHorizontal: 10,
-                            marginVertical: 20,
-                          }}>
-                          <View style={{ flexDirection: 'row' }}>
-                            <Ionicons
-                              name="person"
-                              color={neon}
-                              size={20}
-                              marginLeft={10}
-                            />
-                            <Text
-                              style={{
-                                flex: 1,
-                                color: neon,
-                                fontSize: 20,
-                                marginLeft: 20,
-                              }}>
-                              {dataEntry.userId.name}
-                            </Text>
-                            <Text
-                              style={{
-                                color: neon,
-                                fontSize: 20,
-                                marginLeft: 20,
-                                flex: 0.5,
-                              }}>
-                              {dataEntry.userId.registerationNumber}
-                            </Text>
-                          </View>
+                        <View style={styles.userContainer}>
+                          <Ionicons
+                            name="person"
+                            color={neon}
+                            size={24}
+                            marginRight={10}
+                          />
+                          <Text style={styles.name}>
+                            {dataEntry.userId.name}
+                          </Text>
+                          <Text style={styles.regId}>
+                            {dataEntry.userId.registerationNumber}
+                          </Text>
                         </View>
                       </TouchableOpacity>
                     ))}
-                  </View>
-                </ScrollView>
-              </View>
-            </ScrollView>
+                  </ScrollView>
+                </View>
+              </ScrollView>
+            </>
           )
         )}
-        <Modal visible={found} transparent onRequestClose={() => setfound(false)}>
-            <MsgModal message={'Oops, No Data 😔'} />
+        <Modal
+          visible={found}
+          transparent
+          onRequestClose={() => setfound(false)}>
+          <MsgModal message={'Oops, No Data 😔'} />
         </Modal>
       </SafeAreaView>
     </GradientBG>
   );
 };
 
+const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingBottom: 15,
+    paddingHorizontal: 10,
+  },
+  input: {
+    backgroundColor: bgGlassLight,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    color: neon,
+    textAlign: 'center',
+  },
+  slash: {
+    color: neon,
+    fontSize: 34,
+    marginHorizontal: 10,
+  },
+  searchBtn: {
+    backgroundColor: bgGlass,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+    marginLeft: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+  },
+  dataContainer: {
+    backgroundColor: bgGlassLight,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    width: '100%',
+  },
+  heading: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: bgGlass,
+    borderRadius: 15,
+    paddingVertical: 10,
+    margin: 5,
+  },
+  label: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+  },
+  scrollContainer: {
+    backgroundColor: bgGlassLight,
+    height: '100%',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+  userContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  name: {
+    flex: 1,
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  regId: {
+    color: neon,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
 export default OwnerAttendance;

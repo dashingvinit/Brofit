@@ -101,7 +101,9 @@ const Home = (props) => {
             </View>
           </View>
           <Graph />
-          <CheckedIn navigation={props.navigation} />
+          <View style={{ marginBottom: 100 }}>
+            <CheckedIn navigation={props.navigation} />
+          </View>
         </ScrollView>
       </View>
     </GradientBG>

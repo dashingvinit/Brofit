@@ -10,7 +10,6 @@ import {
   bgLight,
   neon,
 } from '../constants/Constants';
-import { ScrollView } from 'react-native';
 
 const CheckedIn = (props) => {
   const [usersData, setUsers] = useState([]);
@@ -43,29 +42,34 @@ const CheckedIn = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Todays Check-Ins</Text>
-      <View style={styles.userListContainer}>
-        <View style={styles.userHeader}>
-          <Text style={styles.userName}>ID. Name</Text>
-          <Text style={styles.checkInOut}>Check-In</Text>
-          <Text style={styles.checkInOut}>Check-Out</Text>
-        </View>
-        {loading && <LoadingSkeleton />}
-        {usersData.map((member, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.userItem}
-            onPress={() => handleUserPress(member)}>
-            <Text style={styles.userNameText}>
-              {member.userId.registerationNumber}.{' '}
-              <Text style={styles.userNameText}>{member.userId.name}</Text>
-            </Text>
+      {loading ? (
+        <LoadingSkeleton />
+      ) : (
+        <>
+          <Text style={styles.heading}>Today's Check-Ins</Text>
+          <View style={styles.userListContainer}>
+            <View style={styles.userHeader}>
+              <Text style={styles.userName}>ID. Name</Text>
+              <Text style={styles.checkInOut}>Check-In</Text>
+              <Text style={styles.checkInOut}>Check-Out</Text>
+            </View>
+            {usersData.map((member, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.userItem}
+                onPress={() => handleUserPress(member)}>
+                <Text style={styles.userNameText}>
+                  {member.userId.registerationNumber}.{' '}
+                  <Text style={styles.userNameText}>{member.userId.name}</Text>
+                </Text>
 
-            <Text style={styles.checkTime}>{member.checkIn}</Text>
-            <Text style={styles.checkTime}>{member.checkOut}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+                <Text style={styles.checkTime}>{member.checkIn}</Text>
+                <Text style={styles.checkTime}>{member.checkOut}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -73,24 +77,22 @@ const CheckedIn = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 100,
-    marginTop: 10,
-    paddingTop: 20,
+    marginTop: 15,
     borderRadius: 10,
     backgroundColor: bgGlass,
   },
   heading: {
-    fontSize: 32,
-    fontWeight: 900,
+    fontSize: 24,
+    fontWeight: 'bold',
     color: 'white',
-    marginBottom: 10,
+    marginVertical: 10,
     textAlign: 'center',
   },
   userListContainer: {
     backgroundColor: bgGlassLight,
     borderRadius: 10,
     paddingTop: 5,
-    paddingBottom: 50,
+    paddingBottom: 10,
   },
   userHeader: {
     flexDirection: 'row',

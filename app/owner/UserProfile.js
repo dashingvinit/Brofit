@@ -29,7 +29,7 @@ const UserProfile = (props) => {
     try {
       const response = await axios.get(`/userProfile/${user}`);
       const data = response.data.data;
-      // console.log('User Profile Data', data);
+      //console.log('User Profile Data', data);
       setUserData(data);
     } catch (error) {
       console.log('Checked In Users Error', error);
