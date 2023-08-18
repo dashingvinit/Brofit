@@ -72,8 +72,7 @@ const BottomNav = ({ setHandleLogout }) => {
       <Tab.Screen name="WorkoutStack" component={WorkoutStack} />
       <Tab.Screen name="Timer" component={Timer} />
       <Tab.Screen name="ProfilePage">
-        {' '}
-        <ProfilePage {...props} setHandleLogout={setHandleLogout} />{' '}
+        {(props)=> <ProfilePage {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
     </Tab.Navigator>
   );

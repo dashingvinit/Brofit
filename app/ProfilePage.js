@@ -9,7 +9,7 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import { GradientBG, Hr, Hi } from './components';
+import { GradientBG, Hr, Hi, UserDelete } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -23,7 +23,7 @@ import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import MsgModal from './components/MsgModal';
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
   const [userData, setUserData] = useState(null);
   const [username, setUsername] = useState(null);
   const [editable, setEditable] = useState(false);
@@ -305,9 +305,7 @@ const ProfilePage = () => {
                 }}>
                 <View style={{ paddingVertical: 20 }}>
                   <Text style={styles.editHeader}>Edit Profile Settings</Text>
-                  <Text style={styles.editText}>
-                    last updated: {formattedUpdatedAt}
-                  </Text>
+                  <Text style={styles.editText}>{formattedUpdatedAt}</Text>
                 </View>
                 <TouchableOpacity onPress={handleEdit} style={styles.button}>
                   <Text style={styles.buttonText}>Edit</Text>
@@ -334,7 +332,15 @@ const ProfilePage = () => {
           <Text style={styles.smHeader}>Account details</Text>
           <Text style={styles.text}>Address: {userData?.address}</Text>
           <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
-          <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
+          <View style={{flexDirection:'row'}}>
+              <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
+              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                  <UserDelete 
+                    navigation={props.navigation}
+                    setHandleLogout={props.setHandleLogout}
+                  />
+              </View>
+          </View>
         </View>
         <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
           <MsgModal message={'Profile Updated 😉'} />
@@ -390,7 +396,7 @@ const styles = StyleSheet.create({
   smContainer: {
     backgroundColor: '#F8FFDB',
     height: 200,
-    width: 125,
+    width: '30%',
     marginHorizontal: 10,
     borderRadius: 30,
     marginTop: 10,
@@ -416,7 +422,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     paddingHorizontal: 20,
-    color: 'grey',
+    color: bgColor,
   },
   editText: {
     fontSize: 12,
