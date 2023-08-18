@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { bgColor, bgGlassLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
 
 const MsgModal = ({ message }) => {
   return (
@@ -9,13 +9,13 @@ const MsgModal = ({ message }) => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#00000099',
+        backgroundColor: bgGlassLight,
       }}>
       <View
         style={{
           width: '80%',
           height: '12%',
-          backgroundColor: bgGlassLight,
+          backgroundColor: '#000000b3',
           borderRadius: 15,
           justifyContent: 'center',
         }}>

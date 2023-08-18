@@ -26,6 +26,7 @@ import SixDayWorkoutPlan from './6dWorkoutPlan';
 import WorkoutClass from './WorkoutClass';
 import Runtimer from './Runtimer';
 import LoadingSkeleton from './LoadingSkeleton';
+import UserDelete from './UserDelete';
 
 export {
   LoadingSkeleton,
@@ -56,4 +57,5 @@ export {
   Userstatusbox,
   OwnerStatus,
   Adminsearch,
+  UserDelete,
 };

@@ -16,7 +16,6 @@ SplashScreen.preventAutoHideAsync();
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
-  const [isProfileSet, setIsProfileSet] = useState(false);
 
   setTokenHeader();
 

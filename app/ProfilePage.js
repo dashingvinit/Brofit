@@ -306,7 +306,7 @@ const ProfilePage = (props) => {
                 <View style={{ paddingVertical: 20 }}>
                   <Text style={styles.editHeader}>Edit Profile Settings</Text>
                   <Text style={styles.editText}>
-                    last updated: {formattedUpdatedAt}
+                    Last Updated on {formattedUpdatedAt}
                   </Text>
                 </View>
                 <TouchableOpacity onPress={handleEdit} style={styles.button}>
@@ -334,12 +334,33 @@ const ProfilePage = (props) => {
           <Text style={styles.smHeader}>Account details</Text>
           <Text style={styles.text}>Address: {userData?.address}</Text>
           <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
-          <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            <UserDelete
-              navigation={props.navigation}
-              setHandleLogout={props.setHandleLogout}
-            />
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
+          </View>
+        </View>
+        <View style={{ marginBottom: 100 }}>
+          <View style={styles.editContainer}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingVertical: 10,
+              }}>
+              <Text style={styles.editHeader}>Delete Account</Text>
+              <UserDelete
+                navigation={props.navigation}
+                setHandleLogout={props.setHandleLogout}
+              />
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <Text style={styles.editText}>
+                This will delete your account permanently
+              </Text>
+              <Text style={styles.editText}>
+                You will not be able to recover your account
+              </Text>
+            </View>
           </View>
         </View>
         <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
@@ -396,7 +417,7 @@ const styles = StyleSheet.create({
   smContainer: {
     backgroundColor: '#F8FFDB',
     height: 200,
-    width: 125,
+    width: '32.5%',
     marginHorizontal: 10,
     borderRadius: 30,
     marginTop: 10,
@@ -407,7 +428,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 3,
   },
   smHeader: {
-    fontSize: 38,
+    fontSize: 28,
     fontWeight: 'bold',
     paddingVertical: 15,
   },
@@ -428,7 +449,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     paddingHorizontal: 20,
-    color: 'grey',
+    color: '#F3FDE8',
   },
   button: {
     backgroundColor: bgColor,
@@ -458,7 +479,7 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     marginVertical: 10,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   bottomContainer2: {
@@ -466,7 +487,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#4FC0D0',
     borderRadius: 30,
     marginTop: 10,
-    marginBottom: 100,
     borderColor: '#164B60',
     borderRightWidth: 3,
     borderBottomWidth: 3,

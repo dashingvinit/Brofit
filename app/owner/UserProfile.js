@@ -5,17 +5,10 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  TextInput,
 } from 'react-native';
 import axios from '../constants/Axios';
 import React, { useEffect, useState } from 'react';
-import {
-  bgColor,
-  bgLight,
-  neon,
-  bgGlass,
-  bgGlassLight,
-} from '../constants/Constants';
+import { bgColor, bgLight, neon, bgGlass } from '../constants/Constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBack, GradientBG, Hr } from '../components';
@@ -78,150 +71,155 @@ const UserProfile = (props) => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
-        <View style={styles.profileCard}>
-          <View style={styles.profileContainer}>
-            <Image
-              source={require('../assets/images/profile.jpg')}
-              style={{ width: 100, height: 100, borderRadius: 50 }}
-            />
-            <Text style={styles.userName}>{userData?.userId?.name}</Text>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                textAlign: 'center',
-                fontSize: 16,
-                color: bgLight,
-              }}>
-              {userData?.userId.email}
-            </Text>
-          </View>
-          <View style={styles.profileIcons}>
-            <View
-              style={{
-                alignItems: 'center',
-                borderColor: bgColor,
-                width: '30%',
-                borderWidth: 2,
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              {userData?.status == 'active' ? (
+      <SafeAreaView style={{ flex: 1 }}>
+        <TopBack>User Profile</TopBack>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.profileCard}>
+            <View style={styles.profileContainer}>
+              <Image
+                source={require('../assets/images/profile.jpg')}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+              />
+              <Text style={styles.userName}>{userData?.userId?.name}</Text>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  color: bgLight,
+                }}>
+                {userData?.userId.email}
+              </Text>
+            </View>
+            <View style={styles.profileIcons}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  borderColor: bgColor,
+                  width: '30%',
+                  borderWidth: 2,
+                  padding: 10,
+                  borderRadius: 30,
+                }}>
+                {userData?.status == 'active' ? (
+                  <MaterialCommunityIcons
+                    name="card-bulleted-outline"
+                    size={30}
+                    color={bgColor}
+                  />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="card-bulleted-off-outline"
+                    size={30}
+                    color={bgGlass}
+                  />
+                )}
+                <Text>{userData?.status}</Text>
+                <Text>Plan</Text>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  borderColor: bgColor,
+                  width: '30%',
+                  borderWidth: 2,
+                  padding: 10,
+                  borderRadius: 30,
+                }}>
                 <MaterialCommunityIcons
-                  name="card-bulleted-outline"
+                  name="clipboard-outline"
                   size={30}
                   color={bgColor}
                 />
-              ) : (
-                <MaterialCommunityIcons
-                  name="card-bulleted-off-outline"
-                  size={30}
-                  color={bgGlass}
-                />
-              )}
-              <Text>{userData?.status}</Text>
-              <Text>Plan</Text>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                borderColor: bgColor,
-                width: '30%',
-                borderWidth: 2,
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              <MaterialCommunityIcons
-                name="clipboard-outline"
-                size={30}
-                color={bgColor}
-              />
-              <Text>Reg.Id</Text>
-              <Text>{userData?.userId.registerationNumber}</Text>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                borderColor: bgColor,
-                width: '30%',
-                borderWidth: 2,
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              <MaterialCommunityIcons
-                name="calendar-clock-outline"
-                size={30}
-                color={bgColor}
-              />
-              <Text>Exp.In</Text>
-              <Text>{planExiper}d</Text>
-            </View>
-          </View>
-        </View>
-        <Hr />
-
-        <>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}>
-            <View style={styles.smContainer}>
-              <Text>Height</Text>
-              <Text style={styles.smHeader}>{userData?.height}</Text>
-              <Text style={{ fontSize: 12 }}>Feet</Text>
-            </View>
-            <View style={styles.smContainer}>
-              <Text>Weight</Text>
-              <Text style={styles.smHeader}>{userData?.weight}</Text>
-              <Text style={{ fontSize: 12 }}>KG</Text>
-            </View>
-            <View style={styles.smContainer}>
-              <Text>Age</Text>
-              <Text style={styles.smHeader}>{userData?.age}</Text>
-              <Text style={{ fontSize: 12 }}>Yrs</Text>
-            </View>
-          </View>
-
-          {userData?.status == 'inactive' ? (
-            <View style={styles.editContainer}>
+                <Text>Reg.Id</Text>
+                <Text>{userData?.userId.registerationNumber}</Text>
+              </View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  paddingVertical: 10,
-                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  borderColor: bgColor,
+                  width: '30%',
+                  borderWidth: 2,
+                  padding: 10,
+                  borderRadius: 30,
                 }}>
-                <Text style={styles.editHeader}>Activate the plan</Text>
-                <TouchableOpacity onPress={handleStatus} style={styles.button}>
-                  <Text style={styles.buttonText}>Activate</Text>
-                </TouchableOpacity>
+                <MaterialCommunityIcons
+                  name="calendar-clock-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Exp.In</Text>
+                <Text>{planExiper}d</Text>
               </View>
             </View>
-          ) : null}
-        </>
-
-        <Hr />
-        <View style={styles.bottomContainer1}>
-          <Text style={styles.smHeader}>Plan details:</Text>
-          <Text style={styles.text}>
-            Plan Expires: {userData?.planExpiryDate}
-          </Text>
-          <Text style={styles.text}>
-            Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
-          </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.text}>Status: {userData?.status}</Text>
           </View>
-        </View>
-        <View style={styles.bottomContainer}>
-          <Text style={styles.smHeader}>Profile Details:</Text>
-          <Text style={styles.text}>Address: {userData?.address}</Text>
-          <Text style={styles.text}>
-            Contact:{' '}
-            {userData?.phoneNumber ? userData.phoneNumber : 'Not submitted'}
-          </Text>
-        </View>
-      </ScrollView>
+          <Hr />
+
+          <>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+              }}>
+              <View style={styles.smContainer}>
+                <Text>Height</Text>
+                <Text style={styles.smHeader}>{userData?.height}</Text>
+                <Text style={{ fontSize: 12 }}>Feet</Text>
+              </View>
+              <View style={styles.smContainer}>
+                <Text>Weight</Text>
+                <Text style={styles.smHeader}>{userData?.weight}</Text>
+                <Text style={{ fontSize: 12 }}>KG</Text>
+              </View>
+              <View style={styles.smContainer}>
+                <Text>Age</Text>
+                <Text style={styles.smHeader}>{userData?.age}</Text>
+                <Text style={{ fontSize: 12 }}>Yrs</Text>
+              </View>
+            </View>
+
+            {userData?.status == 'inactive' ? (
+              <View style={styles.editContainer}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    paddingVertical: 10,
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.editHeader}>Activate the plan</Text>
+                  <TouchableOpacity
+                    onPress={handleStatus}
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>Activate</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : null}
+          </>
+
+          <Hr />
+          <View style={styles.bottomContainer1}>
+            <Text style={styles.smHeader}>Plan details:</Text>
+            <Text style={styles.text}>
+              Plan Expires: {userData?.planExpiryDate}
+            </Text>
+            <Text style={styles.text}>
+              Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
+            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={styles.text}>Status: {userData?.status}</Text>
+            </View>
+          </View>
+          <View style={styles.bottomContainer}>
+            <Text style={styles.smHeader}>Profile Details:</Text>
+            <Text style={styles.text}>Address: {userData?.address}</Text>
+            <Text style={styles.text}>
+              Contact:{' '}
+              {userData?.phoneNumber ? userData.phoneNumber : 'Not submitted'}
+            </Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </GradientBG>
   );
 };
@@ -290,20 +288,21 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     padding: 20,
-    backgroundColor: '#ed8268',
+    backgroundColor: '#1B6B93',
     borderRadius: 30,
     marginTop: 10,
-    marginBottom: 100,
+    marginBottom: 10,
     borderColor: bgColor,
     borderRightWidth: 3,
     borderBottomWidth: 3,
+    marginBottom: 100,
   },
   bottomContainer1: {
     padding: 20,
-    backgroundColor: 'pink',
+    backgroundColor: '#4FC0D0',
     borderRadius: 30,
     marginTop: 10,
-    borderColor: bgColor,
+    borderColor: '#164B60',
     borderRightWidth: 3,
     borderBottomWidth: 3,
   },
