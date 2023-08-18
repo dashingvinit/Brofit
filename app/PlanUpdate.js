@@ -23,7 +23,7 @@ const PlanUpdate = () => {
   const [status, setStatus] = useState(' ');
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [msg, setmsg] = useState(false);
-  const [warning,setwarning] = useState(false);
+  const [warning, setwarning] = useState(false);
 
   const UserPlans = async () => {
     try {
@@ -169,14 +169,17 @@ const PlanUpdate = () => {
           )}
           {status === 'inactive' ? (
             <View style={styles.changeBtn}>
-              <Text style={styles.changePlan}>Change Plan :</Text>
+              <Text style={styles.changePlan}>Other Plans :</Text>
             </View>
           ) : (
             <View style={{ margin: 10 }}>
+              <Text style={styles.Header}>Current Plan :</Text>
               <View style={styles.planContainer1}>
                 <View style={{ justifyContent: 'center' }}>
                   <Text style={styles.planName}>{Userplans.name}</Text>
-                  <Text style={styles.planPrice}>{Userplans.validity}</Text>
+                  <Text style={styles.planPrice}>
+                    {Userplans.validity} days
+                  </Text>
                   <Text style={styles.planPrice}>{date}</Text>
                 </View>
                 <View>
@@ -225,7 +228,10 @@ const PlanUpdate = () => {
           <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
             <MsgModal message={'Plan Updated 😉'} />
           </Modal>
-          <Modal visible={warning} transparent onRequestClose={() => setwarning(false)}>
+          <Modal
+            visible={warning}
+            transparent
+            onRequestClose={() => setwarning(false)}>
             <MsgModal message={'Plan Expired select new Plan'} />
           </Modal>
         </ScrollView>
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
   planContainer1: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#1A5D1A',
+    backgroundColor: '#159895',
     padding: 15,
     borderRadius: 25,
     borderRightColor: '#F8DE22',
