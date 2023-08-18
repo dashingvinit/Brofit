@@ -9,7 +9,7 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import { GradientBG, Hr, Hi } from './components';
+import { GradientBG, Hr, Hi, UserDelete } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -23,7 +23,7 @@ import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import MsgModal from './components/MsgModal';
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
   const [userData, setUserData] = useState(null);
   const [username, setUsername] = useState(null);
   const [editable, setEditable] = useState(false);
@@ -335,6 +335,12 @@ const ProfilePage = () => {
           <Text style={styles.text}>Address: {userData?.address}</Text>
           <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
           <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
+          <View style={{ flex: 1, alignItems: 'flex-end' }}>
+            <UserDelete
+              navigation={props.navigation}
+              setHandleLogout={props.setHandleLogout}
+            />
+          </View>
         </View>
         <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
           <MsgModal message={'Profile Updated 😉'} />
@@ -416,13 +422,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     paddingHorizontal: 20,
-    color: 'grey',
+    color: bgColor,
   },
   editText: {
     fontSize: 12,
     fontWeight: 'bold',
     paddingHorizontal: 20,
-    color: bgColor,
+    color: 'grey',
   },
   button: {
     backgroundColor: bgColor,
