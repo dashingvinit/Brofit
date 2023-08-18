@@ -305,7 +305,9 @@ const ProfilePage = () => {
                 }}>
                 <View style={{ paddingVertical: 20 }}>
                   <Text style={styles.editHeader}>Edit Profile Settings</Text>
-                  <Text style={styles.editText}>{formattedUpdatedAt}</Text>
+                  <Text style={styles.editText}>
+                    last updated: {formattedUpdatedAt}
+                  </Text>
                 </View>
                 <TouchableOpacity onPress={handleEdit} style={styles.button}>
                   <Text style={styles.buttonText}>Edit</Text>
@@ -414,7 +416,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     paddingHorizontal: 20,
-    color: bgColor,
+    color: 'grey',
   },
   editText: {
     fontSize: 12,
