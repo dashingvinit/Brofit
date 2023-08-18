@@ -76,6 +76,8 @@ const ProfilePage = () => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+      <TopBack>Owner Profile</TopBack>
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.profileCard}>
           <View style={styles.profileContainer}>
@@ -156,7 +158,7 @@ const ProfilePage = () => {
             borderRadius: 20,
             borderRightWidth: 3,
             borderBottomWidth: 3,
-            marginBottom: 10,
+            marginBottom: 80,
           }}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: bgColor }}>
             Plan Details
@@ -201,6 +203,7 @@ const ProfilePage = () => {
           })}
         </View>
       </ScrollView>
+      </SafeAreaView>
     </GradientBG>
   );
 };

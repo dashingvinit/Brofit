@@ -29,7 +29,7 @@ const Plans = () => {
   const [editValidity, setEditValidity] = useState('');
   const [plandone, setplandone] = useState(false);
   const [showCancelButton, setShowCancelButton] = useState(false);
-  const [createplandone, setcreateplandone] = useState(false);
+  const [createplandone, setcreateplandone] = useState(true);
   const [loading, setloading] = useState(true);
 
   const getPlans = async () => {
@@ -102,6 +102,7 @@ const Plans = () => {
   };
 
   const handleUpdatePlan = async () => {
+    setloading(true);
     try {
       const response = await axios.patch(`/plan/${selectedPlan._id}`, {
         name: editName,
@@ -111,8 +112,10 @@ const Plans = () => {
       setplandone(true);
       toggleForm();
       getPlans();
+      setloading(false);
     } catch (error) {
       console.log('Error:', error);
+      setloading(false);
     }
   };
 
@@ -260,7 +263,7 @@ const Plans = () => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    justifyContent: 'space-around',
+                    marginLeft: '10%',
                   }}>
                   <TouchableOpacity
                     onPress={() => {
@@ -293,26 +296,26 @@ const Plans = () => {
             onRequestClose={() => setcreateplandone(false)}>
             <MsgModal message={'Plan created 🏋🏽'} />
           </Modal>
-        </ScrollView>
-        {loading && (
-          <View
-            style={{
-              position: 'absolute',
-              top: -100,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <LottieView
-              source={require('../assets/lottieFiles/loadingSkeliton.json')}
-              autoPlay
-              loop
-            />
-          </View>
-        )}
+          </ScrollView>
+            {loading && (
+            <View
+              style={{
+                  position: 'absolute',
+                  top: -100,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <LottieView
+                source={require('../assets/lottieFiles/loadingSkeliton.json')}
+                autoPlay
+                loop
+              />
+            </View>
+          )}
       </SafeAreaView>
     </GradientBG>
   );
