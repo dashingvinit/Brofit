@@ -8,11 +8,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from 'react-native';
 import { neon } from './constants/Constants';
 import axios from './constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
+import MsgModal from './components/MsgModal';
 
 const PlanUpdate = () => {
   const [Userplans, setUserPlans] = useState([]);
@@ -20,6 +22,8 @@ const PlanUpdate = () => {
   const [date, setDate] = useState(' ');
   const [status, setStatus] = useState(' ');
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [msg, setmsg] = useState(false);
+  const [warning,setwarning] = useState(false);
 
   const UserPlans = async () => {
     try {
@@ -49,6 +53,26 @@ const PlanUpdate = () => {
       handlealert();
     }
   }, []);
+
+  useEffect(() => {
+    if (warning) {
+      const timeout = setTimeout(() => {
+        setwarning(false);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [warning]);
+
+  useEffect(() => {
+    if (msg) {
+      const timeout = setTimeout(() => {
+        setmsg(false);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [msg]);
 
   const getPlans = async () => {
     try {
@@ -85,7 +109,7 @@ const PlanUpdate = () => {
   };
 
   const handlealert = () => {
-    alert('plan expired select new Plan');
+    setwarning(true);
   };
 
   const handlePlanSelection = async (planId) => {
@@ -101,7 +125,7 @@ const PlanUpdate = () => {
         UserPlans();
         setSelectedPlan(null);
       } else {
-        alert('Plan Updated');
+        setmsg(true);
         const chosenPlan = plans.find((plan) => plan._id === planId);
         setSelectedPlan(chosenPlan);
         saveSelectedPlan(chosenPlan);
@@ -198,6 +222,12 @@ const PlanUpdate = () => {
                 </View>
               ))}
           </View>
+          <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
+            <MsgModal message={'Plan Updated 😉'} />
+          </Modal>
+          <Modal visible={warning} transparent onRequestClose={() => setwarning(false)}>
+            <MsgModal message={'Plan Expired select new Plan'} />
+          </Modal>
         </ScrollView>
       </SafeAreaView>
     </GradientBG>

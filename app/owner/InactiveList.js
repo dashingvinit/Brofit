@@ -28,6 +28,7 @@ const InactiveList = (props) => {
       const data = await response.data.data;
       if (data.some(member => member.userId)) {
         setInactiveData(data);
+        // console.log(data[0]);
       } else {
         setInactiveData([]);
       }
