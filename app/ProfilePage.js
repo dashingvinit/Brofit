@@ -338,7 +338,7 @@ const ProfilePage = (props) => {
                   <UserDelete 
                     navigation={props.navigation}
                     setHandleLogout={props.setHandleLogout}
-                  />
+                  /> 
               </View>
           </View>
         </View>
