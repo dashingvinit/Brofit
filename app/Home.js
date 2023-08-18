@@ -113,7 +113,7 @@ const Home = (props) => {
           </View>
           <Graph />
           <Runtimer />
-          {/* <WorkoutCards navigation={props.navigation} /> */}
+
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('SixDayWorkoutPlan');

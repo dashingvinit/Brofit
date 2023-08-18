@@ -5,7 +5,6 @@ import Btn from './Btn';
 import Graph from './Graph';
 import Plans from './Plans';
 import Top from './Top';
-import WorkoutCards from './WorkoutCards';
 import CheckedIn from './CheckedIn';
 import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
@@ -51,7 +50,6 @@ export {
   Plans,
   Top,
   CheckedIn,
-  WorkoutCards,
   CheckIn,
   CheckOut,
   Userstatusbox,

@@ -2,15 +2,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
 
 import WorkoutStack from '../WorkoutStack';
 import HomeStack from '../HomeStack';
 import Timer from '../Timer';
 import Attendance from '../Attendance';
 import ProfilePage from '../ProfilePage';
-import { bgLight, neon } from './Constants';
+import { neon } from './Constants';
 
 const Tab = createBottomTabNavigator();
 
