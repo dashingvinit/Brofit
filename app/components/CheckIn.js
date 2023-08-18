@@ -1,13 +1,5 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform,
-  Modal,
-  Pressable,
-} from 'react-native';
-import { bgColor, neon, bgLight } from '../constants/Constants';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import { bgColor, neon } from '../constants/Constants';
 import * as Location from 'expo-location';
 import axios from '../constants/Axios';
 import React, { useState, useEffect } from 'react';
@@ -52,7 +44,7 @@ const CheckIn = ({ checkINStatus }) => {
     threshold
   ) => {
     const distance = calculateDistance(userLat, userLon, gymLat, gymLon);
-    console.log(distance);
+    //console.log(distance);
     return distance <= threshold;
   };
 
@@ -186,7 +178,16 @@ const CheckIn = ({ checkINStatus }) => {
         style={disableButton ? disabledButtonStyle : enabledButtonStyle}
         disabled={disableButton}
         onPress={handleCheckIn}>
-        <Text style={{ color: bgColor, fontWeight: 'bold' }}>Check In</Text>
+        {disableButton ? (
+          <LottieView
+            source={require('../assets/lottieFiles/loadingcircles.json')}
+            autoPlay
+            loop
+            style={{ height: 20, width: 25 }}
+          />
+        ) : (
+          <Text style={{ color: bgColor, fontWeight: 'bold' }}>Check In</Text>
+        )}
       </TouchableOpacity>
       {Loading && (
         <View
