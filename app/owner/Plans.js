@@ -30,8 +30,10 @@ const Plans = () => {
   const [plandone, setplandone] = useState(false);
   const [showCancelButton, setShowCancelButton] = useState(false);
   const [createplandone, setcreateplandone] = useState(false);
+  const [loading, setloading] = useState(true);
 
   const getPlans = async () => {
+    setloading(true);
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString); // Parse the user string to an object
@@ -43,6 +45,7 @@ const Plans = () => {
     } catch (error) {
       console.log('plans Owner: ' + error);
     }
+    setloading(false);
   };
 
   const handleDelete = async (planId) => {
@@ -57,6 +60,7 @@ const Plans = () => {
   };
 
   const handleCreatePlan = async () => {
+    setloading(true);
     try {
       const response = await axios.post('/plan', {
         gymId,
@@ -71,8 +75,10 @@ const Plans = () => {
       setPrice('');
       setValidity('');
       getPlans();
+      setloading(false);
     } catch (error) {
       console.log('Error:', error);
+      setloading(false);
     }
   };
 
@@ -287,7 +293,26 @@ const Plans = () => {
             onRequestClose={() => setcreateplandone(false)}>
             <MsgModal message={'Plan created 🏋🏽'} />
           </Modal>
-        </ScrollView>
+          </ScrollView>
+            {loading && (
+            <View
+              style={{
+                  position: 'absolute',
+                  top: -100,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <LottieView
+                source={require('../assets/lottieFiles/loadingSkeliton.json')}
+                autoPlay
+                loop
+              />
+            </View>
+          )}
       </SafeAreaView>
     </GradientBG>
   );

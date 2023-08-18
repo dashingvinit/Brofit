@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import { GradientBG, Hr, Hi } from '../components';
+import { GradientBG, Hr, Hi, TopBack } from '../components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -24,13 +24,8 @@ import * as SecureStore from 'expo-secure-store';
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
   const [username, setUsername] = useState(null);
-  const [editable, setEditable] = useState(false);
-  // const [editName, setEditName] = useState('');
-  const [editAge, setEditAge] = useState('');
-  const [editHeight, setEditHeight] = useState('');
-  const [editWeight, setEditWeight] = useState('');
+  const [users, setUsers] = useState(' ');
   const [Id, setId] = useState('');
-  const [planExiper, setPlanExiper] = useState(null);
 
   const fetchUserProfileData = async () => {
     try {
@@ -45,37 +40,30 @@ const ProfilePage = () => {
       setUserData(data.data);
       setId(data.data._id);
     } catch (error) {
-      console.log('User Profile data fetch Error', error);
+      console.log('owner Profile data fetch Error', error);
     }
   };
 
-  const getDifferenceInDays = async (dateString) => {
-    if (!dateString) return null;
-
-    const [day, month, year] = dateString.split('-').map(Number);
-    const givenDate = new Date(year, month - 1, day);
-    if (isNaN(givenDate.getTime())) return null;
-    const currentDate = new Date();
-    const timeDifferenceInMilliseconds = givenDate - currentDate;
-    const differenceInDays = Math.floor(
-      timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24)
-    );
-    setPlanExiper(differenceInDays);
-    return differenceInDays;
+  const getCheckIn = async () => {
+    try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const gymId = user.gymId;
+      const response = await axios.get(`/gym/mems/${gymId}`);
+      const data = response.data;
+      setUsers(data.data.members.length);
+    } catch (error) {
+      console.log('Owner Home checkedIN', error);
+    }
   };
 
   useEffect(() => {
-    const fetchAndCalculatePlanExpiry = async () => {
-      fetchUserProfileData();
-      const givenDateString = userData?.planExpiryDate;
+    getCheckIn();
+  }, []);
 
-      if (userData && givenDateString) {
-        const differenceInDays = await getDifferenceInDays(givenDateString);
-        setPlanExiper(differenceInDays);
-      }
-    };
-    fetchAndCalculatePlanExpiry();
-  }, [userData?.planExpiryDate]);
+  useEffect(() => {
+      fetchUserProfileData();
+  });
 
   if (!userData)
     return (
@@ -156,7 +144,7 @@ const ProfilePage = () => {
                 color={bgColor}
               />
               <Text>Users</Text>
-              <Text>50</Text>
+              <Text>{users}</Text>
             </View>
           </View>
         </View>
