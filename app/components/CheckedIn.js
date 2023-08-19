@@ -23,7 +23,7 @@ const CheckedIn = (props) => {
       const gymId = user.gymId;
       const response = await axios.get(`/attendance/${gymId}`);
       const data = response.data;
-      console.log('Owner Home checkedIN', data);
+      // console.log('Owner Home checkedIN', data);
       setLoading(false);
       setUsers(data.data);
     } catch (error) {

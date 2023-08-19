@@ -29,7 +29,7 @@ const Plans = () => {
   const [editValidity, setEditValidity] = useState('');
   const [plandone, setplandone] = useState(false);
   const [showCancelButton, setShowCancelButton] = useState(false);
-  const [createplandone, setcreateplandone] = useState(true);
+  const [createplandone, setcreateplandone] = useState(false);
   const [loading, setloading] = useState(true);
 
   const getPlans = async () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StatusBar, View, SafeAreaView, StyleSheet } from 'react-native';
+import { StatusBar, View, SafeAreaView, StyleSheet, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { setTokenHeader } from './app/constants/Axios';
@@ -84,24 +84,27 @@ function App() {
   const navbar = useMemo(() => renderNavbarBasedOnRole(), [userRole]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle="light-content"
+        barStyle='light-content'
       />
       <NavigationContainer>
         <View style={styles.content}>
           {isLoggedIn ? navbar : <StackNav sethandleLogin={sethandleLogin} />}
         </View>
       </NavigationContainer>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? StatusBar.currentHeight : 0, // Add padding to shift content below the status bar
+    paddingBottom: Platform.OS === 'ios' ? 0 :0, // Add padding to shift content above the bottom bar (tab bar)
+    backgroundColor: 'transparent', // Make the status bar and bottom bar (tab bar) transparent
   },
   content: {
     flex: 1,

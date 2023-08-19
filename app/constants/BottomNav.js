@@ -23,11 +23,12 @@ const BottomNav = ({ setHandleLogout }) => {
           position: 'absolute',
           backgroundColor: 'rgb(0, 0, 0)',
           opacity: 0.9,
-          height: 60,
+          height: 64,
           borderTopWidth: 0,
           elevation: 0,
           margin: 10,
           borderRadius: 20,
+          paddingBottom:0,
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -49,7 +50,7 @@ const BottomNav = ({ setHandleLogout }) => {
               name={iconName}
               size={30}
               color={color}
-              style={{ marginTop: 5 }}
+              style={{ justifyContent:'center' }}
             />
           );
         },

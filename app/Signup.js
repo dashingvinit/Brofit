@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ScrollView,
   Keyboard,
+  Platform
 } from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
@@ -113,7 +114,9 @@ const Signup = (props) => {
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
         <ScrollView>
-          <View style={{}}>
+          <View style={[
+          Platform.OS === 'ios' ? styles.iosContainer : styles.androidContainer,
+        ]}>
             <Field
               placeholder="Name"
               value={formData.name}
@@ -255,6 +258,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
     marginHorizontal: 20,
+  },
+  iosContainer: {
+    marginTop: '70%', 
+    marginBottom:'90%'
+  },
+  androidContainer: {
+    marginTop: '30%',
+    marginBottom: '10%', 
   },
   header: {
     color: 'white',

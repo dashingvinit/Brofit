@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios from './constants/Axios';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
 import { Background2 } from './components';
 import Btn from './components/Btn';
 import { bgColor, neon } from './constants/Constants';
@@ -52,8 +52,14 @@ const Forgetpassword = (props) => {
 
   return (
     <Background2>
-      <View style={styles.container}>
-        <Text style={styles.brofit}>Brofit</Text>
+      <View style={{marginTop:40}}>
+      <Text style={styles.brofit}>Brofit</Text>
+      </View>
+      <ScrollView>
+      <View style={[
+          styles.container,
+          Platform.OS === 'ios' ? styles.iosContainer : styles.androidContainer,
+        ]}>
         <View>
           {res ? (
             <View style={styles.otpContainer}>
@@ -111,6 +117,7 @@ const Forgetpassword = (props) => {
           </View>
         )}
       </View>
+      </ScrollView>
     </Background2>
   );
 };
@@ -121,6 +128,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 30,
     justifyContent: 'space-around',
+  },
+  iosContainer: {
+    marginTop: '90%', 
+    marginBottom:'90%'
+  },
+  androidContainer: {
+    marginTop: '80%',
+    marginBottom: '10%',
   },
   brofit: {
     color: 'white',

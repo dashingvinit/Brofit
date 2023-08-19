@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   Keyboard,
   TextInput,
+  ScrollView,
+  Platform,
+  StyleSheet
 } from 'react-native';
 import Background from './components/Background';
 import Btn from './components/Btn';
@@ -86,12 +89,12 @@ const Login = (props) => {
 
   return (
     <Background>
+      <ScrollView>
       <View
-        style={{
-          flex: 1,
-          justifyContent: 'space-between',
-          marginVertical: 20,
-        }}>
+        style={[
+          styles.container,
+          Platform.OS === 'ios' ? styles.iosContainer : styles.androidContainer,
+        ]}>
         <View>
           <Text
             style={{
@@ -242,8 +245,24 @@ const Login = (props) => {
           />
         </View>
       )}
+      </ScrollView>
     </Background>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    marginVertical: 20,
+  },
+  iosContainer: {
+    marginTop: '80%', 
+    marginBottom:'90%'
+  },
+  androidContainer: {
+    marginTop: '80%',
+    marginBottom: '10%', 
+  },
+});
 
 export default Login;
