@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { bgColor, neon } from '../constants/Constants';
 import * as Location from 'expo-location';
 import axios from '../constants/Axios';
@@ -7,7 +7,7 @@ import LottieView from 'lottie-react-native';
 import MsgModal from './MsgModal';
 import * as SecureStore from 'expo-secure-store';
 
-const CheckIn = ({ checkINStatus }) => {
+const CheckIn = ({ setAttendance }) => {
   const [location, setLocation] = useState(null);
   const [targetLocation, setTargetLocation] = useState(null);
   const [disableButton, setDisableButton] = useState(true);
@@ -108,7 +108,10 @@ const CheckIn = ({ checkINStatus }) => {
     try {
       setLoading(true);
       const response = await axios.post('/attendance');
-      checkINStatus();
+      setAttendance('Checked In ' + response.data.data.checkIn);
+      const attendance = JSON.stringify(response.data.data);
+      console.log(attendance);
+      await SecureStore.setItemAsync('attendance', attendance);
       setCheck(true);
       setLoading(false);
       setDisableButton(false);
@@ -118,15 +121,10 @@ const CheckIn = ({ checkINStatus }) => {
         setLoading(false);
       }
       if (error.response && error.response.status === 403) {
-        setAlready(true);
-        setLoading(false);
-      }
-      if (error.response && error.response.status === 403) {
+        setAttendance('Already Checked In');
         setAlready(true);
         setLoading(false);
       } else {
-        alert('Error: ' + error);
-        setLoading(false);
         alert('Error: ' + error);
         setLoading(false);
       }
@@ -151,27 +149,6 @@ const CheckIn = ({ checkINStatus }) => {
     }
   }, [check]);
 
-  const buttonStyle = {
-    marginRight: 5,
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    width: 150,
-    justifyContent: 'center', // To center the text vertically
-    alignItems: 'center', // To center the text horizontally
-  };
-
-  // Define styles for different states of the button
-  const enabledButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: neon,
-  };
-
-  const disabledButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: 'gray', // Change this color to your desired color for disabled state
-  };
-
   return (
     <View>
       <TouchableOpacity
@@ -190,17 +167,7 @@ const CheckIn = ({ checkINStatus }) => {
         )}
       </TouchableOpacity>
       {Loading && (
-        <View
-          style={{
-            position: 'absolute',
-            top: -600,
-            bottom: 30,
-            left: '-20%',
-            right: '-120%',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={styles.loadingScreen}>
           <LottieView
             source={require('../assets/lottieFiles/loadingSkeliton.json')}
             autoPlay
@@ -214,35 +181,44 @@ const CheckIn = ({ checkINStatus }) => {
         onRequestClose={() => setAlready(false)}>
         <MsgModal message={'Already checkin 💪🏻'} />
       </Modal>
-
-      <Modal visible={check} transparent onRequestClose={() => setcheck(false)}>
+      <Modal visible={check} transparent onRequestClose={() => setCheck(false)}>
         <MsgModal message={'Get started 😉'} />
       </Modal>
     </View>
   );
 };
 
-export default CheckIn;
+const styles = StyleSheet.create({
+  loadingScreen: {
+    position: 'absolute',
+    top: -600,
+    bottom: 30,
+    left: '-20%',
+    right: '-120%',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+const buttonStyle = {
+  marginRight: 5,
+  paddingVertical: 20,
+  paddingHorizontal: 40,
+  borderRadius: 30,
+  width: 150,
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
-// useEffect(() => {
-//   if (location && targetLocation) {
-//     const latitudeDifference = Math.abs(30.768914 - 30.7688754);
-//     const longitudeDifference = Math.abs(76.576187 - 76.57561);
-//     // latitudeDifference = Math.abs(30.768914 - 30.7688754);
-//     // longitudeDifference = Math.abs(76.576187 - 76.57561);
-//     const latitudeInMeters = latitudeDifference * 111139;
-//     const longitudeInMeters = longitudeDifference * 111139;
-//     console.log(latitudeInMeters)
-//     console.log(longitudeInMeters);
-//     if (latitudeInMeters < 5 && longitudeInMeters < 5) {
-//       console.log('inside if');
-//       setDisableButton(false);
-//     } else {
-//       setDisableButton(true);
-//       console.log('inside else');
-//     }
-//   }
-//   else{
-//     console.log('hello')
-//   }
-// }, [location, targetLocation]);
+// Define styles for different states of the button
+const enabledButtonStyle = {
+  ...buttonStyle,
+  backgroundColor: neon,
+};
+
+const disabledButtonStyle = {
+  ...buttonStyle,
+  backgroundColor: 'gray', // Change this color to your desired color for disabled state
+};
+
+export default CheckIn;

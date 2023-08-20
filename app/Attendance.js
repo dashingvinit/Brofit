@@ -4,14 +4,18 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
-  Alert,
   RefreshControl,
   Modal,
-  Pressable,
+  StyleSheet,
 } from 'react-native';
-
 import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
-import { bgColor, bgLight, neon } from './constants/Constants';
+import {
+  bgColor,
+  bgGlass,
+  bgGlassLight,
+  bgLight,
+  neon,
+} from './constants/Constants';
 import axios from './constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import LottieView from 'lottie-react-native';
@@ -19,21 +23,30 @@ import LottieView from 'lottie-react-native';
 const Attendance = () => {
   const [attendance, setAttendance] = useState();
   const [refreshing, setRefreshing] = useState(false);
-  const [newloading, setnewLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [warning, setwarning] = useState(false);
   const [msg, setmsg] = useState(false);
+
+  useEffect(() => {
+    SecureStore.getItemAsync('attendance').then((res) => {
+      if (res) {
+        const attendanceData = JSON.parse(res);
+        // Assuming checkIn and checkOut are properties of the stored attendanceData object
+        const formattedAttendance =
+          'Last session ' +
+          attendanceData.checkIn +
+          ' - ' +
+          attendanceData.checkOut;
+        setAttendance(formattedAttendance);
+      }
+    });
+  }, []);
 
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
-  };
-
-  const handleCheckin = async () => {
-    setAttendance('Checked In');
-    setLoading(false);
   };
 
   const handleCheckout = async () => {
@@ -48,11 +61,17 @@ const Attendance = () => {
       const user = JSON.parse(userString);
       const Id = user?.userId || user?._id;
       const response = await axios.patch(`/attendance/${Id}`);
-      setAttendance('Checked Out');
+      setLoading(false);
+      await SecureStore.setItemAsync(
+        'attendance',
+        JSON.stringify(response.data.data)
+      );
+      setAttendance('Checked Out ' + response.data.data.checkOut);
     } catch (error) {
-      console.log('Error: ' + error);
+      const errMsg = error.response.data.error.message;
+      setAttendance(errMsg);
+      setLoading(false);
     }
-    setLoading(false);
     setmsg(true);
   };
 
@@ -61,7 +80,6 @@ const Attendance = () => {
       const timeout = setTimeout(() => {
         setmsg(false);
       }, 1000);
-
       return () => clearTimeout(timeout);
     }
   }, [msg]);
@@ -73,74 +91,41 @@ const Attendance = () => {
           visible={warning}
           transparent
           onRequestClose={() => setwarning(false)}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#00000099',
-            }}>
-            <View
-              style={{
-                width: '60%',
-                height: '12%',
-                backgroundColor: bgColor,
-                borderRadius: 25,
-                marginBottom: 0,
-              }}>
-              <View style={{ marginTop: 20, alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, color: neon }}>
-                  Bro, are you leaving ?
-                </Text>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalMsgContainer}>
+              <View style={styles.modalTxtContainer}>
+                <Text style={styles.modalTxt}>Bro, are you leaving ?</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 20,
-                  justifyContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  gap: 10,
-                  marginRight: 20,
-                }}>
-                <View style={{ alignItems: 'center', paddingVertical: 5 }}>
-                  <Pressable onPress={() => setwarning(false)}>
+              <View style={styles.modalOption}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    padding: 15,
+                  }}>
+                  <TouchableOpacity onPress={() => setwarning(false)}>
                     <Text style={{ fontSize: 16, color: neon }}>No</Text>
-                  </Pressable>
+                  </TouchableOpacity>
                 </View>
                 <View
                   style={{
                     alignItems: 'center',
-                    paddingHorizontal: 20,
-                    paddingVertical: 5,
+                    padding: 15,
                   }}>
-                  <Pressable onPress={handleout}>
+                  <TouchableOpacity onPress={handleout}>
                     <Text style={{ fontSize: 16, color: neon }}>Yes</Text>
-                  </Pressable>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
           </View>
         </Modal>
         <Modal visible={msg} transparent onRequestClose={() => setmsg(false)}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#00000099',
-            }}>
-            <View
-              style={{
-                width: '65%',
-                height: '12%',
-                backgroundColor: bgColor,
-                borderRadius: 25,
-                justifyContent: 'center',
-              }}>
-              <View style={{ alignItems: 'center' }}>
-                <Text style={{ fontSize: 18, color: neon }}>
-                  See you tommorow, Bro💪🏻
-                </Text>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalMsgContainer}>
+              <View style={styles.modalTxtContainer}>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={styles.modalTxt}>{attendance}</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -171,76 +156,116 @@ const Attendance = () => {
             <Calendar />
           )}
         </ScrollView>
-        <View
-          style={{
-            marginTop: 20,
-            alignItems: 'center',
-            paddingBottom: 90,
-            backgroundColor: 'black',
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: 'bold',
-              fontSize: 18,
-              padding: 20,
-            }}>
+        <View style={styles.bottomBlack}>
+          <Text style={styles.bottomMsg}>
             {attendance ? attendance : 'Go to the gym'}
           </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingHorizontal: 30,
-            }}>
-            <CheckIn checkINStatus={handleCheckin} />
-
+          <View style={styles.btnContainer}>
+            <CheckIn setAttendance={setAttendance} />
             <TouchableOpacity
-              style={{
-                marginLeft: 5,
-                backgroundColor: bgLight,
-                paddingVertical: 20,
-                paddingHorizontal: 30,
-                borderRadius: 30,
-                width: 150,
-              }}
-              disabled={attendance === 'Checked In' ? false : true}
+              style={styles.checkOutBtn}
               onPress={handleCheckout}>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                CheckOUT
-              </Text>
+              {loading ? (
+                <LottieView
+                  source={require('./assets/lottieFiles/loadingcircles.json')}
+                  autoPlay
+                  loop
+                  style={{ height: 20, width: 25 }}
+                />
+              ) : (
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                  CheckOUT
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
-        {loading && (
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <LottieView
-              source={require('./assets/lottieFiles/loadingSkeliton.json')}
-              autoPlay
-              loop
-            />
-          </View>
-        )}
       </View>
     </GradientBG>
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,.9)',
+  },
+  modalMsgContainer: {
+    width: '80%',
+    backgroundColor: bgGlassLight,
+    borderRadius: 15,
+    borderColor: 'white',
+    borderWidth: 1,
+  },
+  modalTxtContainer: {
+    paddingVertical: 30,
+    borderTopEndRadius: 15,
+    borderTopStartRadius: 15,
+    backgroundColor: bgGlass,
+    alignItems: 'center',
+  },
+  modalTxt: {
+    fontSize: 18,
+    color: 'white',
+  },
+  modalOption: {
+    backgroundColor: bgGlassLight,
+    borderBottomEndRadius: 15,
+    borderBottomStartRadius: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  modalMessage: {
+    width: '80%',
+    backgroundColor: bgColor,
+    borderRadius: 15,
+    justifyContent: 'center',
+  },
+  bottomBlack: {
+    marginTop: 20,
+    alignItems: 'center',
+    paddingBottom: 90,
+    backgroundColor: 'black',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  bottomMsg: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    padding: 20,
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
+  },
+  checkOutBtn: {
+    alignItems: 'center',
+    marginLeft: 5,
+    backgroundColor: bgLight,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    width: 150,
+  },
+  pageLoading: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default Attendance;

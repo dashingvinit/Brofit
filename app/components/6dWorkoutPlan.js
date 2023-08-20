@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 const WorkoutPlan = (props) => {
   const data = WorkoutPlanData;
   const renderItem = ({ item }) => (
-    <View>
+    <View style={{ marginHorizontal: 10, paddingTop: 10 }}>
       <TouchableOpacity
         onPress={() => props.navigation.navigate('DayWiseWorkouts', { item })}>
         <View>
@@ -49,8 +49,8 @@ const WorkoutPlan = (props) => {
 
   return (
     <GradientBG style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1, paddingHorizontal: 10 }}>
-        <TopBack>6 day WorkOut Routin</TopBack>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TopBack>6 day WorkOut</TopBack>
         <FlatList
           data={data}
           renderItem={renderItem}
@@ -72,11 +72,9 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 20,
   },
-
   cardContainer: {
     minHeight: 210,
     maxHeight: 300,
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
