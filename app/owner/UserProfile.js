@@ -162,8 +162,8 @@ const UserProfile = (props) => {
                 justifyContent: 'space-around',
               }}>
               <View style={styles.smContainer}>
-                <Text>Height</Text>
-                <Text style={styles.smHeader}>{userData?.height}</Text>
+                <Text>Height </Text>
+                <Text style={styles.smHeader}>{userData?.height}″</Text>
                 <Text style={{ fontSize: 12 }}>Feet</Text>
               </View>
               <View style={styles.smContainer}>
@@ -196,7 +196,6 @@ const UserProfile = (props) => {
               </View>
             ) : null}
           </>
-
           <Hr />
           <View style={styles.bottomContainer1}>
             <Text style={styles.smHeader}>Plan details:</Text>
@@ -271,7 +270,7 @@ const styles = StyleSheet.create({
   smContainer: {
     backgroundColor: '#F8FFDB',
     height: 180,
-    minWidth: 123,
+    minWidth: '33%',
     marginHorizontal: 10,
     marginBottom: 10,
     borderRadius: 30,

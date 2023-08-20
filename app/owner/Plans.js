@@ -68,6 +68,7 @@ const Plans = () => {
         price,
         validity,
       });
+      console.log('response: ', response.data);
       setcreateplandone(true);
       toggleForm();
       setGymId('');
@@ -263,7 +264,9 @@ const Plans = () => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    marginLeft: '10%',
+                    justifyContent: 'space-around',
+                    backgroundColor: bgGlass,
+                    borderRadius: 10,
                   }}>
                   <TouchableOpacity
                     onPress={() => {
@@ -296,26 +299,26 @@ const Plans = () => {
             onRequestClose={() => setcreateplandone(false)}>
             <MsgModal message={'Plan created 🏋🏽'} />
           </Modal>
-          </ScrollView>
-            {loading && (
-            <View
-              style={{
-                  position: 'absolute',
-                  top: -100,
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <LottieView
-                source={require('../assets/lottieFiles/loadingSkeliton.json')}
-                autoPlay
-                loop
-              />
-            </View>
-          )}
+        </ScrollView>
+        {loading && (
+          <View
+            style={{
+              position: 'absolute',
+              top: -100,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <LottieView
+              source={require('../assets/lottieFiles/loadingSkeliton.json')}
+              autoPlay
+              loop
+            />
+          </View>
+        )}
       </SafeAreaView>
     </GradientBG>
   );
