@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput,ScrollView,StyleSheet } from 'react-native';
 import axios from './constants/Axios';
 import Background from './components/Background';
 import Btn from './components/Btn';
@@ -60,7 +60,11 @@ const ConfirmPassword = (props) => {
           }}>
           Brofit
         </Text>
-        <View style={{ marginHorizontal: 20 }}>
+        <ScrollView>
+        <View style={[
+          styles.container4,
+          Platform.OS === 'ios' ? styles.iosContainer : styles.androidContainer,
+        ]}>
           <Text style={{ fontSize: 40, color: neon, fontWeight: 'bold' }}>
             Reset Password
           </Text>
@@ -152,6 +156,7 @@ const ConfirmPassword = (props) => {
             Press={handlePasswordReset}
           />
         </View>
+        </ScrollView>
         {loading && (
           <View
             style={{
@@ -175,5 +180,18 @@ const ConfirmPassword = (props) => {
     </Background>
   );
 };
+const styles = StyleSheet.create({
+  container4: {
+    marginHorizontal: 20
+  },
+  iosContainer: {
+    marginTop: '80%',  
+    marginBottom:'90%'
+  },
+  androidContainer: {
+    marginTop: '80%',
+    marginBottom: '10%',
+  }
+})
 
 export default ConfirmPassword;
