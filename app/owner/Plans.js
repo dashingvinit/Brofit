@@ -38,6 +38,7 @@ const Plans = () => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString); // Parse the user string to an object
       const gymId = user.gymId;
+      setGymId(gymId);
       const response = await axios.get(`/gym/${gymId}`);
       const data = response.data;
       // console.log('plans: ', data.data.plans);
@@ -63,12 +64,12 @@ const Plans = () => {
     setloading(true);
     try {
       const response = await axios.post('/plan', {
-        gymId,
+        gymId: gymId,
         name,
         price,
         validity,
       });
-      console.log('response: ', response.data);
+      //  console.log('response: ', response.data);
       setcreateplandone(true);
       toggleForm();
       setGymId('');
@@ -220,14 +221,14 @@ const Plans = () => {
                 <Text style={styles.createPlanText}>
                   {selectedPlan ? 'Edit Plan' : 'Create New Plan'}
                 </Text>
-                {!selectedPlan && (
+                {/* {!selectedPlan && (
                   <TextInput
                     value={gymId}
                     onChangeText={setGymId}
                     placeholder="Gym ID"
                     style={styles.input}
                   />
-                )}
+                )} */}
                 <TextInput
                   value={selectedPlan ? editName : name}
                   onChangeText={selectedPlan ? setEditName : setName}
