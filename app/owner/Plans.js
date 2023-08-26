@@ -233,6 +233,7 @@ const Plans = () => {
                   value={selectedPlan ? editName : name}
                   onChangeText={selectedPlan ? setEditName : setName}
                   placeholder="Name"
+                  placeholderTextColor={black}
                   style={styles.input}
                 />
                 <TextInput
@@ -246,6 +247,7 @@ const Plans = () => {
                   value={selectedPlan ? editPrice.toString() : price}
                   onChangeText={selectedPlan ? setEditPrice : setPrice}
                   placeholder="Price"
+                  placeholderTextColor={black}
                   style={styles.input}
                 />
                 <TextInput
@@ -259,6 +261,7 @@ const Plans = () => {
                   value={selectedPlan ? editValidity.toString() : validity}
                   onChangeText={selectedPlan ? setEditValidity : setValidity}
                   placeholder="Validity"
+                  placeholderTextColor={black}
                   style={styles.input}
                 />
                 <View
