@@ -23,7 +23,7 @@ const Workouts = ({ route }) => {
           <TopBack>{item.title}</TopBack>
           <Text style={styles.content}>{item.content}</Text>
           <ScrollView>
-            <View style={{ paddingBottom: 100 }}>
+            <View style={{ paddingBottom: '50%' }}>
               {workouts.map((workout) => (
                 <View style={styles.cards} key={workout.name}>
                   {/* <LottieView
