@@ -338,8 +338,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 20,
     backgroundColor: bgGlass,
-    borderTopEndRadius: 25,
-    borderTopStartRadius: 25,
+    borderTopEndRadius: 15,
+    borderTopStartRadius: 15,
   },
   cardText: {
     color: neon,
@@ -349,8 +349,8 @@ const styles = StyleSheet.create({
   editBtn: {
     marginHorizontal: 20,
     backgroundColor: neon,
-    borderBottomEndRadius: 25,
-    borderBottomStartRadius: 25,
+    borderBottomEndRadius: 15,
+    borderBottomStartRadius: 15,
   },
   editBtnText: {
     color: bgColor,
