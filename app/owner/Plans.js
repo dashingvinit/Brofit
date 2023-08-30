@@ -149,6 +149,86 @@ const Plans = () => {
         <TopBack>Plans</TopBack>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.container}>
+          {!showForm ? (
+              <TouchableOpacity
+                onPress={toggleForm}
+                style={styles.createButton}>
+                <Text style={styles.createButtonText}>Create Plan</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.createPlanContainer}>
+                <Text style={styles.createPlanText}>
+                  {selectedPlan ? 'Edit Plan' : 'Create New Plan'}
+                </Text>
+                {/* {!selectedPlan && (
+                  <TextInput
+                    value={gymId}
+                    onChangeText={setGymId}
+                    placeholder="Gym ID"
+                    style={styles.input}
+                  />
+                )} */}
+                <TextInput
+                  value={selectedPlan ? editName : name}
+                  onChangeText={selectedPlan ? setEditName : setName}
+                  placeholder="Name"
+                  placeholderTextColor={'black'}
+                  style={styles.input}
+                />
+                <TextInput
+                  keyboardType={
+                    Platform.OS === 'android'
+                      ? 'phone-pad'
+                      : Platform.OS === 'ios'
+                      ? 'number-pad'
+                      : 'numbers-and-punctuation'
+                  }
+                  value={selectedPlan ? editPrice.toString() : price}
+                  onChangeText={selectedPlan ? setEditPrice : setPrice}
+                  placeholder="Price"
+                  placeholderTextColor={'black'}
+                  style={styles.input} 
+                />
+                <TextInput
+                  keyboardType={
+                    Platform.OS === 'android'
+                      ? 'phone-pad'
+                      : Platform.OS === 'ios'
+                      ? 'number-pad'
+                      : 'numbers-and-punctuation'
+                  }
+                  value={selectedPlan ? editValidity.toString() : validity}
+                  onChangeText={selectedPlan ? setEditValidity : setValidity}
+                  placeholder="Validity"
+                  placeholderTextColor={'black'}
+                  style={styles.input}
+                />
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    backgroundColor: bgGlass,
+                    borderRadius: 10,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      toggleForm();
+                      setShowCancelButton(false);
+                    }}
+                    style={styles.createButton}>
+                    <Text style={styles.createButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
+                    style={styles.createButton}>
+                    <Text style={styles.createButtonText}>
+                      {selectedPlan ? 'Update Plan' : 'Create Plan'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
             {plans && plans.length > 0 ? (
               plans.map((plan) => (
                 <View key={plan.name}>
@@ -210,86 +290,7 @@ const Plans = () => {
                 <Text style={{ color: neon, fontSize: 20 }}>No Plans</Text>
               </View>
             )}
-            {!showForm ? (
-              <TouchableOpacity
-                onPress={toggleForm}
-                style={styles.createButton}>
-                <Text style={styles.createButtonText}>Create Plan</Text>
-              </TouchableOpacity>
-            ) : (
-              <View style={styles.createPlanContainer}>
-                <Text style={styles.createPlanText}>
-                  {selectedPlan ? 'Edit Plan' : 'Create New Plan'}
-                </Text>
-                {/* {!selectedPlan && (
-                  <TextInput
-                    value={gymId}
-                    onChangeText={setGymId}
-                    placeholder="Gym ID"
-                    style={styles.input}
-                  />
-                )} */}
-                <TextInput
-                  value={selectedPlan ? editName : name}
-                  onChangeText={selectedPlan ? setEditName : setName}
-                  placeholder="Name"
-                  placeholderTextColor={black}
-                  style={styles.input}
-                />
-                <TextInput
-                  keyboardType={
-                    Platform.OS === 'android'
-                      ? 'phone-pad'
-                      : Platform.OS === 'ios'
-                      ? 'number-pad'
-                      : 'numbers-and-punctuation'
-                  }
-                  value={selectedPlan ? editPrice.toString() : price}
-                  onChangeText={selectedPlan ? setEditPrice : setPrice}
-                  placeholder="Price"
-                  placeholderTextColor={black}
-                  style={styles.input}
-                />
-                <TextInput
-                  keyboardType={
-                    Platform.OS === 'android'
-                      ? 'phone-pad'
-                      : Platform.OS === 'ios'
-                      ? 'number-pad'
-                      : 'numbers-and-punctuation'
-                  }
-                  value={selectedPlan ? editValidity.toString() : validity}
-                  onChangeText={selectedPlan ? setEditValidity : setValidity}
-                  placeholder="Validity"
-                  placeholderTextColor={black}
-                  style={styles.input}
-                />
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    backgroundColor: bgGlass,
-                    borderRadius: 10,
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      toggleForm();
-                      setShowCancelButton(false);
-                    }}
-                    style={styles.createButton}>
-                    <Text style={styles.createButtonText}>Cancel</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={selectedPlan ? handleUpdatePlan : handleCreatePlan}
-                    style={styles.createButton}>
-                    <Text style={styles.createButtonText}>
-                      {selectedPlan ? 'Update Plan' : 'Create Plan'}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            )}
+            
           </View>
           <Modal
             visible={plandone}
