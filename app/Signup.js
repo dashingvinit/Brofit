@@ -27,29 +27,13 @@ const Signup = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const [newloading, setnewLoading] = useState(false);
-  const [check, setcheck] = useState(false)
-  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     gymId: '',
     password: '',
     confirmPassword: '',
-    registerationNumber:'',
   });
-  const [showRegistrationIdField, setShowRegistrationIdField] = useState(false);
-  
-
-  const toggleRegistrationIdField = () => {
-    setShowRegistrationIdField(!showRegistrationIdField);
-    if(check)
-    {
-      setcheck(false);
-    }
-    else{
-      setcheck(true);
-    }
-  };
 
   const handleInputChange = (field, value) => {
     setErrMsg('');
@@ -66,7 +50,7 @@ const Signup = (props) => {
   const handleSignup = async () => {
     
     setnewLoading(true);
-    const { name, email, gymId, password, confirmPassword, registerationNumber } = formData;
+    const { name, email, gymId, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
       setErrMsg('Password do not match');
@@ -79,7 +63,6 @@ const Signup = (props) => {
         email,
         gymId,
         password,
-        registerationNumber,
       });
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
@@ -169,7 +152,6 @@ const Signup = (props) => {
                 <Text style={{ color: 'red' }}>{errMsg}</Text>
               </View>
             )}
-            
             <View style={{ position: 'relative' }}>
               <TextInput
                 style={{
@@ -214,40 +196,7 @@ const Signup = (props) => {
               onChangeText={(value) =>
                 handleInputChange('confirmPassword', value)
               }
-            />            
-              <TouchableOpacity
-                onPress={toggleRegistrationIdField}
-                style={styles.checkboxContainer}
-              >
-                <Ionicons
-                      name={check ? 'md-checkmark' : 'square-outline'}
-                      size={24}
-                      color={neon}  
-                />
-                <View style={[styles.checkbox, showRegistrationIdField && styles.checkboxChecked]} />
-                <Text style={styles.checkboxLabel}>Already member</Text>
-              </TouchableOpacity>
-
-            {showRegistrationIdField && (
-              <Field
-                placeholder="Reg  No."
-                value={formData.registerationNumber}
-                icon="user"
-                onChangeText={(value) => handleInputChange('registerationNumber', value)}
-              />
-            )}
-            {error !== '' && (
-            <Text
-              style={{
-                color: 'red',
-                fontSize: 14,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              {error}
-            </Text>
-          )}
-
+            />
             <View style={styles.redirectContainer}>
               <Text style={styles.redirectMsg}>
                 By signing in, you agree to our{' '}
@@ -273,7 +222,7 @@ const Signup = (props) => {
                 Press={nextPage}
               />
             )} */}
-            <View style={styles.redirectContainer1}>
+            <View style={styles.redirectContainer}>
               <Text
                 style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>
                 Already have an account ?{' '}
@@ -342,29 +291,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexWrap: 'wrap',
     textAlign: 'center',
-    marginTop:30,
-  },
-  redirectContainer1: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    textAlign: 'center',
   },
   redirectMsg: {
     color: '#EEEEEE',
     fontSize: 16,
     flexWrap: 'wrap',
     textAlign: 'center',
-  },
-  checkboxLabel: {
-    color:"white",
-    fontSize:16,
-  },
-  checkboxContainer:{
-    margin:10,
-    flexDirection:'row',
-    gap:5,
   },
   redirectBtn: {
     color: neon,
