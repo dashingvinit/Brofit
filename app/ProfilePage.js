@@ -264,7 +264,7 @@ const ProfilePage = (props) => {
                 <TouchableOpacity
                   onPress={() => setEditable(false)}
                   style={styles.button}>
-                  <Text style={styles.buttonText}>cancel</Text>
+                  <Text style={styles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleSave} style={styles.button}>
                   <Text style={styles.buttonText}>Save</Text>
@@ -307,6 +307,10 @@ const ProfilePage = (props) => {
                   <Text style={styles.editHeader}>Edit Profile Settings</Text>
                   <Text style={styles.editText}>
                     Last Updated on {formattedUpdatedAt}
+                    {'\n'}
+                    <Text style={styles.editText}>
+                      *keep updating once a month.
+                    </Text>
                   </Text>
                 </View>
                 <TouchableOpacity onPress={handleEdit} style={styles.button}>

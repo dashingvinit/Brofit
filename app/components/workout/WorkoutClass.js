@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { bgGlass, bgGlassLight, neon } from '../constants/Constants';
+import { bgGlass, bgGlassLight, neon } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WorkoutClass = (props) => {
@@ -8,22 +8,22 @@ const WorkoutClass = (props) => {
     {
       name: 'Boxing',
       workouts: 15,
-      image: require('../assets/images/boxer.jpg'),
+      image: require('../../assets/images/boxer.jpg'),
     },
     {
       name: 'calisthenics',
       workouts: 20,
-      image: require('../assets/images/calis.jpg'),
+      image: require('../../assets/images/calis.jpg'),
     },
     {
       name: 'Yoga',
       workouts: 15,
-      image: require('../assets/images/yoga.jpg'),
+      image: require('../../assets/images/yoga.jpg'),
     },
     {
       name: 'Home Workouts',
       workouts: 10,
-      image: require('../assets/images/home.jpg'),
+      image: require('../../assets/images/home.jpg'),
     },
   ];
 
@@ -34,7 +34,7 @@ const WorkoutClass = (props) => {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              props.navigation.navigate('SixDayWorkoutPlan');
+              props.navigation.navigate('Programs');
             }}>
             <View style={styles.container}>
               <Image

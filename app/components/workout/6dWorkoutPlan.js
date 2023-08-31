@@ -5,12 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  Image,
 } from 'react-native';
-import GradientBG from './GradientBG';
-import TopBack from './TopBack';
+import GradientBG from '../GradientBG';
+import TopBack from '../TopBack';
 import React from 'react';
-import { WorkoutPlanData } from '../constants/Constants';
+import { WorkoutPlanData } from '../../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WorkoutPlan = (props) => {
@@ -37,13 +36,13 @@ const WorkoutPlan = (props) => {
   const getImageSource = (bg) => {
     switch (bg) {
       case 'grade1':
-        return require('../assets/grade1.jpg');
+        return require('../../assets/grade1.jpg');
       case 'grade2':
-        return require('../assets/grade2.jpg');
+        return require('../../assets/grade2.jpg');
       case 'grade3':
-        return require('../assets/grade3.jpg');
+        return require('../../assets/grade3.jpg');
       default:
-        return require('../assets/grade1.jpg'); // Provide a default image if bg doesn't match any case
+        return require('../../assets/grade1.jpg'); // Provide a default image if bg doesn't match any case
     }
   };
 

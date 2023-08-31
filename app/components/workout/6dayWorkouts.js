@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
+import { bgGlass, neon } from '../../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LottieView from 'lottie-react-native';
-import TopBack from './TopBack';
-import GradientBG from './GradientBG';
+import TopBack from '../TopBack';
+import GradientBG from '../GradientBG';
 
 const Workouts = ({ route }) => {
   const [workouts, setWorkouts] = useState([]);
