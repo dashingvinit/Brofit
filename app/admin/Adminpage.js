@@ -20,6 +20,7 @@ const AdminPage = (props) => {
   const [email, setEmail] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [registerationNumber, setregisterationNumber] = useState('');
   const [owner, setOwner] = useState('');
   const [data, setData] = useState(null);
   const [search, setSearch] = useState('');
@@ -36,6 +37,7 @@ const AdminPage = (props) => {
       latitude,
       longitude,
       owner,
+      registerationNumber,
     };
     axios
       .post('/gym', formData, {
@@ -119,6 +121,12 @@ const AdminPage = (props) => {
                   value={owner}
                   onChangeText={setOwner}
                 />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Registration start Onwards "
+                  value={registerationNumber}
+                  onChangeText={setregisterationNumber}
+                />
                 <View style={{ alignItems: 'center', marginTop: 10 }}>
                   <TouchableOpacity
                     onPress={handleFormSubmit}
@@ -139,6 +147,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    marginBottom:'30%'
   },
   heading: {
     fontSize: 32,
