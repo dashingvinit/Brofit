@@ -282,7 +282,7 @@ const ProfilePage = (props) => {
               <View style={styles.smContainer}>
                 <Text>Height</Text>
                 <Text style={styles.smHeader}>{userData?.height}</Text>
-                <Text style={{ fontSize: 12 }}>Feet</Text>
+                <Text style={{ fontSize: 12 }}>cm</Text>
               </View>
               <View style={styles.smContainer}>
                 <Text>Weight</Text>

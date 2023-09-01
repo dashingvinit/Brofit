@@ -151,7 +151,6 @@ const ProfileSetup = (props) => {
               placeholder="Age (yrs)"
               icon="chevrons-up"
               value={formData.age}
-              value={formData.age}
               onChangeText={(value) => handleInputChange('age', value)}
             />
             <Field

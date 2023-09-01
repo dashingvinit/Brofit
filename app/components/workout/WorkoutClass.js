@@ -34,7 +34,7 @@ const WorkoutClass = (props) => {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              props.navigation.navigate('Programs');
+              props.navigation.navigate('Workouts');
             }}>
             <View style={styles.container}>
               <Image
@@ -50,12 +50,7 @@ const WorkoutClass = (props) => {
                 size={25}
                 color="black"
                 backgroundColor={neon}
-                style={{
-                  marginLeft: 'auto',
-                  borderRadius: 100,
-                  paddingVertical: 2,
-                  paddingHorizontal: 3,
-                }}
+                style={styles.icon}
               />
             </View>
           </TouchableOpacity>
@@ -73,6 +68,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 10,
   },
+  icon: {
+    marginLeft: 'auto',
+    borderRadius: 100,
+    paddingVertical: 2,
+    paddingHorizontal: 3,
+  },
   header: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     fontSize: 14,
-    color: bgGlassLight,
+    color: 'white',
     marginTop: 3,
     marginLeft: 10,
   },

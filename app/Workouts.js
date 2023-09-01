@@ -7,15 +7,18 @@ import {
 } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, bgGlass, bgLight, neon } from './constants/Constants';
-import { GradientBG, TopBack, Hr, WorkoutClass, Runtimer } from './components';
+import {
+  GradientBG,
+  WorkoutClass,
+  Runtimer,
+  WorkoutPrograms,
+} from './components';
 import { SixdayWorkOut } from './assets/images';
 
 const Workouts = (props) => {
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopBack>Workout Plans</TopBack>
         <ScrollView>
           <Runtimer />
           <TouchableOpacity
@@ -30,13 +33,14 @@ const Workouts = (props) => {
               />
             </View>
           </TouchableOpacity>
-
-          <View style={{ marginHorizontal: 10, paddingBottom: 100 }}>
+          <WorkoutPrograms />
+          <View style={{ marginHorizontal: 10, paddingBottom: 80 }}>
             <WorkoutClass navigation={props.navigation} />
           </View>
         </ScrollView>
         {/* <View style={styles.BottomContainer}>
           <Text style={styles.BottomContainerText}>Workouts</Text>
+          <ScrollView></ScrollView>
         </View> */}
       </SafeAreaView>
     </GradientBG>
@@ -60,7 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    position: 'absolute',
     bottom: 0,
     width: '100%',
     paddingBottom: 100,
