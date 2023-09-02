@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import {
   View,
@@ -31,6 +31,8 @@ const Plans = () => {
   const [showCancelButton, setShowCancelButton] = useState(false);
   const [createplandone, setcreateplandone] = useState(false);
   const [loading, setloading] = useState(true);
+
+  const scrollRef = useRef(null);
 
   const getPlans = async () => {
     setloading(true);
@@ -90,6 +92,8 @@ const Plans = () => {
     setEditPrice(plan.price);
     setEditValidity(plan.validity);
     toggleForm();
+    scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+
   };
 
   const toggleForm = () => {
@@ -147,7 +151,7 @@ const Plans = () => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>Plans</TopBack>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView ref={scrollRef}>
           <View style={styles.container}>
           {!showForm ? (
               <TouchableOpacity
