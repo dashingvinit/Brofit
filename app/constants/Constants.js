@@ -10,33 +10,6 @@ export const bgLight = 'rgba(42, 47, 55, .6)';
 export const offWhite = '#9BA4B5';
 export const margin = 10;
 
-export const Workouts = [
-  {
-    title: 'tricep',
-    image: tricep,
-  },
-  {
-    title: 'Chest',
-    image: chest,
-  },
-  {
-    title: 'bicep',
-    image: bicep,
-  },
-  {
-    title: 'leg',
-    image: leg,
-  },
-  {
-    title: 'back',
-    image: back,
-  },
-
-  {
-    title: 'shoulder',
-    image: shoulder,
-  },
-];
 export const WorkoutPlanData = [
   {
     id: '1',
@@ -156,7 +129,7 @@ export const WorkoutPlanData = [
     id: '4',
     title: 'Day 4',
     content: 'Cardio and Core',
-    bg: 'grade1',
+    bg: 'grade4',
     exercises: [
       {
         name: 'Running',
@@ -194,7 +167,7 @@ export const WorkoutPlanData = [
     id: '5',
     title: 'Day 5',
     content: 'Full Body Workout',
-    bg: 'grade2',
+    bg: 'grade5',
     exercises: [
       {
         name: 'Burpees',
@@ -232,7 +205,7 @@ export const WorkoutPlanData = [
     id: '6',
     title: 'Day 6',
     content: 'Legs and Core',
-    bg: 'grade3',
+    bg: 'grade6',
     exercises: [
       {
         name: 'Dumbbell Lunges',

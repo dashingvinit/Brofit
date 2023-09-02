@@ -9,14 +9,10 @@ import {
 } from 'react-native';
 
 import moment from 'moment';
-import {
-  bgColor,
-  bgGlass,
-  bgGlassLight,
-  bgLight,
-  neon,
-} from './constants/Constants';
-import { Hr } from './components';
+import { bgColor, bgGlassLight, neon } from './constants/Constants';
+import { Hr, TopBack } from './components';
+import LottieView from 'lottie-react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Timer({ interval, style }) {
   const pad = (n) => (n < 10 ? '0' + n : n);
@@ -145,8 +141,19 @@ export default function App() {
 
   return (
     <ImageBackground
-      source={require('./assets/grade2.jpg')}
+      source={require('./assets/grade5.png')}
       style={styles.backgroundImage}>
+      <SafeAreaView />
+      <View style={{ zIndex: 2 }}>
+        <TopBack>Timer</TopBack>
+      </View>
+
+      <LottieView
+        source={require('./assets/lottieFiles/circlePulse.json')}
+        autoPlay
+        loop
+        style={{ height: '100%', position: 'absolute' }}
+      />
       <View style={styles.container}>
         <Timer
           interval={laps.reduce((total, curr) => total + curr, 0) + now - start}
@@ -212,7 +219,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 50,
   },
   backgroundImage: {
     flex: 1,
@@ -231,8 +237,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'black',
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
+    borderTopRightRadius: 45,
+    borderTopLeftRadius: 45,
     width: '100%',
   },
   button: {

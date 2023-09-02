@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import Entypo from 'react-native-vector-icons/Entypo';
 import WorkoutStack from '../WorkoutStack';
 import HomeStack from '../HomeStack';
 import Timer from '../Timer';
@@ -28,17 +28,17 @@ const BottomNav = ({ setHandleLogout }) => {
           elevation: 0,
           margin: 10,
           borderRadius: 20,
-          paddingBottom:0,
+          paddingBottom: 0,
         },
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, color }) => {
           let iconName;
 
           if (route.name === 'HomeStack') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'WorkoutStack') {
             iconName = focused ? 'md-barbell' : 'md-barbell-outline';
-          } else if (route.name === 'Timer') {
-            iconName = focused ? 'ios-timer' : 'ios-timer-outline';
+          } else if (route.name === 'Stats') {
+            iconName = focused ? 'ios-stats-chart' : 'ios-stats-chart-outline';
           } else if (route.name === 'Attendance') {
             iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
           } else if (route.name === 'ProfilePage') {
@@ -50,7 +50,7 @@ const BottomNav = ({ setHandleLogout }) => {
               name={iconName}
               size={30}
               color={color}
-              style={{ justifyContent:'center' }}
+              style={{ justifyContent: 'center' }}
             />
           );
         },
@@ -69,7 +69,7 @@ const BottomNav = ({ setHandleLogout }) => {
       </Tab.Screen>
       <Tab.Screen name="Attendance" component={Attendance} />
       <Tab.Screen name="WorkoutStack" component={WorkoutStack} />
-      <Tab.Screen name="Timer" component={Timer} />
+      <Tab.Screen name="Stats" component={Timer} />
       <Tab.Screen name="ProfilePage">
         {(props) => (
           <ProfilePage {...props} setHandleLogout={setHandleLogout} />

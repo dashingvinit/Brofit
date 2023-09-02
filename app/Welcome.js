@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { Background2 } from './components';
 import Btn from './components/Btn';
-import { bgColor, bgGlassLight, neon } from './constants/Constants';
+import { bgColor, neon } from './constants/Constants';
 
 const Home = (props) => {
   return (

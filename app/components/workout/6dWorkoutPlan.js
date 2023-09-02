@@ -5,13 +5,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
-  Image,
 } from 'react-native';
-import GradientBG from './GradientBG';
-import TopBack from './TopBack';
+import Gradient4 from '../Gradient4';
+import TopBack from '../TopBack';
 import React from 'react';
-import { WorkoutPlanData } from '../constants/Constants';
+import { WorkoutPlanData } from '../../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const WorkoutPlan = (props) => {
   const data = WorkoutPlanData;
@@ -24,10 +24,14 @@ const WorkoutPlan = (props) => {
             source={getImageSource(item.bg)}
             style={styles.cardContainer}
             resizeMode="cover">
-            <View>
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.content}>{item.content}</Text>
-            </View>
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,0.8)']}
+              style={styles.linearGradient}>
+              <View>
+                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.content}>{item.content}</Text>
+              </View>
+            </LinearGradient>
           </ImageBackground>
         </View>
       </TouchableOpacity>
@@ -37,18 +41,24 @@ const WorkoutPlan = (props) => {
   const getImageSource = (bg) => {
     switch (bg) {
       case 'grade1':
-        return require('../assets/grade1.jpg');
+        return require('../../assets/images/chest.jpg');
       case 'grade2':
-        return require('../assets/grade2.jpg');
+        return require('../../assets/images/calis.jpg');
       case 'grade3':
-        return require('../assets/grade3.jpg');
+        return require('../../assets/images/bicep.jpg');
+      case 'grade4':
+        return require('../../assets/images/cardio.jpg');
+      case 'grade5':
+        return require('../../assets/images/pushups.jpg');
+      case 'grade6':
+        return require('../../assets/images/crunches.jpg');
       default:
-        return require('../assets/grade1.jpg'); // Provide a default image if bg doesn't match any case
+        return require('../../assets/images/crunches.jpg');
     }
   };
 
   return (
-    <GradientBG style={{ flex: 1 }}>
+    <Gradient4 style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>6 day WorkOut</TopBack>
         <FlatList
@@ -60,7 +70,7 @@ const WorkoutPlan = (props) => {
           contentContainerStyle={{ paddingBottom: 180 }}
         />
       </SafeAreaView>
-    </GradientBG>
+    </Gradient4>
   );
 };
 
@@ -75,31 +85,30 @@ const styles = StyleSheet.create({
   cardContainer: {
     minHeight: 210,
     maxHeight: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: 20,
     overflow: 'hidden',
-    marginBottom: 20,
+    marginBottom: 10,
   },
-  cardBackground: {
-    paddingHorizontal: 16,
-    marginTop: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
+  linearGradient: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 10,
   },
   cardTitle: {
-    fontSize: 18,
-    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: 20,
+    color: 'rgba(255, 255, 255, 0.6)',
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 5,
   },
   content: {
-    fontSize: 12,
+    fontSize: 24,
     color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: 'bold',
+    marginRight: 40,
+    marginBottom: 10,
   },
   bottomSpace: {
-    height: 300, // Add the height as per your requirement to create enough space at the bottom
+    height: 300,
   },
 });
 

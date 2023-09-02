@@ -9,7 +9,7 @@ import {
   StyleSheet,
   ScrollView,
   Keyboard,
-  Platform
+  Platform,
 } from 'react-native';
 import Background from './components/Background2';
 import Btn from './components/Btn';
@@ -27,7 +27,7 @@ const Signup = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const [newloading, setnewLoading] = useState(false);
-  const [check, setcheck] = useState(false)
+  const [check, setcheck] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
@@ -35,18 +35,15 @@ const Signup = (props) => {
     gymId: '',
     password: '',
     confirmPassword: '',
-    registerationNumber:'',
+    registerationNumber: '',
   });
   const [showRegistrationIdField, setShowRegistrationIdField] = useState(false);
-  
 
   const toggleRegistrationIdField = () => {
     setShowRegistrationIdField(!showRegistrationIdField);
-    if(check)
-    {
+    if (check) {
       setcheck(false);
-    }
-    else{
+    } else {
       setcheck(true);
     }
   };
@@ -64,9 +61,15 @@ const Signup = (props) => {
   };
 
   const handleSignup = async () => {
-    
     setnewLoading(true);
-    const { name, email, gymId, password, confirmPassword, registerationNumber } = formData;
+    const {
+      name,
+      email,
+      gymId,
+      password,
+      confirmPassword,
+      registerationNumber,
+    } = formData;
 
     if (password !== confirmPassword) {
       setErrMsg('Password do not match');
@@ -84,8 +87,8 @@ const Signup = (props) => {
       const userJSON = response.data.data.user;
       const user = JSON.stringify(userJSON);
       // console.log('user', user);
-      SecureStore.setItemAsync('profileSet', 'false')
-      SecureStore.setItemAsync('a', 'false')
+      SecureStore.setItemAsync('profileSet', 'false');
+      SecureStore.setItemAsync('a', 'false');
       await save('user', user);
       if (response.data.data.jwt) {
         const token = response.data.data.jwt;
@@ -100,7 +103,7 @@ const Signup = (props) => {
           setLoading(false);
           const parsedUser = JSON.parse(user);
           console.log(parsedUser.role);
-        
+
           if (parsedUser.role == 'owner') {
             props.navigation.navigate('Login');
           } else {
@@ -109,13 +112,11 @@ const Signup = (props) => {
         });
       }
       setLoading(false);
-      setnewLoading(false);      
-      
+      setnewLoading(false);
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
       if ((error.response && error.response.status === 400) || 404) {
         setError('Cannot create user with this registration number');
-        
       } else {
         console.error('Error logging in:');
       }
@@ -137,9 +138,12 @@ const Signup = (props) => {
           <Text style={styles.headerText}>Create a new account</Text>
         </View>
         <ScrollView>
-          <View style={[
-          Platform.OS === 'ios' ? styles.iosContainer : styles.androidContainer,
-        ]}>
+          <View
+            style={[
+              Platform.OS === 'ios'
+                ? styles.iosContainer
+                : styles.androidContainer,
+            ]}>
             <Field
               placeholder="Name"
               value={formData.name}
@@ -169,7 +173,7 @@ const Signup = (props) => {
                 <Text style={{ color: 'red' }}>{errMsg}</Text>
               </View>
             )}
-            
+
             <View style={{ position: 'relative' }}>
               <TextInput
                 style={{
@@ -214,39 +218,45 @@ const Signup = (props) => {
               onChangeText={(value) =>
                 handleInputChange('confirmPassword', value)
               }
-            />            
-              <TouchableOpacity
-                onPress={toggleRegistrationIdField}
-                style={styles.checkboxContainer}
-              >
-                <Ionicons
-                      name={check ? 'md-checkmark' : 'square-outline'}
-                      size={24}
-                      color={neon}  
-                />
-                <View style={[styles.checkbox, showRegistrationIdField && styles.checkboxChecked]} />
-                <Text style={styles.checkboxLabel}>Already member</Text>
-              </TouchableOpacity>
+            />
+            <TouchableOpacity
+              onPress={toggleRegistrationIdField}
+              style={styles.checkboxContainer}>
+              <Ionicons
+                name={check ? 'md-checkmark' : 'square-outline'}
+                size={24}
+                color={neon}
+              />
+              <View
+                style={[
+                  styles.checkbox,
+                  showRegistrationIdField && styles.checkboxChecked,
+                ]}
+              />
+              <Text style={styles.checkboxLabel}>Already member</Text>
+            </TouchableOpacity>
 
             {showRegistrationIdField && (
               <Field
                 placeholder="Reg  No."
                 value={formData.registerationNumber}
                 icon="user"
-                onChangeText={(value) => handleInputChange('registerationNumber', value)}
+                onChangeText={(value) =>
+                  handleInputChange('registerationNumber', value)
+                }
               />
             )}
             {error !== '' && (
-            <Text
-              style={{
-                color: 'red',
-                fontSize: 14,
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              {error}
-            </Text>
-          )}
+              <Text
+                style={{
+                  color: 'red',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                }}>
+                {error}
+              </Text>
+            )}
 
             <View style={styles.redirectContainer}>
               <Text style={styles.redirectMsg}>
@@ -317,12 +327,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   iosContainer: {
-    marginTop: '70%', 
-    marginBottom:'90%'
+    marginTop: '70%',
+    marginBottom: '90%',
   },
   androidContainer: {
     marginTop: '30%',
-    marginBottom: '10%', 
+    marginBottom: '10%',
   },
   header: {
     color: 'white',
@@ -342,7 +352,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexWrap: 'wrap',
     textAlign: 'center',
-    marginTop:30,
+    marginTop: 30,
   },
   redirectContainer1: {
     display: 'flex',
@@ -358,13 +368,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   checkboxLabel: {
-    color:"white",
-    fontSize:16,
+    color: 'white',
+    fontSize: 16,
   },
-  checkboxContainer:{
-    margin:10,
-    flexDirection:'row',
-    gap:5,
+  checkboxContainer: {
+    margin: 10,
+    flexDirection: 'row',
+    gap: 5,
   },
   redirectBtn: {
     color: neon,

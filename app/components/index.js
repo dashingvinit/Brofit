@@ -20,9 +20,13 @@ import Adminsearch from './Adminsearch';
 import Hi from './Hi';
 import Background2 from './Background2';
 import Gender from './Gender';
-import DayWiseWorkouts from './6dayWorkouts';
-import SixDayWorkoutPlan from './6dWorkoutPlan';
-import WorkoutClass from './WorkoutClass';
+import {
+  WorkoutClass,
+  DayWiseWorkouts,
+  SixDayWorkoutPlan,
+  Video,
+  WorkoutPrograms,
+} from './workout';
 import Runtimer from './Runtimer';
 import LoadingSkeleton from './LoadingSkeleton';
 import UserDelete from './UserDelete';
@@ -30,6 +34,8 @@ import UserDelete from './UserDelete';
 export {
   LoadingSkeleton,
   Runtimer,
+  Video,
+  WorkoutPrograms,
   WorkoutClass,
   DayWiseWorkouts,
   SixDayWorkoutPlan,
