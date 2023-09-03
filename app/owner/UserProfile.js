@@ -13,6 +13,7 @@ import { bgColor, bgLight, neon, bgGlass } from '../constants/Constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBack, GradientBG, Hr } from '../components';
+import LottieView from 'lottie-react-native';
 
 const UserProfile = (props) => {
   const user = props.route.params.user._id;
@@ -20,6 +21,7 @@ const UserProfile = (props) => {
   const [planExiper, setPlanExiper] = useState(null);
   const [id, setid] = useState('');
   const [showform, setshowform] = useState(false);
+  const [loading, setloading] = useState(true);
 
   const fetchUserProfileData = async () => {
     try {
@@ -30,6 +32,7 @@ const UserProfile = (props) => {
     } catch (error) {
       console.log('Checked In Users Error', error);
     }
+    setloading(false);
   };
   const getDifferenceInDays = async (dateString) => {
     if (!dateString) return null;
@@ -91,6 +94,7 @@ const UserProfile = (props) => {
         console.error(error);
       });
     setshowform(false);
+    setloading(true);
   }
 
   return (
@@ -273,6 +277,25 @@ const UserProfile = (props) => {
               {userData?.phoneNumber ? userData.phoneNumber : 'Not submitted'}
             </Text>
           </View>
+          {loading && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 300,
+              left: 0,
+              right: 0,
+              backgroundColor: 'rgba(0,0,0, 0.5)',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <LottieView
+              source={require('../assets/lottieFiles/loadingSkeliton.json')}
+              autoPlay
+              loop
+            />
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
     </GradientBG>
@@ -332,7 +355,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   input: {
-    color: '#AAC8A7',
+    color: 'black',
     backgroundColor: '#FAF3F0',
     borderRadius: 10,
     padding: 10,
