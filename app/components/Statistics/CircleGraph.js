@@ -45,7 +45,7 @@ const CircleGraph = () => {
       setTotal((presentHours / 60).toFixed(2));
       const hours = presentHours / 540;
       const active = 0.4;
-      const data = [hours, attended];
+      const data = [active, hours, attended];
       setGData(data);
     });
   };
@@ -106,13 +106,14 @@ const CircleGraph = () => {
   ];
 
   const data = {
-    labels: ['Hours', 'Attended'],
+    labels: ['Active', 'Hours', 'Attended'],
     data: Gdata,
     color: ['#d57a61', '#f5b971', '#f5b971'],
   };
 
   const chartConfig = {
     backgroundGradientFrom: '#20211f',
+
     backgroundGradientTo: '#20211f',
     color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
   };
@@ -207,7 +208,7 @@ const CircleGraph = () => {
           chartConfig={chartConfig}
           hideLegend={true}
           strokeWidth={16}
-          radius={38}
+          radius={32}
           style={{ borderRadius: 25 }}
         />
       </View>

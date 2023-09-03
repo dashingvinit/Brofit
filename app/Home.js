@@ -116,7 +116,7 @@ const Home = (props) => {
 
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('SixDayWorkoutPlan');
+              props.navigation.navigate('WorkoutStack');
             }}>
             <View style={styles.card}>
               <ImageBackground
