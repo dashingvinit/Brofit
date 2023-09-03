@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { WorkoutPrograms } from '../workout';
 import { bgGlassLight } from '../../constants/Constants';
 import { ProgressChart } from 'react-native-chart-kit';
-import Axios from '../../constants/Axios';
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Feather from 'react-native-vector-icons/Feather';
@@ -35,7 +34,7 @@ const CircleGraph = () => {
     const user = JSON.parse(userString);
     const userID = user?.userId || user?._id;
 
-    Axios.get(`/attendance/monthlyCount/${userID}/${month}`).then((res) => {
+    axios.get(`/attendance/monthlyCount/${userID}/${month}`).then((res) => {
       const present = JSON.stringify(res.data.data.attended);
       setAttended(present);
       const total = JSON.stringify(res.data.data.total);

@@ -1,9 +1,7 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { GradientBG } from './components';
-import CircleGraph from './components/Statistics/CircleGraph';
-import Calories from './components/Statistics/Calories';
-import Water from './components/Statistics/Water';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
+import { GradientBG } from './components';
+import { CircleGraph, Calories, Water } from './components/statistics';
 
 const Statistics = (props) => {
   return (
@@ -20,12 +18,6 @@ const Statistics = (props) => {
 };
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
   top: {
     backgroundColor: '#183D3D',
     borderRadius: 15,
@@ -33,6 +25,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderBottomColor: '#20211f',
     borderBottomWidth: 2,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginVertical: 10,
   },
 });
 

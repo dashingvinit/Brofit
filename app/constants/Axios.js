@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Axios = axios.create({
-  baseURL: 'https://brofit.live/api/v1/',
+  baseURL: 'https://brofit.onrender.com/api/v1/',
   timeout: 5000, // Adjust the timeout as needed
 });
 
