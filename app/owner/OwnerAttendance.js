@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginHorizontal: 10,
+    textAlign: 'center',
   },
   scrollContainer: {
     backgroundColor: bgGlassLight,

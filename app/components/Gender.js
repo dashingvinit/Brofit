@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { bgColor, neon } from '../constants/Constants';
+import { bgColorLight, neon } from '../constants/Constants';
 
 const Gender = ({ onSelect }) => {
   const genders = [
-    { label: 'Male', value: 'male', color: '#E7AB79', icon: 'male' },
-    { label: 'Female', value: 'female', color: '#ED8D8D', icon: 'female' },
-    { label: 'Other', value: 'other', color: '#DDDDDD', icon: 'male-female' },
+    { label: 'Male', value: 'male', color: '#9DB2BF', icon: 'male' },
+    { label: 'Female', value: 'female', color: '#9DB2BF', icon: 'female' },
+    { label: 'Other', value: 'other', color: '#9DB2BF', icon: 'male-female' },
   ];
 
   const [selectedGender, setSelectedGender] = useState(null);
@@ -37,8 +37,15 @@ const Gender = ({ onSelect }) => {
           ]}
           onPress={() => handleGenderSelect(value)}>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <Ionicons name={icon} size={50} color={bgColor} />
-            <Text style={{ textAlign: 'center', fontSize: 14 }}>{label}</Text>
+            <Ionicons name={icon} size={50} color="#040D12" />
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 14,
+                color: '#040D12',
+              }}>
+              {label}
+            </Text>
           </View>
         </TouchableOpacity>
       ))}

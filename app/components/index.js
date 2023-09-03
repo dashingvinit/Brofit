@@ -18,6 +18,7 @@ import TopBack from './TopBack';
 import Search from './Search';
 import Adminsearch from './Adminsearch';
 import Hi from './Hi';
+import NextBtn from './NextBtn';
 import Background2 from './Background2';
 import Gender from './Gender';
 import {
@@ -32,6 +33,7 @@ import LoadingSkeleton from './LoadingSkeleton';
 import UserDelete from './UserDelete';
 
 export {
+  NextBtn,
   LoadingSkeleton,
   Runtimer,
   Video,

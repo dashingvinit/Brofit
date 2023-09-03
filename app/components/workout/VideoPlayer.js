@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import {
   View,
   Text,
@@ -10,44 +10,23 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 import { bgGlassLight } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ image, children }) => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
+
   return (
     <View style={styles.card}>
       <ImageBackground
-        source={require('../../assets/images/tenor.gif')} // Use the directly constructed image source
+        source={image ? image : null}
         style={styles.imageBackground}
         resizeMode="cover">
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 18,
-            fontWeight: 'bold',
-            margin: 10,
-          }}>
-          Chest Press
-        </Text>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <View style={styles.row}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                }}>
-                Next
-              </Text>
-              <Ionicons
-                name="ios-arrow-forward-circle-outline"
-                size={30}
-                color="white"
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          style={styles.linearGradient}>
+          {children}
+        </LinearGradient>
       </ImageBackground>
     </View>
   );
@@ -66,23 +45,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 10,
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: bgGlassLight,
-    borderRadius: 25,
+  linearGradient: {
+    flex: 1,
+    justifyContent: 'flex-end',
     padding: 10,
   },
 });

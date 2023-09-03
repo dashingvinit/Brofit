@@ -110,8 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 2,
     borderRadius: 15,
-    height: 50,
-    paddingHorizontal: 10,
+    padding: 10,
     backgroundColor: '#E8FFCE',
   },
   userName: {

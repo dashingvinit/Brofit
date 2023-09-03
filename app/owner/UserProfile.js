@@ -163,8 +163,8 @@ const UserProfile = (props) => {
               }}>
               <View style={styles.smContainer}>
                 <Text>Height </Text>
-                <Text style={styles.smHeader}>{userData?.height}″</Text>
-                <Text style={{ fontSize: 12 }}>Feet</Text>
+                <Text style={styles.smHeader}>{userData?.height}</Text>
+                <Text style={{ fontSize: 12 }}>cms</Text>
               </View>
               <View style={styles.smContainer}>
                 <Text>Weight</Text>

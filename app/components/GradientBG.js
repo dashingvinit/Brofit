@@ -5,7 +5,7 @@ const Background = ({ children }) => {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={require('../assets/grade3.jpg')}
+        source={require('../assets/grade6.webp')}
         style={{
           flex: 1,
           resizeMode: 'cover',

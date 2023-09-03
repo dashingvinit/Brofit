@@ -9,7 +9,7 @@ import {
 import Gradient4 from '../Gradient4';
 import TopBack from '../TopBack';
 import React from 'react';
-import { WorkoutPlanData } from '../../constants/Constants';
+import { WorkoutPlanData } from '../../constants/Workouts';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -49,11 +49,11 @@ const WorkoutPlan = (props) => {
       case 'grade4':
         return require('../../assets/images/cardio.jpg');
       case 'grade5':
-        return require('../../assets/images/pushups.jpg');
+        return require('../../assets/images/pushupsimg.jpg');
       case 'grade6':
-        return require('../../assets/images/crunches.jpg');
+        return require('../../assets/images/CrunchesImage.jpg');
       default:
-        return require('../../assets/images/crunches.jpg');
+        return require('../../assets/images/CrunchesImage.jpg');
     }
   };
 

@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import WorkoutStack from '../WorkoutStack';
 import HomeStack from '../HomeStack';
-import Timer from '../Timer';
+import Stats from '../Statistics';
 import Attendance from '../Attendance';
 import ProfilePage from '../ProfilePage';
 import { neon } from './Constants';
@@ -69,7 +69,7 @@ const BottomNav = ({ setHandleLogout }) => {
       </Tab.Screen>
       <Tab.Screen name="Attendance" component={Attendance} />
       <Tab.Screen name="WorkoutStack" component={WorkoutStack} />
-      <Tab.Screen name="Stats" component={Timer} />
+      <Tab.Screen name="Stats" component={Stats} />
       <Tab.Screen name="ProfilePage">
         {(props) => (
           <ProfilePage {...props} setHandleLogout={setHandleLogout} />

@@ -135,7 +135,7 @@ const ProfileSetup = (props) => {
                   ? 'number-pad'
                   : 'numbers-and-punctuation'
               }
-              placeholder="Height (ft)"
+              placeholder="Height (cm)"
               icon="edit-3"
               value={formData.height}
               onChangeText={(value) => handleInputChange('height', value)}
@@ -179,7 +179,7 @@ const ProfileSetup = (props) => {
               </Text>
               <View style={{ width: '100%', flex: 1 }}>
                 <Field
-                  placeholder="Address"
+                  placeholder="Line 1"
                   value={formData.address}
                   onChangeText={(value) => handleInputChange('address', value)}
                 />

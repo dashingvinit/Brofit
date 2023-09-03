@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,43 +7,69 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
 import { bgGlass, neon } from '../../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import NextBtn from '../NextBtn';
 import Video from './VideoPlayer';
 import TopBack from '../TopBack';
 import GradientBG from '../GradientBG';
-import Gradient4 from '../Gradient4';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Workouts = ({ route }) => {
   const [workouts, setWorkouts] = useState([]);
+  const [imageIndex, setImageIndex] = useState(0);
   const { item } = route.params;
   const exercises = item.exercises;
 
+  const handlePress = (img, index) => {
+    setImageIndex(index);
+  };
+
+  const handleNext = () => {
+    setImageIndex((prevIndex) => (prevIndex + 1) % workouts.length);
+  };
+
   useEffect(() => {
     setWorkouts(exercises);
-  }, []);
+  }, [exercises]); // Make sure to update workouts when exercises change
+
+  // Check if workouts is empty or if imageIndex is out of bounds
+  if (
+    workouts.length === 0 ||
+    imageIndex < 0 ||
+    imageIndex >= workouts.length
+  ) {
+    return (
+      <GradientBG>
+        <SafeAreaView style={{ flex: 1 }}>
+          <TopBack>{item.title}</TopBack>
+          <Text>No workouts available</Text>
+        </SafeAreaView>
+      </GradientBG>
+    );
+  }
 
   return (
-    <Gradient4>
+    <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>{item.title}</TopBack>
-        <Video />
+        <Video image={workouts[imageIndex].image}>
+          <NextBtn onPress={handleNext} />
+        </Video>
         <ScrollView>
           <View style={{ paddingBottom: '20%', marginHorizontal: 10 }}>
             {workouts.map((workout, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => {
-                  //props.navigation.navigate('Programs');
+                  handlePress(workout.image, index);
                 }}>
                 <View style={styles.container}>
                   <Image
                     source={require('../../assets/images/boxer.jpg')}
                     style={{ height: 80, width: 80, borderRadius: 20 }}
                   />
-                  <View style={styles.row}>
+                  <View>
                     <Text style={styles.header}>{workout.name}</Text>
                     <Text style={styles.footer}>Reps: {workout.reps}</Text>
                     <Text style={styles.footer}>Sets: {workout.sets}</Text>
@@ -60,7 +87,7 @@ const Workouts = ({ route }) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </Gradient4>
+    </GradientBG>
   );
 };
 

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { GradientBG, Hr, Hi, UserDelete } from './components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import LottieView from 'lottie-react-native';
 import {
   bgColor,
   neon,
@@ -151,7 +151,7 @@ const ProfilePage = (props) => {
               style={{
                 fontWeight: 'bold',
                 textAlign: 'center',
-                fontSize: 16,
+                fontSize: 12,
                 color: bgLight,
               }}>
               {userData?.userId.email}
@@ -321,36 +321,44 @@ const ProfilePage = (props) => {
           </>
         )}
         <Hr />
-        <View style={styles.bottomContainer}>
-          <Text style={styles.smHeader}>Plan details:</Text>
-          <Text style={styles.text}>
-            Plan Expires: {userData?.planExpiryDate}
-          </Text>
-          <Text style={styles.text}>
-            Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
-          </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.text}>Status: {userData?.status}</Text>
+        <View style={{ marginVertical: 10 }}>
+          <View style={styles.planContainer1}>
+            <View style={{ justifyContent: 'center' }}>
+              <Text style={styles.planName}>
+                Plan: {userData?.plan ? userData.plan.name : 'Plans not found'}
+              </Text>
+              <Text style={styles.planPrice}>
+                Validity: {userData.plan.validity} days
+              </Text>
+              <Text style={styles.planPrice}>
+                Expires: {userData?.planExpiryDate}
+              </Text>
+              <Text style={styles.planPrice}>Status: {userData?.status}</Text>
+            </View>
+            <View>
+              <LottieView
+                source={require('./assets/lottieFiles/premiumGoldCrown.json')}
+                autoPlay
+                loop
+                style={{ height: 120, width: 120 }}
+              />
+            </View>
           </View>
         </View>
         <Hr />
         <View style={styles.bottomContainer2}>
-          <Text style={styles.smHeader}>Account details</Text>
-          <Text style={styles.text}>Address: {userData?.address}</Text>
-          <Text style={styles.text}>Phone: {userData?.phoneNumber}</Text>
+          <Text style={styles.planName}>Account details</Text>
+          <Text style={styles.planPrice}>Address: {userData?.address}</Text>
+          <Text style={styles.planPrice}>Phone: {userData?.phoneNumber}</Text>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.text}>Member since: {formattedcreatedAt}</Text>
+            <Text style={styles.planPrice}>
+              Member since: {formattedcreatedAt}
+            </Text>
           </View>
         </View>
         <View style={{ marginBottom: 100 }}>
           <View style={styles.editContainer}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingVertical: 10,
-              }}>
+            <View style={styles.deleteRow}>
               <Text style={styles.editHeader}>Delete Account</Text>
               <UserDelete
                 navigation={props.navigation}
@@ -362,7 +370,7 @@ const ProfilePage = (props) => {
                 This will delete your account permanently
               </Text>
               <Text style={styles.editText}>
-                You will not be able to recover your account
+                You will not be able to recover your account.
               </Text>
             </View>
           </View>
@@ -393,7 +401,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     color: bgColor,
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: 'bold',
     marginTop: 20,
   },
@@ -432,9 +440,10 @@ const styles = StyleSheet.create({
     borderRightWidth: 3,
   },
   smHeader: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     paddingVertical: 15,
+    color: '#D2DE32',
   },
   editContainer: {
     backgroundColor: '#ffffff66',
@@ -470,6 +479,42 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  deleteRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 10,
+  },
+  Header: {
+    color: neon,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 15,
+    marginBottom: 10,
+  },
+  planContainer1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#159895',
+    padding: 15,
+    borderRadius: 25,
+    borderRightColor: '#F8DE22',
+    borderBottomColor: '#F8DE22',
+    borderRightWidth: 2,
+    borderBottomWidth: 5,
+  },
+  planName: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: '#F7FFE5',
+  },
+  planPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: '#F8DE22',
+  },
   bottomContainer: {
     padding: 20,
     backgroundColor: '#1B6B93',
@@ -481,8 +526,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
   },
   text: {
-    color: 'black',
-    marginVertical: 10,
+    color: '#F7FFE5',
+    marginVertical: 3,
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -491,7 +536,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4FC0D0',
     borderRadius: 30,
     marginTop: 10,
-    borderColor: '#164B60',
+    borderColor: '#D2DE32',
     borderRightWidth: 3,
     borderBottomWidth: 3,
   },
