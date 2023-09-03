@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from './constants/Axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Background, Gender, Plans, Btn, Field, Hr } from './components';
 import { neon, bgColor } from './constants/Constants';
 import LottieView from 'lottie-react-native';
@@ -12,6 +12,7 @@ const ProfileSetup = (props) => {
 
   const [newloading, setnewLoading] = useState(false);
   const [isPlanSelected, setIsPlanSelected] = useState(false);
+  const scrollRef = useRef(null);
 
   const [formData, setFormData] = useState({
     weight: '',
@@ -56,6 +57,7 @@ const ProfileSetup = (props) => {
       plan: selectedPlanName,
     }));
     setIsPlanSelected(true);
+    scrollRef.current.scrollTo({ x: 0, y: 50000, animated: true });
   };
 
   const handleGenderSelect = (gender) => {
@@ -80,7 +82,9 @@ const ProfileSetup = (props) => {
         style={{
           flex: 1,
           paddingHorizontal: 20,
-        }}>
+        }} 
+        ref={scrollRef}
+        >
         <View
           style={{
             flex: 1,
@@ -185,8 +189,8 @@ const ProfileSetup = (props) => {
                 />
               </View>
             </View>
+            <View style={{marginBottom:20}}>
             <Plans onSelect={handlePlanSelect} />
-            <View>
               {isPlanSelected && (
                 <Btn
                   textColor={bgColor}
