@@ -18,6 +18,45 @@ const VideoPlayer = ({ image, children }) => {
 
   return (
     <View style={styles.card}>
+      {children}
+      <Video
+        ref={video}
+        style={styles.video}
+        source={image ? image : null}
+        useNativeControls
+        resizeMode={ResizeMode.COVER}
+        isLooping
+        onPlaybackStatusUpdate={(status) => setStatus(() => status)}>
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          style={styles.linearGradient}></LinearGradient>
+      </Video>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  video: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  card: {
+    height: 250,
+    marginHorizontal: 10,
+    borderRadius: 25,
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
+  linearGradient: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 10,
+  },
+});
+
+{
+  /* <View style={styles.card}>
       <ImageBackground
         source={image ? image : null}
         style={styles.imageBackground}
@@ -29,8 +68,6 @@ const VideoPlayer = ({ image, children }) => {
         </LinearGradient>
       </ImageBackground>
     </View>
-  );
-};
 
 const styles = StyleSheet.create({
   card: {
@@ -50,52 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     padding: 10,
   },
-});
-
-export default VideoPlayer;
-
-{
-  /* <View style={styles.container}>
-      <Video
-        ref={video}
-        style={styles.video}
-        source={{
-          uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-        }}
-        useNativeControls
-        resizeMode={ResizeMode.CONTAIN}
-        isLooping
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-      />
-      <View style={styles.buttons}>
-        <Button
-          title={status.isPlaying ? 'Pause' : 'Play'}
-          onPress={() =>
-            status.isPlaying
-              ? video.current.pauseAsync()
-              : video.current.playAsync()
-          }
-        />
-      </View>
-    </View> */
+}); */
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     justifyContent: 'center',
-//     marginHorizontal: 10,
-//     borderRadius: 20,
-//   },
-//   video: {
-//     height: 250,
-//     width: '100%',
-//   },
-//   buttons: {
-//     position: 'absolute',
-//     bottom: 0,
-//     left: 0,
-//     right: 0,
-//     alignItems: 'center',
-//     justifyContent: 'space-around',
-//   },
-// });
+export default VideoPlayer;

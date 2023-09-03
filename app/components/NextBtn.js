@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { neon, bgGlassLight } from '../constants/Constants';
+import { neon, bgGlassLight, bgGlass } from '../constants/Constants';
 
 const NextBtn = ({ onPress }) => {
   return (
@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    bottom: 0,
-    left: 0,
     right: 0,
     alignItems: 'center',
-    marginBottom: 10,
+    marginTop: 10,
+    marginRight: 10,
+    zIndex: 1,
   },
   button: {
-    backgroundColor: bgGlassLight,
+    backgroundColor: bgGlass,
     borderRadius: 25,
     padding: 10,
   },

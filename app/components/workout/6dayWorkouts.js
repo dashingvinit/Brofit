@@ -53,7 +53,7 @@ const Workouts = ({ route }) => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>{item.title}</TopBack>
-        <Video image={workouts[imageIndex].image}>
+        <Video image={workouts[imageIndex].video}>
           <NextBtn onPress={handleNext} />
         </Video>
         <ScrollView>

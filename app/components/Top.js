@@ -52,9 +52,7 @@ const Top = (props) => {
       </View>
       <View style={styles.row}>
         <EBtn
-          btnLabel={
-            <Ionicons name="notifications-outline" color="white" size={30} />
-          }
+          btnLabel={<Ionicons name="heart-outline" color="white" size={30} />}
         />
         <EBtn
           btnLabel={<Ionicons name="ios-exit-outline" color={neon} size={30} />}
