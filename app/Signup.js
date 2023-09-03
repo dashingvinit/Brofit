@@ -27,7 +27,7 @@ const Signup = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const [newloading, setnewLoading] = useState(false);
-  const [check, setcheck] = useState(false);
+  // const [check, setcheck] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
@@ -37,16 +37,16 @@ const Signup = (props) => {
     confirmPassword: '',
     registerationNumber: '',
   });
-  const [showRegistrationIdField, setShowRegistrationIdField] = useState(false);
+  // const [showRegistrationIdField, setShowRegistrationIdField] = useState(false);
 
-  const toggleRegistrationIdField = () => {
-    setShowRegistrationIdField(!showRegistrationIdField);
-    if (check) {
-      setcheck(false);
-    } else {
-      setcheck(true);
-    }
-  };
+  // const toggleRegistrationIdField = () => {
+  //   setShowRegistrationIdField(!showRegistrationIdField);
+  //   if (check) {
+  //     setcheck(false);
+  //   } else {
+  //     setcheck(true);
+  //   }
+  // };
 
   const handleInputChange = (field, value) => {
     setErrMsg('');
@@ -163,6 +163,12 @@ const Signup = (props) => {
               icon="key"
               onChangeText={(value) => handleInputChange('gymId', value)}
             />
+            <Field
+                placeholder="Reg  No."
+                value={formData.registerationNumber}
+                icon="user"
+                onChangeText={(value) => handleInputChange('registerationNumber', value)}
+            />
             {errMsg !== '' && (
               <View
                 style={{
@@ -219,15 +225,15 @@ const Signup = (props) => {
                 handleInputChange('confirmPassword', value)
               }
             />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={toggleRegistrationIdField}
               style={styles.checkboxContainer}>
               <Ionicons
                 name={check ? 'md-checkmark' : 'square-outline'}
                 size={24}
                 color={neon}
-              />
-              <View
+              /> */}
+              {/* <View
                 style={[
                   styles.checkbox,
                   showRegistrationIdField && styles.checkboxChecked,
@@ -241,11 +247,10 @@ const Signup = (props) => {
                 placeholder="Reg  No."
                 value={formData.registerationNumber}
                 icon="user"
-                onChangeText={(value) =>
-                  handleInputChange('registerationNumber', value)
-                }
+                onChangeText={(value) => handleInputChange('registerationNumber', value)}
               />
-            )}
+            )} */}
+
             {error !== '' && (
               <Text
                 style={{
