@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  TextInput,
 } from 'react-native';
 import axios from '../constants/Axios';
 import React, { useEffect, useState } from 'react';
@@ -17,6 +18,8 @@ const UserProfile = (props) => {
   const user = props.route.params.user._id;
   const [userData, setUserData] = useState(null);
   const [planExiper, setPlanExiper] = useState(null);
+  const [id, setid] = useState('');
+  const [showform, setshowform] = useState(false);
 
   const fetchUserProfileData = async () => {
     try {
@@ -69,12 +72,65 @@ const UserProfile = (props) => {
       });
   };
 
+  const handleclick= () =>{
+    // alert('hlo')
+    setshowform(true);
+  }
+
+  const handleSave = () => {
+    // const p = {id};
+    console.log(user);
+    console.log(id);
+    axios
+      .patch(`user/reg/${user}`,{registerationNumber : id})
+      .then((response) => {
+        const responseData = response.data;
+        fetchUserProfileData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    setshowform(false);
+  }
+
   return (
     <GradientBG style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>User Profile</TopBack>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.profileCard}>
+            <View style={{marginBottom:0,marginTop:10,marginLeft:'90%'}}>
+              <TouchableOpacity onPress={handleclick}>
+                    <MaterialCommunityIcons
+                      name="pencil"
+                      size={30}
+                      color={bgColor}
+                    />
+              </TouchableOpacity>
+            </View>
+            {showform ? (
+              <View style={{width:'70%',marginBottom:20,marginLeft:'10%'}}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Reg. Id"
+                  placeholderTextColor={'black'}
+                  value={id}
+                  onChangeText={setid}
+                />
+                <View style={{ flexDirection: 'row', alignItems: 'center',gap:20}}>
+                  <TouchableOpacity
+                    onPress={() => setshowform(false)}
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleSave} style={styles.button}>
+                    <Text style={styles.buttonText}>Save</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ) : (
+              <View></View>
+            )}
             <View style={styles.profileContainer}>
               <Image
                 source={require('../assets/images/profile.jpg')}
@@ -126,13 +182,13 @@ const UserProfile = (props) => {
                   padding: 10,
                   borderRadius: 30,
                 }}>
-                <MaterialCommunityIcons
-                  name="clipboard-outline"
-                  size={30}
-                  color={bgColor}
-                />
-                <Text>Reg.Id</Text>
-                <Text>{userData?.userId.registerationNumber}</Text>
+                  <MaterialCommunityIcons
+                    name="clipboard-outline"
+                    size={30}
+                    color={bgColor}
+                  />
+                  <Text>Reg.Id</Text>
+                  <Text>{userData?.userId.registerationNumber}</Text>
               </View>
               <View
                 style={{
@@ -234,7 +290,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     paddingBottom: 30,
-    paddingTop: 50,
+    paddingTop: 0,
     paddingHorizontal: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -253,6 +309,21 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 40,
     paddingBottom: 30,
+  },
+  button: {
+    backgroundColor: bgColor,
+    paddingHorizontal: 30,
+    paddingVertical: 5,
+    marginRight: 10,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: neon,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   container: {
     padding: 20,
