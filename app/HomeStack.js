@@ -8,6 +8,7 @@ import Home from './Home';
 import PlanUpdate from './PlanUpdate';
 import ProfileSetup from './ProfileSetup';
 import Timer from './Timer';
+import { Notification } from './components';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (
@@ -22,6 +23,7 @@ const HomeStack = ({ setHandleLogout }) => {
       <Stack.Screen name="PlanUpdate" component={PlanUpdate} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Timer" component={Timer} />
+      <Stack.Screen name="Notification" component={Notification} />
     </Stack.Navigator>
   );
 };

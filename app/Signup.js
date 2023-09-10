@@ -158,7 +158,7 @@ const Signup = (props) => {
               onChangeText={(value) => handleInputChange('email', value)}
             />
             <Field
-              placeholder="Gym_Id"
+              placeholder="Gym_Id (Ask your Gym Owner)"
               value={formData.gymId}
               icon="key"
               onChangeText={(value) => handleInputChange('gymId', value)}

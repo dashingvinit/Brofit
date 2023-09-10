@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const InactiveList = (props) => {
   const [inactiveData, setInactiveData] = useState([]);
@@ -54,6 +55,16 @@ const InactiveList = (props) => {
     props.navigation.navigate('UserProfile', { user });
   };
 
+  const handlePing = (user) =>{
+    console.log('Notified');
+    alert('notification send');
+  }
+
+  const handlePingall = () =>{
+    console.log('Notified');
+    alert('notification send');
+  }
+
   const handleEdit = (user) => {
     const updatedStatus = 'active';
     setRefreshing(true);
@@ -76,7 +87,15 @@ const InactiveList = (props) => {
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopBack>Inactive Members</TopBack>
+      <View style={styles.headerContainer}>
+          <TopBack />
+          <View>
+            <Text style={{color:'white',fontSize:24,fontWeight:'bold'}}>Inactive Members</Text>
+          </View>
+          <TouchableOpacity  onPress={handlePingall} style={styles.iconContainer}>
+            <Ionicons name="notifications" color="lightgreen" size={30} />
+          </TouchableOpacity>
+        </View>
         <View style={styles.userHeader}>
           <Text style={styles.userText}>Name</Text>
           <Text style={styles.userText1}>ID</Text>
@@ -100,10 +119,16 @@ const InactiveList = (props) => {
                       {member?.userId?.registerationNumber}
                     </Text>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => handleEdit(member?.userId?._id)}>
-                    <Text style={styles.editButton}>Activate</Text>
-                  </TouchableOpacity>
+                  <View style={{flexDirection:'row'}}>
+                    <TouchableOpacity
+                      onPress={() => handleEdit(member?.userId?._id)}>
+                      <Text style={styles.editButton}>Activate</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => handlePing(member?.userId?._id)}>
+                      <Text style={styles.editButton1}>Ping</Text>
+                    </TouchableOpacity>
+                  </View>
                 </TouchableOpacity>
               ))
             ) : (
@@ -173,6 +198,33 @@ const styles = StyleSheet.create({
     marginTop: 5,
     backgroundColor: neon,
     borderRadius: 10,
+    width:'350%',
+  },
+  editButton1: {
+    color: bgColor,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: 5,
+    marginTop: 5,
+    backgroundColor: neon,
+    borderRadius: 10,
+    marginLeft:'75%',
+    width:'20%',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  iconContainer: {
+    padding: 10,
+    borderRadius: 10,
+  },
+  icon: {
+    marginLeft: 5,
   },
 });
 

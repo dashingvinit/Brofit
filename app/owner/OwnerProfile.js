@@ -86,7 +86,7 @@ const ProfilePage = () => {
               style={{ width: 100, height: 100, borderRadius: 50 }}
             />
             <Text style={styles.userName}>{userData?.gymName}</Text>
-            <Text
+            {/* <Text
               style={{
                 fontWeight: 'bold',
                 textAlign: 'center',
@@ -94,7 +94,7 @@ const ProfilePage = () => {
                 color: bgLight,
               }}>
               {userData?.email}
-            </Text>
+            </Text> */}
           </View>
           <View style={styles.profileIcons}>
             <View
