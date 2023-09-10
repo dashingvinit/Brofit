@@ -5,7 +5,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Background, Gender, Plans, Btn, Field, Hr } from './components';
 import { neon, bgColor } from './constants/Constants';
 import LottieView from 'lottie-react-native';
-import Home from './Home';
 
 const ProfileSetup = (props) => {
   setTokenHeader();
@@ -82,9 +81,8 @@ const ProfileSetup = (props) => {
         style={{
           flex: 1,
           paddingHorizontal: 20,
-        }} 
-        ref={scrollRef}
-        >
+        }}
+        ref={scrollRef}>
         <View
           style={{
             flex: 1,
@@ -189,8 +187,8 @@ const ProfileSetup = (props) => {
                 />
               </View>
             </View>
-            <View style={{marginBottom:20}}>
-            <Plans onSelect={handlePlanSelect} />
+            <View style={{ marginBottom: 20 }}>
+              <Plans onSelect={handlePlanSelect} />
               {isPlanSelected && (
                 <Btn
                   textColor={bgColor}

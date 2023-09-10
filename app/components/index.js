@@ -27,6 +27,7 @@ import {
   SixDayWorkoutPlan,
   Video,
   WorkoutPrograms,
+  SixdayWorkOutCard,
 } from './workout';
 import Runtimer from './Runtimer';
 import LoadingSkeleton from './LoadingSkeleton';
@@ -41,6 +42,7 @@ export {
   WorkoutClass,
   DayWiseWorkouts,
   SixDayWorkoutPlan,
+  SixdayWorkOutCard,
   Search,
   TopBack,
   Calendar,

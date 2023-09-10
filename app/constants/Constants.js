@@ -1,6 +1,3 @@
-import { chest, leg, back, bicep, tricep, shoulder } from '../assets/images';
-import { barbellShoulderPress, dummbell } from '../assets/lottieFiles';
-
 export const neon = '#e0fe10';
 export const bgColor = '#1c2227';
 // export const bgColor = 'black';

@@ -20,18 +20,41 @@ const Water = () => {
     setWater(value);
   };
 
+  const handleReset = () => {
+    SecureStore.setItemAsync('water', '0');
+    setWater(0);
+  };
+
   return (
     <View
       style={{
+        flex: 1,
         backgroundColor: '#1a1b19',
         borderRadius: 25,
         padding: 20,
-        width: '45%',
+        width: '100%',
         height: 150,
       }}>
-      <Text style={{ color: '#e3e3e3', fontSize: 28, fontWeight: 'bold' }}>
-        Water
-      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ color: '#e3e3e3', fontSize: 28, fontWeight: 'bold' }}>
+          H2O
+        </Text>
+        <TouchableOpacity onPress={handleReset}>
+          <View
+            style={{
+              backgroundColor: '#526D82',
+              padding: 4,
+              borderRadius: 10,
+            }}>
+            <MaterialCommunityIcons name="cancel" size={24} color="#9DB2BF" />
+          </View>
+        </TouchableOpacity>
+      </View>
       <Text
         style={{
           color: '#e3e3e3',

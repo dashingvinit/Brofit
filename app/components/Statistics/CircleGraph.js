@@ -4,6 +4,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { bgGlassLight } from '../../constants/Constants';
@@ -17,15 +18,18 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const CircleGraph = () => {
   const screenWidth = Dimensions.get('window').width;
 
-  const [Gdata, setGData] = useState([0, 0, 0]);
   const [month, setMonth] = useState('09');
+  const [Gdata, setGData] = useState([0, 0, 0]);
+
   const [attended, setAttended] = useState();
+
   const [days, setDays] = useState();
   const [total, setTotal] = useState();
+
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const selectCategory = (index, num) => {
-    setSelectedCategory(index); // Update the selected category
+    setSelectedCategory(index);
     setMonth(num);
   };
 
@@ -40,9 +44,11 @@ const CircleGraph = () => {
       const total = JSON.stringify(res.data.data.total);
       setDays(total);
       const attended = present / total;
+
       const presentHours = res.data.data.totalMinutes;
       setTotal((presentHours / 60).toFixed(2));
-      const hours = presentHours / 540;
+      const hours = presentHours / 60 / 90;
+
       const active = 0.4;
       const data = [active, hours, attended];
       setGData(data);
@@ -107,14 +113,12 @@ const CircleGraph = () => {
   const data = {
     labels: ['Active', 'Hours', 'Attended'],
     data: Gdata,
-    color: ['#d57a61', '#f5b971', '#f5b971'],
   };
 
   const chartConfig = {
     backgroundGradientFrom: '#20211f',
-
     backgroundGradientTo: '#20211f',
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    color: (opacity = 1) => `rgba(224, 254, 16, ${opacity})`,
   };
 
   return (
@@ -122,30 +126,22 @@ const CircleGraph = () => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          marginBottom: 10,
-          marginLeft: 10,
-        }}>
+        contentContainerStyle={styles.scroll}>
         {categories.map((category, index) => (
           <TouchableOpacity
             key={index}
             onPress={() => selectCategory(index, category.num)}>
             <View
-              style={{
-                marginTop: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor:
-                  selectedCategory === index ? '#20211f' : bgGlassLight, // Change the color based on selection
-                borderRadius: 20,
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                marginRight: 10,
-              }}>
+              style={[
+                styles.scrollCards,
+                {
+                  backgroundColor:
+                    selectedCategory === index ? '#20211f' : bgGlassLight,
+                },
+              ]}>
               <Text
                 style={{
+                  fontSize: 16,
                   color: selectedCategory === index ? 'white' : '#20211f',
                 }}>
                 {category.num}
@@ -162,23 +158,12 @@ const CircleGraph = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: '#20211f',
-          borderRadius: 25,
-          padding: 5,
-          alignItems: 'center',
-          marginHorizontal: 10,
-          borderBottomColor: 'rgba(26, 255, 146, 1)',
-          borderBottomWidth: 2,
-        }}>
+      <View style={styles.mainContent}>
         <View style={{ marginHorizontal: 15 }}>
           <FontAwesome5
             name="walking"
             size={24}
-            color="rgba(26, 255, 146, 1)"
+            color="rgba(224, 254, 16, 1)"
             style={{ marginVertical: 10 }}>
             <Text style={{ color: 'white', fontSize: 20 }}>
               {' '}
@@ -188,14 +173,14 @@ const CircleGraph = () => {
           <Feather
             name="clock"
             size={24}
-            color="rgba(26, 255, 146, .8)"
+            color="rgba(224, 254, 16, .8)"
             style={{ marginVertical: 10 }}>
             <Text style={{ color: 'white', fontSize: 20 }}> {total} hrs</Text>
           </Feather>
           <Octicons
             name="flame"
             size={24}
-            color="rgba(26, 255, 146, .6)"
+            color="rgba(224, 254, 16, .6)"
             style={{ marginVertical: 10 }}>
             <Text style={{ color: 'white', fontSize: 20 }}> 2110 cals</Text>
           </Octicons>
@@ -214,5 +199,35 @@ const CircleGraph = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  scroll: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+  scrollCards: {
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#20211f',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+  mainContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#20211f',
+    borderRadius: 25,
+    padding: 5,
+    alignItems: 'center',
+    marginHorizontal: 10,
+    borderBottomColor: 'rgb(224,254,16)',
+    borderBottomWidth: 2,
+  },
+});
 
 export default CircleGraph;
