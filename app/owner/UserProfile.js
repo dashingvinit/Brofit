@@ -27,7 +27,7 @@ const UserProfile = (props) => {
     try {
       const response = await axios.get(`/userProfile/${user}`);
       const data = response.data.data;
-      //console.log('User Profile Data', data);
+      // console.log('User Profile Data', data);
       setUserData(data);
     } catch (error) {
       console.log('Checked In Users Error', error);
@@ -77,6 +77,7 @@ const UserProfile = (props) => {
 
   const handleclick= () =>{
     // alert('hlo')
+    setid(userData.userId.registerationNumber);
     setshowform(true);
   }
 
@@ -118,7 +119,7 @@ const UserProfile = (props) => {
                   style={styles.input}
                   placeholder="Reg. Id"
                   placeholderTextColor={'black'}
-                  value={id}
+                  value={id.toString()}
                   onChangeText={setid}
                 />
                 <View style={{ flexDirection: 'row', alignItems: 'center',gap:20}}>

@@ -10,7 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { bgGlass, bgGlassLight, bgLight, neon } from '../constants/Constants';
-import { GradientBG, TopBack, CheckedIn } from '../components';
+import { GradientBG, TopBack, Announcement } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
@@ -96,7 +96,7 @@ const OwnerAttendance = (props) => {
             <Text style={{ color: neon, fontWeight: 'bold' }}>Search</Text>
           </TouchableOpacity>
         </View>
-
+        <ScrollView>
         {!attendanceData.length && !isLoading && (
           <>
             <View
@@ -113,10 +113,10 @@ const OwnerAttendance = (props) => {
                 Search for a date to view the attendance of that day.
               </Text>
             </View>
-            <CheckedIn navigation={props.navigation} />
+            <Announcement navigation={props.navigation} />
           </>
         )}
-
+        </ScrollView>
         {isLoading ? (
           <View
             style={{

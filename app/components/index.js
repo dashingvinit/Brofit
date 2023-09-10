@@ -31,6 +31,8 @@ import {
 import Runtimer from './Runtimer';
 import LoadingSkeleton from './LoadingSkeleton';
 import UserDelete from './UserDelete';
+import Notification from './Notification';
+import Announcement from './Announcement';
 
 export {
   NextBtn,
@@ -64,4 +66,6 @@ export {
   OwnerStatus,
   Adminsearch,
   UserDelete,
+  Notification,
+  Announcement,
 };

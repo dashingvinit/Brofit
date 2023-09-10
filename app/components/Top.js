@@ -30,6 +30,9 @@ const Top = (props) => {
       console.error('error', error);
     }
   };
+  const notify = () =>{
+    props.navigation.navigate('Notification')
+  }
 
   useEffect(() => {
     getUser();
@@ -53,6 +56,7 @@ const Top = (props) => {
       <View style={styles.row}>
         <EBtn
           btnLabel={<Ionicons name="heart-outline" color="white" size={30} />}
+          Press={notify}
         />
         <EBtn
           btnLabel={<Ionicons name="ios-exit-outline" color={neon} size={30} />}
