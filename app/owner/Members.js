@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -27,28 +27,35 @@ const Members = (props) => {
   const [users, setUsers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [found, setfound] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(40);
+  const [numberpages,setnumberpages] = useState(50);
+
 
   const getMembers = async () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      const Id = user.gymId;
-      const response = await axios.get(`/gym/mems/${Id}`);
+      const gymId = user.gymId;
+      const response = await axios.get(`/gym/mems/${gymId}?page=${page}&limit=${limit}`);
       const data = response.data;
-      setUsers(data.data.members);
+      // console.log(response.data.data)
+      // console.log(typeof setUsers);
+      setUsers(data.data.MembersArray);
+      setnumberpages(data.data.totalPages)
     } catch (error) {
-      {
-        alert('Member Fetch error: ' + error.message);
-      }
+      alert('Member Fetch error: ' + error.message);
     }
   };
+  const scrollRef = useRef(null);
 
   const isFocused = useIsFocused();
+
   useEffect(() => {
     if (isFocused) {
       getMembers();
     }
-  }, [isFocused]);
+  }, [isFocused, page]);
 
   useEffect(() => {
     if (found) {
@@ -63,34 +70,52 @@ const Members = (props) => {
     props.navigation.navigate('UserProfile', { user });
   };
 
-  const handleSearch = (query) => {
-    const filteredUsers = users.filter((user) =>
-      user.registerationNumber.toString().includes(query.toLowerCase())
-    );
-    if (filteredUsers.length === 0 || null) {
-      setfound(true);
-    } else {
-      setUsers(filteredUsers);
-    }
-  };
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-
+  const handleSearch = async(query) => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      const Id = user.gymId;
-      const response = await axios.get(`/gym/mems/${Id}`);
+      const gymId = user.gymId;
+      const response = await axios.get(`user/search/${gymId}/${query}`)
       const data = response.data;
-      setUsers(data.data.members);
+      console.log(data.data);
+      console.log(typeof setUsers); 
+      setUsers(data.data); 
+      console.log('After setUsers', users);
     } catch (error) {
-      {
-        alert('Member Fetch error: ' + error.message);
-      }
+      console.log(error);
+    }
+  };
+  
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const gymId = user.gymId;
+      const url = `/gym/mems/${gymId}?page=${page}&limit=${limit}`;
+      const response = await axios.get(url);
+      const data = response.data;
+      setUsers(data.data);
+    } catch (error) {
+      alert('Member Fetch error: ' + error.message);
     }
 
     setRefreshing(false);
+  };
+
+  const handleNextPage = () => {
+    if (page < 5) {
+      setPage(page + 1);
+      scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
+    }
   };
 
   return (
@@ -111,7 +136,7 @@ const Members = (props) => {
                 onRefresh={handleRefresh}
                 colors={['blue']}
               />
-            }>
+            } ref={scrollRef}>
             {users?.map((user, index) => (
               <View key={index}>
                 <TouchableOpacity
@@ -136,11 +161,38 @@ const Members = (props) => {
                 <Hr />
               </View>
             ))}
-          </ScrollView>
-          <Modal
-            visible={found}
-            transparent
-            onRequestClose={() => setfound(false)}>
+          <View style={styles.paginationButtons}>
+          {page > 1 && (
+            <TouchableOpacity
+              onPress={handlePrevPage}
+              style={{
+                backgroundColor: neon,
+                height: 30,
+                width: 80,
+                borderRadius: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={styles.paginationText}>Prev</Text>
+            </TouchableOpacity>
+          )}
+          {page < numberpages && (
+            <TouchableOpacity
+              onPress={handleNextPage}
+              style={{
+                backgroundColor: neon,
+                height: 30,
+                width: 80,
+                borderRadius: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={styles.paginationText}>Next</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        </ScrollView>
+          <Modal visible={found} transparent onRequestClose={() => setfound(false)}>
             <MsgModal message={'No Members 😔'} />
           </Modal>
         </View>
@@ -189,6 +241,19 @@ const styles = StyleSheet.create({
   userText1: {
     fontSize: 20,
     color: neon,
+  },
+  paginationButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    marginTop:50,
+    gap:20,
+  },
+  paginationText: {
+    fontSize: 18,
+    color: 'blue',
+    marginHorizontal: 10,
   },
 });
 
