@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Octicons from 'react-native-vector-icons/Octicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as SecureStore from 'expo-secure-store';
 
 const Calories = () => {
@@ -20,18 +21,41 @@ const Calories = () => {
     setCalories(value);
   };
 
+  const handleReset = () => {
+    SecureStore.setItemAsync('calories', '0');
+    setCalories(0);
+  };
+
   return (
     <View
       style={{
+        flex: 1,
         backgroundColor: '#1a1b19',
         borderRadius: 25,
         padding: 20,
-        width: '45%',
+        width: '100%',
         height: 150,
       }}>
-      <Text style={{ color: '#e3e3e3', fontSize: 28, fontWeight: 'bold' }}>
-        Food
-      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Text style={{ color: '#e3e3e3', fontSize: 28, fontWeight: 'bold' }}>
+          Food
+        </Text>
+        <TouchableOpacity onPress={handleReset}>
+          <View
+            style={{
+              backgroundColor: '#3F2305',
+              padding: 4,
+              borderRadius: 10,
+            }}>
+            <MaterialCommunityIcons name="cancel" size={24} color="#EFE1D1" />
+          </View>
+        </TouchableOpacity>
+      </View>
       <Text
         style={{
           color: '#e3e3e3',

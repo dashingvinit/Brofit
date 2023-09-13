@@ -304,7 +304,7 @@ const ProfilePage = (props) => {
                   paddingVertical: 10,
                 }}>
                 <View style={{ paddingVertical: 20 }}>
-                  <Text style={styles.editHeader}>Edit Profile Settings</Text>
+                  <Text style={styles.editHeader}>Update Profile Data</Text>
                   <Text style={styles.editText}>
                     Last Updated on {formattedUpdatedAt}
                     {'\n'}
