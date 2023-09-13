@@ -1,14 +1,20 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 import React from 'react';
 
 const DietChart = () => {
+
+  const onPress = () => {
+    
+
   return (
-    <View>
-      <Text style={styles.text}>
-        Diet Plans <Octicons name="graph" size={24} color="#fff" />
-      </Text>
-    </View>
+    <TouchableOpacity>
+      <View>
+        <Text style={styles.text}>
+          Diet Plans <Octicons name="graph" size={24} color="#fff" />
+        </Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

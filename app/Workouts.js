@@ -15,7 +15,7 @@ const Workouts = (props) => {
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView>
           <Runtimer />
-          <SixdayWorkOutCard />
+          <SixdayWorkOutCard navigation={props.navigation} />
           <WorkoutPrograms />
           <View style={{ marginHorizontal: 10, paddingBottom: 80 }}>
             <WorkoutClass navigation={props.navigation} />
