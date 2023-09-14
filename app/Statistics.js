@@ -6,7 +6,7 @@ import {
   Calories,
   Water,
   DietChart,
-} from './components/statistics';
+} from './components/Statistics';
 
 const Statistics = (props) => {
   return (

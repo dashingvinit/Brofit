@@ -52,10 +52,11 @@ const Members = (props) => {
       const gymId = user.gymId;
 
       const response = await axios.get(`/user/search/${gymId}/${query}`);
-      const data = response.data;
-      const USER = data.data;
-
-      await setUsers(USER);
+      const data1 = response.data;
+      const USER = data1.data;
+      const userArray = [USER];
+      console.log(userArray);
+      setUsers(userArray);
     } catch (error) {
       console.log(error);
     }
