@@ -3,10 +3,6 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import React from 'react';
 
 const DietChart = () => {
-
-  const onPress = () => {
-    
-
   return (
     <TouchableOpacity>
       <View>

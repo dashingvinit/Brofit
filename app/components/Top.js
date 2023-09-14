@@ -55,7 +55,7 @@ const Top = (props) => {
       </View>
       <View style={styles.row}>
         <EBtn
-          btnLabel={<Ionicons name="heart-outline" color="white" size={30} />}
+          btnLabel={<Ionicons name="notifications" color="lightgreen" size={30} />}
           Press={notify}
         />
         <EBtn

@@ -14,6 +14,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBack, GradientBG, Hr } from '../components';
 import LottieView from 'lottie-react-native';
+// import { CreateChart } from '../components';
 
 const UserProfile = (props) => {
   const user = props.route.params.user._id;
@@ -22,9 +23,11 @@ const UserProfile = (props) => {
   const [id, setid] = useState('');
   const [showform, setshowform] = useState(false);
   const [loading, setloading] = useState(true);
+  const [userID, setUserID] = useState('');
 
   const fetchUserProfileData = async () => {
     try {
+      setUserID(user);
       const response = await axios.get(`/userProfile/${user}`);
       const data = response.data.data;
       // console.log('User Profile Data', data);
@@ -75,18 +78,18 @@ const UserProfile = (props) => {
       });
   };
 
-  const handleclick= () =>{
+  const handleclick = () => {
     // alert('hlo')
     setid(userData.userId.registerationNumber);
     setshowform(true);
-  }
+  };
 
   const handleSave = () => {
     // const p = {id};
     console.log(user);
     console.log(id);
     axios
-      .patch(`user/reg/${user}`,{registerationNumber : id})
+      .patch(`user/reg/${user}`, { registerationNumber: id })
       .then((response) => {
         const responseData = response.data;
         fetchUserProfileData();
@@ -96,7 +99,7 @@ const UserProfile = (props) => {
       });
     setshowform(false);
     setloading(true);
-  }
+  };
 
   return (
     <GradientBG style={{ flex: 1 }}>
@@ -104,17 +107,18 @@ const UserProfile = (props) => {
         <TopBack>User Profile</TopBack>
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.profileCard}>
-            <View style={{marginBottom:0,marginTop:10,marginLeft:'90%'}}>
+            <View style={{ marginBottom: 0, marginTop: 10, marginLeft: '90%' }}>
               <TouchableOpacity onPress={handleclick}>
-                    <MaterialCommunityIcons
-                      name="pencil"
-                      size={30}
-                      color={bgColor}
-                    />
+                <MaterialCommunityIcons
+                  name="pencil"
+                  size={30}
+                  color={bgColor}
+                />
               </TouchableOpacity>
             </View>
             {showform ? (
-              <View style={{width:'70%',marginBottom:20,marginLeft:'10%'}}>
+              <View
+                style={{ width: '70%', marginBottom: 20, marginLeft: '10%' }}>
                 <TextInput
                   style={styles.input}
                   placeholder="Reg. Id"
@@ -122,7 +126,12 @@ const UserProfile = (props) => {
                   value={id.toString()}
                   onChangeText={setid}
                 />
-                <View style={{ flexDirection: 'row', alignItems: 'center',gap:20}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 20,
+                  }}>
                   <TouchableOpacity
                     onPress={() => setshowform(false)}
                     style={styles.button}>
@@ -187,13 +196,13 @@ const UserProfile = (props) => {
                   padding: 10,
                   borderRadius: 30,
                 }}>
-                  <MaterialCommunityIcons
-                    name="clipboard-outline"
-                    size={30}
-                    color={bgColor}
-                  />
-                  <Text>Reg.Id</Text>
-                  <Text>{userData?.userId.registerationNumber}</Text>
+                <MaterialCommunityIcons
+                  name="clipboard-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Reg.Id</Text>
+                <Text>{userData?.userId.registerationNumber}</Text>
               </View>
               <View
                 style={{
@@ -279,24 +288,27 @@ const UserProfile = (props) => {
             </Text>
           </View>
           {loading && (
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 300,
-              left: 0,
-              right: 0,
-              backgroundColor: 'rgba(0,0,0, 0.5)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <LottieView
-              source={require('../assets/lottieFiles/loadingSkeliton.json')}
-              autoPlay
-              loop
-            />
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 300,
+                left: 0,
+                right: 0,
+                backgroundColor: 'rgba(0,0,0, 0.5)',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <LottieView
+                source={require('../assets/lottieFiles/loadingSkeliton.json')}
+                autoPlay
+                loop
+              />
             </View>
           )}
+          {/* <View style={{ bottom: 80 }}>
+            <CreateChart UserID={userID} />
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </GradientBG>

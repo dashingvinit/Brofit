@@ -6,6 +6,7 @@ import HomeStack from '../owner/HomeStack';
 import MembersStack from '../owner/MembersStack';
 import Plans from '../owner/Plans';
 import AttendanceStack from '../owner/AttendanceStack';
+import DietChart from '../owner/OwnerDietPage';
 
 import { bgLight, neon } from './Constants';
 
@@ -39,6 +40,8 @@ const OwnerNav = ({ setHandleLogout }) => {
             iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
           } else if (route.name === 'Members') {
             iconName = focused ? 'people' : 'people-outline';
+          } else if (route.name === 'DietChart') {
+            iconName = focused ? 'fast-food' : 'fast-food-outline';
           }
 
           return (
@@ -62,6 +65,7 @@ const OwnerNav = ({ setHandleLogout }) => {
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
       <Tab.Screen name="Members" component={MembersStack} />
+      <Tab.Screen name="DietChart" component={DietChart} />
       <Tab.Screen name="Plans" component={Plans} />
       <Tab.Screen name="AttendanceStack" component={AttendanceStack} />
     </Tab.Navigator>

@@ -9,13 +9,7 @@ import {
   RefreshControl,
   Modal,
 } from 'react-native';
-import {
-  bgColor,
-  bgLight,
-  neon,
-  bgGlassLight,
-  bgGlass,
-} from '../constants/Constants';
+import { bgColor, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { Search, GradientBG, Hr, TopBack } from '../components';

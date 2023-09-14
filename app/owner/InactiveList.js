@@ -14,11 +14,13 @@ import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LottieView from 'lottie-react-native';
 
 const InactiveList = (props) => {
   const [inactiveData, setInactiveData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [newloading, setnewLoading] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -55,9 +57,27 @@ const InactiveList = (props) => {
     props.navigation.navigate('UserProfile', { user });
   };
 
-  const handlePing = (user) =>{
-    console.log('Notified');
-    alert('notification send');
+  const handlePing = async(user1) =>{
+    setnewLoading(true);
+    try {
+      const userString = await SecureStore.getItemAsync('user');
+      const user = JSON.parse(userString);
+      const Id = user?.gymId;
+      // console.log(Id);
+      // console.log(user1)
+      const response = await axios.post(`/noti/spec/${Id}/${user1}`, {
+          content:"Please renew your Membership",
+        });
+      // console.log('Response:', response.data);
+    } 
+    catch (error) {
+      if (error.response && error.response.status === 404) {
+        console.log(error);
+      } else {
+        console.error('Error in pushing notification data:', error);
+      }
+  }
+  setnewLoading(false);
   }
 
   const handlePingall = () =>{
@@ -137,6 +157,25 @@ const InactiveList = (props) => {
               </View>
             )}
           </View>
+          {newloading && (
+            <View
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <LottieView
+                source={require('../assets/lottieFiles/greenTik.json')}
+                autoPlay
+                loop
+              />
+            </View>
+          )}
         </ScrollView>
       </SafeAreaView>
     </GradientBG>

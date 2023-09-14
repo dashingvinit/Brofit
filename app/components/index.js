@@ -29,6 +29,7 @@ import {
   WorkoutPrograms,
   SixdayWorkOutCard,
 } from './workout';
+import { DietChart, GetDietPlan, CreateChart } from './diet';
 import Runtimer from './Runtimer';
 import LoadingSkeleton from './LoadingSkeleton';
 import UserDelete from './UserDelete';
@@ -47,6 +48,9 @@ export {
   SixdayWorkOutCard,
   Search,
   TopBack,
+  CreateChart,
+  DietChart,
+  GetDietPlan,
   Calendar,
   Gender,
   Hr,
