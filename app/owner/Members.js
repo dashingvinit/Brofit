@@ -16,9 +16,10 @@ import { Search, GradientBG, Hr, TopBack } from '../components';
 import { useIsFocused } from '@react-navigation/native';
 import axios from '../constants/Axios';
 import MsgModal from '../components/MsgModal';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const Members = (props) => {
-  const [users, setUsers] = useState([]);
+  const [Users, setUsers] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [found, setfound] = useState(false);
   const [page, setPage] = useState(1);
@@ -53,22 +54,22 @@ const Members = (props) => {
       const response = await axios.get(`/user/search/${gymId}/${query}`);
       const data = response.data;
       const USER = data.data;
-      console.log(USER);
-      setUsers(USER);
+
+      await setUsers(USER);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleUserPress = async (user) => {
+    props.navigation.navigate('UserProfile', { user });
+  };
+
   const scrollRef = useRef(null);
 
-  const isFocused = useIsFocused();
-
   useEffect(() => {
-    if (isFocused) {
-      getMembers();
-    }
-  }, [isFocused, page]);
+    getMembers();
+  }, [page]);
 
   useEffect(() => {
     if (found) {
@@ -78,10 +79,6 @@ const Members = (props) => {
       return () => clearTimeout(timeout);
     }
   }, [found]);
-
-  const handleUserPress = async (user) => {
-    props.navigation.navigate('UserProfile', { user });
-  };
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -123,26 +120,30 @@ const Members = (props) => {
               />
             }
             ref={scrollRef}>
-            {users?.map((user, index) => (
-              <View key={index}>
-                <TouchableOpacity
-                  onPress={() => handleUserPress(user)}
-                  style={styles.userContainer}>
-                  <Image
-                    source={require('../assets/images/profile.jpg')}
-                    style={styles.Avatar}
-                  />
-                  <View style={styles.textContainer}>
-                    <Text style={styles.userText}> {user?.name}</Text>
-                    <Text style={styles.userText1}>
-                      {user?.registerationNumber}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <Hr />
-              </View>
-            ))}
-            {users.length > 0 ? (
+            {Users?.length > 0 ? (
+              Users.map((user, index) => (
+                <View key={index}>
+                  <TouchableOpacity
+                    onPress={() => handleUserPress(user)}
+                    style={styles.userContainer}>
+                    <Image
+                      source={require('../assets/images/profile.jpg')}
+                      style={styles.Avatar}
+                    />
+                    <View style={styles.textContainer}>
+                      <Text style={styles.userText}> {user?.name}</Text>
+                      <Text style={styles.userText1}>
+                        {user?.registerationNumber}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                  <Hr />
+                </View>
+              ))
+            ) : (
+              <Text>No users found.</Text>
+            )}
+            {Users.length > 0 ? (
               <View style={styles.paginationButtons}>
                 {page > 1 && (
                   <TouchableOpacity
