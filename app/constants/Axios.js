@@ -2,8 +2,9 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Axios = axios.create({
-  // baseURL: 'https://brofit.onrender.com/api/v1/',
-  baseURL: 'http://192.168.1.4:7000/api/v1/',
+  // baseURL: 'https://brofit.onrender.com/api/v1/', //main server
+  //baseURL: 'http://192.168.1.4:7000/api/v1/', //uday server
+  baseURL: 'http://192.168.1.8:3000/api/v1/', //vinist server
   timeout: 5000, // Adjust the timeout as needed
 });
 

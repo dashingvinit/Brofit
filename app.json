@@ -45,15 +45,15 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "30063f32-041d-4aa1-975d-609c8655a40c"
+        "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
       }
     },
-    "owner": "udaysbuild",
+    "owner": "dashing_vinit",
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/30063f32-041d-4aa1-975d-609c8655a40c"
+      "url": "https://u.expo.dev/f2fe1d2d-da34-4d6d-b53d-70a41531f195"
     }
   }
 }

@@ -10,7 +10,13 @@ import {
 } from 'react-native';
 import { TopBack, GradientBG, Hr } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
+import {
+  bgColor,
+  bgGlass,
+  bgGlassLight,
+  bgLight,
+  neon,
+} from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -29,7 +35,7 @@ const InactiveList = (props) => {
       const gymId = user.gymId;
       const response = await axios.get(`/userProfile/${gymId}/inactive`);
       const data = await response.data.data;
-      if (data.some(member => member.userId)) {
+      if (data.some((member) => member.userId)) {
         setInactiveData(data);
         // console.log(data[0]);
       } else {
@@ -57,7 +63,7 @@ const InactiveList = (props) => {
     props.navigation.navigate('UserProfile', { user });
   };
 
-  const handlePing = async(user1) =>{
+  const handlePing = async (user1) => {
     setnewLoading(true);
     try {
       const userString = await SecureStore.getItemAsync('user');
@@ -66,24 +72,23 @@ const InactiveList = (props) => {
       // console.log(Id);
       // console.log(user1)
       const response = await axios.post(`/noti/spec/${Id}/${user1}`, {
-          content:"Please renew your Membership",
-        });
+        content: 'Please renew your Membership',
+      });
       // console.log('Response:', response.data);
-    } 
-    catch (error) {
+    } catch (error) {
       if (error.response && error.response.status === 404) {
         console.log(error);
       } else {
         console.error('Error in pushing notification data:', error);
       }
-  }
-  setnewLoading(false);
-  }
+    }
+    setnewLoading(false);
+  };
 
-  const handlePingall = () =>{
-    console.log('Notified');
+  const handlePingall = () => {
+    alert('Notified');
     // alert('notification send');
-  }
+  };
 
   const handleEdit = (user) => {
     const updatedStatus = 'active';
@@ -107,13 +112,27 @@ const InactiveList = (props) => {
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.headerContainer}>
-          <TopBack />
-          <View>
-            <Text style={{color:'white',fontSize:24,fontWeight:'bold'}}>Inactive Members</Text>
-          </View>
-          <TouchableOpacity  onPress={handlePingall} style={styles.iconContainer}>
-            <Ionicons name="notifications" color="lightgreen" size={30} />
+        <TopBack>Inactive Members</TopBack>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: bgGlass,
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            marginHorizontal: 10,
+            marginTop: 10,
+            borderRadius: 10,
+          }}>
+          <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
+            Notify all members
+          </Text>
+          <TouchableOpacity
+            onPress={handlePingall}
+            style={styles.iconContainer}>
+            <Ionicons name="notifications" color={neon} size={30} />
           </TouchableOpacity>
         </View>
         <View style={styles.userHeader}>
@@ -139,21 +158,32 @@ const InactiveList = (props) => {
                       {member?.userId?.registerationNumber}
                     </Text>
                   </View>
-                  <View style={{flexDirection:'row'}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'space-around',
+                      gap: 10,
+                    }}>
                     <TouchableOpacity
+                      style={{ flex: 3 }} // Adjusted flex value to 3 (75%)
                       onPress={() => handleEdit(member?.userId?._id)}>
                       <Text style={styles.editButton}>Activate</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                      style={{ flex: 1 }} // Adjusted flex value to 1 (25%)
                       onPress={() => handlePing(member?.userId?._id)}>
-                      <Text style={styles.editButton1}>Ping</Text>
+                      <Text style={styles.editButton}>Ping</Text>
                     </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
               ))
             ) : (
-              <View style={{alignItems:'center',marginTop:20}}>
-                <Text style={{color:neon,fontSize:20}}> No Inactive Members </Text>
+              <View style={{ alignItems: 'center', marginTop: 20 }}>
+                <Text style={{ color: neon, fontSize: 20 }}>
+                  {' '}
+                  No Inactive Members{' '}
+                </Text>
               </View>
             )}
           </View>
@@ -229,6 +259,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   editButton: {
+    flex: 1,
     color: bgColor,
     fontSize: 20,
     fontWeight: 'bold',
@@ -237,33 +268,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     backgroundColor: neon,
     borderRadius: 10,
-    width:'350%',
   },
-  editButton1: {
-    color: bgColor,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 5,
-    marginTop: 5,
-    backgroundColor: neon,
-    borderRadius: 10,
-    marginLeft:'75%',
-    width:'20%',
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 10,
-  },
+
   iconContainer: {
     padding: 10,
     borderRadius: 10,
-  },
-  icon: {
-    marginLeft: 5,
+    backgroundColor: bgGlassLight,
   },
 });
 
