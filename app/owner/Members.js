@@ -130,15 +130,10 @@ const Members = (props) => {
                   style={styles.userContainer}>
                   <Image
                     source={require('../assets/images/profile.jpg')}
-                    style={{
-                      width: 45,
-                      height: 45,
-                      borderRadius: 50,
-                    }}
+                    style={styles.Avatar}
                   />
                   <View style={styles.textContainer}>
                     <Text style={styles.userText}> {user?.name}</Text>
-
                     <Text style={styles.userText1}>
                       {user?.registerationNumber}
                     </Text>
@@ -147,36 +142,24 @@ const Members = (props) => {
                 <Hr />
               </View>
             ))}
-            <View style={styles.paginationButtons}>
-              {page > 1 && (
-                <TouchableOpacity
-                  onPress={handlePrevPage}
-                  style={{
-                    backgroundColor: neon,
-                    height: 30,
-                    width: 80,
-                    borderRadius: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={styles.paginationText}>Prev</Text>
-                </TouchableOpacity>
-              )}
-              {page < numberpages && (
-                <TouchableOpacity
-                  onPress={handleNextPage}
-                  style={{
-                    backgroundColor: neon,
-                    height: 30,
-                    width: 80,
-                    borderRadius: 20,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text style={styles.paginationText}>Next</Text>
-                </TouchableOpacity>
-              )}
-            </View>
+            {users.length > 0 ? (
+              <View style={styles.paginationButtons}>
+                {page > 1 && (
+                  <TouchableOpacity
+                    onPress={handlePrevPage}
+                    style={styles.navBtn}>
+                    <Text style={styles.paginationText}>Prev</Text>
+                  </TouchableOpacity>
+                )}
+                {page < numberpages && (
+                  <TouchableOpacity
+                    onPress={handleNextPage}
+                    style={styles.navBtn}>
+                    <Text style={styles.paginationText}>Next</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ) : null}
           </ScrollView>
           <Modal
             visible={found}
@@ -205,6 +188,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%',
     paddingHorizontal: 10,
+  },
+  Avatar: {
+    width: 45,
+    height: 45,
+    borderRadius: 50,
   },
   textContainer: {
     flex: 1,
@@ -243,6 +231,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'blue',
     marginHorizontal: 10,
+  },
+  navBtn: {
+    backgroundColor: neon,
+    height: 30,
+    width: 80,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
