@@ -82,7 +82,7 @@ const InactiveList = (props) => {
 
   const handlePingall = () =>{
     console.log('Notified');
-    alert('notification send');
+    // alert('notification send');
   }
 
   const handleEdit = (user) => {
