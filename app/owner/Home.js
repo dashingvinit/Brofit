@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  RefreshControl,
 } from 'react-native';
 import { Graph, Top, CheckedIn, OwnerStatus, GradientBG } from '../components';
 import { bgGlass, neon } from '../constants/Constants';
@@ -13,15 +12,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Home = (props) => {
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const onRefresh = () => {
-    setIsRefreshing(true);
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 2000);
-  };
-
   return (
     <GradientBG>
       <View style={{ flex: 1 }}>
@@ -29,14 +19,7 @@ const Home = (props) => {
           navigation={props.navigation}
           setHandleLogout={props.setHandleLogout}
         />
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={onRefresh}
-              colors={['blue']}
-            />
-          }>
+        <ScrollView>
           <View style={styles.boxesContainer}>
             <View style={styles.box}>
               <TouchableOpacity

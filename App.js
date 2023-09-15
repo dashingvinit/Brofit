@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { StatusBar, View, SafeAreaView, StyleSheet, Platform } from 'react-native';
+import { StatusBar, View, StyleSheet, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import * as SecureStore from 'expo-secure-store';
 import { setTokenHeader } from './app/constants/Axios';
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
 import BottomNav from './app/constants/BottomNav';
@@ -88,7 +87,7 @@ function App() {
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle='light-content'
+        barStyle="light-content"
       />
       <NavigationContainer>
         <View style={styles.content}>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? StatusBar.currentHeight : 0, // Add padding to shift content below the status bar
-    paddingBottom: Platform.OS === 'ios' ? 0 :0, // Add padding to shift content above the bottom bar (tab bar)
+    paddingBottom: Platform.OS === 'ios' ? 0 : 0, // Add padding to shift content above the bottom bar (tab bar)
     backgroundColor: 'transparent', // Make the status bar and bottom bar (tab bar) transparent
   },
   content: {
