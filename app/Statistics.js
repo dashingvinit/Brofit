@@ -1,12 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { GradientBG } from './components';
-import {
-  CircleGraph,
-  Calories,
-  Water,
-  DietChart,
-} from './components/statistics';
+import { CircleGraph, Calories, Water } from './components/statistics';
 
 const Statistics = (props) => {
   return (
@@ -20,9 +15,9 @@ const Statistics = (props) => {
         <Water />
       </View>
 
-      <View style={{ marginHorizontal: 10 }}>
+      {/* <View style={{ marginHorizontal: 10 }}>
         <DietChart />
-      </View>
+      </View> */}
     </GradientBG>
   );
 };

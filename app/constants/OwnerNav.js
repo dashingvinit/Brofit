@@ -6,7 +6,7 @@ import HomeStack from '../owner/HomeStack';
 import MembersStack from '../owner/MembersStack';
 import Plans from '../owner/Plans';
 import AttendanceStack from '../owner/AttendanceStack';
-import DietChart from '../owner/OwnerDietPage';
+// import DietChart from '../owner/OwnerDietPage';
 
 import { bgLight, neon } from './Constants';
 
@@ -65,7 +65,7 @@ const OwnerNav = ({ setHandleLogout }) => {
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
       <Tab.Screen name="Members" component={MembersStack} />
-      <Tab.Screen name="DietChart" component={DietChart} />
+      {/* <Tab.Screen name="DietChart" component={DietChart} /> */}
       <Tab.Screen name="Plans" component={Plans} />
       <Tab.Screen name="AttendanceStack" component={AttendanceStack} />
     </Tab.Navigator>
