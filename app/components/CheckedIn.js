@@ -10,6 +10,7 @@ import {
   bgLight,
   neon,
 } from '../constants/Constants';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CheckedIn = (props) => {
   const [usersData, setUsers] = useState([]);
@@ -31,6 +32,10 @@ const CheckedIn = (props) => {
     }
   };
 
+  const handleRefresh = () => {
+    getCheckIn();
+  };
+
   const handleUserPress = async (member) => {
     const user = member.userId;
     props.navigation.navigate('UserProfile', { user });
@@ -46,7 +51,22 @@ const CheckedIn = (props) => {
         <LoadingSkeleton />
       ) : (
         <>
-          <Text style={styles.heading}>Today's Check-Ins</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.heading}>Today's Check-Ins</Text>
+            <TouchableOpacity onPress={handleRefresh}>
+              <Ionicons
+                name="refresh"
+                size={24}
+                color="white"
+                style={{ alignSelf: 'flex-end', marginRight: 10 }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.userListContainer}>
             <View style={styles.userHeader}>
               <Text style={styles.userName}>ID. Name</Text>
@@ -86,7 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     marginVertical: 10,
-    textAlign: 'center',
+    marginLeft: 10,
   },
   userListContainer: {
     backgroundColor: bgGlassLight,
