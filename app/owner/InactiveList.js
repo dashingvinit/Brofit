@@ -166,12 +166,12 @@ const InactiveList = (props) => {
                       gap: 10,
                     }}>
                     <TouchableOpacity
-                      style={{ flex: 3 }} // Adjusted flex value to 3 (75%)
+                      style={{ flex: 3 }}
                       onPress={() => handleEdit(member?.userId?._id)}>
                       <Text style={styles.editButton}>Activate</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={{ flex: 1 }} // Adjusted flex value to 1 (25%)
+                      style={{ flex: 1 }}
                       onPress={() => handlePing(member?.userId?._id)}>
                       <Text style={styles.editButton}>Ping</Text>
                     </TouchableOpacity>

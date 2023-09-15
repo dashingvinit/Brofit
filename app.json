@@ -1,62 +1,63 @@
-
 {
-  "expo": {
-    "name": "BroFit",
-    "slug": "brofit",
-    "version": "1.0.5",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
+  "name": "Brofit",
+  "slug": "brofit",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "icon": "./assets/icon.png",
+  "splash": {
+    "image": "./assets/splash.png",
+    "resizeMode": "cover",
+    "backgroundColor": "#000000"
+  },
+  "scheme": "brofit",
+  "userInterfaceStyle": "automatic",
+  "ios": {
+    "supportsTablet": true
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
       "backgroundColor": "#000000"
     },
-    "scheme": "brofit",
-    "userInterfaceStyle": "automatic",
-    "ios": {
-      "config": {
-        "usesNonExemptEncryption": false
-      },
-      "supportsTablet": true,
-      "bundleIdentifier": "com.brogrammers.brofit"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#000000"
-      },
-      "package": "com.brogrammers.brofit",
-      "versionCode": 5
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-        }
-      ],
-	[
-        "expo-av",
-        {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
-        }
-      ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "b2274f16-cbc5-441d-9e86-92a7a823d85e"
+    "package": "com.brogrammers.brofit",
+    "versionCode": 1,
+    "permissions": [
+      "android.permission.ACCESS_COARSE_LOCATION",
+      "android.permission.ACCESS_FINE_LOCATION",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.RECORD_AUDIO",
+      "android.permission.MODIFY_AUDIO_SETTINGS"
+    ]
+  },
+  "web": {
+    "favicon": "./assets/favicon.png"
+  },
+  "plugins": [
+    [
+      "expo-location",
+      {
+        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
       }
-    },
-    "owner": "amritbuild",
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/b2274f16-cbc5-441d-9e86-92a7a823d85e"
+    ],
+    [
+      "expo-av",
+      {
+        "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+      }
+    ]
+  ],
+  "extra": {
+    "eas": {
+      "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
     }
-  }
+  },
+  "owner": "dashing_vinit",
+  "runtimeVersion": {
+    "policy": "sdkVersion"
+  },
+  "updates": {
+    "url": "https://u.expo.dev/f2fe1d2d-da34-4d6d-b53d-70a41531f195"
+  },
+  "sdkVersion": "48.0.0",
+  "platforms": ["ios", "android", "web"]
 }
-
