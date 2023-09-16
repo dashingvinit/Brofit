@@ -56,7 +56,7 @@ const Login = (props) => {
       await save('expire', stringExpires); // Wait for the token to be saved
 
       await setTokenHeader().then(() => {
-        console.log('Token Set');
+        //console.log('Token Set');
       });
       setLoading(false);
       props.sethandleLogin();
