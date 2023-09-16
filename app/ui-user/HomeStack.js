@@ -8,7 +8,7 @@ import Home from './Home';
 import PlanUpdate from './PlanUpdate';
 import ProfileSetup from '../ProfileSetup';
 import Timer from './Timer';
-import { Notification } from '../components';
+import Notification from '../components/Notification';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (

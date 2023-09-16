@@ -34,6 +34,10 @@ const Home = (props) => {
     }
   };
 
+  const notification = () => {
+    props.navigation.navigate('Notification');
+  };
+
   // useEffect(() => {
   //   if (profile) {
   //     props.navigation.navigate('ProfileSetup');

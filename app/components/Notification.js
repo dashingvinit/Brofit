@@ -6,9 +6,9 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
-import TopBack from '../components/TopBack';
-import GradientBG from '../components/containers';
-import { neon, bgLight, bgColor } from '../constants/Constants';
+import TopBack from './TopBack';
+import GradientBG from './containers/GradientBG';
+import { neon, bgColor } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -21,8 +21,6 @@ const Notification = () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      //   console.log(user.gymId)
-      //   console.log(user.userId)
       const responseInactive = await axios.get(`/noti/${user.gymId}`);
       const responsePersonal = await axios.get(
         `/noti/spec/${user.gymId}/${user.userId}`
@@ -30,8 +28,6 @@ const Notification = () => {
 
       setInactiveData(responseInactive.data.data);
       setPersonalData(responsePersonal.data.data);
-      // console.log(responseInactive.data);
-      // console.log(responsePersonal.data);
 
       setLoading(false);
     } catch (error) {
@@ -49,17 +45,13 @@ const Notification = () => {
 
   const renderNotifications = (data) => {
     return data.map((message, index) => (
-      <View
-        key={index}
-        style={styles.dataContainer}
-        style={styles.containerdata}>
+      <View key={index} style={styles.containerdata}>
         <Text style={styles.dataItem1}>{message.content}</Text>
         <View style={styles.dataContainer1}>
           <Text style={styles.dataItem2}>{message.day}</Text>
           <View>
             <Text style={styles.dataItem2}>{message.time}</Text>
           </View>
-          {/* <Text style={styles.dataItem2}>{message.gymId}</Text> */}
         </View>
         <View style={styles.separator} />
       </View>
@@ -151,7 +143,7 @@ const styles = StyleSheet.create({
   dataContainer1: {
     paddingTop: 10,
     borderRadius: 15,
-    margintop: 15,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
