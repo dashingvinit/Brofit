@@ -5,19 +5,28 @@ import * as SecureStore from 'expo-secure-store';
 import { setTokenHeader } from './app/constants/Axios';
 import * as SplashScreen from 'expo-splash-screen';
 
-import BottomNav from './app/constants/BottomNav';
-import StackNav from './app/constants/StackNav';
-import AdminNav from './app/constants/AdminNav';
-import OwnerNav from './app/constants/OwnerNav';
+import {
+  UserNav,
+  StackNav,
+  AdminNav,
+  OwnerNav,
+} from './app/navigation/index.js';
 
 SplashScreen.preventAutoHideAsync();
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // state to check if user is logged in
+  const [userRole, setUserRole] = useState(null); // state to check user role
 
   setTokenHeader();
 
+  // calls getToken and getUser on initial render
+  useEffect(() => {
+    getToken();
+    getUser();
+  }, []);
+
+  // Function to delete item from secure store
   const deleteItemFromSecureStore = async (key) => {
     try {
       await SecureStore.deleteItemAsync(key);
@@ -26,15 +35,21 @@ function App() {
     }
   };
 
+  // sets the isLoggedIn state to true and calls getUser
+  // --> this is passed to the StackNav component
   const sethandleLogin = () => {
     setIsLoggedIn(true);
     getUser();
   };
 
+  // sets the isLoggedIn state to false
+  // --> this is passed to the OwnerNav, AdminNav, and UserNav components
   const setHandleLogout = () => {
     setIsLoggedIn(false);
   };
 
+  // gets the token and expire from secure store and checks if the token is expired
+  // --> if the token is expired, it deletes the token from secure store
   const getToken = async () => {
     try {
       const token = await SecureStore.getItemAsync('token');
@@ -51,11 +66,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    getToken();
-    getUser();
-  }, []);
-
+  // gets the user role and sets it to the userRole state
   const getUser = async () => {
     try {
       const user = await SecureStore.getItemAsync('user');
@@ -67,6 +78,7 @@ function App() {
     }
   };
 
+  //Render navbar based on user role we get from getUser
   const renderNavbarBasedOnRole = () => {
     if (userRole === 'owner') {
       SplashScreen.hideAsync();
@@ -76,7 +88,7 @@ function App() {
       return <AdminNav setHandleLogout={setHandleLogout} />;
     } else {
       SplashScreen.hideAsync();
-      return <BottomNav setHandleLogout={setHandleLogout} />;
+      return <UserNav setHandleLogout={setHandleLogout} />;
     }
   };
 

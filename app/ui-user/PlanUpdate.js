@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GradientBG, TopBack, Hr } from './components';
+import { GradientBG, TopBack, MsgModal } from '../components';
 import * as SecureStore from 'expo-secure-store';
 import {
   View,
@@ -10,11 +10,10 @@ import {
   ScrollView,
   Modal,
 } from 'react-native';
-import { neon } from './constants/Constants';
-import axios from './constants/Axios';
+import { neon } from '../constants/Constants';
+import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
-import MsgModal from './components/MsgModal';
 
 const PlanUpdate = () => {
   const [Userplans, setUserPlans] = useState([]);
@@ -158,7 +157,7 @@ const PlanUpdate = () => {
                 </View>
                 <View>
                   <LottieView
-                    source={require('./assets/lottieFiles/premiumGoldCrown.json')}
+                    source={require('../assets/lottieFiles/premiumGoldCrown.json')}
                     autoPlay
                     loop
                     style={{ height: 120, width: 120, marginRight: 10 }}
@@ -184,7 +183,7 @@ const PlanUpdate = () => {
                 </View>
                 <View>
                   <LottieView
-                    source={require('./assets/lottieFiles/premiumGoldCrown.json')}
+                    source={require('../assets/lottieFiles/premiumGoldCrown.json')}
                     autoPlay
                     loop
                     style={{ height: 120, width: 120 }}
@@ -214,7 +213,7 @@ const PlanUpdate = () => {
                       </View>
                       <View>
                         <LottieView
-                          source={require('./assets/lottieFiles/dollarSign.json')}
+                          source={require('../assets/lottieFiles/dollarSign.json')}
                           autoPlay
                           loop
                           style={{ height: 120, width: 120 }}

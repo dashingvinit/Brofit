@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from '../constants/Axios';
-import LoadingSkeleton from '../components/LoadingSkeleton';
+import LoadingSkeleton from './loading-animations/LoadingSkeleton';
 import {
   bgColor,
   bgGlass,

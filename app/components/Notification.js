@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import TopBack from '../components/TopBack';
-import GradientBG from '../components/GradientBG';
+import GradientBG from '../components/containers';
 import { neon, bgLight, bgColor } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';

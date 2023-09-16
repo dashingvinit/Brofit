@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import axios, { setTokenHeader } from '../constants/Axios';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Background from '../components/Background';
-import Btn from '../components/Btn';
+import { Background, Btn, Field } from '../components';
 import { bgColor, neon } from '../constants/Constants';
-import Field from '../components/Field';
 import jwtDecode from 'jwt-decode';
-import { s } from 'react-native-size-matters';
 
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
 }
 
-const AdminLogin = (props) => {
+const OwnerLogin = (props) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
@@ -21,7 +18,7 @@ const AdminLogin = (props) => {
     const { email, password } = formData;
 
     try {
-      const response = await axios.post('/user/signin/admin', {
+      const response = await axios.post('/user/signin/owner', {
         email,
         password,
       });
@@ -43,10 +40,9 @@ const AdminLogin = (props) => {
         console.log('Token Set');
         setLoading(false);
       });
-
-      console.log('Response:', token);
       props.sethandleLogin();
-      alert('Login successful');
+      // console.log('Response:', token);
+      // alert('Login successful');
       props.navigation.navigate('Home2');
     } catch (error) {
       alert('Login failed');
@@ -146,4 +142,4 @@ const AdminLogin = (props) => {
   );
 };
 
-export default AdminLogin;
+export default OwnerLogin;

@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NextBtn from '../NextBtn';
 import Video from './VideoPlayer';
 import TopBack from '../TopBack';
-import GradientBG from '../GradientBG';
+import GradientBG from '../containers/GradientBG';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Workouts = ({ route }) => {

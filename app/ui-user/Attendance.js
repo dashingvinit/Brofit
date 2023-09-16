@@ -8,15 +8,15 @@ import {
   Modal,
   StyleSheet,
 } from 'react-native';
-import { FetchQuote, CheckIn, Calendar, GradientBG } from './components';
+import { FetchQuote, CheckIn, Calendar, GradientBG } from '../components';
 import {
   bgColor,
   bgGlass,
   bgGlassLight,
   bgLight,
   neon,
-} from './constants/Constants';
-import axios from './constants/Axios';
+} from '../constants/Constants';
+import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import LottieView from 'lottie-react-native';
 
@@ -142,7 +142,7 @@ const Attendance = () => {
           <FetchQuote />
           {refreshing ? (
             <LottieView
-              source={require('./assets/lottieFiles/graphLoading.json')}
+              source={require('../assets/lottieFiles/graphLoading.json')}
               autoPlay
               loop
               style={{
@@ -167,7 +167,7 @@ const Attendance = () => {
               onPress={handleCheckout}>
               {loading ? (
                 <LottieView
-                  source={require('./assets/lottieFiles/loadingcircles.json')}
+                  source={require('../assets/lottieFiles/loadingcircles.json')}
                   autoPlay
                   loop
                   style={{ height: 20, width: 25 }}

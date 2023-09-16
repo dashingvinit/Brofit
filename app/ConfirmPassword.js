@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput,ScrollView,StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import axios from './constants/Axios';
-import Background from './components/Background';
-import Btn from './components/Btn';
+import { Background, Btn } from './components';
 import { bgColor, neon, bgGlass } from './constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
@@ -61,101 +67,104 @@ const ConfirmPassword = (props) => {
           Brofit
         </Text>
         <ScrollView>
-        <View style={[
-          styles.container4,
-          Platform.OS === 'ios' ? styles.iosContainer : styles.androidContainer,
-        ]}>
-          <Text style={{ fontSize: 40, color: neon, fontWeight: 'bold' }}>
-            Reset Password
-          </Text>
-          <Text
-            style={{
-              color: 'white',
-              fontSize: 19,
-              fontWeight: 'bold',
-              marginBottom: 20,
-            }}>
-            Enter New Password
-          </Text>
-          <View style={{ position: 'relative' }}>
-            <TextInput
+          <View
+            style={[
+              styles.container4,
+              Platform.OS === 'ios'
+                ? styles.iosContainer
+                : styles.androidContainer,
+            ]}>
+            <Text style={{ fontSize: 40, color: neon, fontWeight: 'bold' }}>
+              Reset Password
+            </Text>
+            <Text
               style={{
-                borderWidth: 1,
-                borderColor: neon,
-                borderRadius: 15,
                 color: 'white',
-                width: '100%',
-                padding: 10,
-                fontSize: 14,
-                backgroundColor: bgGlass,
-                marginVertical: 10,
-              }}
-              placeholderTextColor={'#EEEEEE'}
-              placeholder="Password"
-              secureTextEntry={!showPassword}
-              value={formData.password}
-              onChangeText={(value) => handleInputChange('password', value)}
-            />
-            <TouchableOpacity
-              onPress={togglePasswordVisibility}
-              style={{
-                position: 'absolute',
-                top: 22,
-                right: 10,
-                zIndex: 2,
-                opacity: 0.5,
+                fontSize: 19,
+                fontWeight: 'bold',
+                marginBottom: 20,
               }}>
-              <Ionicons
-                name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                size={24}
-                color={neon}
+              Enter New Password
+            </Text>
+            <View style={{ position: 'relative' }}>
+              <TextInput
+                style={{
+                  borderWidth: 1,
+                  borderColor: neon,
+                  borderRadius: 15,
+                  color: 'white',
+                  width: '100%',
+                  padding: 10,
+                  fontSize: 14,
+                  backgroundColor: bgGlass,
+                  marginVertical: 10,
+                }}
+                placeholderTextColor={'#EEEEEE'}
+                placeholder="Password"
+                secureTextEntry={!showPassword}
+                value={formData.password}
+                onChangeText={(value) => handleInputChange('password', value)}
               />
-            </TouchableOpacity>
-          </View>
-          <View style={{ position: 'relative' }}>
-            <TextInput
-              style={{
-                borderWidth: 1,
-                borderColor: neon,
-                borderRadius: 15,
-                color: 'white',
-                width: '100%',
-                padding: 10,
-                fontSize: 14,
-                backgroundColor: bgGlass,
-                marginVertical: 10,
-              }}
-              placeholderTextColor={'#EEEEEE'}
-              placeholder="Confirm Password"
-              secureTextEntry={!showPassword}
-              value={formData.confirmPassword}
-              onChangeText={(value) =>
-                handleInputChange('confirmPassword', value)
-              }
+              <TouchableOpacity
+                onPress={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  top: 22,
+                  right: 10,
+                  zIndex: 2,
+                  opacity: 0.5,
+                }}>
+                <Ionicons
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color={neon}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ position: 'relative' }}>
+              <TextInput
+                style={{
+                  borderWidth: 1,
+                  borderColor: neon,
+                  borderRadius: 15,
+                  color: 'white',
+                  width: '100%',
+                  padding: 10,
+                  fontSize: 14,
+                  backgroundColor: bgGlass,
+                  marginVertical: 10,
+                }}
+                placeholderTextColor={'#EEEEEE'}
+                placeholder="Confirm Password"
+                secureTextEntry={!showPassword}
+                value={formData.confirmPassword}
+                onChangeText={(value) =>
+                  handleInputChange('confirmPassword', value)
+                }
+              />
+              <TouchableOpacity
+                onPress={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  top: 22,
+                  right: 10,
+                  zIndex: 2,
+                  opacity: 0.5,
+                }}>
+                <Ionicons
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color={neon}
+                />
+              </TouchableOpacity>
+            </View>
+            <Btn
+              textColor={bgColor}
+              bgColor={neon}
+              btnLabel="Reset"
+              Press={handlePasswordReset}
             />
-            <TouchableOpacity
-              onPress={togglePasswordVisibility}
-              style={{
-                position: 'absolute',
-                top: 22,
-                right: 10,
-                zIndex: 2,
-                opacity: 0.5,
-              }}>
-              <Ionicons
-                name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                size={24}
-                color={neon}
-              />
-            </TouchableOpacity>
           </View>
-          <Btn
-            textColor={bgColor}
-            bgColor={neon}
-            btnLabel="Reset"
-            Press={handlePasswordReset}
-          />
-        </View>
         </ScrollView>
         {loading && (
           <View
@@ -182,16 +191,16 @@ const ConfirmPassword = (props) => {
 };
 const styles = StyleSheet.create({
   container4: {
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   iosContainer: {
-    marginTop: '80%',  
-    marginBottom:'90%'
+    marginTop: '80%',
+    marginBottom: '90%',
   },
   androidContainer: {
     marginTop: '80%',
     marginBottom: '10%',
-  }
-})
+  },
+});
 
 export default ConfirmPassword;

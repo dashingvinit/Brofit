@@ -2,10 +2,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import Home from '../admin/Adminpage';
-import Userrole from '../admin/Userrole';
+import Home from '../ui-admin/Adminpage';
+import Userrole from '../ui-admin/Userrole';
 
-import { bgLight, neon } from './Constants';
+import { bgLight, neon } from '../constants/Constants';
 
 const Tab = createBottomTabNavigator();
 

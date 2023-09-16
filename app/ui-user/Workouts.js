@@ -7,7 +7,7 @@ import {
   Runtimer,
   WorkoutPrograms,
   SixdayWorkOutCard,
-} from './components';
+} from '../components';
 
 const Workouts = (props) => {
   return (

@@ -2,13 +2,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import WorkoutStack from '../WorkoutStack';
-import HomeStack from '../HomeStack';
-import Stats from '../Statistics';
-import Attendance from '../Attendance';
-import ProfilePage from '../ProfilePage';
-import { neon } from './Constants';
+import WorkoutStack from '../ui-user/WorkoutStack';
+import HomeStack from '../ui-user/HomeStack';
+import Stats from '../ui-user/Statistics';
+import Attendance from '../ui-user/Attendance';
+import ProfilePage from '../ui-user/ProfilePage';
+import { neon } from '../constants/Constants';
 
 const Tab = createBottomTabNavigator();
 

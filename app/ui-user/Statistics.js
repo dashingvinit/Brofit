@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import React from 'react';
-import { GradientBG } from './components';
-import { CircleGraph, Calories, Water } from './components/statistics';
+import { GradientBG } from '../components';
+import { CircleGraph, Calories, Water } from '../components/statistics';
 
 const Statistics = (props) => {
   return (

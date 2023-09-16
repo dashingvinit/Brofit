@@ -5,11 +5,11 @@ import Welcome from '../Welcome';
 import Signup from '../Signup';
 import ProfileSetup from '../ProfileSetup';
 import Login from '../Login';
-import OwnerLogin from '../owner/OwnerLogin';
-import AdminLogin from '../admin/AdminLogin';
-import Home from '../Home';
-import OwnerHome from '../owner/Home';
-import AdminPage from '../admin/Adminpage';
+import OwnerLogin from '../ui-owner/OwnerLogin';
+import AdminLogin from '../ui-admin/AdminLogin';
+import Home from '../ui-user/Home';
+import OwnerHome from '../ui-owner/Home';
+import AdminPage from '../ui-admin/Adminpage';
 import Forgetpassword from '../Forgetpassword';
 import ConfirmPass from '../ConfirmPassword';
 

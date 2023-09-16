@@ -13,10 +13,8 @@ import { bgColor, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
 import { Search, GradientBG, Hr, TopBack } from '../components';
-import { useIsFocused } from '@react-navigation/native';
 import axios from '../constants/Axios';
 import MsgModal from '../components/MsgModal';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const Members = (props) => {
   const [Users, setUsers] = useState([]);

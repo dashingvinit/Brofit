@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import Gradient4 from '../Gradient4';
+import Gradient4 from '../containers/Gradient4';
 import TopBack from '../TopBack';
 import React from 'react';
 import { WorkoutPlanData } from '../../constants/Workouts';

@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { BarChart } from 'react-native-chart-kit';
-import GraphLoading from './GraphLoading';
+import GraphLoading from './loading-animations/GraphLoading';
 import React, { useState, useEffect } from 'react';
 import axios from '../constants/Axios';
 import { bgGlass, neon } from '../constants/Constants';

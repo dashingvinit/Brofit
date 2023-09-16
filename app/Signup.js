@@ -8,13 +8,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Keyboard,
   Platform,
 } from 'react-native';
-import Background from './components/Background2';
-import Btn from './components/Btn';
+import { Background, Btn, Field } from './components';
 import { bgColor, bgGlass, neon } from './constants/Constants';
-import Field from './components/Field';
 import LottieView from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -164,10 +161,12 @@ const Signup = (props) => {
               onChangeText={(value) => handleInputChange('gymId', value)}
             />
             <Field
-                placeholder="Reg  No."
-                value={formData.registerationNumber}
-                icon="user"
-                onChangeText={(value) => handleInputChange('registerationNumber', value)}
+              placeholder="Reg  No."
+              value={formData.registerationNumber}
+              icon="user"
+              onChangeText={(value) =>
+                handleInputChange('registerationNumber', value)
+              }
             />
             {errMsg !== '' && (
               <View
@@ -233,7 +232,7 @@ const Signup = (props) => {
                 size={24}
                 color={neon}
               /> */}
-              {/* <View
+            {/* <View
                 style={[
                   styles.checkbox,
                   showRegistrationIdField && styles.checkboxChecked,

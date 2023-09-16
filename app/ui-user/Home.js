@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Graph, Top, Runtimer, Userstatusbox, GradientBG } from './components';
+import { Graph, Top, Runtimer, Userstatusbox, GradientBG } from '../components';
 import {
   View,
   Text,
@@ -7,16 +7,12 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
-  Modal,
-  Pressable,
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import { SixdayWorkOut } from './assets/images';
-import { bgGlass, neon, bgColor } from './constants/Constants';
+import { SixdayWorkOut } from '../assets/images';
+import { bgGlass, neon } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MsgModal from './components/MsgModal';
-import axios from './constants/Axios';
 
 const Home = (props) => {
   const [profile, setprofile] = useState(false);

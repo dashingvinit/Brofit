@@ -9,19 +9,12 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import { GradientBG, Hr, Hi, UserDelete } from './components';
+import { GradientBG, Hr, Hi, UserDelete, MsgModal } from '../components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LottieView from 'lottie-react-native';
-import {
-  bgColor,
-  neon,
-  bgLight,
-  bgGlassLight,
-  bgGlass,
-} from './constants/Constants';
-import axios from './constants/Axios';
+import { bgColor, neon, bgLight, bgGlass } from '../constants/Constants';
+import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
-import MsgModal from './components/MsgModal';
 
 const ProfilePage = (props) => {
   const [userData, setUserData] = useState(null);
@@ -143,7 +136,7 @@ const ProfilePage = (props) => {
         <View style={styles.profileCard}>
           <View style={styles.profileContainer}>
             <Image
-              source={require('./assets/images/profile.jpg')}
+              source={require('../assets/images/profile.jpg')}
               style={{ width: 100, height: 100, borderRadius: 50 }}
             />
             <Text style={styles.userName}>{username}</Text>
@@ -337,7 +330,7 @@ const ProfilePage = (props) => {
             </View>
             <View>
               <LottieView
-                source={require('./assets/lottieFiles/premiumGoldCrown.json')}
+                source={require('../assets/lottieFiles/premiumGoldCrown.json')}
                 autoPlay
                 loop
                 style={{ height: 120, width: 120 }}

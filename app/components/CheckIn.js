@@ -110,7 +110,7 @@ const CheckIn = ({ setAttendance }) => {
       const response = await axios.post('/attendance');
       setAttendance('Checked In ' + response.data.data.checkIn);
       const attendance = JSON.stringify(response.data.data);
-      console.log(attendance);
+      //console.log(attendance);
       await SecureStore.setItemAsync('attendance', attendance);
       setCheck(true);
       setLoading(false);

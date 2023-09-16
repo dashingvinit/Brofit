@@ -5,11 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator,
   Modal,
   StyleSheet,
 } from 'react-native';
-import { bgGlass, bgGlassLight, bgLight, neon } from '../constants/Constants';
+import { bgGlass, bgGlassLight, neon } from '../constants/Constants';
 import { GradientBG, TopBack, Announcement } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from '../constants/Axios';
@@ -97,25 +96,25 @@ const OwnerAttendance = (props) => {
           </TouchableOpacity>
         </View>
         <ScrollView>
-        {!attendanceData.length && !isLoading && (
-          <>
-            <View
-              style={{
-                alignItems: 'center',
-              }}>
-              <LottieView
-                source={require('../assets/lottieFiles/searchExplain.json')}
-                autoPlay
-                loop
-                style={{ width: 200, height: 200 }}
-              />
-              <Text style={styles.label}>
-                Search for a date to view the attendance of that day.
-              </Text>
-            </View>
-            <Announcement navigation={props.navigation} />
-          </>
-        )}
+          {!attendanceData.length && !isLoading && (
+            <>
+              <View
+                style={{
+                  alignItems: 'center',
+                }}>
+                <LottieView
+                  source={require('../assets/lottieFiles/searchExplain.json')}
+                  autoPlay
+                  loop
+                  style={{ width: 200, height: 200 }}
+                />
+                <Text style={styles.label}>
+                  Search for a date to view the attendance of that day.
+                </Text>
+              </View>
+              <Announcement navigation={props.navigation} />
+            </>
+          )}
         </ScrollView>
         {isLoading ? (
           <View
