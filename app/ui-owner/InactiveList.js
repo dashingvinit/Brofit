@@ -63,12 +63,9 @@ const InactiveList = (props) => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user?.gymId;
-      // console.log(Id);
-      // console.log(user1)
       const response = await axios.post(`/noti/spec/${Id}/${user1}`, {
         content: 'Please renew your Membership',
       });
-      // console.log('Response:', response.data);
     } catch (error) {
       if (error.response && error.response.status === 404) {
         console.log(error);
@@ -81,7 +78,6 @@ const InactiveList = (props) => {
 
   const handlePingall = () => {
     alert('Notified');
-    // alert('notification send');
   };
 
   const handleEdit = (user) => {

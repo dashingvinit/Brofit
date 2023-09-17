@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import axios, { setTokenHeader } from './constants/Axios';
+import axios, { setTokenHeader } from '../constants/Axios';
 import {
   View,
   Text,
@@ -10,8 +10,8 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import { Background, Btn, Field } from './components';
-import { bgColor, bgGlass, neon } from './constants/Constants';
+import { Background, Btn, Field } from '../components';
+import { bgColor, bgGlass, neon } from '../constants/Constants';
 import LottieView from 'lottie-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -313,7 +313,7 @@ const Signup = (props) => {
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('./assets/lottieFiles/greenTik.json')}
+            source={require('../assets/lottieFiles/greenTik.json')}
             autoPlay
             loop
           />

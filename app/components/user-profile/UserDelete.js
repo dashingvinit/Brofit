@@ -11,13 +11,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
-import {
-  bgColor,
-  bgGlass,
-  bgGlassLight,
-  bgLight,
-  neon,
-} from '../../constants/Constants';
+import { neon } from '../../constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const UserDelete = (props) => {

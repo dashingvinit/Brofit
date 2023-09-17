@@ -3,10 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Welcome from '../Welcome';
+import Welcome from '../ui-welcom/Welcome';
 import Home from './Home';
 import PlanUpdate from './PlanUpdate';
-import ProfileSetup from '../ProfileSetup';
+import ProfileSetup from '../ui-welcom/ProfileSetup';
 import Timer from './Timer';
 import Notification from '../components/Notification';
 

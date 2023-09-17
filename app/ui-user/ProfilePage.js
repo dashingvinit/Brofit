@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
   TextInput,
   Modal,
 } from 'react-native';
-import { GradientBG, Hr, Hi, UserDelete, MsgModal, Profileimage } from '../components';
+import {
+  GradientBG,
+  Hr,
+  Hi,
+  UserDelete,
+  MsgModal,
+  Profileimage,
+} from '../components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LottieView from 'lottie-react-native';
 import { bgColor, neon, bgLight, bgGlass } from '../constants/Constants';

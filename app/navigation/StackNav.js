@@ -1,17 +1,18 @@
 // import { createStackNavigator } from '@react-navigation/stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Welcome from '../Welcome';
-import Signup from '../Signup';
-import ProfileSetup from '../ProfileSetup';
-import Login from '../Login';
+import Welcome from '../ui-welcom/Welcome';
+import Login from '../ui-welcom/Login';
+import Signup from '../ui-welcom/Signup';
+import Forgetpassword from '../ui-welcom/Forgetpassword';
+import ConfirmPass from '../ui-welcom/ConfirmPassword';
+import ProfileSetup from '../ui-welcom/ProfileSetup';
+
 import OwnerLogin from '../ui-owner/OwnerLogin';
 import AdminLogin from '../ui-admin/AdminLogin';
 import Home from '../ui-user/Home';
 import OwnerHome from '../ui-owner/Home';
 import AdminPage from '../ui-admin/Adminpage';
-import Forgetpassword from '../Forgetpassword';
-import ConfirmPass from '../ConfirmPassword';
 
 const Stack = createNativeStackNavigator();
 

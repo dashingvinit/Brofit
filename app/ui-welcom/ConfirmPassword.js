@@ -7,9 +7,9 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import axios from './constants/Axios';
-import { Background, Btn } from './components';
-import { bgColor, neon, bgGlass } from './constants/Constants';
+import axios from '../constants/Axios';
+import { Background, Btn } from '../components';
+import { bgColor, neon, bgGlass } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
 
@@ -179,7 +179,7 @@ const ConfirmPassword = (props) => {
               alignItems: 'center',
             }}>
             <LottieView
-              source={require('./assets/lottieFiles/greenTik.json')}
+              source={require('../assets/lottieFiles/greenTik.json')}
               autoPlay
               loop
             />

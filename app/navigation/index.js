@@ -1,4 +1,4 @@
-import UserNav from './BottomNav';
+import UserNav from './UserNav';
 import OwnerNav from './OwnerNav';
 import AdminNav from './AdminNav';
 import StackNav from './StackNav';

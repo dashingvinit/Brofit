@@ -1,9 +1,9 @@
 import { View, Text, ScrollView } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import axios, { setTokenHeader } from './constants/Axios';
+import axios, { setTokenHeader } from '../constants/Axios';
 import React, { useEffect, useState, useRef } from 'react';
-import { Background, Gender, Plans, Btn, Field, Hr } from './components';
-import { neon, bgColor } from './constants/Constants';
+import { Background, Gender, Plans, Btn, Field, Hr } from '../components';
+import { neon, bgColor } from '../constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const ProfileSetup = (props) => {
@@ -213,7 +213,7 @@ const ProfileSetup = (props) => {
               alignItems: 'center',
             }}>
             <LottieView
-              source={require('./assets/lottieFiles/loadingSkeliton.json')}
+              source={require('../assets/lottieFiles/loadingSkeliton.json')}
               autoPlay
               loop
             />
