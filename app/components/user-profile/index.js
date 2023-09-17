@@ -1,3 +1,4 @@
 import UserDelete from "./UserDelete";
+import Profileimage from "./Profileimage";
 
-export { UserDelete };
+export { UserDelete, Profileimage };

@@ -9,7 +9,7 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import { GradientBG, Hr, Hi, UserDelete, MsgModal } from '../components';
+import { GradientBG, Hr, Hi, UserDelete, MsgModal, Profileimage } from '../components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LottieView from 'lottie-react-native';
 import { bgColor, neon, bgLight, bgGlass } from '../constants/Constants';
@@ -135,10 +135,7 @@ const ProfilePage = (props) => {
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.profileCard}>
           <View style={styles.profileContainer}>
-            <Image
-              source={require('../assets/images/profile.jpg')}
-              style={{ width: 100, height: 100, borderRadius: 50 }}
-            />
+            <Profileimage />
             <Text style={styles.userName}>{username}</Text>
             <Text
               style={{
