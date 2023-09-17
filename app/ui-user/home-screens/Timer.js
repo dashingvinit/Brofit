@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-
 import moment from 'moment';
-import { bgColor, bgGlassLight, neon } from '../constants/Constants';
-import { Hr, TopBack } from '../components';
+import { bgColor, bgGlassLight, neon } from '../../constants/Constants';
+import { Hr, TopBack } from '../../components';
 import LottieView from 'lottie-react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -141,7 +140,7 @@ export default function App() {
 
   return (
     <ImageBackground
-      source={require('../assets/grade5.png')}
+      source={require('../../assets/grade5.png')}
       style={styles.backgroundImage}>
       <SafeAreaView />
       <View style={{ zIndex: 2 }}>
@@ -149,7 +148,7 @@ export default function App() {
       </View>
 
       <LottieView
-        source={require('../assets/lottieFiles/circlePulse.json')}
+        source={require('../../assets/lottieFiles/circlePulse.json')}
         autoPlay
         loop
         style={{ height: '100%', position: 'absolute' }}

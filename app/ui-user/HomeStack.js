@@ -5,9 +5,9 @@ const Stack = createNativeStackNavigator();
 
 import Welcome from '../ui-welcom/Welcome';
 import Home from './Home';
-import PlanUpdate from './PlanUpdate';
+import PlanUpdate from './home-screens/PlanUpdate';
 import ProfileSetup from '../ui-welcom/ProfileSetup';
-import Timer from './Timer';
+import Timer from './home-screens/Timer';
 import Notification from '../components/Notification';
 
 const HomeStack = ({ setHandleLogout }) => {

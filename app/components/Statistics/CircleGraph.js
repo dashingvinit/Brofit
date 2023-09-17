@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,7 +7,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
 import { bgGlassLight } from '../../constants/Constants';
 import { ProgressChart } from 'react-native-chart-kit';
 import axios from '../../constants/Axios';
@@ -17,16 +17,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const CircleGraph = () => {
   const screenWidth = Dimensions.get('window').width;
+  const scrollRef = useRef(null); // Create a ref for the ScrollView
 
   const [month, setMonth] = useState('09');
   const [Gdata, setGData] = useState([0, 0, 0]);
-
   const [attended, setAttended] = useState();
-
   const [days, setDays] = useState();
   const [total, setTotal] = useState();
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(8); // '09' is at index 8
 
   const selectCategory = (index, num) => {
     setSelectedCategory(index);
@@ -55,9 +53,16 @@ const CircleGraph = () => {
     });
   };
 
+  // Inside the useEffect hook:
   useEffect(() => {
     getData();
-  }, [month]);
+    // Scroll to the selected category when the component mounts
+    scrollRef.current.scrollTo({
+      x: selectedCategory * screenWidth * 0.1, // 0.3 because the width of each category card is 30% of the screen width
+      animated: true,
+      duration: 2500, // Change this to your desired animation duration
+    });
+  }, [month]); // Include selectedCategory in the dependency array
 
   const categories = [
     {
@@ -124,6 +129,7 @@ const CircleGraph = () => {
   return (
     <View>
       <ScrollView
+        ref={scrollRef}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scroll}>

@@ -101,7 +101,7 @@ const CheckedIn = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15,
+    marginTop: 10,
     borderRadius: 20,
     backgroundColor: bgGlass,
   },
