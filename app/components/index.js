@@ -30,6 +30,7 @@ import Announcement from './Announcement';
 import MsgModal from './MsgModal';
 
 export {
+  Notification,
   Background,
   Background2,
   Gradient4,
@@ -66,6 +67,5 @@ export {
   OwnerStatus,
   Adminsearch,
   UserDelete,
-  Notification,
   Announcement,
 };

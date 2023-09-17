@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import EBtn from './ExitButton';
-import { bgColor, bgLight, neon, offWhite } from '../constants/Constants';
+import { neon, offWhite } from '../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Top = (props) => {

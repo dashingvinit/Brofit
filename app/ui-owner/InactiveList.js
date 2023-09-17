@@ -10,13 +10,7 @@ import {
 } from 'react-native';
 import { TopBack, GradientBG, Hr } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  bgColor,
-  bgGlass,
-  bgGlassLight,
-  bgLight,
-  neon,
-} from '../constants/Constants';
+import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -44,7 +38,7 @@ const InactiveList = (props) => {
       setLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        console.log('Data not found');
+        console.log('Data not found Inactivelist');
       } else {
         console.error('Error fetching attendance data:', error);
       }

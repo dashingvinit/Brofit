@@ -1,20 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from '../constants/Axios';
 import LoadingSkeleton from './loading-animations/LoadingSkeleton';
-import {
-  bgColor,
-  bgGlass,
-  bgGlassLight,
-  bgLight,
-  neon,
-} from '../constants/Constants';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
+import LottieView from 'lottie-react-native';
 
 const CheckedIn = (props) => {
   const [usersData, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const lottieRef = useRef(null);
 
   const getCheckIn = async () => {
     try {
@@ -33,6 +28,12 @@ const CheckedIn = (props) => {
   };
 
   const handleRefresh = () => {
+    if (lottieRef.current) {
+      lottieRef.current.reset();
+    }
+    if (lottieRef.current) {
+      lottieRef.current.play();
+    }
     getCheckIn();
   };
 
@@ -47,32 +48,35 @@ const CheckedIn = (props) => {
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <LoadingSkeleton />
-      ) : (
-        <>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.heading}>Today's Check-Ins</Text>
-            <TouchableOpacity onPress={handleRefresh}>
-              <Ionicons
-                name="refresh"
-                size={24}
-                color="white"
-                style={{ alignSelf: 'flex-end', marginRight: 10 }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.userListContainer}>
-            <View style={styles.userHeader}>
-              <Text style={styles.userName}>ID. Name</Text>
-              <Text style={styles.checkInOut}>Check-In</Text>
-              <Text style={styles.checkInOut}>Check-Out</Text>
-            </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+        <Text style={styles.heading}>Today's Check-Ins</Text>
+
+        <TouchableOpacity onPress={handleRefresh} style={styles.refresh}>
+          <LottieView
+            ref={lottieRef}
+            source={require('../assets/lottieFiles/refresh.json')}
+            autoPlay
+            loop={false} // Set loop to false initially
+            style={{ width: 35, height: 35, alignSelf: 'flex-end' }}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.userListContainer}>
+        <View style={styles.userHeader}>
+          <Text style={styles.userName}>ID. Name</Text>
+          <Text style={styles.checkInOut}>Check-In</Text>
+          <Text style={styles.checkInOut}>Check-Out</Text>
+        </View>
+        {loading ? (
+          <LoadingSkeleton />
+        ) : (
+          <>
             {usersData.map((member, index) => (
               <TouchableOpacity
                 key={index}
@@ -87,9 +91,9 @@ const CheckedIn = (props) => {
                 <Text style={styles.checkTime}>{member.checkOut}</Text>
               </TouchableOpacity>
             ))}
-          </View>
-        </>
-      )}
+          </>
+        )}
+      </View>
     </View>
   );
 };
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 15,
-    borderRadius: 10,
+    borderRadius: 20,
     backgroundColor: bgGlass,
   },
   heading: {
@@ -107,6 +111,9 @@ const styles = StyleSheet.create({
     color: 'white',
     marginVertical: 10,
     marginLeft: 10,
+  },
+  refresh: {
+    marginRight: 10,
   },
   userListContainer: {
     backgroundColor: bgGlassLight,

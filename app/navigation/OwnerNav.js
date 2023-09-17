@@ -6,7 +6,6 @@ import HomeStack from '../ui-owner/HomeStack';
 import MembersStack from '../ui-owner/MembersStack';
 import Plans from '../ui-owner/Plans';
 import AttendanceStack from '../ui-owner/AttendanceStack';
-// import DietChart from '../owner/OwnerDietPage';
 
 import { neon } from '../constants/Constants';
 
