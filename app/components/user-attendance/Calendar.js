@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
-import { bgColor, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgLight, neon } from '../../constants/Constants';
 import * as SecureStore from 'expo-secure-store';
-import axios from '../constants/Axios';
+import axios from '../../constants/Axios';
 
 const Calender = () => {
   const [markedDates, setMarkedDates] = useState({});

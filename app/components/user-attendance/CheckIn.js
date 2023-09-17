@@ -1,10 +1,10 @@
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { bgColor, neon } from '../constants/Constants';
+import { bgColor, neon } from '../../constants/Constants';
 import * as Location from 'expo-location';
-import axios from '../constants/Axios';
+import axios from '../../constants/Axios';
 import React, { useState, useEffect } from 'react';
 import LottieView from 'lottie-react-native';
-import MsgModal from './MsgModal';
+import MsgModal from '../MsgModal';
 import * as SecureStore from 'expo-secure-store';
 
 const CheckIn = ({ setAttendance }) => {
@@ -157,7 +157,7 @@ const CheckIn = ({ setAttendance }) => {
         onPress={handleCheckIn}>
         {disableButton ? (
           <LottieView
-            source={require('../assets/lottieFiles/loadingcircles.json')}
+            source={require('../../assets/lottieFiles/loadingcircles.json')}
             autoPlay
             loop
             style={{ height: 20, width: 25 }}
@@ -169,7 +169,7 @@ const CheckIn = ({ setAttendance }) => {
       {Loading && (
         <View style={styles.loadingScreen}>
           <LottieView
-            source={require('../assets/lottieFiles/loadingSkeliton.json')}
+            source={require('../../assets/lottieFiles/loadingSkeliton.json')}
             autoPlay
             loop
           />

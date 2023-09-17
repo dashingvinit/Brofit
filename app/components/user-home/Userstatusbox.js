@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import axios from '../constants/Axios';
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
-import { neon } from '../constants/Constants';
+import { neon } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 

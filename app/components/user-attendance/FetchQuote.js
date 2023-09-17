@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
-import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgLight, neon } from '../../constants/Constants';
 
 function FetchQuote() {
   const [quote, setQuote] = useState('');

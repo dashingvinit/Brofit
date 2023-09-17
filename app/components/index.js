@@ -1,17 +1,14 @@
 import { Background, Background2, Gradient4, GradientBG } from './containers';
 import { Hi, GraphLoading, LoadingSkeleton } from './loading-animations';
 import Field from './Field';
-import FetchQuote from './FetchQuote';
+import {FetchQuote, Calendar, CheckIn } from './user-attendance/';
 import Btn from './Btn';
-import Graph from './Graph';
+import {Graph, Userstatusbox, Runtimer} from './user-home';
 import Plans from './Plans';
 import Top from './Top';
 import CheckedIn from './CheckedIn';
-import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
-import Userstatusbox from './Userstatusbox';
 import OwnerStatus from './OwnerStatus';
-import Calendar from './Calendar';
 import Hr from './hr';
 import TopBack from './TopBack';
 import Search from './Search';
@@ -27,7 +24,6 @@ import {
   SixdayWorkOutCard,
 } from './workout';
 import { CreateChart, GetDietPlans } from './diet';
-import Runtimer from './Runtimer';
 import UserDelete from './UserDelete';
 import Notification from './Notification';
 import Announcement from './Announcement';
