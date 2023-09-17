@@ -3,36 +3,31 @@ import { View, Image, TouchableOpacity, Alert, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-<<<<<<< HEAD
-import axios from '../../constants/Axios';
-import * as SecureStore from 'expo-secure-store';
-=======
-import Raxios from '../../constants/Axios'
+import Raxios from '../../constants/Axios';
 import axios from 'axios';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 
 const uriToBlob = (uri) => {
   return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest()
+    const xhr = new XMLHttpRequest();
     xhr.onload = function () {
       // return the blob
-      resolve(xhr.response)
-    }
+      resolve(xhr.response);
+    };
     xhr.onerror = function () {
-      reject(new Error('uriToBlob failed'))
-    }
-    xhr.responseType = 'blob'
-    xhr.open('GET', uri, true)
-    xhr.send(null)
-  })
-}
->>>>>>> 2b716b5e9f9282a0967fa7e028252a82cf140bb6
+      reject(new Error('uriToBlob failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', uri, true);
+    xhr.send(null);
+  });
+};
 
 const ProfileImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagetype, setimagetype] = useState('');
-  const [imageData,setimagagedata] =useState([])
+  const [imageData, setimagagedata] = useState([]);
 
   const handleImageSelect = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -52,12 +47,8 @@ const ProfileImage = () => {
     if (!result.canceled) {
       setSelectedImage(result);
       setimagetype(result.assets[0].uri.split('.')[3]);
-<<<<<<< HEAD
-      console.log(imagetype);
-=======
       console.log(result);
       setimagagedata(result.assets[0]);
->>>>>>> 2b716b5e9f9282a0967fa7e028252a82cf140bb6
     }
   };
 
@@ -70,69 +61,29 @@ const ProfileImage = () => {
 
         const uriParts = selectedImage.assets[0].uri.split('.');
         const fileType = uriParts[uriParts.length - 1];
-        console.log(fileType)
+        console.log(fileType);
 
-<<<<<<< HEAD
-        const base = await FileSystem.readAsStringAsync(
-          selectedImage.assets[0].uri,
-          {
-            encoding: FileSystem.EncodingType.Base64,
-          }
-        );
-
-        // const base64Data = base;
-        // const binaryData = base64.toByteArray(base64Data);
-
-        // console.log(binaryData);
-
-        console.log(imagetype);
-        const formData = new FormData();
-        formData.append('profileImage', {
-          uri: selectedImage.assets[0].uri,
-          name: `profile.${fileType}`,
-          type: `image/${fileType}`,
-          data: base,
-        });
-
-        const response = await axios.post(
-          `/userProfile/profilePic/${user.userId}/${user.gymId}`,
-          { format: imagetype }
-        );
-=======
         // const formData = new FormData();
         // formData.append('profileImage', {
         //   uri: selectedImage.assets[0].uri,
         //   name: `profile.${fileType}`,
         //   type: `image/${fileType}`,
-        //   data: await uriToBlob(selectedImage.assets[0].uri), 
+        //   data: await uriToBlob(selectedImage.assets[0].uri),
         // });
 
-    
         console.log(imagetype);
 
-        const response = await Raxios.post(`/userProfile/profilePic/${user.userId}/${user.gymId}`, {
-          format: `image/${fileType}`,
-        });
+        const response = await Raxios.post(
+          `/userProfile/profilePic/${user.userId}/${user.gymId}`,
+          {
+            format: `image/${fileType}`,
+          }
+        );
 
->>>>>>> 2b716b5e9f9282a0967fa7e028252a82cf140bb6
         const url = response.data.data;
-        
+
         console.log(url);
 
-
-<<<<<<< HEAD
-        const response1 = await axios.put(url, selectedImage.assets[0].uri);
-        console.log(response1);
-
-        const response2 = await axios.get(
-          `/userProfile/profilePic/${user.userId}/${user.gymId}`
-        );
-        console.log('3', response.data.data);
-        const url2 = response.data.data;
-
-        const response3 = await axios.get(url);
-        console.log(response3);
-=======
         // Function to upload a file to S3 using a pre-signed URL
         // async function uploadFileToS3(signedUrl, file) {
         //   try {
@@ -157,19 +108,21 @@ const ProfileImage = () => {
         //   }
         // }
 
+        //  let x =  await fetch(imageData.uri)
+        //    console.log(x);
+        //   x.then(response => response.blob())
+        //   .then(blob => {
+        //     const file = new File([blob], 'image.jpeg', { type: 'image/jpeg' });
+        //     uploadFileToS3(Url, file);
+        //   })
+        //   .catch(error => {
+        //     console.error('Error fetching image:', error);
+        //   });
 
-      //  let x =  await fetch(imageData.uri)
-      //    console.log(x);
-      //   x.then(response => response.blob())
-      //   .then(blob => {
-      //     const file = new File([blob], 'image.jpeg', { type: 'image/jpeg' });
-      //     uploadFileToS3(Url, file);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching image:', error);
-      //   });
-
-        const response1 = await axios.put(url,uriToBlob(selectedImage.assets[0].uri));
+        const response1 = await axios.put(
+          url,
+          uriToBlob(selectedImage.assets[0].uri)
+        );
         console.log(response1);
 
         // const response2 = await axios.get(`/userProfile/profilePic/${user.userId}/${user.gymId}`);
@@ -180,8 +133,6 @@ const ProfileImage = () => {
 
         // const response3 = await axios.get(url2);
         // console.log(response3);
-
->>>>>>> 2b716b5e9f9282a0967fa7e028252a82cf140bb6
       } catch (error) {
         console.error('Error uploading image:', error);
       }
