@@ -24,9 +24,9 @@ import {
   SixdayWorkOutCard,
 } from './workout';
 import { CreateChart, GetDietPlans } from './diet';
-import UserDelete from './UserDelete';
+import{ UserDelete } from './user-profile';
 import Notification from './Notification';
-import Announcement from './Announcement';
+import { Announcement } from './owner-search';
 import MsgModal from './MsgModal';
 
 export {

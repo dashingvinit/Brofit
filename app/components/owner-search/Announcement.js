@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import { View, Text,TextInput,TouchableOpacity,StyleSheet } from 'react-native'
-import { bgColor, neon } from '../constants/Constants'
-import axios from '../constants/Axios';
+import { bgColor, neon } from '../../constants/Constants'
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import LottieView from 'lottie-react-native';
 
@@ -61,7 +61,7 @@ const Announcement = () => {
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('../assets/lottieFiles/greenTik.json')}
+            source={require('../../assets/lottieFiles/greenTik.json')}
             autoPlay
             loop
           />

@@ -9,7 +9,7 @@ import {
   Text,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import axios from '../constants/Axios';
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import {
   bgColor,
@@ -17,7 +17,7 @@ import {
   bgGlassLight,
   bgLight,
   neon,
-} from '../constants/Constants';
+} from '../../constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const UserDelete = (props) => {
@@ -118,7 +118,7 @@ const UserDelete = (props) => {
             alignItems: 'center',
           }}>
           <LottieView
-            source={require('../assets/lottieFiles/loadingSkeliton.json')}
+            source={require('../../assets/lottieFiles/loadingSkeliton.json')}
             autoPlay
             loop
           />
