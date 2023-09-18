@@ -10,6 +10,7 @@ import Raxios from '../../constants/Axios';
 const ProfileImage = () => {
   const [imageUri, setImageUri] = useState(null);
   const [headers, setHeaders] = useState({});
+  const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const pickImage = async () => {
@@ -64,7 +65,7 @@ const ProfileImage = () => {
     })
       .then((response) => {
         {
-          response.ok ? console.log('Image uploaded successfully') : null;
+          response.ok ? alert('Image uploaded successfully') : null;
         }
       })
       .catch((err) => {
@@ -85,9 +86,7 @@ const ProfileImage = () => {
 
       const imageUrl = profilePic.data.data;
       const binaryString = await getBase64StringFromHttpsSource(imageUrl);
-      setImageUri(`data:image/jpeg;base64,${binaryString}`);
-
-      console.log(binaryString);
+      setImage(`data:image/jpeg;base64,${binaryString}`);
     } catch (err) {
       console.log(err);
     }
@@ -107,8 +106,8 @@ const ProfileImage = () => {
     <View>
       <Image
         source={
-          imageUri
-            ? { uri: imageUri }
+          imageUri || image
+            ? { uri: imageUri || image }
             : require('../../assets/images/profile.jpg')
         }
         style={{ width: 120, height: 120, borderRadius: 70 }}
