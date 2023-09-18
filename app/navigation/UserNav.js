@@ -4,7 +4,7 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { neon } from '../constants/Constants';
 
-import HomeStack from '../ui-user/HomeStack';
+import HomeStack from '../ui-user/home-screens/HomeStack';
 import Attendance from '../ui-user/Attendance';
 import WorkoutStack from '../ui-user/WorkoutStack';
 import Stats from '../ui-user/Statistics';

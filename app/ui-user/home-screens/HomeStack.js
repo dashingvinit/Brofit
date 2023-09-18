@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Welcome from '../ui-welcom/Welcome';
-import Home from './Home';
-import PlanUpdate from './home-screens/PlanUpdate';
-import ProfileSetup from '../ui-welcom/ProfileSetup';
-import Timer from './home-screens/Timer';
-import Notification from '../components/Notification';
+import Welcome from '../../ui-welcom/Welcome';
+import Home from '../Home';
+import PlanUpdate from './PlanUpdate';
+import ProfileSetup from '../../ui-welcom/ProfileSetup';
+import Timer from './Timer';
+import Notification from './Notification';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (

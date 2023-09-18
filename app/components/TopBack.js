@@ -20,7 +20,7 @@ const TopBack = ({ children }) => {
       </TouchableOpacity>
       <Text style={{ color: 'white', fontSize: 21 }}>{children}</Text>
       <TouchableOpacity>
-        <FontAwesome5 name="grip-lines" size={30} color="transparent" />
+        <FontAwesome5 name="hamburger" size={30} color="transparent" />
       </TouchableOpacity>
     </View>
   );
@@ -29,8 +29,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 0,
+    // gap: 20,
     justifyContent: 'space-between',
+    paddingHorizontal: 0,
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 30,

@@ -1,9 +1,9 @@
 import { Background, Background2, Gradient4, GradientBG } from './containers';
 import { Hi, GraphLoading, LoadingSkeleton } from './loading-animations';
 import Field from './Field';
-import {FetchQuote, Calendar, CheckIn } from './user-attendance/';
+import { FetchQuote, Calendar, CheckIn } from './user-attendance/';
 import Btn from './Btn';
-import {Graph, Userstatusbox, Runtimer} from './user-home';
+import { Graph, Userstatusbox, Runtimer } from './user-home';
 import Plans from './Plans';
 import Top from './Top';
 import CheckedIn from './CheckedIn';
@@ -24,13 +24,11 @@ import {
   SixdayWorkOutCard,
 } from './workout';
 import { CreateChart, GetDietPlans } from './diet';
-import{ UserDelete, Profileimage} from './user-profile';
-import Notification from './Notification';
+import { UserDelete, Profileimage } from './user-profile';
 import { Announcement } from './owner-search';
 import MsgModal from './MsgModal';
 
 export {
-  Notification,
   Background,
   Background2,
   Gradient4,
