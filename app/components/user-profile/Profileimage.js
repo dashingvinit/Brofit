@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, TouchableOpacity, Alert, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+
 import Raxios from '../../constants/Axios';
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
 
 const ProfileImage = () => {
   const [imageUri, setImageUri] = useState(null);
+  const [headers, setHeaders] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.8,
     });
 
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
-      console.log(result.assets[0].uri);
     }
   };
 
@@ -34,9 +35,10 @@ const ProfileImage = () => {
     const SignedUrl = await Raxios.post(
       `/userProfile/profilePic/${userId}/${gymId}`,
       {
-        format: 'image/jpeg',
+        format: `image/${imageUri.split('.').pop()}`,
       }
     );
+    setHeaders(SignedUrl.headers);
     return SignedUrl.data.data;
   };
 
@@ -57,13 +59,12 @@ const ProfileImage = () => {
       method: 'PUT',
       body: imageBody,
       headers: {
-        'Content-Type': 'image/jpeg',
+        ...headers,
       },
     })
       .then((response) => {
-        if (response.ok) {
-          console.log('response', response);
-          Alert.alert('Image uploaded successfully');
+        {
+          response.ok ? console.log('Image uploaded successfully') : null;
         }
       })
       .catch((err) => {
@@ -73,16 +74,30 @@ const ProfileImage = () => {
 
   // Fetching the profile pic from backend
   const fetchProfilePic = async () => {
-    const user = await SecureStore.getItemAsync('user');
-    const parsedUser = JSON.parse(user);
-    const userId = parsedUser.userId;
-    const gymId = parsedUser.gymId;
-    const profilePic = await Raxios.get(
-      `/userProfile/profilePic/${userId}/${gymId}`
-    );
-    setImageUri(profilePic.data.data);
-    console.log(imageUri);
+    try {
+      const user = await SecureStore.getItemAsync('user');
+      const parsedUser = JSON.parse(user);
+      const userId = parsedUser.userId;
+      const gymId = parsedUser.gymId;
+      const profilePic = await Raxios.get(
+        `/userProfile/profilePic/${userId}/${gymId}`
+      );
+
+      const imageUrl = profilePic.data.data;
+      const binaryString = await getBase64StringFromHttpsSource(imageUrl);
+      setImageUri(`data:image/jpeg;base64,${binaryString}`);
+
+      console.log(binaryString);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  async function getBase64StringFromHttpsSource(imageUrl) {
+    const response = await fetch(imageUrl);
+    const text = await response.text();
+    return text;
+  }
 
   useEffect(() => {
     fetchProfilePic();
