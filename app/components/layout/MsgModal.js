@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgGlassLight, neon } from '../../constants/Constants';
 
 const MsgModal = ({ message }) => {
   return (

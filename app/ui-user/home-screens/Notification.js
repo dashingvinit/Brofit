@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import TopBack from '../../components/TopBack';
+import { TopBack } from '../../components';
 import { GradientBG } from '../../components/containers';
 import { neon, bgGlass } from '../../constants/Constants';
 import axios from '../../constants/Axios';
@@ -48,8 +48,8 @@ const Notification = () => {
 
   const renderNotifications = (data) => {
     return data.map((message, index) => (
-      <TouchableOpacity>
-        <View key={index} style={styles.containerdata}>
+      <TouchableOpacity key={`message-${index}`}>
+        <View key={`container-${index}`} style={styles.containerdata}>
           <Image
             source={require('../../assets/images/announcement.jpg')}
             style={styles.img}
@@ -62,7 +62,7 @@ const Notification = () => {
             </View>
           </View>
         </View>
-        <View style={styles.separator} />
+        <View style={styles.separator} key={`separator-${index}`} />
       </TouchableOpacity>
     ));
   };

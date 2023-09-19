@@ -9,12 +9,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import { bgGlass, bgGlassLight, neon } from '../constants/Constants';
-import { GradientBG, TopBack, Announcement } from '../components';
+import { GradientBG, TopBack, Announcement, MsgModal } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MsgModal from '../components/MsgModal';
 import LottieView from 'lottie-react-native';
 
 const OwnerAttendance = (props) => {

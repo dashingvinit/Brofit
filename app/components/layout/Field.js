@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextInput, StyleSheet, View } from 'react-native';
-import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, bgGlassLight, neon } from '../../constants/Constants';
 import Feather from 'react-native-vector-icons/Feather';
 
 const Field = (props) => {
