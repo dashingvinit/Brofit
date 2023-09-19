@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, TouchableOpacity, Alert, Text } from 'react-native';
+import { bgGlass } from '../../constants/Constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -11,7 +13,7 @@ const ProfileImage = () => {
   const [imageUri, setImageUri] = useState(null);
   const [headers, setHeaders] = useState({});
   const [image, setImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -53,6 +55,7 @@ const ProfileImage = () => {
 
   // Uploading the image using the pre-signed URL
   const uploadUsingPresignedUrl = async () => {
+    setIsLoading(true);
     const signedUrl = await getPreSignedUrl();
     const imageBody = await getBlob(imageUri);
 
@@ -65,7 +68,12 @@ const ProfileImage = () => {
     })
       .then((response) => {
         {
-          response.ok ? alert('Image uploaded successfully') : null;
+          if (response.ok) {
+            alert('Image uploaded successfully');
+            setImageUri('');
+            fetchProfilePic();
+            setIsLoading(false);
+          }
         }
       })
       .catch((err) => {
@@ -119,9 +127,28 @@ const ProfileImage = () => {
       </TouchableOpacity>
       {imageUri && (
         <TouchableOpacity
-          style={{ marginLeft: 80, marginTop: 10 }}
+          style={{
+            alignSelf: 'center',
+            marginTop: 20,
+            width: '100%',
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            backgroundColor: bgGlass,
+            borderRadius: 10,
+          }}
           onPress={uploadUsingPresignedUrl}>
-          <Text>Upload</Text>
+          {isLoading ? (
+            <LottieView
+              source={require('../../assets/lottieFiles/loadingcircles.json')}
+              autoPlay
+              loop
+              style={{ height: 20, width: 25 }}
+            />
+          ) : (
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
+              Upload
+            </Text>
+          )}
         </TouchableOpacity>
       )}
     </View>
