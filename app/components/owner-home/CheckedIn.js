@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import axios from '../constants/Axios';
-import LoadingSkeleton from './loading-animations/LoadingSkeleton';
-import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
+import axios from '../../constants/Axios';
+import LoadingSkeleton from '../loading-animations/LoadingSkeleton';
+import { bgColor, bgGlass, bgGlassLight, neon } from '../../constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const CheckedIn = (props) => {
@@ -59,7 +59,7 @@ const CheckedIn = (props) => {
         <TouchableOpacity onPress={handleRefresh} style={styles.refresh}>
           <LottieView
             ref={lottieRef}
-            source={require('../assets/lottieFiles/refresh.json')}
+            source={require('../../assets/lottieFiles/refresh.json')}
             autoPlay
             loop={false} // Set loop to false initially
             style={{ width: 35, height: 35, alignSelf: 'flex-end' }}

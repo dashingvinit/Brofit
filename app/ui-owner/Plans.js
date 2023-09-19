@@ -13,7 +13,7 @@ import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 import { GradientBG, TopBack, LoadingSkeleton } from '../components';
-import MsgModal from '../components/MsgModal';
+import { MsgModal } from '../components';
 import LottieView from 'lottie-react-native';
 
 const Plans = () => {

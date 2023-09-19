@@ -106,6 +106,7 @@ const ProfileImage = () => {
       const imageUrl = profilePic.data.data;
       const binaryString = await getBase64StringFromHttpsSource(imageUrl);
       setImage(`data:image/jpeg;base64,${binaryString}`);
+      console.log(image)
     } catch (err) {
       console.log(err);
     }

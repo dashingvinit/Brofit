@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Background2 } from '../components';
-import Btn from '../components/Btn';
+import { Btn } from '../components';
 import { bgColor, neon } from '../constants/Constants';
 
 const Home = (props) => {

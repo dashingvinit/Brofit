@@ -12,9 +12,8 @@ import {
 import { bgColor, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
-import { Search, GradientBG, Hr, TopBack } from '../components';
+import { Search, GradientBG, Hr, TopBack, MsgModal} from '../components';
 import axios from '../constants/Axios';
-import MsgModal from '../components/MsgModal';
 
 const Members = (props) => {
   const [Users, setUsers] = useState([]);

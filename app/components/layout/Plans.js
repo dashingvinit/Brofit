@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
-import axios from '../constants/Axios';
-import { bgGlassLight, bgLight, neon } from '../constants/Constants';
+import axios from '../../constants/Axios';
+import { bgGlassLight, bgLight, neon } from '../../constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const Plans = ({ onSelect }) => {
@@ -53,7 +53,7 @@ const Plans = ({ onSelect }) => {
             <Text style={styles.content}>Validity: {item.validity}d</Text>
           </View>
           <LottieView
-            source={require('../assets/lottieFiles/premiumGoldCrown.json')}
+            source={require('../../assets/lottieFiles/premiumGoldCrown.json')}
             autoPlay
             loop
             style={{ width: 100, height: 100 }}

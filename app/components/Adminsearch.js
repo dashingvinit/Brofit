@@ -7,7 +7,7 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import Top from '../components/Top';
+import { Top } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { bgColor, bgLight, neon } from '../constants/Constants';
 import axios from '../constants/Axios';

@@ -2,12 +2,15 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import EBtn from './ExitButton';
-import { neon, offWhite } from '../constants/Constants';
+import { neon, offWhite } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from '../../constants/Axios';
 
 const Top = (props) => {
   const [name, setName] = useState('User');
   const [Role, setRole] = useState('User');
+  const [image1, setimage1] = useState(null)
+  const [imageUri, setImageUri] = useState(null);
 
   const getUser = async () => {
     const userObject = await SecureStore.getItemAsync('user');
@@ -20,6 +23,32 @@ const Top = (props) => {
       console.log('top', error);
     }
   };
+
+  const fetchProfilePic = async () => {
+    try {
+      const user = await SecureStore.getItemAsync('user');
+      const parsedUser = JSON.parse(user);
+      const userId = parsedUser.userId;
+      console.log(user);
+      const gymId = parsedUser.gymId;
+      const profilePic = await axios.get(
+        `/userProfile/profilePic/${userId}/${gymId}`
+      );
+
+      const imageUrl = profilePic.data.data;
+      console.log(imageUrl)
+      const binaryString = await getBase64StringFromHttpsSource(imageUrl);
+      setimage1(`data:image/jpeg;base64,${binaryString}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  async function getBase64StringFromHttpsSource(imageUrl) {
+    const response = await fetch(imageUrl);
+    const text = await response.text();
+    return text;
+  }
 
   const handleLogout = async () => {
     try {
@@ -36,7 +65,10 @@ const Top = (props) => {
     props.navigation.navigate('Notification');
   };
 
+  
+
   useEffect(() => {
+    fetchProfilePic();
     getUser();
   }, []);
 
@@ -46,7 +78,7 @@ const Top = (props) => {
         {Role === 'Admin' ? (
           <TouchableOpacity>
             <Image
-              source={require('../assets/images/profile.jpg')}
+              source={require('../../assets/images/profile.jpg')}
               style={styles.img}
             />
           </TouchableOpacity>
@@ -54,9 +86,12 @@ const Top = (props) => {
           <TouchableOpacity
             onPress={() => props.navigation.navigate('ProfilePage')}>
             <Image
-              source={require('../assets/images/profile.jpg')}
-              style={styles.img}
-            />
+              source={
+                imageUri || image1
+                ? { uri: imageUri || image1 }
+                : require('../../assets/images/profile.jpg')
+              } 
+              style={styles.img}/>
           </TouchableOpacity>
         )}
 
