@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity, Alert, Text } from 'react-native';
-import { bgGlass } from '../../constants/Constants';
+import { View, Image, TouchableOpacity, Text, Modal } from 'react-native';
+import { bgGlass, bgGlassLight } from '../../constants/Constants';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
 import * as SecureStore from 'expo-secure-store';
@@ -14,6 +14,17 @@ const ProfileImage = () => {
   const [headers, setHeaders] = useState({});
   const [image, setImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  // Function to show the modal
+  const showModal = () => {
+    setShowImage(!showImage);
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -112,19 +123,62 @@ const ProfileImage = () => {
 
   return (
     <View>
-      <Image
-        source={
-          imageUri || image
-            ? { uri: imageUri || image }
-            : require('../../assets/images/profile.jpg')
-        }
-        style={{ width: 120, height: 120, borderRadius: 70 }}
-      />
-      <TouchableOpacity
-        style={{ marginLeft: 80, marginTop: -40 }}
-        onPress={pickImage}>
-        <MaterialCommunityIcons name="pencil" size={25} color={'white'} />
+      <TouchableOpacity onPress={toggleModal}>
+        <Image
+          source={
+            imageUri || image
+              ? { uri: imageUri || image }
+              : require('../../assets/images/profile.jpg')
+          }
+          style={{ width: 120, height: 120, borderRadius: 70 }}
+        />
+        {isModalVisible ? (
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              backgroundColor: bgGlass,
+              padding: 5,
+              paddingHorizontal: 0,
+              marginTop: 5,
+              borderRadius: 10,
+            }}>
+            <TouchableOpacity style={{}} onPress={pickImage}>
+              <Text style={{ fontSize: 18, color: 'white' }}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{}} onPress={showModal}>
+              <Text style={{ fontSize: 18, color: 'white' }}>View</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </TouchableOpacity>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showImage}
+        onRequestClose={showModal}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}>
+          <View style={{ padding: 20, backgroundColor: bgGlass }}>
+            <Image
+              source={
+                imageUri || image
+                  ? { uri: imageUri || image }
+                  : require('../../assets/images/profile.jpg')
+              }
+              style={{ width: 300, height: 400 }}
+            />
+          </View>
+        </View>
+      </Modal>
+
       {imageUri && (
         <TouchableOpacity
           style={{
