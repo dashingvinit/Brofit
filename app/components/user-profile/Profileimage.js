@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity, Text, Modal } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  Modal,
+  StyleSheet,
+} from 'react-native';
 import { bgGlass, bgGlassLight } from '../../constants/Constants';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LottieView from 'lottie-react-native';
 import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
@@ -87,7 +95,8 @@ const ProfileImage = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+        setIsLoading(false);
       });
   };
 
@@ -122,7 +131,7 @@ const ProfileImage = () => {
 
   return (
     <View>
-      <TouchableOpacity onPress={toggleModal}>
+      <TouchableOpacity onPress={toggleModal} style={{ position: 'relative' }}>
         <Image
           source={
             imageUri || image
@@ -131,27 +140,17 @@ const ProfileImage = () => {
           }
           style={{ width: 120, height: 120, borderRadius: 70 }}
         />
-        {isModalVisible ? (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              backgroundColor: bgGlass,
-              padding: 5,
-              paddingHorizontal: 0,
-              marginTop: 5,
-              borderRadius: 10,
-            }}>
-            <TouchableOpacity style={{}} onPress={pickImage}>
-              <Text style={{ fontSize: 18, color: 'white' }}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{}} onPress={showModal}>
-              <Text style={{ fontSize: 18, color: 'white' }}>View</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
       </TouchableOpacity>
+      {isModalVisible ? (
+        <View style={styles.imageActions}>
+          <TouchableOpacity style={{}} onPress={pickImage}>
+            <FontAwesome name="edit" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={{}} onPress={showModal}>
+            <MaterialIcons name="zoom-out-map" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+      ) : null}
 
       <Modal
         animationType="slide"
@@ -164,31 +163,35 @@ const ProfileImage = () => {
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
+            backgroundColor: bgGlass,
           }}>
-          <View style={{ padding: 20, backgroundColor: bgGlass }}>
-            <Image
-              source={
-                imageUri || image
-                  ? { uri: imageUri || image }
-                  : require('../../assets/images/profile.jpg')
-              }
-              style={{ width: 300, height: 400 }}
-            />
-          </View>
+          <TouchableOpacity
+            onPress={showModal}
+            style={{
+              margin: 20,
+              padding: 10,
+              backgroundColor: 'black',
+              borderRadius: 100,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+            }}>
+            <MaterialIcons name="arrow-back" size={24} color="white" />
+          </TouchableOpacity>
+          <Image
+            source={
+              imageUri || image
+                ? { uri: imageUri || image }
+                : require('../../assets/images/profile.jpg')
+            }
+            style={{ width: '90%', height: '60%', borderRadius: 20 }}
+          />
         </View>
       </Modal>
 
       {imageUri && (
         <TouchableOpacity
-          style={{
-            alignSelf: 'center',
-            marginTop: 20,
-            width: '100%',
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            backgroundColor: bgGlass,
-            borderRadius: 10,
-          }}
+          style={styles.editButton}
           onPress={uploadUsingPresignedUrl}>
           {isLoading ? (
             <LottieView
@@ -207,5 +210,31 @@ const ProfileImage = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  imageActions: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: bgGlass,
+    padding: 5,
+    marginTop: 5,
+    borderRadius: 10,
+    position: 'absolute',
+    right: -40,
+    top: 20,
+  },
+  editButton: {
+    alignSelf: 'center',
+    marginTop: 10,
+    width: '100%',
+    minHeight: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: 'black',
+    borderRadius: 10,
+  },
+});
 
 export default ProfileImage;

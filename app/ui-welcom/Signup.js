@@ -202,7 +202,44 @@ const Signup = (props) => {
                 onPress={togglePasswordVisibility}
                 style={{
                   position: 'absolute',
-                  top: 25,
+                  top: 23,
+                  right: 10,
+                  zIndex: 2,
+                  opacity: 0.5,
+                }}>
+                <Ionicons
+                  name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                  size={24}
+                  color={neon}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ position: 'relative' }}>
+              <TextInput
+                style={{
+                  borderWidth: 1,
+                  borderColor: neon,
+                  borderRadius: 15,
+                  color: 'white',
+                  width: '100%',
+                  padding: 10,
+                  fontSize: 14,
+                  backgroundColor: bgGlass,
+                  marginVertical: 10,
+                }}
+                placeholderTextColor={'#EEEEEE'}
+                placeholder="Confirm Password"
+                secureTextEntry={!showPassword}
+                value={formData.confirmPassword}
+                onChangeText={(value) =>
+                  handleInputChange('confirmPassword', value)
+                }
+              />
+              <TouchableOpacity
+                onPress={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  top: 23,
                   right: 10,
                   zIndex: 2,
                   opacity: 0.5,
@@ -215,15 +252,6 @@ const Signup = (props) => {
               </TouchableOpacity>
             </View>
 
-            <Field
-              placeholder="Confirm Password"
-              secureTextEntry={!showPassword}
-              value={formData.confirmPassword}
-              icon="eye-off"
-              onChangeText={(value) =>
-                handleInputChange('confirmPassword', value)
-              }
-            />
             {/* <TouchableOpacity
               onPress={toggleRegistrationIdField}
               style={styles.checkboxContainer}>

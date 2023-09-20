@@ -15,8 +15,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = (props) => {
-  const [profile, setprofile] = useState(false);
-
   useEffect(() => {
     fetch();
   }, []);
@@ -33,17 +31,6 @@ const Home = (props) => {
       console.log('User Profile Error', error);
     }
   };
-
-  const notification = () => {
-    props.navigation.navigate('Notification');
-  };
-
-  // useEffect(() => {
-  //   if (profile) {
-  //     props.navigation.navigate('ProfileSetup');
-  //     setprofile(false);
-  //   }
-  // }, [profile]);
 
   return (
     <GradientBG>
