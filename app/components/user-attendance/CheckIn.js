@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import axios from '../../constants/Axios';
 import React, { useState, useEffect } from 'react';
 import LottieView from 'lottie-react-native';
-import { MsgModal } from '../../components';
+import MsgModal from '../../components/layout/MsgModal';
 import * as SecureStore from 'expo-secure-store';
 
 const CheckIn = ({ setAttendance }) => {

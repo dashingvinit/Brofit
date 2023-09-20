@@ -3,7 +3,12 @@ import * as SecureStore from 'expo-secure-store';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from '../../constants/Axios';
 import LoadingSkeleton from '../loading-animations/LoadingSkeleton';
-import { bgColor, bgGlass, bgGlassLight, neon } from '../../constants/Constants';
+import {
+  bgColor,
+  bgGlass,
+  bgGlassLight,
+  neon,
+} from '../../constants/Constants';
 import LottieView from 'lottie-react-native';
 
 const CheckedIn = (props) => {

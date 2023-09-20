@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import Gradient4 from '../containers/Gradient4';
-import { TopBack } from '../../components';
+import TopBack from '../../components/layout/TopBack';
 import React from 'react';
 import { WorkoutPlanData } from '../../constants/Workouts';
 import { SafeAreaView } from 'react-native-safe-area-context';

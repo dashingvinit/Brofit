@@ -17,6 +17,7 @@ const ProfileImage = () => {
   const [showImage, setShowImage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
+  // Function to toggle the modal
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -38,7 +39,6 @@ const ProfileImage = () => {
       setImageUri(result.assets[0].uri);
     }
   };
-
   // Getting the pre signed url from backend
   const getPreSignedUrl = async () => {
     const user = await SecureStore.getItemAsync('user');
@@ -98,14 +98,13 @@ const ProfileImage = () => {
       const parsedUser = JSON.parse(user);
       const userId = parsedUser.userId;
       const gymId = parsedUser.gymId;
+
       const profilePic = await Raxios.get(
         `/userProfile/profilePic/${userId}/${gymId}`
       );
-
       const imageUrl = profilePic.data.data;
       const binaryString = await getBase64StringFromHttpsSource(imageUrl);
       setImage(`data:image/jpeg;base64,${binaryString}`);
-      console.log(image);
     } catch (err) {
       console.log(err);
     }

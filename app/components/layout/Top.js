@@ -9,7 +9,7 @@ import axios from '../../constants/Axios';
 const Top = (props) => {
   const [name, setName] = useState('User');
   const [Role, setRole] = useState('User');
-  const [image1, setimage1] = useState(null)
+  const [image1, setimage1] = useState(null);
   const [imageUri, setImageUri] = useState(null);
 
   const getUser = async () => {
@@ -29,14 +29,12 @@ const Top = (props) => {
       const user = await SecureStore.getItemAsync('user');
       const parsedUser = JSON.parse(user);
       const userId = parsedUser.userId;
-      console.log(user);
       const gymId = parsedUser.gymId;
       const profilePic = await axios.get(
         `/userProfile/profilePic/${userId}/${gymId}`
       );
 
       const imageUrl = profilePic.data.data;
-      console.log(imageUrl)
       const binaryString = await getBase64StringFromHttpsSource(imageUrl);
       setimage1(`data:image/jpeg;base64,${binaryString}`);
     } catch (err) {
@@ -65,8 +63,6 @@ const Top = (props) => {
     props.navigation.navigate('Notification');
   };
 
-  
-
   useEffect(() => {
     fetchProfilePic();
     getUser();
@@ -88,10 +84,11 @@ const Top = (props) => {
             <Image
               source={
                 imageUri || image1
-                ? { uri: imageUri || image1 }
-                : require('../../assets/images/profile.jpg')
-              } 
-              style={styles.img}/>
+                  ? { uri: imageUri || image1 }
+                  : require('../../assets/images/profile.jpg')
+              }
+              style={styles.img}
+            />
           </TouchableOpacity>
         )}
 

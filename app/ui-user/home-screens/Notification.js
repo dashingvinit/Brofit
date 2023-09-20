@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { TopBack } from '../../components';
 import { GradientBG } from '../../components/containers';
-import { neon, bgGlass } from '../../constants/Constants';
+import { neon } from '../../constants/Constants';
 import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -46,12 +46,16 @@ const Notification = () => {
     fetchData();
   }, []);
 
-  const renderNotifications = (data) => {
+  const renderNotifications = (data, img) => {
     return data.map((message, index) => (
       <TouchableOpacity key={`message-${index}`}>
         <View key={`container-${index}`} style={styles.containerdata}>
           <Image
-            source={require('../../assets/images/announcement.jpg')}
+            source={
+              img === 1
+                ? require('../../assets/images/announcement.jpg')
+                : require('../../assets/images/notification.jpg')
+            }
             style={styles.img}
           />
           <View style={styles.messageContainer}>
@@ -81,7 +85,7 @@ const Notification = () => {
                 <Text style={styles.text1}>Announcements</Text>
                 {/* <View style={styles.separator} /> */}
                 {inactiveData.length > 0 ? (
-                  renderNotifications(inactiveData)
+                  renderNotifications(inactiveData, 1)
                 ) : (
                   <View style={styles.noDataContainer}>
                     <Text style={styles.noDataText}>No Announcements</Text>
@@ -91,7 +95,7 @@ const Notification = () => {
               <View style={styles.notificationContainer}>
                 <Text style={styles.notificationTitle}>Notification</Text>
                 {personalData.length > 0 ? (
-                  renderNotifications(personalData)
+                  renderNotifications(personalData, 2)
                 ) : (
                   <View style={styles.noDataContainer}>
                     <Text style={styles.noDataText}>No new notification</Text>
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   dataItem2: {
-    color: bgGlass,
+    color: 'white',
     fontSize: 12,
   },
   containerdata: {
