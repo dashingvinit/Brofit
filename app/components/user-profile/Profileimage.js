@@ -45,12 +45,11 @@ const ProfileImage = () => {
     const parsedUser = JSON.parse(user);
     const userId = parsedUser.userId;
     const gymId = parsedUser.gymId;
+    const format = `image/${imageUri.split('.').pop()}`;
 
     const SignedUrl = await Raxios.post(
       `/userProfile/profilePic/${userId}/${gymId}`,
-      {
-        format: `image/${imageUri.split('.').pop()}`,
-      }
+      { format: format }
     );
     setHeaders(SignedUrl.headers);
     return SignedUrl.data.data;
@@ -106,7 +105,7 @@ const ProfileImage = () => {
       const imageUrl = profilePic.data.data;
       const binaryString = await getBase64StringFromHttpsSource(imageUrl);
       setImage(`data:image/jpeg;base64,${binaryString}`);
-      console.log(image)
+      console.log(image);
     } catch (err) {
       console.log(err);
     }
