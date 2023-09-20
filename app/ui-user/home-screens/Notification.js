@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { TopBack } from '../../components';
 import { GradientBG } from '../../components/containers';
-import { neon } from '../../constants/Constants';
+import { neon, bgGlass, bgColor } from '../../constants/Constants';
 import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,6 +19,7 @@ const Notification = () => {
   const [inactiveData, setInactiveData] = useState([]);
   const [personalData, setPersonalData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('Announcements');
 
   const fetchData = async () => {
     try {
@@ -46,16 +47,12 @@ const Notification = () => {
     fetchData();
   }, []);
 
-  const renderNotifications = (data, img) => {
+  const renderNotifications = (data) => {
     return data.map((message, index) => (
       <TouchableOpacity key={`message-${index}`}>
         <View key={`container-${index}`} style={styles.containerdata}>
           <Image
-            source={
-              img === 1
-                ? require('../../assets/images/announcement.jpg')
-                : require('../../assets/images/notification.jpg')
-            }
+            source={require('../../assets/images/announcement.jpg')}
             style={styles.img}
           />
           <View style={styles.messageContainer}>
@@ -75,33 +72,45 @@ const Notification = () => {
     <GradientBG>
       <SafeAreaView />
       <TopBack>Notification</TopBack>
+      <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginLeft:20,marginRight:20,marginTop:20}}>
+        <TouchableOpacity onPress={()=>setActiveTab('Announcements')} style={activeTab === 'Announcements' && styles.activeTab}>
+          <Text style={[styles.text1, activeTab === 'Announcements' && styles.activeTabtext]}>Announcements</Text>
+        </TouchableOpacity> 
+        <TouchableOpacity onPress={()=>setActiveTab('PersonalNotify')} style={activeTab === 'PersonalNotify' && styles.activeTab}>
+          <Text style={[styles.notificationTitle, activeTab === 'PersonalNotify' && styles.activeTabtext]}>Personal Notify</Text>
+        </TouchableOpacity>
+      </View>
       <ScrollView>
         <View style={styles.scrollContainer}>
           {loading ? (
             <ActivityIndicator size="large" />
           ) : (
             <>
-              <View style={styles.notificationContainer}>
-                <Text style={styles.text1}>Announcements</Text>
-                {/* <View style={styles.separator} /> */}
-                {inactiveData.length > 0 ? (
-                  renderNotifications(inactiveData, 1)
-                ) : (
-                  <View style={styles.noDataContainer}>
-                    <Text style={styles.noDataText}>No Announcements</Text>
-                  </View>
-                )}
-              </View>
-              <View style={styles.notificationContainer}>
-                <Text style={styles.notificationTitle}>Notification</Text>
-                {personalData.length > 0 ? (
-                  renderNotifications(personalData, 2)
-                ) : (
-                  <View style={styles.noDataContainer}>
-                    <Text style={styles.noDataText}>No new notification</Text>
-                  </View>
-                )}
-              </View>
+              {activeTab==='Announcements' && (
+                <View style={styles.notificationContainer}>
+                  {/* <View style={styles.separator} /> */}
+                  {inactiveData.length > 0 ? (
+                    renderNotifications(inactiveData)
+                  ) : (
+                    <View style={styles.noDataContainer}>
+                      <Text style={styles.noDataText}>No Announcements</Text>
+                    </View>
+                  )}
+                </View>
+              )}
+
+              {/* for persnal notify */}
+              {activeTab==='PersonalNotify' && (
+                <View style={styles.notificationContainer}>
+                  {personalData.length > 0 ? (
+                    renderNotifications(personalData)
+                  ) : (
+                    <View style={styles.noDataContainer}>
+                      <Text style={styles.noDataText}>No new notification</Text>
+                    </View>
+                  )}
+                </View>
+              )}
             </>
           )}
         </View>
@@ -174,6 +183,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
+  activeTab: {
+    backgroundColor:bgColor,
+    padding:10,
+    borderRadius:20,
+  },
+  activeTabtext:{
+    color:'white',
+  }
 });
 
 export default Notification;
