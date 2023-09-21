@@ -47,20 +47,27 @@ const ProfileImage = () => {
       setImageUri(result.assets[0].uri);
     }
   };
+
   // Getting the pre signed url from backend
   const getPreSignedUrl = async () => {
-    const user = await SecureStore.getItemAsync('user');
-    const parsedUser = JSON.parse(user);
-    const userId = parsedUser.userId;
-    const gymId = parsedUser.gymId;
-    const format = `image/${imageUri.split('.').pop()}`;
-
-    const SignedUrl = await Raxios.post(
-      `/userProfile/profilePic/${userId}/${gymId}`,
-      { format: format }
-    );
-    setHeaders(SignedUrl.headers);
-    return SignedUrl.data.data;
+    try {
+      const user = await SecureStore.getItemAsync('user');
+      const parsedUser = JSON.parse(user);
+      const userId = parsedUser.userId;
+      const gymId = parsedUser.gymId;
+      const format = `image/${imageUri.split('.').pop()}`;
+      const SignedUrl = await Raxios.post(
+        `/userProfile/profilePic/${userId}/${gymId}`,
+        {
+          format: format,
+        }
+      );
+      setHeaders(SignedUrl.headers);
+      return SignedUrl.data.data;
+    } catch (err) {
+      console.error('Error getting signed URL', err);
+      return null;
+    }
   };
 
   // Getting the blob from the image uri
@@ -87,7 +94,7 @@ const ProfileImage = () => {
       .then((response) => {
         {
           if (response.ok) {
-            alert('Image uploaded successfully');
+            alert('Profile Updated');
             setImageUri('');
             fetchProfilePic();
             setIsLoading(false);
@@ -95,8 +102,9 @@ const ProfileImage = () => {
         }
       })
       .catch((err) => {
-        console.error(err);
         setIsLoading(false);
+        alert('Error Uploading Image');
+        console.error(err);
       });
   };
 
@@ -157,25 +165,8 @@ const ProfileImage = () => {
         transparent={true}
         visible={showImage}
         onRequestClose={showModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            backgroundColor: bgGlass,
-          }}>
-          <TouchableOpacity
-            onPress={showModal}
-            style={{
-              margin: 20,
-              padding: 10,
-              backgroundColor: 'black',
-              borderRadius: 100,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-            }}>
+        <View style={styles.expandedImgContainer}>
+          <TouchableOpacity onPress={showModal} style={styles.backBtn}>
             <MaterialIcons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
           <Image
@@ -184,7 +175,7 @@ const ProfileImage = () => {
                 ? { uri: imageUri || image }
                 : require('../../assets/images/profile.jpg')
             }
-            style={{ width: '90%', height: '60%', borderRadius: 20 }}
+            style={styles.expandedImg}
           />
         </View>
       </Modal>
@@ -201,9 +192,7 @@ const ProfileImage = () => {
               style={{ height: 20, width: 25 }}
             />
           ) : (
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-              Upload
-            </Text>
+            <Text style={styles.uploadTxt}>Upload</Text>
           )}
         </TouchableOpacity>
       )}
@@ -234,6 +223,32 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     backgroundColor: 'black',
     borderRadius: 10,
+  },
+  expandedImgContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: bgGlass,
+  },
+  backBtn: {
+    margin: 20,
+    padding: 10,
+    backgroundColor: 'black',
+    borderRadius: 100,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  expandedImg: {
+    width: '90%',
+    height: '60%',
+    borderRadius: 20,
+  },
+  uploadTxt: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 

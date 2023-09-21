@@ -54,15 +54,15 @@
   ],
   "extra": {
     "eas": {
-      "projectId": "b2274f16-cbc5-441d-9e86-92a7a823d85e"
+      "projectId": "f2fe1d2d-da34-4d6d-b53d-70a41531f195"
     }
   },
-  "owner": "amritbuild",
+  "owner": "dashing_vinit",
   "runtimeVersion": {
     "policy": "sdkVersion"
   },
   "updates": {
-    "url": "https://u.expo.dev/b2274f16-cbc5-441d-9e86-92a7a823d85e"
+    "url": "https://u.expo.dev/f2fe1d2d-da34-4d6d-b53d-70a41531f195"
   },
   "sdkVersion": "48.0.0",
   "platforms": ["ios", "android", "web"]
