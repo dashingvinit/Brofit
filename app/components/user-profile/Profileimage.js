@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity, Text, Modal } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  Modal,
+  StyleSheet,
+} from 'react-native';
 import { bgGlass, bgGlassLight } from '../../constants/Constants';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LottieView from 'lottie-react-native';
 import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
@@ -39,20 +47,27 @@ const ProfileImage = () => {
       setImageUri(result.assets[0].uri);
     }
   };
+
   // Getting the pre signed url from backend
   const getPreSignedUrl = async () => {
-    const user = await SecureStore.getItemAsync('user');
-    const parsedUser = JSON.parse(user);
-    const userId = parsedUser.userId;
-    const gymId = parsedUser.gymId;
-    const format = `image/${imageUri.split('.').pop()}`;
-
-    const SignedUrl = await Raxios.post(
-      `/userProfile/profilePic/${userId}/${gymId}`,
-      { format: format }
-    );
-    setHeaders(SignedUrl.headers);
-    return SignedUrl.data.data;
+    try {
+      const user = await SecureStore.getItemAsync('user');
+      const parsedUser = JSON.parse(user);
+      const userId = parsedUser.userId;
+      const gymId = parsedUser.gymId;
+      const format = `image/${imageUri.split('.').pop()}`;
+      const SignedUrl = await Raxios.post(
+        `/userProfile/profilePic/${userId}/${gymId}`,
+        {
+          format: format,
+        }
+      );
+      setHeaders(SignedUrl.headers);
+      return SignedUrl.data.data;
+    } catch (err) {
+      console.error('Error getting signed URL', err);
+      return null;
+    }
   };
 
   // Getting the blob from the image uri
@@ -79,7 +94,7 @@ const ProfileImage = () => {
       .then((response) => {
         {
           if (response.ok) {
-            alert('Image uploaded successfully');
+            alert('Profile Updated');
             setImageUri('');
             fetchProfilePic();
             setIsLoading(false);
@@ -87,7 +102,9 @@ const ProfileImage = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        setIsLoading(false);
+        alert('Error Uploading Image');
+        console.error(err);
       });
   };
 
@@ -122,7 +139,7 @@ const ProfileImage = () => {
 
   return (
     <View>
-      <TouchableOpacity onPress={toggleModal}>
+      <TouchableOpacity onPress={toggleModal} style={{ position: 'relative' }}>
         <Image
           source={
             imageUri || image
@@ -131,64 +148,41 @@ const ProfileImage = () => {
           }
           style={{ width: 120, height: 120, borderRadius: 70 }}
         />
-        {isModalVisible ? (
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              backgroundColor: bgGlass,
-              padding: 5,
-              paddingHorizontal: 0,
-              marginTop: 5,
-              borderRadius: 10,
-            }}>
-            <TouchableOpacity style={{}} onPress={pickImage}>
-              <Text style={{ fontSize: 18, color: 'white' }}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{}} onPress={showModal}>
-              <Text style={{ fontSize: 18, color: 'white' }}>View</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
       </TouchableOpacity>
+      {isModalVisible ? (
+        <View style={styles.imageActions}>
+          <TouchableOpacity style={{}} onPress={pickImage}>
+            <FontAwesome name="edit" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={{}} onPress={showModal}>
+            <MaterialIcons name="zoom-out-map" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
+      ) : null}
 
       <Modal
         animationType="slide"
         transparent={true}
         visible={showImage}
         onRequestClose={showModal}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-          }}>
-          <View style={{ padding: 20, backgroundColor: bgGlass }}>
-            <Image
-              source={
-                imageUri || image
-                  ? { uri: imageUri || image }
-                  : require('../../assets/images/profile.jpg')
-              }
-              style={{ width: 300, height: 400 }}
-            />
-          </View>
+        <View style={styles.expandedImgContainer}>
+          <TouchableOpacity onPress={showModal} style={styles.backBtn}>
+            <MaterialIcons name="arrow-back" size={24} color="white" />
+          </TouchableOpacity>
+          <Image
+            source={
+              imageUri || image
+                ? { uri: imageUri || image }
+                : require('../../assets/images/profile.jpg')
+            }
+            style={styles.expandedImg}
+          />
         </View>
       </Modal>
 
       {imageUri && (
         <TouchableOpacity
-          style={{
-            alignSelf: 'center',
-            marginTop: 20,
-            width: '100%',
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            backgroundColor: bgGlass,
-            borderRadius: 10,
-          }}
+          style={styles.editButton}
           onPress={uploadUsingPresignedUrl}>
           {isLoading ? (
             <LottieView
@@ -198,14 +192,64 @@ const ProfileImage = () => {
               style={{ height: 20, width: 25 }}
             />
           ) : (
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-              Upload
-            </Text>
+            <Text style={styles.uploadTxt}>Upload</Text>
           )}
         </TouchableOpacity>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  imageActions: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: bgGlass,
+    padding: 5,
+    marginTop: 5,
+    borderRadius: 10,
+    position: 'absolute',
+    right: -40,
+    top: 20,
+  },
+  editButton: {
+    alignSelf: 'center',
+    marginTop: 10,
+    width: '100%',
+    minHeight: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: 'black',
+    borderRadius: 10,
+  },
+  expandedImgContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: bgGlass,
+  },
+  backBtn: {
+    margin: 20,
+    padding: 10,
+    backgroundColor: 'black',
+    borderRadius: 100,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  expandedImg: {
+    width: '90%',
+    height: '60%',
+    borderRadius: 20,
+  },
+  uploadTxt: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+});
 
 export default ProfileImage;
