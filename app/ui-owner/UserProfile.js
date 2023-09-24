@@ -24,22 +24,23 @@ const UserProfile = (props) => {
   const [showform, setshowform] = useState(false);
   const [loading, setloading] = useState(true);
   const [userID, setUserID] = useState('');
+  const [image, setImage] = useState(null);
 
   const fetchUserProfileData = async () => {
     try {
       setUserID(user);
       const response = await axios.get(`/userProfile/${user}`);
       const data = response.data.data;
-      // console.log('User Profile Data', data);
       setUserData(data);
+      await fetchProfilePic(data.gymId);
     } catch (error) {
-      console.log('Checked In Users Error', error);
+      console.log('User Profile fetch', error);
     }
     setloading(false);
   };
+
   const getDifferenceInDays = async (dateString) => {
     if (!dateString) return null;
-
     const [day, month, year] = dateString.split('-').map(Number);
     const givenDate = new Date(year, month - 1, day);
     if (isNaN(givenDate.getTime())) return null;
@@ -79,19 +80,14 @@ const UserProfile = (props) => {
   };
 
   const handleclick = () => {
-    // alert('hlo')
     setid(userData.userId.registerationNumber);
     setshowform(true);
   };
 
   const handleSave = () => {
-    // const p = {id};
-    console.log(user);
-    console.log(id);
     axios
       .patch(`user/reg/${user}`, { registerationNumber: id })
       .then((response) => {
-        const responseData = response.data;
         fetchUserProfileData();
       })
       .catch((error) => {
@@ -100,6 +96,26 @@ const UserProfile = (props) => {
     setshowform(false);
     setloading(true);
   };
+
+  // Fetching the profile pic from backend
+  const fetchProfilePic = async (gymId) => {
+    try {
+      const profilePic = await axios.get(
+        `/userProfile/profilePic/${user}/${gymId}`
+      );
+      const imageUrl = profilePic.data.data;
+      const binaryString = await getBase64StringFromHttpsSource(imageUrl);
+      setImage(`data:image/jpeg;base64,${binaryString}`);
+    } catch (err) {
+      console.log('error fetching profile pic', err);
+    }
+  };
+
+  async function getBase64StringFromHttpsSource(imageUrl) {
+    const response = await fetch(imageUrl);
+    const text = await response.text();
+    return text;
+  }
 
   return (
     <GradientBG style={{ flex: 1 }}>
@@ -147,8 +163,12 @@ const UserProfile = (props) => {
             )}
             <View style={styles.profileContainer}>
               <Image
-                source={require('../assets/images/profile.jpg')}
-                style={{ width: 100, height: 100, borderRadius: 50 }}
+                source={
+                  image
+                    ? { uri: image }
+                    : require('../assets/images/profile.jpg')
+                }
+                style={{ width: 120, height: 120, borderRadius: 70 }}
               />
               <Text style={styles.userName}>{userData?.userId?.name}</Text>
               <Text

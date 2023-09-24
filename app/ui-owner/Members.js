@@ -12,7 +12,7 @@ import {
 import { bgColor, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
-import { Search, GradientBG, Hr, TopBack, MsgModal} from '../components';
+import { Search, GradientBG, Hr, TopBack, MsgModal } from '../components';
 import axios from '../constants/Axios';
 
 const Members = (props) => {
@@ -28,7 +28,6 @@ const Members = (props) => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const gymId = user.gymId;
-
       const response = await axios.get(
         `/gym/mems/${gymId}?page=${page}&limit=${limit}`
       );

@@ -8,121 +8,114 @@ import {
   TextInput,
   Modal,
 } from 'react-native';
-import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
+import { bgColor, bgGlass, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
-import { GradientBG, TopBack, LoadingSkeleton } from '../components';
+import { GradientBG, TopBack } from '../components';
 import { MsgModal } from '../components';
 import LottieView from 'lottie-react-native';
 
 const Plans = () => {
+  const [loading, setLoading] = useState(true);
   const [plans, setPlans] = useState([]);
-  const [gymId, setGymId] = useState('');
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [validity, setValidity] = useState('');
+  const [formState, setFormState] = useState({
+    gymId: '',
+    name: '',
+    price: '',
+    validity: '',
+  });
   const [showForm, setShowForm] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [editName, setEditName] = useState('');
-  const [editPrice, setEditPrice] = useState('');
-  const [editValidity, setEditValidity] = useState('');
-  const [plandone, setplandone] = useState(false);
+  const [editFormState, setEditFormState] = useState({
+    editName: '',
+    editPrice: '',
+    editValidity: '',
+  });
+  const [plandone, setPlandone] = useState(false);
   const [showCancelButton, setShowCancelButton] = useState(false);
-  const [createplandone, setcreateplandone] = useState(false);
-  const [loading, setloading] = useState(true);
+  const [createPlanDone, setCreatePlanDone] = useState(false);
+  const [count, setCount] = useState(-1);
 
   const scrollRef = useRef(null);
 
   const getPlans = async () => {
-    setloading(true);
+    setLoading(true);
     try {
       const userString = await SecureStore.getItemAsync('user');
-      const user = JSON.parse(userString); // Parse the user string to an object
+      const user = JSON.parse(userString);
       const gymId = user.gymId;
-      setGymId(gymId);
+      setFormState((prevState) => ({ ...prevState, gymId }));
       const response = await axios.get(`/gym/${gymId}`);
-      const data = response.data;
-      // console.log('plans: ', data.data.plans);
-      setPlans(data.data.plans);
+      setPlans(response.data.data.plans);
     } catch (error) {
-      console.log('plans Owner: ' + error);
+      console.log('Error fetching plans:', error);
     }
-    setloading(false);
+    setLoading(false);
   };
 
-  const handleDelete = async (planId) => {
-    try {
-      const response = await axios.delete(`/plan/${planId}`);
-      const data1 = await response.data;
-      setPlans(data1.data.plans);
-      getPlans();
-    } catch (error) {
-      console.log('Error:', error);
-    }
+  const getCount = async (gymId, planId) => {
+    const count = await axios.get(
+      `/userProfile/planMemberCount/${gymId}/${planId}`
+    );
+    console.log(count.data.data.count);
+    setCount(count.data.data.count);
   };
 
   const handleCreatePlan = async () => {
-    setloading(true);
+    setLoading(true);
     try {
-      const response = await axios.post('/plan', {
-        gymId: gymId,
-        name,
-        price,
-        validity,
-      });
-      //  console.log('response: ', response.data);
-      setcreateplandone(true);
+      await axios.post('/plan', formState);
+      setCreatePlanDone(true);
       toggleForm();
-      setGymId('');
-      setName('');
-      setPrice('');
-      setValidity('');
+      setFormState({
+        gymId: '',
+        name: '',
+        price: '',
+        validity: '',
+      });
       getPlans();
-      setloading(false);
     } catch (error) {
-      console.log('Error:', error);
-      setloading(false);
+      console.log('Error creating plan:', error);
     }
+    setLoading(false);
   };
 
   const handleEdit = (plan) => {
     setSelectedPlan(plan);
-    setEditName(plan.name);
-    setEditPrice(plan.price);
-    setEditValidity(plan.validity);
+    setEditFormState({
+      editName: plan.name,
+      editPrice: plan.price,
+      editValidity: plan.validity,
+    });
     toggleForm();
     scrollRef.current.scrollTo({ x: 0, y: 0, animated: true });
-
   };
 
   const toggleForm = () => {
     if (showForm) {
       setSelectedPlan(null);
-      setEditName('');
-      setEditPrice('');
-      setEditValidity('');
+      setEditFormState({
+        editName: '',
+        editPrice: '',
+        editValidity: '',
+      });
     }
     setShowForm(!showForm);
     setShowCancelButton(!showCancelButton);
   };
 
   const handleUpdatePlan = async () => {
-    setloading(true);
+    setLoading(true);
     try {
-      const response = await axios.patch(`/plan/${selectedPlan._id}`, {
-        name: editName,
-        price: editPrice,
-        validity: editValidity,
-      });
-      setplandone(true);
+      await axios.patch(`/plan/${selectedPlan._id}`, editFormState);
+      setPlandone(true);
       toggleForm();
       getPlans();
-      setloading(false);
     } catch (error) {
-      console.log('Error:', error);
-      setloading(false);
+      console.log('Error updating plan:', error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -130,22 +123,19 @@ const Plans = () => {
   }, []);
 
   useEffect(() => {
-    if (plandone) {
-      const timeout = setTimeout(() => {
-        setplandone(false);
-      }, 2000);
-      return () => clearTimeout(timeout);
-    }
-  }, [plandone]);
+    const clearPlandone = () => setPlandone(false);
+    const clearCreatePlanDone = () => setCreatePlanDone(false);
 
-  useEffect(() => {
-    if (createplandone) {
-      const timeout = setTimeout(() => {
-        setcreateplandone(false);
-      }, 2000);
+    if (plandone) {
+      const timeout = setTimeout(clearPlandone, 2000);
       return () => clearTimeout(timeout);
     }
-  }, [createplandone]);
+
+    if (createPlanDone) {
+      const timeout = setTimeout(clearCreatePlanDone, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [plandone, createPlanDone]);
 
   return (
     <GradientBG>
@@ -153,7 +143,7 @@ const Plans = () => {
         <TopBack>Plans</TopBack>
         <ScrollView ref={scrollRef}>
           <View style={styles.container}>
-          {!showForm ? (
+            {!showForm ? (
               <TouchableOpacity
                 onPress={toggleForm}
                 style={styles.createButton}>
@@ -164,57 +154,68 @@ const Plans = () => {
                 <Text style={styles.createPlanText}>
                   {selectedPlan ? 'Edit Plan' : 'Create New Plan'}
                 </Text>
-                {/* {!selectedPlan && (
-                  <TextInput
-                    value={gymId}
-                    onChangeText={setGymId}
-                    placeholder="Gym ID"
-                    style={styles.input}
-                  />
-                )} */}
                 <TextInput
-                  value={selectedPlan ? editName : name}
-                  onChangeText={selectedPlan ? setEditName : setName}
+                  value={selectedPlan ? editFormState.editName : formState.name}
+                  onChangeText={(text) =>
+                    selectedPlan
+                      ? setEditFormState((prevState) => ({
+                          ...prevState,
+                          editName: text,
+                        }))
+                      : setFormState((prevState) => ({
+                          ...prevState,
+                          name: text,
+                        }))
+                  }
                   placeholder="Name"
                   placeholderTextColor={'black'}
                   style={styles.input}
                 />
                 <TextInput
-                  keyboardType={
-                    Platform.OS === 'android'
-                      ? 'phone-pad'
-                      : Platform.OS === 'ios'
-                      ? 'number-pad'
-                      : 'numbers-and-punctuation'
+                  keyboardType={'phone-pad'}
+                  value={
+                    selectedPlan
+                      ? editFormState.editPrice.toString()
+                      : formState.price
                   }
-                  value={selectedPlan ? editPrice.toString() : price}
-                  onChangeText={selectedPlan ? setEditPrice : setPrice}
+                  onChangeText={(text) =>
+                    selectedPlan
+                      ? setEditFormState((prevState) => ({
+                          ...prevState,
+                          editPrice: text,
+                        }))
+                      : setFormState((prevState) => ({
+                          ...prevState,
+                          price: text,
+                        }))
+                  }
                   placeholder="Price"
                   placeholderTextColor={'black'}
-                  style={styles.input} 
+                  style={styles.input}
                 />
                 <TextInput
-                  keyboardType={
-                    Platform.OS === 'android'
-                      ? 'phone-pad'
-                      : Platform.OS === 'ios'
-                      ? 'number-pad'
-                      : 'numbers-and-punctuation'
+                  keyboardType={'phone-pad'}
+                  value={
+                    selectedPlan
+                      ? editFormState.editValidity.toString()
+                      : formState.validity
                   }
-                  value={selectedPlan ? editValidity.toString() : validity}
-                  onChangeText={selectedPlan ? setEditValidity : setValidity}
+                  onChangeText={(text) =>
+                    selectedPlan
+                      ? setEditFormState((prevState) => ({
+                          ...prevState,
+                          editValidity: text,
+                        }))
+                      : setFormState((prevState) => ({
+                          ...prevState,
+                          validity: text,
+                        }))
+                  }
                   placeholder="Validity"
                   placeholderTextColor={'black'}
                   style={styles.input}
                 />
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    backgroundColor: bgGlass,
-                    borderRadius: 10,
-                  }}>
+                <View style={styles.createButtonGroup}>
                   <TouchableOpacity
                     onPress={() => {
                       toggleForm();
@@ -239,49 +240,35 @@ const Plans = () => {
                   <View style={styles.plainCard}>
                     <View>
                       <Text style={styles.cardText}>
-                        <Text style={{ color: 'white', fontSize: 16 }}>
-                          Name :{' '}
-                        </Text>
+                        <Text style={styles.cardLabelText}>Name : </Text>
                         {plan.name}
                       </Text>
                       <Text style={styles.cardText}>
-                        <Text style={{ color: 'white', fontSize: 16 }}>
-                          Price :{' '}
-                        </Text>
+                        <Text style={styles.cardLabelText}>Price : </Text>
                         {plan.price}
                       </Text>
                       <Text style={styles.cardText}>
-                        <Text style={{ color: 'white', fontSize: 16 }}>
+                        <Text style={styles.cardLabelText}>
                           Validity (Days) :{' '}
                         </Text>
                         {plan.validity}
                       </Text>
                     </View>
                     <View>
-                      <LottieView
-                        source={require('../assets/lottieFiles/dollarSign.json')}
-                        autoPlay
-                        loop
-                        style={{ height: 100, width: 100 }}
-                      />
+                      <TouchableOpacity
+                        onPress={() => {
+                          getCount(plan.gymId, plan._id);
+                        }}>
+                        <LottieView
+                          source={require('../assets/lottieFiles/dollarSign.json')}
+                          autoPlay
+                          loop
+                          style={styles.lottie}
+                        />
+                      </TouchableOpacity>
                     </View>
-                    {/* <View
-                      style={{
-                        alignContent: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => handleEdit(plan)}
-                        style={styles.createButton}>
-                        <Text style={styles.createButtonText}>Edit</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() => handleDelete(plan._id)}
-                        style={styles.createButton}>
-                        <Text style={styles.createButtonText}>Delete</Text>
-                      </TouchableOpacity>
-                    </View> */}
                   </View>
+
                   <TouchableOpacity
                     onPress={() => handleEdit(plan)}
                     style={styles.editBtn}>
@@ -290,37 +277,26 @@ const Plans = () => {
                 </View>
               ))
             ) : (
-              <View style={{ alignItems: 'center' }}>
-                <Text style={{ color: neon, fontSize: 20 }}>No Plans</Text>
+              <View style={styles.noPlansContainer}>
+                <Text style={styles.noPlansText}>No Plans</Text>
               </View>
             )}
-            
           </View>
           <Modal
             visible={plandone}
             transparent
-            onRequestClose={() => setplandone(false)}>
+            onRequestClose={() => setPlandone(false)}>
             <MsgModal message={'Plan Updated 🏋🏽'} />
           </Modal>
           <Modal
-            visible={createplandone}
+            visible={createPlanDone}
             transparent
-            onRequestClose={() => setcreateplandone(false)}>
+            onRequestClose={() => setCreatePlanDone(false)}>
             <MsgModal message={'Plan created 🏋🏽'} />
           </Modal>
         </ScrollView>
         {loading && (
-          <View
-            style={{
-              position: 'absolute',
-              top: -100,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View style={styles.loadingOverlay}>
             <LottieView
               source={require('../assets/lottieFiles/loadingSkeliton.json')}
               autoPlay
@@ -354,6 +330,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+  cardLabelText: {
+    color: 'white',
+    fontSize: 16,
+  },
   editBtn: {
     marginHorizontal: 20,
     backgroundColor: neon,
@@ -378,17 +358,24 @@ const styles = StyleSheet.create({
     height: 50,
     margin: 20,
   },
+  createButtonGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: bgGlass,
+    borderRadius: 10,
+  },
+  createButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: neon,
+  },
   heading: {
     fontSize: 32,
     marginBottom: 20,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
-  },
-  createButtonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: neon,
   },
   createPlanContainer: {
     marginVertical: 20,
@@ -405,6 +392,27 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+  },
+  lottie: {
+    height: 100,
+    width: 100,
+  },
+  noPlansContainer: {
+    alignItems: 'center',
+  },
+  noPlansText: {
+    color: neon,
+    fontSize: 20,
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: -100,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

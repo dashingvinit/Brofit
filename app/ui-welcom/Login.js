@@ -28,6 +28,7 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
+    Keyboard.dismiss();
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
@@ -152,7 +153,7 @@ const Login = (props) => {
                 onPress={togglePasswordVisibility}
                 style={{
                   position: 'absolute',
-                  top: 25,
+                  top: 22,
                   right: 10,
                   zIndex: 2,
                   opacity: 0.5,

@@ -8,10 +8,10 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import { GradientBG, Hr, TopBack } from '../components';
+import { GradientBG, Hr, TopBack } from '../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, bgGlass, bgLight, neon } from '../constants/Constants';
-import axios from '../constants/Axios';
+import { bgColor, bgGlass, neon } from '../../constants/Constants';
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
 const ActiveList = (props) => {
@@ -79,7 +79,7 @@ const ActiveList = (props) => {
                       <View style={styles.flexRow}>
                         <View style={styles.flexRow}>
                           <Image
-                            source={require('../assets/images/profile.jpg')}
+                            source={require('../../assets/images/profile.jpg')}
                             style={{
                               width: 35,
                               height: 35,
@@ -100,8 +100,11 @@ const ActiveList = (props) => {
                   </View>
                 ))
               ) : (
-                <View style={{alignItems:'center',marginTop:20}}>
-                  <Text style={{color:neon,fontSize:20}}> No Active Members </Text>
+                <View style={{ alignItems: 'center', marginTop: 20 }}>
+                  <Text style={{ color: neon, fontSize: 20 }}>
+                    {' '}
+                    No Active Members{' '}
+                  </Text>
                 </View>
               )}
             </View>

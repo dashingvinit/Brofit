@@ -1,15 +1,6 @@
 import React, { Children } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
-import { bgGlassLight } from '../../constants/Constants';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const VideoPlayer = ({ image, children }) => {
@@ -54,40 +45,5 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
-
-{
-  /* <View style={styles.card}>
-      <ImageBackground
-        source={image ? image : null}
-        style={styles.imageBackground}
-        resizeMode="cover">
-        <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.8)']}
-          style={styles.linearGradient}>
-          {children}
-        </LinearGradient>
-      </ImageBackground>
-    </View>
-
-const styles = StyleSheet.create({
-  card: {
-    height: 250,
-    marginHorizontal: 10,
-    borderRadius: 25,
-    overflow: 'hidden',
-    marginBottom: 10,
-  },
-  imageBackground: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-  linearGradient: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    padding: 10,
-  },
-}); */
-}
 
 export default VideoPlayer;

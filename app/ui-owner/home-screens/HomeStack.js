@@ -3,12 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Welcome from '../ui-welcom/Welcome';
-import Home from './Home';
-import UserProfile from './UserProfile';
+import Welcome from '../../ui-welcom/Welcome';
+import Home from '../Home';
+import UserProfile from '../UserProfile';
 import ActiveList from './ActiveList';
 import InactiveList from './InactiveList';
-import OwnerProfile from './OwnerProfile';
+import OwnerProfile from '../OwnerProfile';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (

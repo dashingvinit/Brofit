@@ -72,7 +72,6 @@ const ProfilePage = (props) => {
         phoneNumber: editContact,
         address: editAddress,
       };
-
       await axios.patch(`/userProfile/${Id}`, updatedData);
       fetchUserProfileData();
       setEditable(false);
@@ -97,16 +96,16 @@ const ProfilePage = (props) => {
     return differenceInDays;
   };
 
-  useEffect(() => {
-    const fetchAndCalculatePlanExpiry = async () => {
-      fetchUserProfileData();
-      const givenDateString = userData?.planExpiryDate;
+  const fetchAndCalculatePlanExpiry = async () => {
+    fetchUserProfileData();
+    const givenDateString = userData?.planExpiryDate;
+    if (userData && givenDateString) {
+      const differenceInDays = await getDifferenceInDays(givenDateString);
+      setPlanExiper(differenceInDays);
+    }
+  };
 
-      if (userData && givenDateString) {
-        const differenceInDays = await getDifferenceInDays(givenDateString);
-        setPlanExiper(differenceInDays);
-      }
-    };
+  useEffect(() => {
     fetchAndCalculatePlanExpiry();
   }, [userData?.planExpiryDate]);
 
@@ -115,7 +114,6 @@ const ProfilePage = (props) => {
       const timeout = setTimeout(() => {
         setmsg(false);
       }, 1000);
-
       return () => clearTimeout(timeout);
     }
   }, [msg]);
@@ -399,6 +397,7 @@ const styles = StyleSheet.create({
     color: bgColor,
     fontSize: 30,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginTop: 20,
   },
   profileIcons: {

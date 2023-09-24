@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { TopBack } from '../../components';
 import { GradientBG } from '../../components/containers';
-import { neon, bgGlass, bgColor } from '../../constants/Constants';
+import { neon, bgColor } from '../../constants/Constants';
 import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -25,9 +25,10 @@ const Notification = () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
+      const userId = user.userId || user._id;
       const responseInactive = await axios.get(`/noti/${user.gymId}`);
       const responsePersonal = await axios.get(
-        `/noti/spec/${user.gymId}/${user.userId}`
+        `/noti/spec/${user.gymId}/${userId}`
       );
 
       setInactiveData(responseInactive.data.data);
@@ -72,12 +73,34 @@ const Notification = () => {
     <GradientBG>
       <SafeAreaView />
       <TopBack>Notification</TopBack>
-      <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginLeft:20,marginRight:20,marginTop:20}}>
-        <TouchableOpacity onPress={()=>setActiveTab('Announcements')} style={activeTab === 'Announcements' && styles.activeTab}>
-          <Text style={[styles.text1, activeTab === 'Announcements' && styles.activeTabtext]}>Announcements</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity onPress={()=>setActiveTab('PersonalNotify')} style={activeTab === 'PersonalNotify' && styles.activeTab}>
-          <Text style={[styles.notificationTitle, activeTab === 'PersonalNotify' && styles.activeTabtext]}>Personal Notify</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          marginTop: 10,
+        }}>
+        <TouchableOpacity
+          onPress={() => setActiveTab('Announcements')}
+          style={activeTab === 'Announcements' && styles.activeTab}>
+          <Text
+            style={[
+              styles.text1,
+              activeTab === 'Announcements' && styles.activeTabtext,
+            ]}>
+            Announcements
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setActiveTab('PersonalNotify')}
+          style={activeTab === 'PersonalNotify' && styles.activeTab}>
+          <Text
+            style={[
+              styles.notificationTitle,
+              activeTab === 'PersonalNotify' && styles.activeTabtext,
+            ]}>
+            Notifications
+          </Text>
         </TouchableOpacity>
       </View>
       <ScrollView>
@@ -86,9 +109,8 @@ const Notification = () => {
             <ActivityIndicator size="large" />
           ) : (
             <>
-              {activeTab==='Announcements' && (
+              {activeTab === 'Announcements' && (
                 <View style={styles.notificationContainer}>
-                  {/* <View style={styles.separator} /> */}
                   {inactiveData.length > 0 ? (
                     renderNotifications(inactiveData)
                   ) : (
@@ -100,7 +122,7 @@ const Notification = () => {
               )}
 
               {/* for persnal notify */}
-              {activeTab==='PersonalNotify' && (
+              {activeTab === 'PersonalNotify' && (
                 <View style={styles.notificationContainer}>
                   {personalData.length > 0 ? (
                     renderNotifications(personalData)
@@ -131,9 +153,8 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: neon,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
     textAlign: 'center',
   },
   dataContainer1: {
@@ -178,19 +199,19 @@ const styles = StyleSheet.create({
   },
   notificationTitle: {
     color: neon,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
   },
   activeTab: {
-    backgroundColor:bgColor,
-    padding:10,
-    borderRadius:20,
+    backgroundColor: bgColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderRadius: 10,
   },
-  activeTabtext:{
-    color:'white',
-  }
+  activeTabtext: {
+    color: 'white',
+  },
 });
 
 export default Notification;

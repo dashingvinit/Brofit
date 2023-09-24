@@ -4,49 +4,34 @@ import * as SecureStore from 'expo-secure-store';
 import EBtn from './ExitButton';
 import { neon, offWhite } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import axios from '../../constants/Axios';
+import { Axios, GetUser } from '../../functoins/';
 
 const Top = (props) => {
-  const [name, setName] = useState('User');
-  const [Role, setRole] = useState('User');
-  const [image1, setimage1] = useState(null);
-  const [imageUri, setImageUri] = useState(null);
+  const [image, setimage] = useState(null);
+  const [user, setuser] = useState({});
 
-  const getUser = async () => {
-    const userObject = await SecureStore.getItemAsync('user');
-    if (!userObject) return;
-    try {
-      const user = JSON.parse(userObject);
-      setName(user.name);
-      setRole(user.role);
-    } catch (error) {
-      console.log('top', error);
-    }
-  };
-
-  const fetchProfilePic = async () => {
-    try {
-      const user = await SecureStore.getItemAsync('user');
-      const parsedUser = JSON.parse(user);
-      const userId = parsedUser.userId;
-      const gymId = parsedUser.gymId;
-      const profilePic = await axios.get(
-        `/userProfile/profilePic/${userId}/${gymId}`
-      );
-
-      const imageUrl = profilePic.data.data;
-      const binaryString = await getBase64StringFromHttpsSource(imageUrl);
-      setimage1(`data:image/jpeg;base64,${binaryString}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  async function getBase64StringFromHttpsSource(imageUrl) {
+  async function GetB64StrFromHttpsSrc(imageUrl) {
     const response = await fetch(imageUrl);
     const text = await response.text();
     return text;
   }
+
+  const fetchProfilePic = async () => {
+    try {
+      const USER = await GetUser();
+      setuser(USER);
+      const userId = USER.userId || USER._id;
+      const gymId = USER.gymId;
+      const profilePic = await Axios.get(
+        `/userProfile/profilePic/${userId}/${gymId}`
+      );
+      const imageUrl = profilePic.data.data;
+      const binaryString = await GetB64StrFromHttpsSrc(imageUrl);
+      setimage(`data:image/jpeg;base64,${binaryString}`);
+    } catch (err) {
+      setimage(null);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -55,23 +40,22 @@ const Top = (props) => {
       props.setHandleLogout();
       props.navigation.navigate('Welcome');
     } catch (error) {
-      alert('error');
       console.error('error', error);
     }
   };
+
   const notify = () => {
     props.navigation.navigate('Notification');
   };
 
   useEffect(() => {
     fetchProfilePic();
-    getUser();
   }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        {Role === 'Admin' ? (
+        {user.role === 'Admin' ? (
           <TouchableOpacity>
             <Image
               source={require('../../assets/images/profile.jpg')}
@@ -83,8 +67,8 @@ const Top = (props) => {
             onPress={() => props.navigation.navigate('ProfilePage')}>
             <Image
               source={
-                imageUri || image1
-                  ? { uri: imageUri || image1 }
+                image
+                  ? { uri: image }
                   : require('../../assets/images/profile.jpg')
               }
               style={styles.img}
@@ -94,11 +78,11 @@ const Top = (props) => {
 
         <View>
           <Text style={styles.hellomsg}>Welcome Back</Text>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.name}>{user.name}</Text>
         </View>
       </View>
       <View style={styles.row}>
-        {Role === 'owner' ? null : (
+        {user.role === 'owner' ? null : (
           <EBtn
             btnLabel={<Ionicons name="notifications" color={neon} size={30} />}
             Press={notify}

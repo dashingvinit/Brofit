@@ -8,10 +8,15 @@ import {
   StyleSheet,
   RefreshControl,
 } from 'react-native';
-import { TopBack, GradientBG, Hr } from '../components';
+import { TopBack, GradientBG, Hr } from '../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, bgGlass, bgGlassLight, neon } from '../constants/Constants';
-import axios from '../constants/Axios';
+import {
+  bgColor,
+  bgGlass,
+  bgGlassLight,
+  neon,
+} from '../../constants/Constants';
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
@@ -104,18 +109,7 @@ const InactiveList = (props) => {
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>Inactive Members</TopBack>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            backgroundColor: bgGlass,
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            marginHorizontal: 10,
-            marginTop: 10,
-            borderRadius: 10,
-          }}>
+        <View style={styles.notifyAll}>
           <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>
             Notify all members
           </Text>
@@ -148,13 +142,7 @@ const InactiveList = (props) => {
                       {member?.userId?.registerationNumber}
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      justifyContent: 'space-around',
-                      gap: 10,
-                    }}>
+                  <View style={styles.btnContainer}>
                     <TouchableOpacity
                       style={{ flex: 3 }}
                       onPress={() => handleEdit(member?.userId?._id)}>
@@ -178,19 +166,9 @@ const InactiveList = (props) => {
             )}
           </View>
           {newloading && (
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0)',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+            <View style={styles.loading}>
               <LottieView
-                source={require('../assets/lottieFiles/greenTik.json')}
+                source={require('../../assets/lottieFiles/greenTik.json')}
                 autoPlay
                 loop
               />
@@ -202,6 +180,17 @@ const InactiveList = (props) => {
   );
 };
 const styles = StyleSheet.create({
+  notifyAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: bgGlass,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginHorizontal: 10,
+    marginTop: 10,
+    borderRadius: 10,
+  },
   userHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -248,6 +237,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
+  btnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    gap: 10,
+  },
   editButton: {
     flex: 1,
     color: bgColor,
@@ -259,11 +254,20 @@ const styles = StyleSheet.create({
     backgroundColor: neon,
     borderRadius: 10,
   },
-
   iconContainer: {
     padding: 10,
     borderRadius: 10,
     backgroundColor: bgGlassLight,
+  },
+  loading: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

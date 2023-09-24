@@ -2,10 +2,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeStack from '../ui-owner/HomeStack';
+import HomeStack from '../ui-owner/home-screens/HomeStack';
 import MembersStack from '../ui-owner/MembersStack';
 import Plans from '../ui-owner/Plans';
 import AttendanceStack from '../ui-owner/AttendanceStack';
+import OwnerDietPage from '../ui-owner/OwnerDietPage';
 
 import { neon } from '../constants/Constants';
 
@@ -64,7 +65,7 @@ const OwnerNav = ({ setHandleLogout }) => {
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
       <Tab.Screen name="Members" component={MembersStack} />
-      {/* <Tab.Screen name="DietChart" component={DietChart} /> */}
+      <Tab.Screen name="DietChart" component={OwnerDietPage} />
       <Tab.Screen name="Plans" component={Plans} />
       <Tab.Screen name="AttendanceStack" component={AttendanceStack} />
     </Tab.Navigator>

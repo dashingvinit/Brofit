@@ -5,9 +5,12 @@ import {
   TouchableOpacity,
   Text,
   Modal,
+  Button,
   StyleSheet,
 } from 'react-native';
-import { bgGlass, bgGlassLight } from '../../constants/Constants';
+//import { Image as ImageCompressor } from 'react-native-compressor';
+import { Video, ResizeMode } from 'expo-av';
+import { bgGlass } from '../../constants/Constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LottieView from 'lottie-react-native';
@@ -25,6 +28,9 @@ const ProfileImage = () => {
   const [showImage, setShowImage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+
   // Function to toggle the modal
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -37,14 +43,22 @@ const ProfileImage = () => {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 0.8,
+      quality: 0.5,
     });
 
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
+      // const compressedImage = await ImageCompressor.compress(imageUri, {
+      //   quality: 0.5,
+      //   compressFormat: 'jpeg',
+      //   maxWidth: 500,
+      //   maxHeight: 500,
+      //   autoRotate: true,
+      // });
+      // setImageUri(compressedImage.path);
     }
   };
 
@@ -53,9 +67,10 @@ const ProfileImage = () => {
     try {
       const user = await SecureStore.getItemAsync('user');
       const parsedUser = JSON.parse(user);
-      const userId = parsedUser.userId;
+      const userId = parsedUser._id || parsedUser.userId;
       const gymId = parsedUser.gymId;
-      const format = `image/${imageUri.split('.').pop()}`;
+      const imageFormat = imageUri.split('.').pop();
+      const format = `image/${imageFormat}`;
       const SignedUrl = await Raxios.post(
         `/userProfile/profilePic/${userId}/${gymId}`,
         {
@@ -113,15 +128,20 @@ const ProfileImage = () => {
     try {
       const user = await SecureStore.getItemAsync('user');
       const parsedUser = JSON.parse(user);
-      const userId = parsedUser.userId;
+      const userId = parsedUser._id || parsedUser.userId;
       const gymId = parsedUser.gymId;
+
+      console.log(userId, gymId);
 
       const profilePic = await Raxios.get(
         `/userProfile/profilePic/${userId}/${gymId}`
       );
       const imageUrl = profilePic.data.data;
+
       const binaryString = await getBase64StringFromHttpsSource(imageUrl);
-      setImage(`data:image/jpeg;base64,${binaryString}`);
+
+      setImage(`data:video/mp4;base64,${binaryString}`);
+      // setImage(`data:image/jpeg;base64,${binaryString}`);
     } catch (err) {
       console.log(err);
     }
@@ -140,6 +160,29 @@ const ProfileImage = () => {
   return (
     <View>
       <TouchableOpacity onPress={toggleModal} style={{ position: 'relative' }}>
+        {/* <View style={styles.container}>
+          <Video
+            ref={video}
+            style={{ width: 120, height: 120, borderRadius: 70 }}
+            source={{
+              uri: imageUri || image,
+            }}
+            useNativeControls
+            resizeMode={ResizeMode.CONTAIN}
+            isLooping
+            onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+          />
+          <View style={styles.buttons}>
+            <Button
+              title={status.isPlaying ? 'Pause' : 'Play'}
+              onPress={() =>
+                status.isPlaying
+                  ? video.current.pauseAsync()
+                  : video.current.playAsync()
+              }
+            />
+          </View>
+        </View> */}
         <Image
           source={
             imageUri || image
