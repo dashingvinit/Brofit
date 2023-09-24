@@ -15,14 +15,23 @@ import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
+import DatePicker from 'react-native-modern-datepicker'; // Assuming you have this library installed
+import { getFormatedDate } from 'react-native-modern-datepicker'; // Assuming you have this library installed
 
 const OwnerAttendance = (props) => {
-  const [searchDay, setSearchDay] = useState('');
-  const [searchMonth, setSearchMonth] = useState('');
-  const [searchYear, setSearchYear] = useState('');
   const [attendanceData, setAttendanceData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [found, setfound] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const today = new Date();
+  const startDate = getFormatedDate(today.setDate(today.getDate()+1), 'YYYY/MM/DD');
+  const [startedDate, setStartedDate] = useState('');
+  const [selectedStartDate, setSelectedStartDate] = useState(startedDate);
+
+  const handleChangeStartDate = (propDate) => {
+    setStartedDate(propDate);
+    setStartedDate(propDate);
+  };
 
   const searchAttendance = async () => {
     try {
@@ -30,20 +39,42 @@ const OwnerAttendance = (props) => {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
       const Id = user.gymId;
-      const date = `${searchDay}-${searchMonth}-${searchYear}`;
+      console.log(startedDate);
+      const [year, month, day] = startedDate.split('/');
+      // console.log(year)
+      // console.log(month)
+      // console.log(day)
+      // setSearchYear(year);
+      // console.log(searchYear);
+      // setSearchMonth(month);
+      // setSearchDay(day);
+      const date = `${day}-${month}-${year}`;
+      console.log(date)
       const response = await axios.get(`attendance/${Id}/${date}`);
       const data = response.data.data;
+      console.log(data)
       setAttendanceData(data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       if (error.response && error.response.status === 404) {
         setfound(true);
+        setAttendanceData([]);
         console.log(error);
       } else {
         console.error('Error fetching attendance data:', error);
       }
     }
+    setSelectedStartDate('')
+  };
+
+  const handleTextPress = () => {
+    setDatePickerVisibility(!isDatePickerVisible);
+  };
+
+  const handleTextPress1 = () => {
+    setDatePickerVisibility(!isDatePickerVisible);
+    searchAttendance();
   };
 
   const handlePress = async (user) => {
@@ -59,40 +90,59 @@ const OwnerAttendance = (props) => {
     }
   }, [found]);
 
+  // const handleDateSelected = () => {
+  //   console.log('Selected Date:', selectedStartDate);
+  // };
+
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <TopBack>Attendance</TopBack>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            keyboardType="number-pad"
-            placeholder="05"
-            onChangeText={(text) => setSearchDay(text)}
-            value={searchDay}
-            maxLength={2}
-          />
-          <Text style={styles.slash}>/</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="number-pad"
-            placeholder="08"
-            onChangeText={(text) => setSearchMonth(text)}
-            value={searchMonth}
-            maxLength={2}
-          />
-          <Text style={styles.slash}>/</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="number-pad"
-            placeholder="2023"
-            onChangeText={(text) => setSearchYear(text)}
-            value={searchYear}
-            maxLength={4}
-          />
-          <TouchableOpacity style={styles.searchBtn} onPress={searchAttendance}>
-            <Text style={{ color: neon, fontWeight: 'bold' }}>Search</Text>
+          <TouchableOpacity onPress={handleTextPress}>
+            <TextInput
+              style={styles.input}
+              placeholder="Select a date to Search"
+              placeholderTextColor={neon}
+              value={selectedStartDate}
+              editable={false}
+            />
           </TouchableOpacity>
+          <Modal
+            visible={isDatePickerVisible}
+            transparent
+            onRequestClose={() => setDatePickerVisibility(false)}
+          >
+            <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor: 'rgba(0,0,0, 0.5)'}}>
+              <View style={styles.modalContainer}>
+                <DatePicker
+                  mode="calendar"
+                  minimumDate={null}
+                  selected={startedDate}
+                  onDateChanged={handleChangeStartDate}
+                  onSelectedChange={(date) => {
+                    setSelectedStartDate(date);
+                    setStartedDate(date);
+                  }}
+                  options={{
+                    backgroundColor:"#080516",
+                    textHeaderColor: "#469ab6",
+                    textDefaultColor: "#FFFFFF",
+                    selectedTextColor: "#FFF",
+                    maincolor: "#469ab6",
+                    borderColor:'rgba(122,146,165,0.1)',
+                    textSecondaryColor: "#FFFFFF",
+                  }}    
+                />
+                <TouchableOpacity onPress={handleTextPress1} style={{paddingBottom:15}}>
+                  <Text style={{color:"white"}}>Done</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+          {/* <TouchableOpacity style={styles.searchBtn} onPress={searchAttendance}>
+            <Text style={{ color: neon, fontWeight: 'bold' }}>Search</Text>
+          </TouchableOpacity> */}
         </View>
         <ScrollView>
           {!attendanceData.length && !isLoading && (
@@ -193,11 +243,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     color: neon,
     textAlign: 'center',
-  },
-  slash: {
-    color: neon,
-    fontSize: 34,
-    marginHorizontal: 10,
+    width: 300,
   },
   searchBtn: {
     backgroundColor: bgGlass,
@@ -207,6 +253,20 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     paddingVertical: 5,
     paddingHorizontal: 15,
+  },
+  modalContainer: {
+    backgroundColor: '#080516',
+    borderRadius: 25,
+    margin: 20,
+    paddingTop:35,
+    alignItems: 'center',
+    justifyContent:'center',
+    width:'90%',
+    shadowColor:"#000",
+    shadowOffset:{
+      height:2,
+      width:0
+    }
   },
   dataContainer: {
     backgroundColor: bgGlassLight,
@@ -260,4 +320,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
 export default OwnerAttendance;
