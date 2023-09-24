@@ -33,6 +33,8 @@ const Notification = () => {
 
       setInactiveData(responseInactive.data.data);
       setPersonalData(responsePersonal.data.data);
+      console.log(responseInactive);
+      console.log(responsePersonal);
 
       setLoading(false);
     } catch (error) {
