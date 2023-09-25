@@ -24,7 +24,10 @@ const OwnerAttendance = (props) => {
   const [found, setfound] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const today = new Date();
-  const startDate = getFormatedDate(today.setDate(today.getDate()+1), 'YYYY/MM/DD');
+  const startDate = getFormatedDate(
+    today.setDate(today.getDate() + 1),
+    'YYYY/MM/DD'
+  );
   const [startedDate, setStartedDate] = useState('');
   const [selectedStartDate, setSelectedStartDate] = useState(startedDate);
 
@@ -41,18 +44,11 @@ const OwnerAttendance = (props) => {
       const Id = user.gymId;
       console.log(startedDate);
       const [year, month, day] = startedDate.split('/');
-      // console.log(year)
-      // console.log(month)
-      // console.log(day)
-      // setSearchYear(year);
-      // console.log(searchYear);
-      // setSearchMonth(month);
-      // setSearchDay(day);
       const date = `${day}-${month}-${year}`;
-      console.log(date)
+      console.log(date);
       const response = await axios.get(`attendance/${Id}/${date}`);
       const data = response.data.data;
-      console.log(data)
+      console.log(data);
       setAttendanceData(data);
       setIsLoading(false);
     } catch (error) {
@@ -65,7 +61,7 @@ const OwnerAttendance = (props) => {
         console.error('Error fetching attendance data:', error);
       }
     }
-    setSelectedStartDate('')
+    setSelectedStartDate('');
   };
 
   const handleTextPress = () => {
@@ -111,9 +107,14 @@ const OwnerAttendance = (props) => {
           <Modal
             visible={isDatePickerVisible}
             transparent
-            onRequestClose={() => setDatePickerVisibility(false)}
-          >
-            <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor: 'rgba(0,0,0, 0.5)'}}>
+            onRequestClose={() => setDatePickerVisibility(false)}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(0,0,0, 0.5)',
+              }}>
               <View style={styles.modalContainer}>
                 <DatePicker
                   mode="calendar"
@@ -125,17 +126,19 @@ const OwnerAttendance = (props) => {
                     setStartedDate(date);
                   }}
                   options={{
-                    backgroundColor:"#080516",
-                    textHeaderColor: "#469ab6",
-                    textDefaultColor: "#FFFFFF",
-                    selectedTextColor: "#FFF",
-                    maincolor: "#469ab6",
-                    borderColor:'rgba(122,146,165,0.1)',
-                    textSecondaryColor: "#FFFFFF",
-                  }}    
+                    backgroundColor: '#080516',
+                    textHeaderColor: '#469ab6',
+                    textDefaultColor: '#FFFFFF',
+                    selectedTextColor: '#FFF',
+                    maincolor: '#469ab6',
+                    borderColor: 'rgba(122,146,165,0.1)',
+                    textSecondaryColor: '#FFFFFF',
+                  }}
                 />
-                <TouchableOpacity onPress={handleTextPress1} style={{paddingBottom:15}}>
-                  <Text style={{color:"white"}}>Done</Text>
+                <TouchableOpacity
+                  onPress={handleTextPress1}
+                  style={{ paddingBottom: 15 }}>
+                  <Text style={{ color: 'white' }}>Done</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -144,31 +147,31 @@ const OwnerAttendance = (props) => {
             <Text style={{ color: neon, fontWeight: 'bold' }}>Search</Text>
           </TouchableOpacity> */}
         </View>
-        <ScrollView>
-          {!attendanceData.length && !isLoading && (
-            <>
-              <View
-                style={{
-                  alignItems: 'center',
-                }}>
-                <LottieView
-                  source={require('../assets/lottieFiles/searchExplain.json')}
-                  autoPlay
-                  loop
-                  style={{ width: 200, height: 200 }}
-                />
-                <Text style={styles.label}>
-                  Search for a date to view the attendance of that day.
-                </Text>
-              </View>
-              <Announcement navigation={props.navigation} />
-            </>
-          )}
-        </ScrollView>
+
+        {!attendanceData.length && !isLoading ? (
+          <ScrollView>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <LottieView
+                source={require('../assets/lottieFiles/searchExplain.json')}
+                autoPlay
+                loop
+                style={{ width: 200, height: 200 }}
+              />
+              <Text style={styles.label}>
+                Search for a date to view the attendance of that day.
+              </Text>
+            </View>
+            <Announcement navigation={props.navigation} />
+          </ScrollView>
+        ) : null}
+
         {isLoading ? (
           <View
             style={{
-              flex: 1,
+              // flex: 1,
               alignItems: 'center',
             }}>
             <LottieView
@@ -190,7 +193,7 @@ const OwnerAttendance = (props) => {
                 </View>
               </View>
               <ScrollView>
-                <View style={{ flex: 1, paddingBottom: 100 }}>
+                <View style={{}}>
                   <ScrollView style={styles.scrollContainer}>
                     {attendanceData.map((dataEntry, index) => (
                       <TouchableOpacity
@@ -243,7 +246,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     color: neon,
     textAlign: 'center',
-    width: 300,
+    fontWeight: 'bold',
+    width: '100%',
   },
   searchBtn: {
     backgroundColor: bgGlass,
@@ -258,15 +262,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#080516',
     borderRadius: 25,
     margin: 20,
-    paddingTop:35,
+    paddingTop: 35,
     alignItems: 'center',
-    justifyContent:'center',
-    width:'90%',
-    shadowColor:"#000",
-    shadowOffset:{
-      height:2,
-      width:0
-    }
+    justifyContent: 'center',
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
   },
   dataContainer: {
     backgroundColor: bgGlassLight,

@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TextInput,
+  Modal,
 } from 'react-native';
 import axios from '../constants/Axios';
 import React, { useEffect, useState } from 'react';
@@ -14,6 +15,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBack, GradientBG, Hr } from '../components';
 import LottieView from 'lottie-react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import { CreateChart } from '../components';
 
 const UserProfile = (props) => {
@@ -25,6 +27,18 @@ const UserProfile = (props) => {
   const [loading, setloading] = useState(true);
   const [userID, setUserID] = useState('');
   const [image, setImage] = useState(null);
+  const [showImage, setShowImage] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  // Function to toggle the modal
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  // Function to show the modal
+  const showModal = () => {
+    setShowImage(!showImage);
+  };
 
   const fetchUserProfileData = async () => {
     try {
@@ -162,14 +176,36 @@ const UserProfile = (props) => {
               <View></View>
             )}
             <View style={styles.profileContainer}>
-              <Image
-                source={
-                  image
-                    ? { uri: image }
-                    : require('../assets/images/profile.jpg')
-                }
-                style={{ width: 120, height: 120, borderRadius: 70 }}
-              />
+              <TouchableOpacity style={{}} onPress={showModal}>
+                <Image
+                  source={
+                    image
+                      ? { uri: image }
+                      : require('../assets/images/profile.jpg')
+                  }
+                  style={{ width: 120, height: 120, borderRadius: 70 }}
+                />
+              </TouchableOpacity>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={showImage}
+                onRequestClose={showModal}>
+                <View style={styles.expandedImgContainer}>
+                  <TouchableOpacity onPress={showModal} style={styles.backBtn}>
+                    <MaterialIcons name="arrow-back" size={24} color="white" />
+                  </TouchableOpacity>
+                  <Image
+                    source={
+                      image
+                        ? { uri: image }
+                        : require('../assets/images/profile.jpg')
+                    }
+                    style={styles.expandedImg}
+                  />
+                </View>
+              </Modal>
               <Text style={styles.userName}>{userData?.userId?.name}</Text>
               <Text
                 style={{
@@ -343,6 +379,27 @@ const styles = StyleSheet.create({
     borderRightWidth: 3,
     borderBottomWidth: 3,
     marginBottom: 10,
+  },
+  expandedImgContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: bgGlass,
+  },
+  backBtn: {
+    margin: 20,
+    padding: 10,
+    backgroundColor: 'black',
+    borderRadius: 100,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  expandedImg: {
+    width: '90%',
+    height: '60%',
+    borderRadius: 20,
   },
   profileContainer: {
     paddingBottom: 30,
