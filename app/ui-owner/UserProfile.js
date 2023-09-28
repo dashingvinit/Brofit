@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { TopBack, GradientBG, Hr } from '../components';
 import LottieView from 'lottie-react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import { CreateChart } from '../components';
+import { LinearGradient } from 'react-native-svg';
 
 const UserProfile = (props) => {
   const user = props.route.params.user._id;
@@ -25,7 +25,6 @@ const UserProfile = (props) => {
   const [id, setid] = useState('');
   const [showform, setshowform] = useState(false);
   const [loading, setloading] = useState(true);
-  const [userID, setUserID] = useState('');
   const [image, setImage] = useState(null);
   const [showImage, setShowImage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -42,13 +41,12 @@ const UserProfile = (props) => {
 
   const fetchUserProfileData = async () => {
     try {
-      setUserID(user);
       const response = await axios.get(`/userProfile/${user}`);
       const data = response.data.data;
       setUserData(data);
       await fetchProfilePic(data.gymId);
     } catch (error) {
-      console.log('User Profile fetch', error);
+      setYs;
     }
     setloading(false);
   };
@@ -196,6 +194,9 @@ const UserProfile = (props) => {
                   <TouchableOpacity onPress={showModal} style={styles.backBtn}>
                     <MaterialIcons name="arrow-back" size={24} color="white" />
                   </TouchableOpacity>
+                  <LinearGradient
+                    colors={['transparent', 'rgba(0,0,0,0.8)']}
+                    style={styles.linearGradient}></LinearGradient>
                   <Image
                     source={
                       image
@@ -380,12 +381,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     marginBottom: 10,
   },
+  linearGradient: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    padding: 10,
+  },
   expandedImgContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: bgGlass,
+    //backgroundColor: bgGlass,
   },
   backBtn: {
     margin: 20,

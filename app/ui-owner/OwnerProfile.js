@@ -1,44 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-} from 'react-native';
-import { GradientBG, Hr, Hi, TopBack } from '../components';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import { GradientBG, Hi, TopBack } from '../components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  bgColor,
-  neon,
-  bgLight,
-  bgGlassLight,
-  bgGlass,
-} from '../constants/Constants';
+import { bgColor, neon, bgLight } from '../constants/Constants';
 import axios from '../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState(null);
   const [users, setUsers] = useState(' ');
-  const [Id, setId] = useState('');
 
   const fetchUserProfileData = async () => {
     try {
       const userString = await SecureStore.getItemAsync('user');
       const user = JSON.parse(userString);
-      setUsername(user.name);
       const userID = user?.gymId;
-      // console.log('User ID', userID);
       const response = await axios.get(`/gym/${userID}`);
       const data = await response.data;
-      // console.log('User Profile data', data.data);
       setUserData(data.data);
-      setId(data.data._id);
     } catch (error) {
       console.log('owner Profile data fetch Error', error);
     }
@@ -59,10 +39,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     getCheckIn();
-  }, []);
-
-  useEffect(() => {
-      fetchUserProfileData();
+    fetchUserProfileData();
   });
 
   if (!userData)
@@ -77,16 +54,16 @@ const ProfilePage = () => {
   return (
     <GradientBG style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-      <TopBack>Owner Profile</TopBack>
-      <ScrollView style={{ flex: 1 }}>
-        <View style={styles.profileCard}>
-          <View style={styles.profileContainer}>
-            <Image
-              source={require('../assets/images/profile.jpg')}
-              style={{ width: 100, height: 100, borderRadius: 50 }}
-            />
-            <Text style={styles.userName}>{userData?.gymName}</Text>
-            {/* <Text
+        <TopBack>Owner Profile</TopBack>
+        <ScrollView style={{ flex: 1 }}>
+          <View style={styles.profileCard}>
+            <View style={styles.profileContainer}>
+              <Image
+                source={require('../assets/images/profile.jpg')}
+                style={{ width: 100, height: 100, borderRadius: 50 }}
+              />
+              <Text style={styles.userName}>{userData?.gymName}</Text>
+              {/* <Text
               style={{
                 fontWeight: 'bold',
                 textAlign: 'center',
@@ -95,114 +72,77 @@ const ProfilePage = () => {
               }}>
               {userData?.email}
             </Text> */}
-          </View>
-          <View style={styles.profileIcons}>
-            <View
-              style={{
-                alignItems: 'center',
-                borderColor: bgColor,
-                width: '30%',
-                borderWidth: 2,
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              <MaterialCommunityIcons
-                name="card-bulleted-outline"
-                size={30}
-                color={bgColor}
-              />
-              <Text>Plans</Text>
-              <Text>{userData?.plans.length}</Text>
             </View>
-            <View
-              style={{
-                alignItems: 'center',
-                borderColor: bgColor,
-                width: '30%',
-                borderWidth: 2,
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              <MaterialCommunityIcons
-                name="clipboard-outline"
-                size={30}
-                color={bgColor}
-              />
-              <Text>Gym.Id</Text>
-              <Text>{userData?.gymId}</Text>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                borderColor: bgColor,
-                width: '30%',
-                borderWidth: 2,
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              <MaterialCommunityIcons
-                name="calendar-clock-outline"
-                size={30}
-                color={bgColor}
-              />
-              <Text>Users</Text>
-              <Text>{users}</Text>
+            <View style={styles.profileIcons}>
+              <View style={styles.infoBox}>
+                <MaterialCommunityIcons
+                  name="card-bulleted-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Plans</Text>
+                <Text>{userData?.plans.length}</Text>
+              </View>
+              <View style={styles.infoBox}>
+                <MaterialCommunityIcons
+                  name="clipboard-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Gym.Id</Text>
+                <Text>{userData?.gymId}</Text>
+              </View>
+              <View style={styles.infoBox}>
+                <MaterialCommunityIcons
+                  name="calendar-clock-outline"
+                  size={30}
+                  color={bgColor}
+                />
+                <Text>Users</Text>
+                <Text>{users}</Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View
-          style={{
-            paddingHorizontal: 20,
-            backgroundColor: 'orange',
-            borderRadius: 20,
-            borderRightWidth: 3,
-            borderBottomWidth: 3,
-            marginBottom: 80,
-          }}>
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: bgColor }}>
-            Plan Details
-          </Text>
+          <View style={styles.planCard}>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', color: bgColor }}>
+              Plan Details
+            </Text>
 
-          {userData?.plans.map((item, index) => {
-            return (
-              <View key={index}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 20,
-                  }}>
-                  <View style={{ alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, color: bgLight }}>
-                      Plan Name
-                    </Text>
-                    <Text style={{ fontSize: 16, color: bgColor }}>
-                      {item.name}
-                    </Text>
-                  </View>
-                  <View style={{ alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, color: bgLight }}>
-                      Plan Price
-                    </Text>
-                    <Text style={{ fontSize: 16, color: bgColor }}>
-                      {item.price}
-                    </Text>
-                  </View>
-                  <View style={{ alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, color: bgLight }}>
-                      Plan Days
-                    </Text>
-                    <Text style={{ fontSize: 16, color: bgColor }}>
-                      {item.validity}
-                    </Text>
+            {userData?.plans.map((item, index) => {
+              return (
+                <View key={index}>
+                  <View style={styles.plaContainer}>
+                    <View style={{ alignItems: 'center' }}>
+                      <Text style={{ fontSize: 16, color: bgLight }}>
+                        Plan Name
+                      </Text>
+                      <Text style={{ fontSize: 16, color: bgColor }}>
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Text style={{ fontSize: 16, color: bgLight }}>
+                        Plan Price
+                      </Text>
+                      <Text style={{ fontSize: 16, color: bgColor }}>
+                        {item.price}
+                      </Text>
+                    </View>
+                    <View style={{ alignItems: 'center' }}>
+                      <Text style={{ fontSize: 16, color: bgLight }}>
+                        Plan Days
+                      </Text>
+                      <Text style={{ fontSize: 16, color: bgColor }}>
+                        {item.validity}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
-        </View>
-      </ScrollView>
+              );
+            })}
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </GradientBG>
   );
@@ -230,6 +170,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
+  infoBox: {
+    alignItems: 'center',
+    borderColor: bgColor,
+    width: '30%',
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 30,
+  },
+  planCard: {
+    paddingHorizontal: 20,
+    backgroundColor: 'orange',
+    borderRadius: 20,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    marginBottom: 80,
+  },
   profileIcons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -237,6 +193,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 40,
     paddingBottom: 30,
+  },
+  plaContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
   },
   smContainer: {
     backgroundColor: '#F8FFDB',
