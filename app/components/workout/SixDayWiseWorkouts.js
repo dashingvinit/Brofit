@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { bgGlass, neon } from '../../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import NextBtn from '../../components/layout/NextBtn';
-import TopBack from '../../components/layout/TopBack';
+import NextBtn from '../layout/NextBtn';
+import TopBack from '../layout/TopBack';
 import Video from './VideoPlayer';
 import GradientBG from '../containers/GradientBG';
 import Ionicons from 'react-native-vector-icons/Ionicons';

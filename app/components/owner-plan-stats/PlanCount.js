@@ -1,56 +1,54 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
+import { neon } from '../../constants/Constants';
 
-const Water = () => {
+const PlanCount = ({ count }) => {
   const [water, setWater] = useState(0);
 
-  useEffect(() => {
-    AsyncStorage.getItem('water').then((value) => {
-      if (value) {
-        setWater(parseInt(value));
-      }
-    });
-  }, []);
-
   const handleWater = async () => {
-    const value = water + 1;
-    await AsyncStorage.setItem('water', value.toString());
-    setWater(value);
+    console.log('handleWater');
+    // const value = water + 1;
+    // await SecureStore.setItemAsync('water', value.toString());
+    // setWater(value);
   };
 
   const handleReset = async () => {
-    await AsyncStorage.setItem('water', '0');
-    setWater(0);
+    console.log('handleReset');
+    // await SecureStore.setItemAsync('water', '0');
+    // setWater(0);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>H2O</Text>
+        <Text style={styles.headerText}>TOTAL</Text>
         <TouchableOpacity onPress={handleReset}>
           <View style={styles.resetButton}>
-            <MaterialCommunityIcons name="cancel" size={24} color="#9DB2BF" />
+            <MaterialCommunityIcons
+              name="chart-bubble"
+              size={24}
+              color={neon}
+            />
           </View>
         </TouchableOpacity>
       </View>
       <Text style={styles.waterText}>
-        {water}/10 <Text style={styles.waterUnit}>250ml* </Text>
+        {count} <Text style={styles.waterUnit}>PLANS</Text>
       </Text>
       <View style={styles.waterRow}>
         <MaterialCommunityIcons name="cup" size={24} color="#9dcfe2">
           <Text style={styles.waterValue}> 2500ml</Text>
         </MaterialCommunityIcons>
-        <TouchableOpacity onPress={handleWater}>
-          <View style={styles.waterPlusButton}>
-            <MaterialCommunityIcons
-              name="water-plus-outline"
-              size={24}
-              color="#1a1b19"
-            />
-          </View>
-        </TouchableOpacity>
+
+        <MaterialCommunityIcons
+          name="water-plus-outline"
+          size={24}
+          color="#1a1b19"
+          style={styles.waterPlusButton}
+          onPress={handleWater}
+        />
       </View>
     </View>
   );
@@ -105,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Water;
+export default PlanCount;

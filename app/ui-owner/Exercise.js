@@ -1,9 +1,9 @@
 import React from 'react';
 import { GradientBG } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CreateWorkout } from './features/';
+import { CreateWorkout } from './features';
 
-const OwnerDietPage = () => {
+const Exercise = () => {
   return (
     <GradientBG>
       <SafeAreaView />
@@ -12,4 +12,4 @@ const OwnerDietPage = () => {
   );
 };
 
-export default OwnerDietPage;
+export default Exercise;

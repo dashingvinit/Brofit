@@ -2,11 +2,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeStack from '../ui-owner/home-screens/HomeStack';
-import MembersStack from '../ui-owner/MembersStack';
+import HomeStack from '../ui-owner/nav-stacks/HomeStack';
+import MembersStack from '../ui-owner/nav-stacks/MembersStack';
 import Plans from '../ui-owner/Plans';
-import AttendanceStack from '../ui-owner/AttendanceStack';
-import OwnerDietPage from '../ui-owner/OwnerDietPage';
+import AttendanceStack from '../ui-owner/nav-stacks/AttendanceStack';
+import OwnerDietPage from '../ui-owner/Exercise';
 
 import { neon } from '../constants/Constants';
 

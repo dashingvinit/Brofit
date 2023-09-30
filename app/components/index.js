@@ -6,8 +6,8 @@ import { FetchQuote, Calendar, CheckIn } from './user-attendance';
 import { Graph, Userstatusbox, Runtimer } from './user-home';
 
 import { CheckedIn, OwnerStatus } from './owner-home';
-import CheckOut from './CheckOut';
 import { Search } from './owner-member';
+import { PlanCount } from './owner-plan-stats';
 import Adminsearch from './Adminsearch';
 import {
   Btn,
@@ -20,6 +20,7 @@ import {
   Plans,
   Top,
   TopBack,
+  SearchBox,
 } from './layout';
 import {
   WorkoutClass,
@@ -28,6 +29,7 @@ import {
   Video,
   WorkoutPrograms,
   SixdayWorkOutCard,
+  Cards,
 } from './workout';
 import { CreateChart, GetDietPlans } from './diet';
 import { UserDelete, Profileimage } from './user-profile';
@@ -47,9 +49,12 @@ export {
   DayWiseWorkouts,
   SixDayWorkoutPlan,
   SixdayWorkOutCard,
+  Cards,
   Search,
   MsgModal,
   TopBack,
+  SearchBox,
+  ExitButton,
   CreateChart,
   GetDietPlans,
   Calendar,
@@ -65,11 +70,11 @@ export {
   Top,
   CheckedIn,
   CheckIn,
-  CheckOut,
   Userstatusbox,
   OwnerStatus,
   Adminsearch,
   UserDelete,
   Announcement,
   Profileimage,
+  PlanCount,
 };

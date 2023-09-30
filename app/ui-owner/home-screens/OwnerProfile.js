@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import { GradientBG, Hi, TopBack } from '../components';
+import { GradientBG, Hi, TopBack } from '../../components';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { bgColor, neon, bgLight } from '../constants/Constants';
-import axios from '../constants/Axios';
+import { bgColor, neon, bgLight } from '../../constants/Constants';
+import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 
 const ProfilePage = () => {
@@ -59,7 +59,7 @@ const ProfilePage = () => {
           <View style={styles.profileCard}>
             <View style={styles.profileContainer}>
               <Image
-                source={require('../assets/images/profile.jpg')}
+                source={require('../../assets/images/profile.jpg')}
                 style={{ width: 100, height: 100, borderRadius: 50 }}
               />
               <Text style={styles.userName}>{userData?.gymName}</Text>

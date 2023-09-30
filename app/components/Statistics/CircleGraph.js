@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { bgGlassLight } from '../../constants/Constants';
+import { bgGlass, bgGlassLight } from '../../constants/Constants';
 import { ProgressChart } from 'react-native-chart-kit';
 import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
@@ -24,7 +24,7 @@ const CircleGraph = () => {
   const [attended, setAttended] = useState();
   const [days, setDays] = useState();
   const [total, setTotal] = useState();
-  const [selectedCategory, setSelectedCategory] = useState(8); // '09' is at index 8
+  const [selectedCategory, setSelectedCategory] = useState(9); // '09' is at index 8
 
   const selectCategory = (index, num) => {
     setSelectedCategory(index);
@@ -142,7 +142,7 @@ const CircleGraph = () => {
                 styles.scrollCards,
                 {
                   backgroundColor:
-                    selectedCategory === index ? '#20211f' : bgGlassLight,
+                    selectedCategory === index ? '#20211f' : bgGlass,
                 },
               ]}>
               <Text

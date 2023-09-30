@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import OwnerAttendance from './OwnerAttendance';
-import UserProfile from './UserProfile';
+import Attendance from '../Attendance';
+import UserProfile from '../UserProfile';
 
 const AttendanceStack = () => {
   return (
@@ -12,7 +12,7 @@ const AttendanceStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="OwnerAttendance" component={OwnerAttendance} />
+      <Stack.Screen name="OwnerAttendance" component={Attendance} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );

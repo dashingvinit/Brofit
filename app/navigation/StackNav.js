@@ -8,7 +8,6 @@ import Forgetpassword from '../ui-welcom/Forgetpassword';
 import ConfirmPass from '../ui-welcom/ConfirmPassword';
 import ProfileSetup from '../ui-welcom/ProfileSetup';
 
-import OwnerLogin from '../ui-owner/OwnerLogin';
 import AdminLogin from '../ui-admin/AdminLogin';
 import Home from '../ui-user/Home';
 import OwnerHome from '../ui-owner/Home';
@@ -31,9 +30,6 @@ const StackNav = ({ sethandleLogin }) => {
         </Stack.Screen>
         <Stack.Screen name="Login">
           {(props) => <Login {...props} sethandleLogin={sethandleLogin} />}
-        </Stack.Screen>
-        <Stack.Screen name="OwnerLogin">
-          {(props) => <OwnerLogin {...props} sethandleLogin={sethandleLogin} />}
         </Stack.Screen>
         <Stack.Screen name="AdminLogin">
           {(props) => <AdminLogin {...props} sethandleLogin={sethandleLogin} />}

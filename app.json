@@ -36,7 +36,7 @@
     [
       "expo-location",
       {
-        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        "locationAlwaysAndWhenInUsePermission": "$(PRODUCT_NAME) needs your location to compare with your gym's location."
       }
     ],
     [
@@ -48,7 +48,8 @@
     [
       "expo-image-picker",
       {
-        "photosPermission": "The app accesses your photos to let you share them with your friends."
+        "photosPermission": "Allow $(PRODUCT_NAME) to access your photos",
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
       }
     ]
   ],

@@ -24,7 +24,7 @@ const Statistics = (props) => {
 
 const styles = StyleSheet.create({
   top: {
-    backgroundColor: '#900C3F',
+    backgroundColor: '#D2DE32',
     borderRadius: 15,
     paddingTop: 30,
     paddingBottom: 20,

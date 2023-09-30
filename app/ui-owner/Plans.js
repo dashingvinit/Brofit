@@ -12,8 +12,8 @@ import { bgColor, bgGlass, neon } from '../constants/Constants';
 import axios from '../constants/Axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
-import { GradientBG, TopBack } from '../components';
-import { MsgModal } from '../components';
+import { GradientBG, MsgModal, PlanCount } from '../components';
+
 import LottieView from 'lottie-react-native';
 
 const Plans = () => {
@@ -140,8 +140,18 @@ const Plans = () => {
   return (
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopBack>Plans</TopBack>
         <ScrollView ref={scrollRef}>
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              flexDirection: 'row',
+              gap: 3,
+              marginHorizontal: 15,
+            }}>
+            <PlanCount count={3} />
+            <PlanCount count={3} />
+          </View>
           <View style={styles.container}>
             {!showForm ? (
               <TouchableOpacity
@@ -313,12 +323,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 100,
+    marginHorizontal: 10,
   },
   plainCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-    marginHorizontal: 20,
     paddingTop: 20,
     paddingHorizontal: 20,
     backgroundColor: bgGlass,
@@ -335,7 +345,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   editBtn: {
-    marginHorizontal: 20,
     backgroundColor: neon,
     borderBottomEndRadius: 15,
     borderBottomStartRadius: 15,
@@ -351,12 +360,11 @@ const styles = StyleSheet.create({
     backgroundColor: bgGlass,
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
     height: 50,
-    margin: 20,
+    marginVertical: 10,
   },
   createButtonGroup: {
     flexDirection: 'row',

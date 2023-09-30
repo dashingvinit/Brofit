@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Members from './Members';
-import UserProfile from './UserProfile';
+import Members from '../Members';
+import UserProfile from '../UserProfile';
 
 const MembersStack = () => {
   return (

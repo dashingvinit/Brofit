@@ -6,9 +6,9 @@ const Stack = createNativeStackNavigator();
 import Welcome from '../../ui-welcom/Welcome';
 import Home from '../Home';
 import UserProfile from '../UserProfile';
-import ActiveList from './ActiveList';
-import InactiveList from './InactiveList';
-import OwnerProfile from '../OwnerProfile';
+import ActiveList from '../home-screens/ActiveList';
+import InactiveList from '../home-screens/InactiveList';
+import OwnerProfile from '../home-screens/OwnerProfile';
 
 const HomeStack = ({ setHandleLogout }) => {
   return (

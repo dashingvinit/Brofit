@@ -2,8 +2,8 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
 const Axios = axios.create({
-  baseURL: 'https://brofit.onrender.com/api/v1/', //main server
-  timeout: 5000, // Adjust the timeout as needed
+  baseURL: 'https://brofit.onrender.com/api/v1/',
+  timeout: 5000,
 });
 
 // Function to retrieve the token from SecureStore

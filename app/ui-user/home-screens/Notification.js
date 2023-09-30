@@ -14,6 +14,8 @@ import { neon, bgColor } from '../../constants/Constants';
 import axios from '../../constants/Axios';
 import * as SecureStore from 'expo-secure-store';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import announcementImage from '../../assets/images/announcement.jpg';
+import notificationImage from '../../assets/images/notification.jpg';
 
 const Notification = () => {
   const [inactiveData, setInactiveData] = useState([]);
@@ -33,9 +35,6 @@ const Notification = () => {
 
       setInactiveData(responseInactive.data.data);
       setPersonalData(responsePersonal.data.data);
-      console.log(responseInactive);
-      console.log(responsePersonal);
-
       setLoading(false);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -50,12 +49,14 @@ const Notification = () => {
     fetchData();
   }, []);
 
-  const renderNotifications = (data) => {
+  const renderNotifications = (data, img) => {
     return data.map((message, index) => (
       <TouchableOpacity key={`message-${index}`}>
         <View key={`container-${index}`} style={styles.containerdata}>
           <Image
-            source={require('../../assets/images/announcement.jpg')}
+            source={
+              img === 'announcement.jpg' ? announcementImage : notificationImage
+            }
             style={styles.img}
           />
           <View style={styles.messageContainer}>
@@ -114,7 +115,7 @@ const Notification = () => {
               {activeTab === 'Announcements' && (
                 <View style={styles.notificationContainer}>
                   {inactiveData.length > 0 ? (
-                    renderNotifications(inactiveData)
+                    renderNotifications(inactiveData, 'announcement.jpg')
                   ) : (
                     <View style={styles.noDataContainer}>
                       <Text style={styles.noDataText}>No Announcements</Text>
@@ -127,7 +128,7 @@ const Notification = () => {
               {activeTab === 'PersonalNotify' && (
                 <View style={styles.notificationContainer}>
                   {personalData.length > 0 ? (
-                    renderNotifications(personalData)
+                    renderNotifications(personalData, 'notification.jpg')
                   ) : (
                     <View style={styles.noDataContainer}>
                       <Text style={styles.noDataText}>No new notification</Text>
