@@ -6,7 +6,7 @@ import HomeStack from '../ui-owner/nav-stacks/HomeStack';
 import MembersStack from '../ui-owner/nav-stacks/MembersStack';
 import Plans from '../ui-owner/Plans';
 import AttendanceStack from '../ui-owner/nav-stacks/AttendanceStack';
-import OwnerDietPage from '../ui-owner/Exercise';
+import ExerciseStack from '../ui-owner/nav-stacks/ExerciseStack';
 
 import { neon } from '../constants/Constants';
 
@@ -35,13 +35,13 @@ const OwnerNav = ({ setHandleLogout }) => {
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Plans') {
-            iconName = focused ? 'newspaper' : 'newspaper-outline';
+            iconName = focused ? 'planet' : 'planet-outline';
           } else if (route.name === 'AttendanceStack') {
             iconName = focused ? 'ios-calendar' : 'ios-calendar-outline';
           } else if (route.name === 'Members') {
             iconName = focused ? 'people' : 'people-outline';
-          } else if (route.name === 'DietChart') {
-            iconName = focused ? 'fast-food' : 'fast-food-outline';
+          } else if (route.name === 'ExerciseStack') {
+            iconName = focused ? 'bicycle' : 'bicycle-outline';
           }
 
           return (
@@ -65,7 +65,7 @@ const OwnerNav = ({ setHandleLogout }) => {
         {(props) => <HomeStack {...props} setHandleLogout={setHandleLogout} />}
       </Tab.Screen>
       <Tab.Screen name="Members" component={MembersStack} />
-      <Tab.Screen name="DietChart" component={OwnerDietPage} />
+      <Tab.Screen name="ExerciseStack" component={ExerciseStack} />
       <Tab.Screen name="Plans" component={Plans} />
       <Tab.Screen name="AttendanceStack" component={AttendanceStack} />
     </Tab.Navigator>

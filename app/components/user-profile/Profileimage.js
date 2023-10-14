@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Text,
   Modal,
-  Button,
   StyleSheet,
 } from 'react-native';
 //import { Image as ImageCompressor } from 'react-native-compressor';
@@ -131,18 +130,35 @@ const ProfileImage = () => {
       const userId = parsedUser._id || parsedUser.userId;
       const gymId = parsedUser.gymId;
 
-      console.log(userId, gymId);
+      const localUri = `${FileSystem.cacheDirectory}profilePicture/${userId}.jpg`;
+      const localInfo = await FileSystem.getInfoAsync(localUri);
+      if (localInfo.exists) {
+        setImage(localUri);
+        return;
+      } else {
+        const profilePic = await Raxios.get(
+          `/userProfile/profilePic/${userId}/${gymId}`
+        );
+        const imageUrl = profilePic.data.data;
+        const binaryString = await getBase64StringFromHttpsSource(imageUrl);
 
-      const profilePic = await Raxios.get(
-        `/userProfile/profilePic/${userId}/${gymId}`
-      );
-      const imageUrl = profilePic.data.data;
+        // Save the image to cache
+        await FileSystem.makeDirectoryAsync(
+          `${FileSystem.cacheDirectory}profilePicture/`,
+          {
+            intermediates: true,
+          }
+        );
+        const localImageUri = `${FileSystem.cacheDirectory}profilePicture/${userId}.jpg`;
+        await FileSystem.writeAsStringAsync(localImageUri, binaryString, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
 
-      const binaryString = await getBase64StringFromHttpsSource(imageUrl);
-
-      setImage(`data:video/mp4;base64,${binaryString}`);
-      // setImage(`data:image/jpeg;base64,${binaryString}`);
+        // Set the image URI for display
+        setImage(localImageUri);
+      }
     } catch (err) {
+      setImage(null);
       console.log(err);
     }
   };

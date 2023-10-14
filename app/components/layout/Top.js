@@ -5,6 +5,7 @@ import EBtn from './ExitButton';
 import { neon, offWhite } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Axios, GetUser } from '../../functoins/';
+import * as FileSystem from 'expo-file-system';
 
 const Top = (props) => {
   const [image, setimage] = useState(null);
@@ -22,12 +23,33 @@ const Top = (props) => {
       setuser(USER);
       const userId = USER.userId || USER._id;
       const gymId = USER.gymId;
-      const profilePic = await Axios.get(
-        `/userProfile/profilePic/${userId}/${gymId}`
-      );
-      const imageUrl = profilePic.data.data;
-      const binaryString = await GetB64StrFromHttpsSrc(imageUrl);
-      setimage(`data:image/jpeg;base64,${binaryString}`);
+
+      const localUri = `${FileSystem.cacheDirectory}profilePicture/${userId}.jpg`;
+      const localInfo = await FileSystem.getInfoAsync(localUri);
+      if (localInfo.exists) {
+        setimage(localUri);
+        return;
+      } else {
+        const profilePic = await Axios.get(
+          `/userProfile/profilePic/${userId}/${gymId}`
+        );
+        const imageUrl = profilePic.data.data;
+        const binaryString = await GetB64StrFromHttpsSrc(imageUrl);
+        // Save the image to cache
+        await FileSystem.makeDirectoryAsync(
+          `${FileSystem.cacheDirectory}profilePicture/`,
+          {
+            intermediates: true,
+          }
+        );
+        const localImageUri = `${FileSystem.cacheDirectory}profilePicture/${userId}.jpg`;
+        await FileSystem.writeAsStringAsync(localImageUri, binaryString, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        // Set the image URI for display
+        setimage(localImageUri);
+      }
     } catch (err) {
       setimage(null);
     }

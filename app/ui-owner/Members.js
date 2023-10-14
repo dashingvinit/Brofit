@@ -101,7 +101,6 @@ const Members = (props) => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <TopBack>Gym Members</TopBack>
           <Search onSearch={handleSearch} />
           <View style={styles.userHeader}>
             <Text style={styles.userText}>Name</Text>

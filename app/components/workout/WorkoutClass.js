@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { bgGlass, bgGlassLight, neon } from '../../constants/Constants';
+import { bgGlass, neon } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WorkoutClass = (props) => {
