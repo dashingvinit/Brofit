@@ -4,26 +4,43 @@ import { bgGlass, neon } from '../../constants/Constants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WorkoutClass = (props) => {
+  const { data, navigation } = props;
+
   const workOutClasses = [
     {
-      name: 'Boxing',
+      name: 'Monday',
       workouts: 15,
       image: require('../../assets/images/boxer.jpg'),
     },
     {
-      name: 'calisthenics',
+      name: 'Tuesday',
       workouts: 20,
       image: require('../../assets/images/calis.jpg'),
     },
     {
-      name: 'Yoga',
+      name: 'Wednesday',
       workouts: 15,
       image: require('../../assets/images/yoga.jpg'),
     },
     {
-      name: 'Home Workouts',
+      name: 'Thursday',
       workouts: 10,
       image: require('../../assets/images/home.jpg'),
+    },
+    {
+      name: 'Friday',
+      workouts: 15,
+      image: require('../../assets/images/boxer.jpg'),
+    },
+    {
+      name: 'Saturday',
+      workouts: 20,
+      image: require('../../assets/images/calis.jpg'),
+    },
+    {
+      name: 'Sunday',
+      workouts: 15,
+      image: require('../../assets/images/yoga.jpg'),
     },
   ];
 
@@ -34,12 +51,12 @@ const WorkoutClass = (props) => {
           <TouchableOpacity
             key={index}
             onPress={() => {
-              props.navigation.navigate('Workouts');
+              navigation.navigate('ExerciseList', { item: item, data: data });
             }}>
             <View style={styles.container}>
               <Image
                 source={item.image}
-                style={{ height: 80, width: 80, borderRadius: 20 }}
+                style={{ height: 100, width: 100, borderRadius: 25 }}
               />
               <View style={styles.row}>
                 <Text style={styles.header}>{item.name}</Text>
@@ -66,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: bgGlass,
     padding: 10,
     borderRadius: 20,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   icon: {
     marginLeft: 'auto',

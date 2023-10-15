@@ -164,43 +164,48 @@ const CircleGraph = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <View style={styles.mainContent}>
-        <View style={{ marginHorizontal: 15 }}>
-          <FontAwesome5
-            name="walking"
-            size={24}
-            color="rgba(224, 254, 16, 1)"
-            style={{ marginVertical: 10 }}>
-            <Text style={{ color: 'white', fontSize: 20 }}>
-              {' '}
-              {attended}/{days} days
-            </Text>
-          </FontAwesome5>
-          <Feather
-            name="clock"
-            size={24}
-            color="rgba(224, 254, 16, .8)"
-            style={{ marginVertical: 10 }}>
-            <Text style={{ color: 'white', fontSize: 20 }}> {total} hrs</Text>
-          </Feather>
-          <Octicons
-            name="flame"
-            size={24}
-            color="rgba(224, 254, 16, .6)"
-            style={{ marginVertical: 10 }}>
-            <Text style={{ color: 'white', fontSize: 20 }}> 2110 cals</Text>
-          </Octicons>
+      <View style={styles.dataContainer}>
+        <Text style={{ color: 'white', fontSize: 14, marginHorizontal: 15 }}>
+          Monthly Activity
+        </Text>
+        <View style={styles.mainContent}>
+          <View style={{ marginHorizontal: 15 }}>
+            <FontAwesome5
+              name="walking"
+              size={24}
+              color="rgba(224, 254, 16, 1)"
+              style={{ marginBottom: 10 }}>
+              <Text style={{ color: 'white', fontSize: 20 }}>
+                {' '}
+                {attended}/{days} days
+              </Text>
+            </FontAwesome5>
+            <Feather
+              name="clock"
+              size={24}
+              color="rgba(224, 254, 16, .8)"
+              style={{ marginVertical: 10 }}>
+              <Text style={{ color: 'white', fontSize: 20 }}> {total} hrs</Text>
+            </Feather>
+            <Octicons
+              name="flame"
+              size={24}
+              color="rgba(224, 254, 16, .6)"
+              style={{ marginVertical: 10 }}>
+              <Text style={{ color: 'white', fontSize: 20 }}> 2110 cals</Text>
+            </Octicons>
+          </View>
+          <ProgressChart
+            data={data}
+            width={screenWidth / 2}
+            height={screenWidth / 2}
+            chartConfig={chartConfig}
+            hideLegend={true}
+            strokeWidth={16}
+            radius={32}
+            style={{ borderRadius: 25 }}
+          />
         </View>
-        <ProgressChart
-          data={data}
-          width={screenWidth / 2}
-          height={screenWidth / 2}
-          chartConfig={chartConfig}
-          hideLegend={true}
-          strokeWidth={16}
-          radius={32}
-          style={{ borderRadius: 25 }}
-        />
       </View>
     </View>
   );
@@ -223,16 +228,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginRight: 10,
   },
-  mainContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#20211f',
+  dataContainer: {
     borderRadius: 25,
     padding: 5,
-    alignItems: 'center',
+    backgroundColor: '#20211f',
     marginHorizontal: 10,
     borderBottomColor: 'rgb(224,254,16)',
     borderBottomWidth: 2,
+  },
+  mainContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

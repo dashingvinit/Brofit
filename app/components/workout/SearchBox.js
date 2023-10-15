@@ -47,6 +47,15 @@ const SearchBox = ({ onSearch }) => {
     }
   };
 
+  const handleReset = () => {
+    console.log('reset');
+    setSelectedTags([]);
+    setFittnessLevel('Beginner');
+
+    const data = [];
+    onSearch(data);
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -98,7 +107,7 @@ const SearchBox = ({ onSearch }) => {
           <TouchableOpacity style={styles.iconBtn}>
             <Ionicons name="heart" size={28} color={neon} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconBtn}>
+          <TouchableOpacity style={styles.iconBtn} onPress={handleReset}>
             <Ionicons name="book" size={28} color={neon} />
           </TouchableOpacity>
         </View>

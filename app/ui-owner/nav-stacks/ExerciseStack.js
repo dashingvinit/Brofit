@@ -2,8 +2,9 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Exercise from '../Exercise';
-import ExerciseCards from '../exercise-screens/ExerciseCards';
-import ExerciseScreen from '../exercise-screens/ExerciseScreen';
+import ExerciseCards from '../../features/exercise-screens/ExerciseCards';
+import ExerciseScreen from '../../features/exercise-screens/ExerciseScreen';
+import ExerciseList from '../../features/exercise-screens/ExerciseList';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function ExerciseStack() {
       <Stack.Screen name="Exercise" component={Exercise} />
       <Stack.Screen name="ExerciseCards" component={ExerciseCards} />
       <Stack.Screen name="ExerciseScreen" component={ExerciseScreen} />
+      <Stack.Screen name="ExerciseList" component={ExerciseList} />
     </Stack.Navigator>
   );
 }

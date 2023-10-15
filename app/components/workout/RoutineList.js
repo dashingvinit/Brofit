@@ -6,7 +6,7 @@ import CardList from './CardList';
 const RoutineList = (props) => {
   const [data, setData] = useState([]);
 
-  const getRoutine = async () => {
+  const getRoutines = async () => {
     const user = await GetUser();
     try {
       const res = await Axios.get(`/routine/name/all/${user.gymId}`);
@@ -17,7 +17,7 @@ const RoutineList = (props) => {
   };
 
   useEffect(() => {
-    getRoutine();
+    getRoutines();
   }, []);
 
   return (

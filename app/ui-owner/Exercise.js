@@ -20,6 +20,10 @@ const Exercise = (props) => {
         <ScrollView style={styles.scroll}>
           <View style={styles.scrollContainer}>
             <CardList data={data} navigation={props.navigation} />
+            <View>
+              <Text style={styles.heading}>Routines</Text>
+              <View style={styles.separator} />
+            </View>
             <RoutineList navigation={props.navigation} />
           </View>
         </ScrollView>
@@ -45,6 +49,12 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingBottom: 100,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 

@@ -14,17 +14,13 @@ const Statistics = (props) => {
         <Calories />
         <Water />
       </View>
-
-      {/* <View style={{ marginHorizontal: 10 }}>
-        <DietChart />
-      </View> */}
     </GradientBG>
   );
 };
 
 const styles = StyleSheet.create({
   top: {
-    backgroundColor: '#D2DE32',
+    backgroundColor: '#618b63',
     borderRadius: 15,
     paddingTop: 30,
     paddingBottom: 20,

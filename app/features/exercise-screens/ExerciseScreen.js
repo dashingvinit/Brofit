@@ -102,11 +102,11 @@ const ExerciseScreen = ({ route }) => {
             <View style={styles.separator} />
 
             <View style={styles.tagContainer}>
-              <Text style={styles.tag}>Tags:</Text>
+              <Text style={styles.tag}>Tags: </Text>
               {data?.tags?.map((tag, index) => (
-                <Text key={index} style={styles.tag}>
-                  {tag},
-                </Text>
+                <View style={styles.tagBG} key={index}>
+                  <Text style={styles.tag}>{tag}</Text>
+                </View>
               ))}
             </View>
           </Animated.View>
@@ -214,17 +214,23 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
     flexWrap: 'wrap',
     marginBottom: 20,
     backgroundColor: '#1a1b19',
     borderRadius: 20,
     padding: 20,
   },
+  tagBG: {
+    backgroundColor: bgGlassLight,
+    borderRadius: 10,
+    paddingHorizontal: 7,
+    paddingVertical: 5,
+  },
   tag: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 10,
-    marginRight: 10,
     color: '#eeee',
   },
 });

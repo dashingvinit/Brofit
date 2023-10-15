@@ -8,8 +8,8 @@ const CardList = ({ data, navigation, screen }) => {
         data.map((item, index) => {
           return (
             <Cards
-              screen={screen}
               key={index}
+              screen={screen}
               item={item}
               navigation={navigation}
             />

@@ -33,9 +33,15 @@ const Cards = ({ item, navigation, screen, id }) => {
       />
       <View style={styles.textContainer}>
         <Text style={styles.workOutName}>{item?.name || item?.title}</Text>
-        <Text style={styles.workOutLength}>{item?.level}</Text>
+        <Text style={styles.workOutLength}>
+          {item?.level ? `Owner Level: ${item.level}` : 'My Routine'}
+        </Text>
       </View>
-      <Ionicons name="heart-outline" size={24} style={styles.icon} />
+      <Ionicons
+        name={item.level ? 'heart-outline' : 'heart'}
+        size={28}
+        style={styles.icon}
+      />
     </TouchableOpacity>
   );
 };

@@ -12,8 +12,9 @@ import {
 import { bgColor, neon } from '../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SecureStore from 'expo-secure-store';
-import { Search, GradientBG, Hr, TopBack, MsgModal } from '../components';
+import { Search, GradientBG, Hr, MsgModal } from '../components';
 import axios from '../constants/Axios';
+import * as FileSystem from 'expo-file-system';
 
 const Members = (props) => {
   const [Users, setUsers] = useState([]);
@@ -22,6 +23,16 @@ const Members = (props) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(25);
   const [numberpages, setnumberpages] = useState(50);
+
+  const fetchProfilePic = async (userId) => {
+    const localUri = `${FileSystem.cacheDirectory}profilePicture/${userId}.jpg`;
+    const localInfo = await FileSystem.getInfoAsync(localUri);
+    if (localInfo.exists) {
+      return localUri;
+    } else {
+      return null;
+    }
+  };
 
   const getMembers = async () => {
     try {
@@ -33,8 +44,15 @@ const Members = (props) => {
       );
 
       const data = response.data;
-      setUsers(data.data.MembersArray);
+      const members = data.data.MembersArray;
 
+      // Set the user's profile picture for each member and add the "image" field
+      for (let member of members) {
+        const image = await fetchProfilePic(member._id);
+        member.image = image; // Add the "image" field to the member object
+      }
+
+      setUsers(members);
       setnumberpages(data.data.totalPages);
     } catch (error) {
       alert('Member Fetch error: ' + error.message);
@@ -123,7 +141,11 @@ const Members = (props) => {
                     onPress={() => handleUserPress(user)}
                     style={styles.userContainer}>
                     <Image
-                      source={require('../assets/images/profile.jpg')}
+                      source={
+                        user.image
+                          ? { uri: user.image }
+                          : require('../assets/images/profile.jpg')
+                      }
                       style={styles.Avatar}
                     />
                     <View style={styles.textContainer}>
@@ -139,6 +161,7 @@ const Members = (props) => {
             ) : (
               <Text>No users found.</Text>
             )}
+
             {Users.length > 0 ? (
               <View style={styles.paginationButtons}>
                 {page > 1 && (

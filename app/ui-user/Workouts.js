@@ -1,13 +1,7 @@
 import { View, ScrollView } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-  GradientBG,
-  WorkoutClass,
-  Runtimer,
-  WorkoutPrograms,
-  SixdayWorkOutCard,
-} from '../components';
+import { GradientBG, Runtimer, SixdayWorkOutCard } from '../components';
 
 const Workouts = (props) => {
   return (
@@ -16,10 +10,6 @@ const Workouts = (props) => {
         <ScrollView>
           <Runtimer />
           <SixdayWorkOutCard navigation={props.navigation} />
-          <WorkoutPrograms />
-          <View style={{ marginHorizontal: 10, paddingBottom: 80 }}>
-            <WorkoutClass navigation={props.navigation} />
-          </View>
         </ScrollView>
       </SafeAreaView>
     </GradientBG>
