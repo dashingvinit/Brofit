@@ -9,6 +9,7 @@ import UserProfile from '../UserProfile';
 import ActiveList from '../home-screens/ActiveList';
 import InactiveList from '../home-screens/InactiveList';
 import OwnerProfile from '../home-screens/OwnerProfile';
+import Notification from '../home-screens/Notification'
 
 const HomeStack = ({ setHandleLogout }) => {
   return (
@@ -25,6 +26,7 @@ const HomeStack = ({ setHandleLogout }) => {
       <Stack.Screen name="InactiveList" component={InactiveList} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="ProfilePage" component={OwnerProfile} />
+      <Stack.Screen name="Notification" component={Notification} />
     </Stack.Navigator>
   );
 };
