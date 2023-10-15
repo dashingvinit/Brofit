@@ -104,9 +104,9 @@ const SearchBox = ({ onSearch }) => {
 
         <View style={styles.row}>
           <CreateWorkout />
-          <TouchableOpacity style={styles.iconBtn}>
+          {/* <TouchableOpacity style={styles.iconBtn}>
             <Ionicons name="heart" size={28} color={neon} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.iconBtn} onPress={handleReset}>
             <Ionicons name="book" size={28} color={neon} />
           </TouchableOpacity>

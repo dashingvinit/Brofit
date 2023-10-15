@@ -47,7 +47,7 @@ const UserProfile = (props) => {
       setUserData(data);
       await fetchProfilePic(data.gymId);
     } catch (error) {
-      setYs;
+      console.error(error);
     }
     setloading(false);
   };

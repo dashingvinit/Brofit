@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React from 'react';
+import React, { useState } from 'react';
 
 const imagePaths = [
   require('../../assets/images/home.jpg'),
@@ -16,17 +16,26 @@ const getRandomImage = () => {
   return imagePaths[randomIndex];
 };
 
-const Cards = ({ item, navigation, screen, id }) => {
+const Cards = ({ item, navigation, screen, getID }) => {
+  const [selected, setSelected] = useState(false);
+
   const handleCardPress = async () => {
-    const screenName =
-      screen == 'ExerciseCards' ? 'ExerciseCards' : 'ExerciseScreen';
-    navigation.navigate(screenName, { data: item });
+    if (getID) {
+      getID(item._id);
+      setSelected(true);
+    } else {
+      const screenName =
+        screen === 'ExerciseCards' ? 'ExerciseCards' : 'ExerciseScreen';
+      navigation.navigate(screenName, { data: item });
+    }
   };
 
   const randomImage = getRandomImage();
 
   return (
-    <TouchableOpacity style={styles.workoutCard} onPress={handleCardPress}>
+    <TouchableOpacity
+      style={[styles.workoutCard, selected && styles.selectedCard]}
+      onPress={handleCardPress}>
       <Image
         source={item?.thumbnail ? { uri: item?.thumbnail } : randomImage}
         style={styles.img}
@@ -58,6 +67,9 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     gap: 20,
+  },
+  selectedCard: {
+    backgroundColor: 'lightblue', // Change the background color when selected
   },
   img: {
     height: '100%',

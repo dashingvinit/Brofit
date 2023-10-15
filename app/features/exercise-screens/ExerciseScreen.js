@@ -88,6 +88,7 @@ const ExerciseScreen = ({ route }) => {
               style={styles.startButton}
               onPress={onStartWorkout}>
               <Text style={styles.startButtonText}>Start Workout</Text>
+              <Ionicons name="play" size={24} />
             </TouchableOpacity>
 
             <View style={styles.row}>
@@ -109,6 +110,17 @@ const ExerciseScreen = ({ route }) => {
                 </View>
               ))}
             </View>
+
+            <View style={styles.separator} />
+            <Text style={styles.title}>Similar Exercises</Text>
+            <View style={styles.separator} />
+            <Text style={styles.title}>Comments</Text>
+            <View style={styles.separator} />
+
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={styles.tag}> Made with love by brofit</Text>
+              <Ionicons name="heart" size={24} color="red" />
+            </View>
           </Animated.View>
         </View>
       </ScrollView>
@@ -122,7 +134,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: 10,
   },
   iconContainer: {
     width: '100%',
@@ -141,7 +153,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   thumbnailContainer: {
-    backgroundColor: bgGlass,
+    backgroundColor: '#1a1b19',
     width: '100%',
     borderRadius: 20,
     padding: 10,
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
   textContainer: {
     padding: 10,
     borderRadius: 20,
-    marginTop: 20,
+    marginTop: 10,
     elevation: 1,
     backgroundColor: 'black',
     height: '100%',
@@ -170,23 +182,16 @@ const styles = StyleSheet.create({
     backgroundColor: neon,
     borderRadius: 10,
     paddingVertical: 12,
-    alignItems: 'center',
     marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 10,
   },
   startButtonText: {
     color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  smCard: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 10,
-    width: '48%',
-    height: 150,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 10,
   },
   descContainer: {
     flexDirection: 'row',
