@@ -21,7 +21,7 @@ const Members = (props) => {
   const [refreshing, setRefreshing] = useState(false);
   const [found, setfound] = useState(false);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(25);
+  const [limit, setLimit] = useState(100);
   const [numberpages, setnumberpages] = useState(50);
 
   const fetchProfilePic = async (userId) => {

@@ -70,6 +70,10 @@ const Top = (props) => {
     props.navigation.navigate('Notification');
   };
 
+  const notifyowner = () => {
+    props.navigation.navigate('Notification');
+  };
+
   useEffect(() => {
     fetchProfilePic();
   }, []);
@@ -104,7 +108,12 @@ const Top = (props) => {
         </View>
       </View>
       <View style={styles.row}>
-        {user.role === 'owner' ? null : (
+        {user.role === 'owner' ? (
+          <EBtn
+            btnLabel={<Ionicons name="notifications" color={neon} size={30} />}
+            Press={notifyowner}
+          />
+        ) : (
           <EBtn
             btnLabel={<Ionicons name="notifications" color={neon} size={30} />}
             Press={notify}

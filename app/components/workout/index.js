@@ -1,4 +1,4 @@
-import DayWiseWorkouts from './SixDayWiseWorkouts';
+   import DayWiseWorkouts from './SixDayWiseWorkouts';
 import SixDayWorkoutPlan from './SixDayWorkoutPlan';
 import Video from './VideoPlayer';
 import WorkoutClass from './WorkoutClass';
