@@ -141,16 +141,8 @@ const Plans = () => {
     <GradientBG>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView ref={scrollRef}>
-          <View
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              flexDirection: 'row',
-              gap: 3,
-              marginHorizontal: 15,
-            }}>
-            <PlanCount count={3} />
-            <PlanCount count={3} />
+          <View style={styles.row}>
+            <PlanCount count={plans.length} />
           </View>
           <View style={styles.container}>
             {!showForm ? (
@@ -320,6 +312,13 @@ const Plans = () => {
 };
 
 const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 3,
+    marginHorizontal: 15,
+  },
   container: {
     flex: 1,
     paddingBottom: 100,

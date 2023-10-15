@@ -92,8 +92,7 @@ const OwnerAttendance = (props) => {
 
   return (
     <GradientBG>
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopBack>Attendance</TopBack>
+      <SafeAreaView style={{ flex: 1, marginTop: 10 }}>
         <View style={styles.inputContainer}>
           <TouchableOpacity onPress={handleTextPress}>
             <TextInput

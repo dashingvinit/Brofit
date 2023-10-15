@@ -8,7 +8,6 @@ import NextBtn from './NextBtn';
 import Plans from './Plans';
 import Top from './Top';
 import TopBack from './TopBack';
-import SearchBox from './SearchBox';
 
 export {
   Btn,
@@ -21,5 +20,4 @@ export {
   Plans,
   Top,
   TopBack,
-  SearchBox,
 };

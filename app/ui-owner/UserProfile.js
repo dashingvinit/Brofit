@@ -17,6 +17,7 @@ import { TopBack, GradientBG, Hr } from '../components';
 import LottieView from 'lottie-react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from 'react-native-svg';
+import * as FileSystem from 'expo-file-system';
 
 const UserProfile = (props) => {
   const user = props.route.params.user._id;
@@ -111,15 +112,35 @@ const UserProfile = (props) => {
 
   // Fetching the profile pic from backend
   const fetchProfilePic = async (gymId) => {
-    try {
-      const profilePic = await axios.get(
-        `/userProfile/profilePic/${user}/${gymId}`
-      );
-      const imageUrl = profilePic.data.data;
-      const binaryString = await getBase64StringFromHttpsSource(imageUrl);
-      setImage(`data:image/jpeg;base64,${binaryString}`);
-    } catch (err) {
-      console.log('error fetching profile pic', err);
+    const localUri = `${FileSystem.cacheDirectory}profilePicture/${user}.jpg`;
+    const localInfo = await FileSystem.getInfoAsync(localUri);
+    if (localInfo.exists) {
+      setImage(localUri);
+      return;
+    } else {
+      try {
+        const profilePic = await axios.get(
+          `/userProfile/profilePic/${user}/${gymId}`
+        );
+        const imageUrl = profilePic.data.data;
+        const binaryString = await getBase64StringFromHttpsSource(imageUrl);
+        // Save the image to cache
+        await FileSystem.makeDirectoryAsync(
+          `${FileSystem.cacheDirectory}profilePicture/`,
+          {
+            intermediates: true,
+          }
+        );
+        const localImageUri = `${FileSystem.cacheDirectory}profilePicture/${user}.jpg`;
+        await FileSystem.writeAsStringAsync(localImageUri, binaryString, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        // Set the image URI for display
+        setImage(localImageUri);
+      } catch (err) {
+        console.log('error fetching profile pic', err);
+      }
     }
   };
 

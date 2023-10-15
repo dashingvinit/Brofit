@@ -4,8 +4,11 @@ import Video from './VideoPlayer';
 import WorkoutClass from './WorkoutClass';
 import WorkoutPrograms from './WorkoutPrograms';
 import SixdayWorkOutCard from './SixdayCard';
+import SearchBox from './SearchBox';
 import Cards from './Cards';
-import WorkoutCards from './WorkOutCards';
+import CreateWorkout from './CreateWorkout';
+import CardList from './CardList';
+import RoutineList from './RoutineList';
 
 export {
   DayWiseWorkouts,
@@ -14,6 +17,9 @@ export {
   WorkoutClass,
   WorkoutPrograms,
   SixdayWorkOutCard,
+  SearchBox,
   Cards,
-  WorkoutCards,
+  CardList,
+  CreateWorkout,
+  RoutineList,
 };

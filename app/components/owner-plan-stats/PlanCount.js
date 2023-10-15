@@ -1,67 +1,58 @@
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState, useEffect } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as SecureStore from 'expo-secure-store';
 import { neon } from '../../constants/Constants';
 
 const PlanCount = ({ count }) => {
-  const [water, setWater] = useState(0);
-
-  const handleWater = async () => {
-    console.log('handleWater');
-    // const value = water + 1;
-    // await SecureStore.setItemAsync('water', value.toString());
-    // setWater(value);
-  };
-
-  const handleReset = async () => {
-    console.log('handleReset');
-    // await SecureStore.setItemAsync('water', '0');
-    // setWater(0);
-  };
-
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>TOTAL</Text>
-        <TouchableOpacity onPress={handleReset}>
-          <View style={styles.resetButton}>
-            <MaterialCommunityIcons
-              name="chart-bubble"
-              size={24}
-              color={neon}
-            />
-          </View>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.waterText}>
-        {count} <Text style={styles.waterUnit}>PLANS</Text>
-      </Text>
-      <View style={styles.waterRow}>
-        <MaterialCommunityIcons name="cup" size={24} color="#9dcfe2">
-          <Text style={styles.waterValue}> 2500ml</Text>
-        </MaterialCommunityIcons>
+    <View style={styles.outerContainer}>
+      <View style={styles.gradientContainer}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>PLANS</Text>
+          <TouchableOpacity>
+            <View style={styles.resetButton}>
+              <MaterialCommunityIcons
+                name="chart-bubble"
+                size={24}
+                color={neon}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.waterText}>
+          {count} <Text style={styles.waterUnit}>TOTAL</Text>
+        </Text>
+        <View style={styles.waterRow}>
+          <MaterialCommunityIcons
+            name="chart-scatter-plot"
+            size={24}
+            color="#E9B824">
+            <Text style={styles.waterValue}></Text>
+          </MaterialCommunityIcons>
 
-        <MaterialCommunityIcons
-          name="water-plus-outline"
-          size={24}
-          color="#1a1b19"
-          style={styles.waterPlusButton}
-          onPress={handleWater}
-        />
+          <MaterialCommunityIcons
+            name="chart-timeline-variant"
+            size={24}
+            color="#219C90"
+            style={styles.waterPlusButton}
+          />
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
-    backgroundColor: '#1a1b19',
-    borderRadius: 25,
-    padding: 20,
-    width: '100%',
+    borderRadius: 15,
     height: 150,
+    overflow: 'hidden', // Clip child Views to the container's border
+  },
+  gradientContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 20,
   },
   header: {
     flexDirection: 'row',
@@ -74,7 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   resetButton: {
-    backgroundColor: '#526D82',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     padding: 4,
     borderRadius: 10,
   },
@@ -97,7 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   waterPlusButton: {
-    backgroundColor: '#9dcfe2',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     padding: 4,
     borderRadius: 10,
   },

@@ -20,22 +20,27 @@ import {
   Plans,
   Top,
   TopBack,
-  SearchBox,
 } from './layout';
 import {
   WorkoutClass,
   DayWiseWorkouts,
+  SixdayWorkOutCard,
   SixDayWorkoutPlan,
   Video,
   WorkoutPrograms,
-  SixdayWorkOutCard,
   Cards,
+  CardList,
+  RoutineList,
+  SearchBox,
 } from './workout';
 import { CreateChart, GetDietPlans } from './diet';
 import { UserDelete, Profileimage } from './user-profile';
 import { Announcement } from './owner-search';
+import { Water, Calories } from './statistics';
 
 export {
+  Water,
+  Calories,
   Background,
   Background2,
   Gradient4,
@@ -50,6 +55,8 @@ export {
   SixDayWorkoutPlan,
   SixdayWorkOutCard,
   Cards,
+  CardList,
+  RoutineList,
   Search,
   MsgModal,
   TopBack,

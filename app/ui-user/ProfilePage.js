@@ -42,7 +42,7 @@ const ProfilePage = (props) => {
       const user = JSON.parse(userString);
       setUsername(user.name);
       const userID = user?.userId || user?._id;
-      // console.log('User ID', userID);
+      //console.log('User ID', userID);
       const response = await axios.get(`/userProfile/${userID}`);
       const data = await response.data;
       //  console.log('User Profile Data', response.data);

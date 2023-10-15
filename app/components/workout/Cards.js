@@ -2,16 +2,38 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-const Cards = (data) => {
+const imagePaths = [
+  require('../../assets/images/home.jpg'),
+  require('../../assets/images/bicep.jpg'),
+  require('../../assets/images/boxer.jpg'),
+  require('../../assets/images/calis.jpg'),
+  require('../../assets/images/chest.jpg'),
+  require('../../assets/images/CrunchesImage.jpg'),
+];
+
+const getRandomImage = () => {
+  const randomIndex = Math.floor(Math.random() * imagePaths.length);
+  return imagePaths[randomIndex];
+};
+
+const Cards = ({ item, navigation, screen, id }) => {
+  const handleCardPress = async () => {
+    const screenName =
+      screen == 'ExerciseCards' ? 'ExerciseCards' : 'ExerciseScreen';
+    navigation.navigate(screenName, { data: item });
+  };
+
+  const randomImage = getRandomImage();
+
   return (
-    <TouchableOpacity key={data?.id} style={styles.workoutCard}>
+    <TouchableOpacity style={styles.workoutCard} onPress={handleCardPress}>
       <Image
-        source={require('../../assets/images/bicep.jpg')}
+        source={item?.thumbnail ? { uri: item?.thumbnail } : randomImage}
         style={styles.img}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.workOutName}>Gym</Text>
-        <Text style={styles.workOutLength}>18 WORKOUTS</Text>
+        <Text style={styles.workOutName}>{item?.name || item?.title}</Text>
+        <Text style={styles.workOutLength}>{item?.level}</Text>
       </View>
       <Ionicons name="heart-outline" size={24} style={styles.icon} />
     </TouchableOpacity>
@@ -51,6 +73,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   workOutLength: {
+    textTransform: 'uppercase',
     fontSize: 12,
     letterSpacing: 1,
     color: 'black',

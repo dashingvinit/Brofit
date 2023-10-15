@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,15 +6,18 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { bgGlassLight, neon } from '../../constants/Constants';
+import { bgGlass, bgGlassLight, neon } from '../../constants/Constants';
 
-const WorkoutPrograms = () => {
+const WorkoutPrograms = ({ onTagPress }) => {
+  const [selectedTags, setSelectedTags] = useState([]);
+
   const categories = [
-    'All',
-    'Upper Body',
-    'Lower Body',
+    'Shoulders',
+    'Triceps',
     'Chest',
     'Abs',
+    'Upper Body',
+    'Lower Body',
     'Cardio',
     'Yoga',
     'Weight Loss',
@@ -24,25 +27,44 @@ const WorkoutPrograms = () => {
     'Calisthenics',
   ];
 
+  const handleTagPress = (tag) => {
+    const newTags = [...selectedTags];
+
+    if (newTags.includes(tag.toLowerCase())) {
+      const index = newTags.indexOf(tag.toLowerCase());
+      if (index !== -1) {
+        newTags.splice(index, 1);
+      }
+    } else {
+      newTags.push(tag.toLowerCase());
+    }
+    setSelectedTags(newTags);
+    onTagPress(newTags);
+  };
+
   return (
     <View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginHorizontal: 10,
-        }}>
-        <Text style={styles.title}>Workout Programs</Text>
-        <Text style={styles.btn}>See all</Text>
-      </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContainer}>
         {categories.map((category, index) => (
-          <TouchableOpacity key={index} style={styles.button}>
-            <Text style={styles.buttonText}>{category}</Text>
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.button,
+              selectedTags.includes(category.toLowerCase()) &&
+                styles.selectedButton, // Apply styles for selected tags
+            ]}
+            onPress={() => handleTagPress(category)}>
+            <Text
+              style={[
+                styles.buttonText,
+                selectedTags.includes(category.toLowerCase()) &&
+                  styles.selectedButtonText, // Apply styles for selected tags
+              ]}>
+              {category}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -51,23 +73,10 @@ const WorkoutPrograms = () => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-    marginVertical: 10,
-  },
-  btn: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    color: neon,
-  },
   scrollContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   button: {
     backgroundColor: bgGlassLight,
@@ -76,10 +85,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginRight: 10,
   },
+  selectedButton: {
+    backgroundColor: bgGlass,
+    borderColor: neon,
+    borderWidth: 1,
+    paddingVertical: 9,
+    paddingHorizontal: 19,
+  },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  selectedButtonText: {
+    color: neon,
   },
 });
 
