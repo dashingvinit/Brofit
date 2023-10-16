@@ -84,7 +84,7 @@ const SearchBox = ({ onSearch }) => {
           </TouchableOpacity>
 
           {isDropdownOpen ? (
-            <View>
+            <View style={{ marginTop: 5 }}>
               <TouchableOpacity onPress={() => selectOption('Beginner')}>
                 <Text style={styles.levelOptions}>Beginner</Text>
               </TouchableOpacity>
@@ -104,9 +104,9 @@ const SearchBox = ({ onSearch }) => {
 
         <View style={styles.row}>
           <CreateWorkout />
-          {/* <TouchableOpacity style={styles.iconBtn}>
+          <TouchableOpacity style={styles.iconBtn}>
             <Ionicons name="heart" size={28} color={neon} />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity style={styles.iconBtn} onPress={handleReset}>
             <Ionicons name="book" size={28} color={neon} />
           </TouchableOpacity>
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     paddingHorizontal: 7,
-    marginVertical: 15,
+    marginVertical: 10,
   },
   dropdownButton: {
     flexDirection: 'row',

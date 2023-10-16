@@ -23,9 +23,6 @@ import {
 } from './layout';
 import {
   WorkoutClass,
-  DayWiseWorkouts,
-  SixdayWorkOutCard,
-  SixDayWorkoutPlan,
   Video,
   WorkoutPrograms,
   Cards,
@@ -51,9 +48,6 @@ export {
   Video,
   WorkoutPrograms,
   WorkoutClass,
-  DayWiseWorkouts,
-  SixDayWorkoutPlan,
-  SixdayWorkOutCard,
   Cards,
   CardList,
   RoutineList,

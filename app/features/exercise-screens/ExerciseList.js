@@ -20,9 +20,11 @@ const ExerciseList = (props) => {
 
   const getExercise = async () => {
     const response = await Axios.get(
-      `/routine/content/${data._id}/${item.name.toLowerCase()}/`
+      `/routine/content/${data._id}/${item.name.toLowerCase()}`
     );
-    setListData(response.data.data.monday);
+
+    const lowercaseItemName = item.name.toLowerCase();
+    setListData(response.data.data[lowercaseItemName]);
   };
 
   const handleSearch = (searchData) => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import Cards from './Cards';
 
 const CardList = ({ data, navigation, screen, getID }) => {
@@ -9,15 +10,24 @@ const CardList = ({ data, navigation, screen, getID }) => {
           return (
             <Cards
               getID={getID}
-              key={index}
               screen={screen}
+              key={index}
               item={item}
               navigation={navigation}
             />
           );
         })}
+      <View style={styles.separator} />
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  separator: {
+    borderBottomColor: '#ccc',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginVertical: 10,
+  },
+});
 
 export default CardList;

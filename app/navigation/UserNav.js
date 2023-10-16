@@ -6,7 +6,7 @@ import { neon } from '../constants/Constants';
 
 import HomeStack from '../ui-user/home-screens/HomeStack';
 import Attendance from '../ui-user/Attendance';
-import WorkoutStack from '../ui-user/WorkoutStack';
+import WorkoutStack from '../ui-user/nav-stacks/ExerciseStack';
 import Stats from '../ui-user/Statistics';
 import ProfilePage from '../ui-user/ProfilePage';
 
