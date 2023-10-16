@@ -14,6 +14,7 @@ import Axios from '../../constants/Axios';
 
 const SearchBox = ({ onSearch }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchName, setSearchName] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [fittnessLevel, setFittnessLevel] = useState('Beginner');
 
@@ -28,19 +29,29 @@ const SearchBox = ({ onSearch }) => {
 
   const handleTagPress = async (tags) => {
     setSelectedTags(tags);
+    setSearchName('');
   };
 
   const handleSearch = async () => {
     try {
-      const query = selectedTags
-        .filter((tag) => tag)
-        .map((tag) => `-${tag}`)
-        .join('');
+      let searchData, data;
 
-      const searchData = await Axios.get(
-        `/workout/?tags=${fittnessLevel.toLowerCase()}${query}`
-      );
-      const data = searchData.data.data;
+      if (selectedTags.length > 0) {
+        const query = selectedTags
+          .filter((tag) => tag)
+          .map((tag) => `-${tag}`)
+          .join('');
+        searchData = await Axios.get(
+          `/workout/?tags=${fittnessLevel.toLowerCase()}${query}`
+        );
+        data = searchData.data.data;
+      } else if (searchName) {
+        searchData = await Axios.get(`/workout/${searchName}`);
+        data = [searchData.data.data];
+      } else {
+        return;
+      }
+
       onSearch(data);
     } catch (error) {
       console.log('search error', error);
@@ -48,10 +59,7 @@ const SearchBox = ({ onSearch }) => {
   };
 
   const handleReset = () => {
-    console.log('reset');
-    setSelectedTags([]);
     setFittnessLevel('Beginner');
-
     const data = [];
     onSearch(data);
   };
@@ -61,9 +69,15 @@ const SearchBox = ({ onSearch }) => {
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          placeholder="search name "
+          placeholder="Exact name or use tags"
           placeholderTextColor="#ccc"
+          value={searchName}
+          onChangeText={(text) => {
+            setSearchName(text);
+            setSelectedTags([]);
+          }}
         />
+
         <Ionicons name="search-outline" size={24} style={styles.searchIcon} />
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <Ionicons name="search-outline" size={30} color={neon} />
@@ -108,7 +122,7 @@ const SearchBox = ({ onSearch }) => {
             <Ionicons name="heart" size={28} color={neon} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconBtn} onPress={handleReset}>
-            <Ionicons name="book" size={28} color={neon} />
+            <Ionicons name="md-file-tray-full-outline" size={28} color={neon} />
           </TouchableOpacity>
         </View>
       </View>

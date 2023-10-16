@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   separator: {
     borderBottomColor: '#ccc',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginVertical: 10,
+    marginVertical: 5,
   },
 });
 

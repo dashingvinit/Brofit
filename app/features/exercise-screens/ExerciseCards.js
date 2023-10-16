@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { TopBack, GradientBG, Cards, WorkoutClass } from '../../components';
+import React from 'react';
+import { TopBack, GradientBG, WorkoutClass, Runtimer } from '../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -13,8 +13,9 @@ const WorkoutCards = ({ route }) => {
     <GradientBG>
       <SafeAreaView />
       <TopBack>{data?.title}</TopBack>
-      <ScrollView style={{ marginHorizontal: 10 }}>
+      <ScrollView>
         <View style={{ paddingBottom: 100 }}>
+          <Runtimer />
           <WorkoutClass data={data} navigation={navigation} />
         </View>
       </ScrollView>

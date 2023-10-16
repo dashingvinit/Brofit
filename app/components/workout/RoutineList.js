@@ -12,7 +12,6 @@ const RoutineList = (props) => {
     try {
       const res = await Axios.get(`/routine/name/all/${user.gymId}`);
       const pRes = await Axios.get(`/routine/name/specific/${user.userId}`);
-
       setData(res.data.data);
       SetPRoutine(pRes.data.data);
     } catch (error) {
@@ -28,7 +27,7 @@ const RoutineList = (props) => {
     <>
       {pRoutine.length > 0 && (
         <>
-          <Text style={styles.heading}>Personal Routines</Text>
+          <Text style={styles.heading}>My Routines</Text>
           <View style={styles.separator} />
           <CardList
             screen="ExerciseCards"
@@ -40,7 +39,7 @@ const RoutineList = (props) => {
 
       {data.length > 0 && (
         <>
-          <Text style={styles.heading}>Owner Routines</Text>
+          <Text style={styles.heading}>Trainer Routines</Text>
           <View style={styles.separator} />
           <CardList
             screen="ExerciseCards"
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
   separator: {
     borderBottomColor: '#ccc',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginVertical: 10,
+    marginBottom: 5,
     marginHorizontal: 7,
   },
 });

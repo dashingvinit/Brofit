@@ -12,19 +12,21 @@ const WorkoutPrograms = ({ onTagPress }) => {
   const [selectedTags, setSelectedTags] = useState([]);
 
   const categories = [
+    'Chest',
     'Shoulders',
     'Triceps',
-    'Chest',
+    'Biceps',
     'Abs',
-    'Upper Body',
-    'Lower Body',
-    'Cardio',
-    'Yoga',
-    'Weight Loss',
-    'Weight Gain',
-    'Boxing',
-    'Home Workout',
-    'Calisthenics',
+    'Quads',
+    'Hamstrings',
+    'Glutes',
+    'Calves',
+    'Lats',
+    'Upperback',
+    'Middleback',
+    'Lowerback',
+    'Forearms',
+    'Traps',
   ];
 
   const handleTagPress = (tag) => {

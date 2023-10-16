@@ -1,6 +1,8 @@
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { s } from 'react-native-size-matters';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const imagePaths = [
   require('../../assets/images/home.jpg'),
@@ -17,12 +19,26 @@ const getRandomImage = () => {
 };
 
 const Cards = ({ item, navigation, screen, getID }) => {
-  const [selected, setSelected] = useState(false);
+  const [selectedCards, setSelectedCards] = useState([]);
 
-  const handleCardPress = async () => {
+  const handleTagPress = (tag) => {
+    getID(tag);
+    const newTags = [...selectedCards];
+
+    if (newTags.includes(tag)) {
+      const index = newTags.indexOf(tag);
+      if (index !== -1) {
+        newTags.splice(index, 1);
+      }
+    } else {
+      newTags.push(tag);
+    }
+    setSelectedCards(newTags);
+  };
+
+  const handleCardPress = () => {
     if (getID) {
-      getID(item._id);
-      setSelected(true);
+      handleTagPress(item._id);
     } else {
       const screenName =
         screen === 'ExerciseCards' ? 'ExerciseCards' : 'ExerciseScreen';
@@ -34,20 +50,28 @@ const Cards = ({ item, navigation, screen, getID }) => {
 
   return (
     <TouchableOpacity
-      style={[styles.workoutCard, selected && styles.selectedCard]}
+      style={[
+        styles.workoutCard,
+        item.level ? styles.card : null,
+        selectedCards.includes(item._id) && styles.selectedCard,
+      ]}
       onPress={handleCardPress}>
       <Image
         source={item?.thumbnail ? { uri: item?.thumbnail } : randomImage}
         style={styles.img}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.workOutName}>{item?.name || item?.title}</Text>
+        <Text style={styles.workOutName}>
+          {item?.name || item?.title || 'NO DATA'}
+        </Text>
         <Text style={styles.workOutLength}>
-          {item?.level ? `Owner Level: ${item.level}` : 'My Routine'}
+          {item?.level
+            ? `Trainer Routine\nLevel: ${item?.level}`
+            : 'My Routine'}
         </Text>
       </View>
       <Ionicons
-        name={item.level ? 'heart-outline' : 'heart'}
+        name={item?.level || item?.name ? 'heart-outline' : 'heart'}
         size={28}
         style={styles.icon}
       />
@@ -60,16 +84,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 2,
     padding: 7,
-    backgroundColor: 'white',
-    height: 130,
+    height: 135,
     borderRadius: 30,
     width: '100%',
-
     flexDirection: 'row',
     gap: 20,
+    alignItems: 'center',
+    backgroundColor: '#D6D46D',
+  },
+  card: {
+    backgroundColor: '#DE8F5F',
   },
   selectedCard: {
-    backgroundColor: 'lightblue', // Change the background color when selected
+    backgroundColor: 'lightblue',
   },
   img: {
     height: '100%',
@@ -87,7 +114,7 @@ const styles = StyleSheet.create({
   workOutName: {
     fontWeight: 'bold',
     marginTop: 10,
-    fontSize: 22,
+    fontSize: 20,
     color: 'black',
   },
   workOutLength: {

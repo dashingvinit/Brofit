@@ -22,7 +22,6 @@ const ExerciseList = (props) => {
     const response = await Axios.get(
       `/routine/content/${data._id}/${item.name.toLowerCase()}`
     );
-
     const lowercaseItemName = item.name.toLowerCase();
     setListData(response.data.data[lowercaseItemName]);
   };
@@ -35,8 +34,18 @@ const ExerciseList = (props) => {
     setVisible(!visible);
   };
 
-  const addWorkout = (item) => {
-    setWorkouts((workouts) => [...workouts, item]);
+  const addWorkout = (tag) => {
+    const newTags = [...workouts];
+
+    if (newTags.includes(tag)) {
+      const index = newTags.indexOf(tag);
+      if (index !== -1) {
+        newTags.splice(index, 1);
+      }
+    } else {
+      newTags.push(tag);
+    }
+    setWorkouts(newTags);
   };
 
   const addExercise = async () => {

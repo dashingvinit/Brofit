@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { GradientBG, SearchBox, CardList, RoutineList } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 10,
-    marginHorizontal: 10,
+    //marginHorizontal: 10,
   },
   separator: {
     borderBottomColor: '#ccc',

@@ -1,10 +1,22 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { bgGlass, neon } from '../../constants/Constants';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Modal,
+  Button,
+} from 'react-native';
+import Axios from '../../functoins/Axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { bgGlass, neon } from '../../constants/Constants';
 
 const WorkoutClass = (props) => {
   const { data, navigation } = props;
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const workOutClasses = [
     {
@@ -30,78 +42,147 @@ const WorkoutClass = (props) => {
     {
       name: 'Friday',
       workouts: 15,
-      image: require('../../assets/images/boxer.jpg'),
+      image: require('../../assets/images/bicep.jpg'),
     },
     {
       name: 'Saturday',
       workouts: 20,
-      image: require('../../assets/images/calis.jpg'),
+      image: require('../../assets/images/cardio.jpg'),
     },
     {
       name: 'Sunday',
       workouts: 15,
-      image: require('../../assets/images/yoga.jpg'),
+      image: require('../../assets/images/CrunchesImage.jpg'),
     },
   ];
 
+  const handleDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const res = await Axios.delete(`routine/${data._id}`);
+      navigation.navigate('Exercise');
+      setShowDeleteModal(false); // Hide the delete modal after successful deletion
+    } catch (error) {
+      console.log(error);
+      setShowDeleteModal(false); // Hide the modal in case of an error
+    }
+  };
+
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity
+      key={index}
+      onPress={() => {
+        navigation.navigate('ExerciseList', { item: item, data: data });
+      }}>
+      <View style={styles.card}>
+        <Image source={item.image} style={styles.image} />
+        <Text style={styles.day}>{item.name}</Text>
+        <Text style={styles.workouts}>{`${item.workouts} workouts`}</Text>
+        <Ionicons
+          name="chevron-forward-outline"
+          size={25}
+          color="black"
+          backgroundColor={neon}
+          style={styles.icon}
+        />
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <>
-      {workOutClasses.map((item, index) => {
-        return (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {
-              navigation.navigate('ExerciseList', { item: item, data: data });
-            }}>
-            <View style={styles.container}>
-              <Image
-                source={item.image}
-                style={{ height: 100, width: 100, borderRadius: 25 }}
-              />
-              <View style={styles.row}>
-                <Text style={styles.header}>{item.name}</Text>
-                <Text style={styles.footer}>{item.workouts}</Text>
-              </View>
-              <Ionicons
-                name="chevron-forward-outline"
-                size={25}
-                color="black"
-                backgroundColor={neon}
-                style={styles.icon}
-              />
-            </View>
-          </TouchableOpacity>
-        );
-      })}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={styles.title}>Workout Classes</Text>
+        <TouchableOpacity onPress={() => handleDelete()}>
+          <MaterialIcons name="delete-outline" size={28} color="white" />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={workOutClasses}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderItem}
+      />
+
+      <Modal
+        visible={showDeleteModal}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setShowDeleteModal(false)}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>
+              Are you sure you want to delete this item?
+            </Text>
+            <Button title="Yes, Delete" onPress={confirmDelete} color="red" />
+            <Button
+              title="Cancel"
+              onPress={() => setShowDeleteModal(false)}
+              color="gray"
+            />
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
+
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  card: {
     backgroundColor: bgGlass,
-    padding: 10,
     borderRadius: 20,
-    marginVertical: 5,
+    margin: 10,
+    width: 200,
+    padding: 10,
+    alignItems: 'center',
   },
-  icon: {
-    marginLeft: 'auto',
-    borderRadius: 100,
-    paddingVertical: 2,
-    paddingHorizontal: 3,
+  image: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
   },
-  header: {
+  day: {
     fontSize: 22,
     fontWeight: 'bold',
     color: 'white',
-    marginLeft: 10,
+    marginTop: 10,
   },
-  footer: {
+  workouts: {
     fontSize: 14,
     color: 'white',
-    marginTop: 3,
-    marginLeft: 10,
+    marginTop: 5,
+  },
+  icon: {
+    marginTop: 10,
+    paddingHorizontal: 4,
+    paddingVertical: 3,
+    borderRadius: 50,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: 'center',
   },
 });
 
