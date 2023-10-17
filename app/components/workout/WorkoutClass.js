@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,14 +9,24 @@ import {
   Modal,
   Button,
 } from 'react-native';
-import Axios from '../../functoins/Axios';
+import { Axios, GetUser } from '../../functoins';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MaterialIcons } from '@expo/vector-icons';
-import { bgGlass, neon } from '../../constants/Constants';
+import { bgGlass, bgGlassLight, neon } from '../../constants/Constants';
+import { G } from 'react-native-svg';
 
 const WorkoutClass = (props) => {
-  const { data, navigation } = props;
+  const { data, navigation, routine } = props;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const getRole = async () => {
+      const userObj = await GetUser();
+      setUser(userObj.role);
+    };
+    getRole();
+  }, []);
 
   const workOutClasses = [
     {
@@ -64,10 +74,10 @@ const WorkoutClass = (props) => {
     try {
       const res = await Axios.delete(`routine/${data._id}`);
       navigation.navigate('Exercise');
-      setShowDeleteModal(false); // Hide the delete modal after successful deletion
+      setShowDeleteModal(false);
     } catch (error) {
       console.log(error);
-      setShowDeleteModal(false); // Hide the modal in case of an error
+      setShowDeleteModal(false);
     }
   };
 
@@ -94,11 +104,14 @@ const WorkoutClass = (props) => {
 
   return (
     <>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={styles.title}>Workout Classes</Text>
-        <TouchableOpacity onPress={() => handleDelete()}>
-          <MaterialIcons name="delete-outline" size={28} color="white" />
-        </TouchableOpacity>
+      <View style={styles.deleteContainer}>
+        <Text style={styles.title}>Workout Days</Text>
+
+        {routine === user && (
+          <TouchableOpacity onPress={() => handleDelete()}>
+            <MaterialIcons name="delete-outline" size={28} color="white" />
+          </TouchableOpacity>
+        )}
       </View>
       <FlatList
         data={workOutClasses}
@@ -116,14 +129,16 @@ const WorkoutClass = (props) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalText}>
-              Are you sure you want to delete this item?
+              Are you sure you want to delete this routine?
             </Text>
-            <Button title="Yes, Delete" onPress={confirmDelete} color="red" />
-            <Button
-              title="Cancel"
-              onPress={() => setShowDeleteModal(false)}
-              color="gray"
-            />
+            <View style={styles.btnContainer}>
+              <Button title="Yes, Delete" onPress={confirmDelete} color="red" />
+              <Button
+                title="Cancel"
+                onPress={() => setShowDeleteModal(false)}
+                color="gray"
+              />
+            </View>
           </View>
         </View>
       </Modal>
@@ -162,6 +177,14 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 50,
   },
+  deleteContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: bgGlassLight,
+    borderRadius: 10,
+    marginHorizontal: 5,
+  },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -170,7 +193,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
@@ -178,6 +200,13 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     alignItems: 'center',
+    width: '80%',
+    alignSelf: 'center',
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   modalText: {
     fontSize: 18,

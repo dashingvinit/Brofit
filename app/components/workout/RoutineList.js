@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Axios, GetUser } from '../../functoins';
 import CardList from './CardList';
+import { TouchableOpacity } from 'react-native-web';
 
 const RoutineList = (props) => {
   const [data, setData] = useState([]);
@@ -33,6 +34,7 @@ const RoutineList = (props) => {
             screen="ExerciseCards"
             data={pRoutine}
             navigation={props.navigation}
+            routine="user"
           />
         </>
       )}
@@ -45,6 +47,7 @@ const RoutineList = (props) => {
             screen="ExerciseCards"
             data={data}
             navigation={props.navigation}
+            routine="owner"
           />
         </>
       )}

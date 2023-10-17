@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Cards from './Cards';
 
-const CardList = ({ data, navigation, screen, getID }) => {
+const CardList = ({ data, navigation, screen, getID, routine }) => {
   return (
     <>
       {data?.length > 0 &&
@@ -14,6 +14,7 @@ const CardList = ({ data, navigation, screen, getID }) => {
               key={index}
               item={item}
               navigation={navigation}
+              routine={routine}
             />
           );
         })}

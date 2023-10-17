@@ -5,7 +5,7 @@ import { View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const WorkoutCards = ({ route }) => {
-  const { data } = route.params;
+  const { data, routine } = route.params;
 
   const navigation = useNavigation();
 
@@ -15,8 +15,8 @@ const WorkoutCards = ({ route }) => {
       <TopBack>{data?.title}</TopBack>
       <ScrollView>
         <View style={{ paddingBottom: 100 }}>
+          <WorkoutClass routine={routine} data={data} navigation={navigation} />
           <Runtimer />
-          <WorkoutClass data={data} navigation={navigation} />
         </View>
       </ScrollView>
     </GradientBG>

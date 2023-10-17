@@ -17,6 +17,7 @@ const ExerciseList = (props) => {
   const [listData, setListData] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
 
   const getExercise = async () => {
     const response = await Axios.get(
@@ -31,6 +32,11 @@ const ExerciseList = (props) => {
   };
 
   const toggleVisible = () => {
+    setVisible(!visible);
+  };
+
+  const toggleDeleteVisible = () => {
+    setDeleteVisible(!deleteVisible);
     setVisible(!visible);
   };
 
@@ -49,14 +55,33 @@ const ExerciseList = (props) => {
   };
 
   const addExercise = async () => {
-    const response = await Axios.patch(`/routine/${data._id}`, {
-      day: item.name.toLowerCase(),
-      workouts: workouts,
-    });
-    console.log('patch', response.data);
-    setWorkouts([]);
-    setVisible(!visible);
-    getExercise();
+    if (workouts.length === 0) {
+      setVisible(!visible);
+    } else {
+      const response = await Axios.patch(`/routine/${data._id}`, {
+        day: item.name.toLowerCase(),
+        workouts: workouts,
+      });
+      setWorkouts([]);
+      setVisible(!visible);
+      getExercise();
+    }
+  };
+
+  const deleteExercise = async () => {
+    if (workouts.length === 0) {
+      setVisible(!visible);
+    } else {
+      setDeleteVisible(true);
+      const response = await Axios.patch(`/routine/remove/${data._id}`, {
+        day: item.name.toLowerCase(),
+        workouts: workouts,
+      });
+      setWorkouts([]);
+      setVisible(!visible);
+      getExercise();
+      setDeleteVisible(false);
+    }
   };
 
   useEffect(() => {
@@ -70,32 +95,45 @@ const ExerciseList = (props) => {
       <View style={styles.topContainer}>
         <View>
           <Text style={styles.heading}>{item.name}</Text>
-          <Text style={styles.subHeading}>{listData?.length} WORKOUTS</Text>
+          <Text style={styles.subHeading}>{listData?.length} EXERCISE</Text>
         </View>
-        <TouchableOpacity onPress={toggleVisible}>
-          <Ionicons
-            name={visible ? 'ios-close-circle' : 'ios-add-circle'}
-            size={40}
-            color="#fff"
-          />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+          {(listData?.length > 0 && deleteVisible) || !visible ? (
+            <TouchableOpacity onPress={toggleDeleteVisible}>
+              <Ionicons
+                name={visible ? 'ios-close-circle' : 'ios-trash-bin'}
+                size={35}
+                color="#fff"
+              />
+            </TouchableOpacity>
+          ) : null}
+          {deleteVisible ? null : (
+            <TouchableOpacity onPress={toggleVisible}>
+              <Ionicons
+                name={visible ? 'ios-close-circle' : 'ios-add-circle'}
+                size={40}
+                color="#fff"
+              />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
       <ScrollView style={styles.scroll}>
         <View style={styles.scrollContainer}>
           {visible ? (
             <>
-              <SearchBox onSearch={handleSearch} />
+              {deleteVisible ? null : <SearchBox onSearch={handleSearch} />}
               <CardList
                 getID={addWorkout}
-                data={searchData}
+                data={deleteVisible ? listData : searchData}
                 navigation={props.navigation}
               />
-              <View style={styles.separator} />
+
               <TouchableOpacity
                 style={{ alignItems: 'center', marginVertical: 10 }}
-                onPress={addExercise}>
+                onPress={deleteVisible ? deleteExercise : addExercise}>
                 <Text style={{ color: '#fff', fontSize: 20 }}>
-                  Add {workouts.length} Workouts
+                  {workouts.length} Workouts
                 </Text>
                 <Ionicons name="ios-checkmark-circle" size={40} color="#fff" />
               </TouchableOpacity>

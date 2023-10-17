@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { GradientBG, SearchBox, CardList, RoutineList } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Exercise = (props) => {
+const Workouts = (props) => {
   const [data, setData] = useState([]);
 
   const handleSearch = (searchData) => {
@@ -19,11 +19,9 @@ const Exercise = (props) => {
 
         <ScrollView style={styles.scroll}>
           <View style={styles.scrollContainer}>
-            <CardList data={data} navigation={props.navigation} />
-            <View>
-              <Text style={styles.heading}>Routines</Text>
-              <View style={styles.separator} />
-            </View>
+            {data.length > 0 ? (
+              <CardList data={data} navigation={props.navigation} />
+            ) : null}
             <RoutineList navigation={props.navigation} />
           </View>
         </ScrollView>
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 2,
   },
   separator: {
     borderBottomColor: '#ccc',
@@ -50,12 +48,6 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingBottom: 100,
   },
-  heading: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
-  },
 });
 
-export default Exercise;
+export default Workouts;

@@ -11,6 +11,7 @@ const imagePaths = [
   require('../../assets/images/calis.jpg'),
   require('../../assets/images/chest.jpg'),
   require('../../assets/images/CrunchesImage.jpg'),
+  require('../../assets/images/cardio.jpg'),
 ];
 
 const getRandomImage = () => {
@@ -18,7 +19,7 @@ const getRandomImage = () => {
   return imagePaths[randomIndex];
 };
 
-const Cards = ({ item, navigation, screen, getID }) => {
+const Cards = ({ item, navigation, screen, getID, routine }) => {
   const [selectedCards, setSelectedCards] = useState([]);
 
   const handleTagPress = (tag) => {
@@ -42,7 +43,7 @@ const Cards = ({ item, navigation, screen, getID }) => {
     } else {
       const screenName =
         screen === 'ExerciseCards' ? 'ExerciseCards' : 'ExerciseScreen';
-      navigation.navigate(screenName, { data: item });
+      navigation.navigate(screenName, { data: item, routine: routine });
     }
   };
 
@@ -53,6 +54,7 @@ const Cards = ({ item, navigation, screen, getID }) => {
       style={[
         styles.workoutCard,
         item.level ? styles.card : null,
+        item.name ? styles.card2 : null,
         selectedCards.includes(item._id) && styles.selectedCard,
       ]}
       onPress={handleCardPress}>
@@ -94,6 +96,9 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#DE8F5F',
+  },
+  card2: {
+    backgroundColor: '#FDF7C3',
   },
   selectedCard: {
     backgroundColor: 'lightblue',

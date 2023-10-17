@@ -111,9 +111,9 @@ const CreateWorkout = () => {
                 )}
               </View>
             ) : null}
-            <View style={{ flexDirection: 'row', gap: 20, marginTop: 20 }}>
-              <Button title="Submit" onPress={handleSubmit} />
-              <Button title="Cancel" onPress={handleButtonPress} />
+            <View style={styles.btnContainer}>
+              <Button color="grey" title="Cancel" onPress={handleButtonPress} />
+              <Button color="black" title="Submit" onPress={handleSubmit} />
             </View>
           </View>
         </View>
@@ -154,13 +154,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 10,
     borderRadius: 10,
+    fontSize: 16,
   },
   dropdownButton: {
+    height: 40,
+    padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: 'gray',
     borderWidth: 1,
-    padding: 10,
     borderRadius: 10,
   },
   optionContainer: {
@@ -174,11 +176,11 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   level: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   levelOptions: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'gray',
     marginBottom: 5,
@@ -187,6 +189,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'gray',
+  },
+  btnContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'space-around',
   },
 });
 
