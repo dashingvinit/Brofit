@@ -5,13 +5,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const imagePaths = [
+  require('../../assets/images/cardio.jpg'),
+  require('../../assets/images/bell.jpg'),
+  require('../../assets/images/ball.jpg'),
+  require('../../assets/images/backBending.jpg'),
+  require('../../assets/images/boobs.jpg'),
   require('../../assets/images/home.jpg'),
   require('../../assets/images/bicep.jpg'),
   require('../../assets/images/boxer.jpg'),
   require('../../assets/images/calis.jpg'),
   require('../../assets/images/chest.jpg'),
   require('../../assets/images/CrunchesImage.jpg'),
-  require('../../assets/images/cardio.jpg'),
+  require('../../assets/images/streching.jpg'),
+  require('../../assets/images/homeWorkout.jpg'),
 ];
 
 const getRandomImage = () => {

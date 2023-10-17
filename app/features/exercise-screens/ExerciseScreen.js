@@ -12,9 +12,8 @@ import { Video, ResizeMode } from 'expo-av';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { GradientBG } from '../../components';
-import { bgGlass, bgGlassLight, neon } from '../../constants/Constants';
+import { bgGlassLight, neon } from '../../constants/Constants';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Water, Calories } from '../../components';
 
 const ExerciseScreen = ({ route }) => {
   const video = React.useRef(null);
@@ -92,8 +91,14 @@ const ExerciseScreen = ({ route }) => {
             </TouchableOpacity>
 
             <View style={styles.row}>
-              <Water />
-              <Calories />
+              <View style={styles.row}>
+                <Ionicons name="repeat-outline" size={24} color="#ccc" />
+                <Text style={styles.tag}> 3-4 sets</Text>
+              </View>
+              <View style={styles.row}>
+                <Ionicons name="barbell-outline" size={24} color="#ccc" />
+                <Text style={styles.tag}> 8-12 reps</Text>
+              </View>
             </View>
 
             <View style={styles.descContainer}>
@@ -111,11 +116,11 @@ const ExerciseScreen = ({ route }) => {
               ))}
             </View>
 
-            <View style={styles.separator} />
+            {/* <View style={styles.separator} />
             <Text style={styles.title}>Similar Exercises</Text>
             <View style={styles.separator} />
             <Text style={styles.title}>Comments</Text>
-            <View style={styles.separator} />
+            <View style={styles.separator} /> */}
 
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
               <Text style={styles.tag}> Made with love by brofit</Text>
@@ -214,7 +219,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     gap: 10,
   },
   tagContainer: {

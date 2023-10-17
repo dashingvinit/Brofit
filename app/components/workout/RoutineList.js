@@ -1,23 +1,44 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
 import { Axios, GetUser } from '../../functoins';
 import CardList from './CardList';
-import { TouchableOpacity } from 'react-native-web';
+import LottieView from 'lottie-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 const RoutineList = (props) => {
   const [data, setData] = useState([]);
   const [pRoutine, SetPRoutine] = useState([]);
+  const lottieRef = useRef(null);
 
   const getRoutines = async () => {
     const user = await GetUser();
     try {
-      const res = await Axios.get(`/routine/name/all/${user.gymId}`);
+      const storedData = await AsyncStorage.getItem('routines');
+
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        setData(parsedData);
+      } else {
+        const res = await Axios.get(`/routine/name/all/${user.gymId}`);
+        setData(res.data.data);
+        await AsyncStorage.setItem('routines', JSON.stringify(res.data.data));
+      }
       const pRes = await Axios.get(`/routine/name/specific/${user.userId}`);
-      setData(res.data.data);
       SetPRoutine(pRes.data.data);
     } catch (error) {
       console.log('error', error);
     }
+  };
+
+  const handleRefresh = async () => {
+    if (lottieRef.current) {
+      lottieRef.current.reset();
+    }
+    if (lottieRef.current) {
+      lottieRef.current.play();
+    }
+    await AsyncStorage.removeItem('routines');
+    getRoutines();
   };
 
   useEffect(() => {
@@ -28,7 +49,18 @@ const RoutineList = (props) => {
     <>
       {pRoutine.length > 0 && (
         <>
-          <Text style={styles.heading}>My Routines</Text>
+          <View style={styles.row}>
+            <Text style={styles.heading}>My Routines</Text>
+            <TouchableOpacity onPress={handleRefresh}>
+              <LottieView
+                ref={lottieRef}
+                source={require('../../assets/lottieFiles/refresh.json')}
+                autoPlay
+                loop={false}
+                style={{ width: 35, height: 35, marginRight: 10 }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.separator} />
           <CardList
             screen="ExerciseCards"
@@ -41,7 +73,18 @@ const RoutineList = (props) => {
 
       {data.length > 0 && (
         <>
-          <Text style={styles.heading}>Trainer Routines</Text>
+          <View style={styles.row}>
+            <Text style={styles.heading}>Trainer Routines</Text>
+            <TouchableOpacity onPress={handleRefresh}>
+              <LottieView
+                ref={lottieRef}
+                source={require('../../assets/lottieFiles/refresh.json')}
+                autoPlay
+                loop={false}
+                style={{ width: 35, height: 35, marginRight: 10 }}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={styles.separator} />
           <CardList
             screen="ExerciseCards"
@@ -60,13 +103,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-    textAlign: 'center',
+    marginLeft: 10,
   },
   separator: {
     borderBottomColor: '#ccc',
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 5,
     marginHorizontal: 7,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 5,
   },
 });
 

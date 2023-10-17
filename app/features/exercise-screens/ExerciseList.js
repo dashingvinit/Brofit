@@ -10,14 +10,17 @@ import { GradientBG, TopBack, CardList, SearchBox } from '../../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Axios from '../../functoins/Axios';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { s } from 'react-native-size-matters';
+import { GetUser } from '../../functoins';
 
 const ExerciseList = (props) => {
-  const { item, data } = props.route.params;
+  const { item, data, routine } = props.route.params;
   const [searchData, setSearchData] = useState([]);
   const [listData, setListData] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [visible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const [user, setUser] = useState();
 
   const getExercise = async () => {
     const response = await Axios.get(
@@ -86,6 +89,11 @@ const ExerciseList = (props) => {
 
   useEffect(() => {
     getExercise();
+    const getUser = async () => {
+      const fetchedUser = await GetUser();
+      setUser(fetchedUser.role);
+    };
+    getUser();
   }, []);
 
   return (
@@ -97,26 +105,28 @@ const ExerciseList = (props) => {
           <Text style={styles.heading}>{item.name}</Text>
           <Text style={styles.subHeading}>{listData?.length} EXERCISE</Text>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-          {(listData?.length > 0 && deleteVisible) || !visible ? (
-            <TouchableOpacity onPress={toggleDeleteVisible}>
-              <Ionicons
-                name={visible ? 'ios-close-circle' : 'ios-trash-bin'}
-                size={35}
-                color="#fff"
-              />
-            </TouchableOpacity>
-          ) : null}
-          {deleteVisible ? null : (
-            <TouchableOpacity onPress={toggleVisible}>
-              <Ionicons
-                name={visible ? 'ios-close-circle' : 'ios-add-circle'}
-                size={40}
-                color="#fff"
-              />
-            </TouchableOpacity>
-          )}
-        </View>
+        {user === routine ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+            {listData?.length > 0 && (deleteVisible || !visible) ? (
+              <TouchableOpacity onPress={toggleDeleteVisible}>
+                <Ionicons
+                  name={visible ? 'ios-close-circle' : 'ios-trash-bin'}
+                  size={35}
+                  color="#fff"
+                />
+              </TouchableOpacity>
+            ) : null}
+            {deleteVisible ? null : (
+              <TouchableOpacity onPress={toggleVisible}>
+                <Ionicons
+                  name={visible ? 'ios-close-circle' : 'ios-add-circle'}
+                  size={40}
+                  color="#fff"
+                />
+              </TouchableOpacity>
+            )}
+          </View>
+        ) : null}
       </View>
       <ScrollView style={styles.scroll}>
         <View style={styles.scrollContainer}>
@@ -128,14 +138,42 @@ const ExerciseList = (props) => {
                 data={deleteVisible ? listData : searchData}
                 navigation={props.navigation}
               />
-
+              <Text
+                style={{
+                  color: '#fff',
+                  fontSize: 20,
+                  alignSelf: 'flex-end',
+                  marginRight: 10,
+                }}>
+                {workouts.length} Selected
+              </Text>
               <TouchableOpacity
-                style={{ alignItems: 'center', marginVertical: 10 }}
+                style={{
+                  marginVertical: 10,
+                  alignItems: 'center',
+                  backgroundColor: '#000',
+                  paddingVertical: 7,
+                  borderRadius: 10,
+                  marginHorizontal: 10,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  gap: 5,
+                }}
                 onPress={deleteVisible ? deleteExercise : addExercise}>
-                <Text style={{ color: '#fff', fontSize: 20 }}>
-                  {workouts.length} Workouts
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 20,
+                  }}>
+                  {deleteVisible ? 'Delete' : 'Add'}
                 </Text>
-                <Ionicons name="ios-checkmark-circle" size={40} color="#fff" />
+                <Ionicons
+                  name={
+                    deleteVisible ? 'ios-trash-bin' : 'ios-checkmark-circle'
+                  }
+                  size={25}
+                  color="#fff"
+                />
               </TouchableOpacity>
             </>
           ) : (

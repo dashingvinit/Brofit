@@ -11,14 +11,50 @@ import {
 } from 'react-native';
 import { Axios, GetUser } from '../../functoins';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { MaterialIcons } from '@expo/vector-icons';
 import { bgGlass, bgGlassLight, neon } from '../../constants/Constants';
-import { G } from 'react-native-svg';
 
 const WorkoutClass = (props) => {
   const { data, navigation, routine } = props;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [user, setUser] = useState();
+
+  const workOutClasses = [
+    {
+      name: 'Monday',
+      workouts: data.monday,
+      image: require('../../assets/images/boobs.jpg'),
+    },
+    {
+      name: 'Tuesday',
+      workouts: data.tuesday,
+      image: require('../../assets/images/calis.jpg'),
+    },
+    {
+      name: 'Wednesday',
+      workouts: data.wednesday,
+      image: require('../../assets/images/boxer.jpg'),
+    },
+    {
+      name: 'Thursday',
+      workouts: data.thursday,
+      image: require('../../assets/images/bicep.jpg'),
+    },
+    {
+      name: 'Friday',
+      workouts: data.friday,
+      image: require('../../assets/images/bell.jpg'),
+    },
+    {
+      name: 'Saturday',
+      workouts: data.saturday,
+      image: require('../../assets/images/cardio.jpg'),
+    },
+    {
+      name: 'Sunday',
+      workouts: data.sunday,
+      image: require('../../assets/images/CrunchesImage.jpg'),
+    },
+  ];
 
   useEffect(() => {
     const getRole = async () => {
@@ -27,44 +63,6 @@ const WorkoutClass = (props) => {
     };
     getRole();
   }, []);
-
-  const workOutClasses = [
-    {
-      name: 'Monday',
-      workouts: 15,
-      image: require('../../assets/images/boxer.jpg'),
-    },
-    {
-      name: 'Tuesday',
-      workouts: 20,
-      image: require('../../assets/images/calis.jpg'),
-    },
-    {
-      name: 'Wednesday',
-      workouts: 15,
-      image: require('../../assets/images/yoga.jpg'),
-    },
-    {
-      name: 'Thursday',
-      workouts: 10,
-      image: require('../../assets/images/home.jpg'),
-    },
-    {
-      name: 'Friday',
-      workouts: 15,
-      image: require('../../assets/images/bicep.jpg'),
-    },
-    {
-      name: 'Saturday',
-      workouts: 20,
-      image: require('../../assets/images/cardio.jpg'),
-    },
-    {
-      name: 'Sunday',
-      workouts: 15,
-      image: require('../../assets/images/CrunchesImage.jpg'),
-    },
-  ];
 
   const handleDelete = () => {
     setShowDeleteModal(true);
@@ -85,12 +83,14 @@ const WorkoutClass = (props) => {
     <TouchableOpacity
       key={index}
       onPress={() => {
-        navigation.navigate('ExerciseList', { item: item, data: data });
+        navigation.navigate('ExerciseList', { item, data, routine });
       }}>
       <View style={styles.card}>
         <Image source={item.image} style={styles.image} />
         <Text style={styles.day}>{item.name}</Text>
-        <Text style={styles.workouts}>{`${item.workouts} workouts`}</Text>
+        <Text style={styles.workouts}>
+          {item.workouts == 1 ? 'Rest Day' : `${item.workouts} workouts`}
+        </Text>
         <Ionicons
           name="chevron-forward-outline"
           size={25}
@@ -109,7 +109,7 @@ const WorkoutClass = (props) => {
 
         {routine === user && (
           <TouchableOpacity onPress={() => handleDelete()}>
-            <MaterialIcons name="delete-outline" size={28} color="white" />
+            <Ionicons name="ios-trash-bin" size={28} color="white" />
           </TouchableOpacity>
         )}
       </View>
