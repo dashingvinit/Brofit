@@ -42,8 +42,15 @@ const RoutineList = (props) => {
   };
 
   useEffect(() => {
-    getRoutines();
+    const interval = setInterval(() => {
+      getRoutines();
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
+  // useEffect(() => {
+  //   getRoutines();
+  // }, []);
 
   return (
     <>

@@ -97,21 +97,27 @@ const Attendance = () => {
                 <Text style={styles.modalTxt}>Bro, are you leaving ?</Text>
               </View>
               <View style={styles.modalOption}>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    padding: 15,
+                <View>
+                  <TouchableOpacity onPress={() => setwarning(false)} style={{
+                      alignItems: 'center',
+                      padding:15,
+                      borderWidth: 1,
+                      borderColor:'white',
+                      width:142,
+                      borderBottomLeftRadius:15,
                   }}>
-                  <TouchableOpacity onPress={() => setwarning(false)}>
                     <Text style={{ fontSize: 16, color: neon }}>No</Text>
                   </TouchableOpacity>
                 </View>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    padding: 15,
+                <View>
+                  <TouchableOpacity onPress={handleout} style={{
+                      padding:15,
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      borderColor:'white',
+                      width:142,
+                      borderBottomEndRadius:15,
                   }}>
-                  <TouchableOpacity onPress={handleout}>
                     <Text style={{ fontSize: 16, color: neon }}>Yes</Text>
                   </TouchableOpacity>
                 </View>

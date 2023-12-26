@@ -11,11 +11,13 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { neon } from '../../constants/Constants';
 import { Axios, GetUser } from '../../functoins';
+import LottieView from 'lottie-react-native';
 
 const CreateWorkout = () => {
   const [workoutName, setWorkoutName] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [fittnessLevel, setFittnessLevel] = useState('Beginner');
 
   const [user, setUser] = useState('');
@@ -42,6 +44,8 @@ const CreateWorkout = () => {
   };
 
   const handleSubmit = async () => {
+    setVisible(false);
+    setLoading(true);
     try {
       const userID = user._id || user.userId;
       await Axios.post(`/routine/${userID}`, {
@@ -52,7 +56,7 @@ const CreateWorkout = () => {
     } catch (error) {
       console.log('error', error);
     }
-    setVisible(false);
+    setLoading(false);
   };
 
   return (
@@ -118,6 +122,24 @@ const CreateWorkout = () => {
           </View>
         </View>
       </Modal>
+      {loading && (
+            <LottieView
+              source={require('../../assets/lottieFiles/loadingSkeliton.json')}
+              autoPlay
+              loop
+              style={{
+                position: 'absolute',
+                top: -320,
+                bottom: -550,
+                left: -250,
+                right: -200,
+                backgroundColor: 'rgba(0,0,0,0.4)',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+                zIndex:999
+              }}
+            />
+        )}
     </View>
   );
 };
