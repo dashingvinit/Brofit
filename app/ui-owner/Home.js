@@ -23,7 +23,7 @@ const Home = (props) => {
           <View style={styles.boxesContainer}>
             <View style={styles.box}>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('ActiveList')}>
+                onPress={() => props.navigation.navigate('Notificationpush')}>
                 <View style={{ alignItems: 'center' }}>
                   <Ionicons
                     name="flame-sharp"
