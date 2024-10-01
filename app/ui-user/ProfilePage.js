@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     color: bgColor,
-    fontSize: 30,
+    fontSize: 29,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
